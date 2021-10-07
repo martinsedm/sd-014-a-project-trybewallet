@@ -1,7 +1,7 @@
 export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
-export const SET_EXPENSES = 'SET_EXPENSES';
+export const SET_EXPENSE = 'SET_EXPENSE';
 
 export const setUserEmail = (email) => ({
   type: SET_USER_EMAIL,
@@ -25,3 +25,8 @@ export const fetchCurrencies = () => async (dispatch) => {
   currenciesArray.splice(currenciesArray.indexOf('USDT'), 1);
   dispatch(receiveCurrencies(currenciesArray));
 };
+
+export const setExpense = (expense) => ({
+  type: SET_EXPENSE,
+  expense,
+});
