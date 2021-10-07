@@ -1,14 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { setUserEmail } from '../actions';
 import { emailVerification, passwordVerification } from '../services/auth';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      email: '',
       emailCondition: false,
       passwordCondition: false,
     };
     this.handleCondition = this.handleCondition.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange({ target: { value, name } }) {
+    this.setState({ [name]: value });
   }
 
   handleCondition({ target: { value, name } }) {
@@ -19,6 +30,13 @@ class Login extends React.Component {
       const passwordCondition = passwordVerification(value);
       this.setState({ passwordCondition });
     }
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { history, dispatchEmail } = this.props;
+    dispatchEmail(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -35,7 +53,10 @@ class Login extends React.Component {
                 data-testid="email-input"
                 type="email"
                 name="email"
-                onChange={ this.handleCondition }
+                onChange={ (event) => {
+                  this.handleChange(event);
+                  this.handleCondition(event);
+                } }
                 id="email"
               />
             </label>
@@ -51,6 +72,7 @@ class Login extends React.Component {
             </label>
             <button
               type="button"
+              onClick={ this.handleClick }
               disabled={ buttonDisabled }
             >
               Entrar
@@ -62,4 +84,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  dispatchEmail: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchEmail: (email) => dispatch(setUserEmail(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
