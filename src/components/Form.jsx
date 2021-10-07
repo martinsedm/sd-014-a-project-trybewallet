@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Form extends Component {
@@ -8,6 +9,7 @@ class Form extends Component {
     };
     this.generateMethods = this.generateMethods.bind(this);
     this.generateTags = this.generateTags.bind(this);
+    this.generateCurrencies = this.generateCurrencies.bind(this);
   }
 
   generateMethods() {
@@ -24,32 +26,39 @@ class Form extends Component {
     ));
   }
 
+  generateCurrencies() {
+    const { currencies } = this.props;
+    return currencies.map((currency, index) => (
+      <option key={ index } value={ currency }>{currency}</option>
+    ));
+  }
+
   render() {
     return (
       <form>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor:
           <input
             type="number"
-            id="valor"
-            name="valor"
+            id="value"
+            name="value"
           />
         </label>
-        <label htmlFor="descrição">
+        <label htmlFor="description">
           Descrição:
           <input
             type="text"
-            id="descrição"
-            name="descrição"
+            id="description"
+            name="description"
           />
         </label>
-        <label htmlFor="moeda">
+        <label htmlFor="currency">
           Moeda:
           <select
-            id="moeda"
-            name="moeda"
+            id="currency"
+            name="currency"
           >
-            <option value="BRL">BRL</option>
+            { this.generateCurrencies() }
           </select>
         </label>
         <label htmlFor="method">
@@ -75,4 +84,12 @@ class Form extends Component {
   }
 }
 
-export default connect()(Form);
+Form.propTypes = {
+  currencies: PropTypes.array,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps)(Form);
