@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions';
+import { removeExpense, setEditCondition } from '../actions';
 
 class Tr extends Component {
   render() {
-    const { expense, deleteExpense } = this.props;
+    const { expense, deleteExpense, editCondition } = this.props;
     const { id, description, tag, method, value, currency, exchangeRates } = expense;
     const { ask, name } = exchangeRates[currency];
     const convertedValue = value * ask;
@@ -27,6 +27,13 @@ class Tr extends Component {
           >
             Excluir
           </button>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => { editCondition(true, expense); } }
+          >
+            Editar
+          </button>
         </td>
       </tr>
     );
@@ -47,10 +54,12 @@ Tr.propTypes = {
     }),
   }).isRequired,
   deleteExpense: PropTypes.func.isRequired,
+  editCondition: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (expenseId) => dispatch(removeExpense(expenseId)),
+  editCondition: (condition, expense) => dispatch(setEditCondition(condition, expense)),
 });
 
 export default connect(null, mapDispatchToProps)(Tr);

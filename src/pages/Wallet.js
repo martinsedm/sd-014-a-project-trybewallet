@@ -5,6 +5,7 @@ import Form from '../components/Form';
 import Header from '../components/Header';
 import { fetchCurrencies } from '../actions';
 import Table from '../components/Table';
+import FormEdit from '../components/FormEdit';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -18,10 +19,11 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { editCondition, expense } = this.props;
     return (
       <>
         <Header />
-        <Form />
+        {editCondition ? <FormEdit expense={ expense } /> : <Form />}
         <Table />
       </>
     );
@@ -29,11 +31,18 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  getCurrencies: PropTypes.func,
+  getCurrencies: PropTypes.func.isRequired,
+  editCondition: PropTypes.bool.isRequired,
+  expense: PropTypes.object.isRequired,
 }.isRequired;
+
+const mapStateToProps = (state) => ({
+  editCondition: state.edit.editCondition,
+  expense: state.edit.expense,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
 });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
