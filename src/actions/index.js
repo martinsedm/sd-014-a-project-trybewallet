@@ -2,6 +2,7 @@ export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const RECEIVE_CURRENCIES = 'RECEIVE_CURRENCIES';
 export const SET_EXPENSE = 'SET_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const setUserEmail = (email) => ({
   type: SET_USER_EMAIL,
@@ -29,4 +30,9 @@ export const fetchCurrencies = () => async (dispatch) => {
 export const setExpense = (expense) => ({
   type: SET_EXPENSE,
   expense,
+});
+
+export const removeExpense = (expenseId) => ({
+  type: REMOVE_EXPENSE,
+  expenseId,
 });
