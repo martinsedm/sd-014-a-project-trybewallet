@@ -9,21 +9,23 @@ import TagInput from './TagInput';
 import DescriptionInput from './DescriptionInput';
 
 import { getCurrencies } from '../utils/currenciesAPI';
+import { addExpense as expense } from '../actions';
 
-export default class ExpensesForm extends Component {
+class ExpensesForm extends Component {
   constructor() {
     super();
     this.state = {
       value: '0',
       currency: 'USD',
-      method: 'cash',
-      tag: 'food',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
       currencies: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.fetchCurrencies = this.fetchCurrencies.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +34,12 @@ export default class ExpensesForm extends Component {
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { currencies, ...expenseInfo } = this.state;
+    const { addExpense } = this.props;
+    addExpense(expenseInfo);
   }
 
   async fetchCurrencies() {
@@ -58,6 +66,7 @@ export default class ExpensesForm extends Component {
         <button
           type="button"
           className="btn btn-primary"
+          onClick={ this.handleClick }
         >
           Adicionar despesa
         </button>
@@ -65,3 +74,13 @@ export default class ExpensesForm extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expenseInfo) => dispatch(expense(expenseInfo)),
+});
+
+ExpensesForm.propTypes = {
+  addExpense: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(ExpensesForm);

@@ -17,7 +17,7 @@ export default class PaymentInput extends Component {
           value={ value }
         >
           { methods.map(({ id, name }) => (
-            <option value={ id } key={ id }>{name}</option>
+            <option value={ name } key={ id }>{name}</option>
           ))}
 
         </select>

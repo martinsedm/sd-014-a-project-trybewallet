@@ -17,7 +17,7 @@ export default class TagInput extends Component {
           value={ value }
         >
           { tags.map(({ id, name }) => (
-            <option value={ id } key={ id }>{name}</option>
+            <option value={ name } key={ id }>{name}</option>
           ))}
 
         </select>
