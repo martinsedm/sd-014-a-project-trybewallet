@@ -6,11 +6,11 @@ import { createMemoryHistory } from 'history';
 import { applyMiddleware, createStore } from 'redux';
 import { render } from '@testing-library/react';
 
-import reducer from '../reducers';
+import rootReducer from '../reducers';
 
 export const getStore = (initialState) => {
-  if (!initialState) return createStore(reducer, applyMiddleware(thunk));
-  return createStore(reducer, initialState, applyMiddleware(thunk));
+  if (!initialState) return createStore(rootReducer, applyMiddleware(thunk));
+  return createStore(rootReducer, initialState, applyMiddleware(thunk));
 };
 
 export const renderWithRouterAndStore = (component, routeConfigs = {}, initialState) => {
