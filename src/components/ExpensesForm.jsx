@@ -8,6 +8,8 @@ import PaymentInput from './PaymentInput';
 import TagInput from './TagInput';
 import DescriptionInput from './DescriptionInput';
 
+import { getCurrencies } from '../utils/currenciesAPI';
+
 export default class ExpensesForm extends Component {
   constructor() {
     super();
@@ -17,23 +19,34 @@ export default class ExpensesForm extends Component {
       method: 'cash',
       tag: 'food',
       description: '',
+      currencies: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.fetchCurrencies = this.fetchCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
+  async fetchCurrencies() {
+    const currencies = await getCurrencies();
+    this.setState({ currencies });
+  }
+
   render() {
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, tag, description, currencies } = this.state;
     return (
       <form className="expenses-form">
         <ValueInput value={ value } onChange={ this.handleChange } />
         <CurrencyInput
           onChange={ this.handleChange }
-          currencies={ ['USD', 'CAN', 'BRL'] }
+          currencies={ currencies }
           value={ currency }
         />
         <PaymentInput value={ method } onChange={ this.handleChange } />
