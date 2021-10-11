@@ -1,16 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .page {
   display: flex;
   flex-direction: column;
   overflow: auto;
   align-items: center;
-  justify-content: center;
   height: 100vh;
   width: 100vw;
   background-color: whitesmoke;
   /* background-color: #141414; */
 }
 
-.login{
+.login {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -18,5 +22,20 @@
   background-color: white;
   padding: 20px 30px;
   width: 25%;
-  height: 50vh;  
+  height: 50vh;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.infos-container {
+  display: flex;
+  width: 45%;
+  justify-content: space-around;
 }

@@ -38,7 +38,7 @@ class LoginForm extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div className="login rounded shadow">
+      <div className="login rounded shadow mt-5">
         <h1 className="text-success">Trybewallet</h1>
         <div className="d-flex flex-column">
           <EmailInput value={ email } onChange={ this.handleChange } />
