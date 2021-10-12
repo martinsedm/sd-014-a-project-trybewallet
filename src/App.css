@@ -81,6 +81,13 @@
 .row .col {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-basis: 9%;
   font-size: 12px;
+}
+
+.expense-btn {
+  padding: 0px 8px;
+  margin: 1px;
+  color: black
 }
