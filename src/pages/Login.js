@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Login extends React.Component {
   constructor() {
@@ -8,18 +9,55 @@ class Login extends React.Component {
       password: '',
       isEnable: false,
     };
+    this.formValidator = this.formValidator.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+  }
+
+  formValidator() {
+    const { email, password } = this.state;
+    const passwdLength = 6;
+    const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]/i;
+    const isEnable = regex.test(email) && password.length >= passwdLength;
+    this.setState({ isEnable });
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({ [name]: value }, () => this.formValidator());
+  }
+
+  submitForm(event) {
+    const { history } = this.props;
+    event.preventDefault();
+    history.push('/carteira');
   }
 
   render() {
     const { isEnable } = this.state;
     return (
-      <form>
-        <input type="email" data-testid="email-input" placeholder="Email" />
-        <input type="text" data-testid="password-input" placeholder="Email" />
-        <input type="submmit" value="Entrar" disabled={ !isEnable } />
+      <form onSubmit={ this.submitForm }>
+        <input
+          name="email"
+          type="email"
+          data-testid="email-input"
+          placeholder="Email"
+          onChange={ this.handleChange }
+        />
+        <input
+          name="password"
+          type="password"
+          data-testid="password-input"
+          placeholder="Senha"
+          onChange={ this.handleChange }
+        />
+        <input type="submit" value="Entrar" disabled={ !isEnable } />
       </form>
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Login;
