@@ -7,6 +7,7 @@ import CurrencyInput from './CurrencyInput';
 import PaymentInput from './PaymentInput';
 import TagInput from './TagInput';
 import DescriptionInput from './DescriptionInput';
+import ExpensesList from './ExpensesList';
 
 import { getCurrencies } from '../utils/currenciesAPI';
 import { addExpense as expense } from '../actions';
@@ -50,27 +51,30 @@ class ExpensesForm extends Component {
   render() {
     const { value, currency, method, tag, description, currencies } = this.state;
     return (
-      <form className="expenses-form">
-        <ValueInput value={ value } onChange={ this.handleChange } />
-        <CurrencyInput
-          onChange={ this.handleChange }
-          currencies={ currencies }
-          value={ currency }
-        />
-        <PaymentInput value={ method } onChange={ this.handleChange } />
+      <>
+        <form className="expenses-form">
+          <ValueInput value={ value } onChange={ this.handleChange } />
+          <CurrencyInput
+            onChange={ this.handleChange }
+            currencies={ currencies }
+            value={ currency }
+          />
+          <PaymentInput value={ method } onChange={ this.handleChange } />
 
-        <TagInput value={ tag } onChange={ this.handleChange } />
+          <TagInput value={ tag } onChange={ this.handleChange } />
 
-        <DescriptionInput value={ description } onChange={ this.handleChange } />
+          <DescriptionInput value={ description } onChange={ this.handleChange } />
 
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={ this.handleClick }
-        >
-          Adicionar despesa
-        </button>
-      </form>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={ this.handleClick }
+          >
+            Adicionar despesa
+          </button>
+        </form>
+        <ExpensesList />
+      </>
     );
   }
 }

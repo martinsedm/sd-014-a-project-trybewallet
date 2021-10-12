@@ -39,7 +39,7 @@
   width: 45%;
   justify-content: space-around;
 }
-.expenses-form{
+.expenses-form {
   display: flex;
   width: 100%;
   padding: 20px;
@@ -57,4 +57,30 @@
 
 .expenses-form label:nth-of-type(5) {
   width: 17%;
+}
+
+.expenses-header {
+  background-color: #404040;
+  padding: 10px 20px;
+}
+
+.expenses-header .col {
+  color: white;
+}
+
+.expense-items {
+  background-color: white;
+  padding: 10px 20px;
+}
+
+.expense-items .row {
+  border: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.row .col {
+  display: flex;
+  justify-content: center;
+  flex-basis: 9%;
+  font-size: 12px;
 }
