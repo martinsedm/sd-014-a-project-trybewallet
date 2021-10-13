@@ -1,10 +1,11 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { ADD_EXPENSE, REMOVE_EXPENSE, SET_CURRENCIES, IS_FETCHING } from '../actions';
+import { ADD_EXPENSE, REMOVE_EXPENSE, SET_CURRENCIES,
+  IS_FETCHING, EDIT_EXPENSE, SAVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   isFetching: false,
   editor: false,
-  idToEdit: null,
+  idToEdit: 0,
   currencyToExchange: 'BRL',
   currencies: [],
   expenses: [],
@@ -29,6 +30,18 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: state.expenses.filter(({ id }) => id !== action.id),
+    };
+  case EDIT_EXPENSE:
+    return { ...state, editor: true, idToEdit: action.id };
+  case SAVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses.slice(0, action.payload.id),
+        action.payload,
+        ...state.expenses.slice(action.payload.id + 1),
+      ],
+      editor: false,
+      idToEdit: 0,
     };
   default:
     return state;

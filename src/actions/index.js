@@ -5,6 +5,8 @@ export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const IS_FETCHING = 'IS_FETCHING';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
 export const loginUser = (email) => ({
   type: LOGIN,
@@ -26,6 +28,16 @@ const setFetching = () => ({ type: IS_FETCHING });
 export const removeExpense = (expenseId) => ({
   type: REMOVE_EXPENSE,
   id: expenseId,
+});
+
+export const editExpense = (id) => ({
+  type: EDIT_EXPENSE,
+  id,
+});
+
+export const saveExpense = (payload) => ({
+  type: SAVE_EXPENSE,
+  payload,
 });
 
 export function setCurrencies() {

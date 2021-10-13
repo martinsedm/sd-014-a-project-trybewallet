@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { AiOutlineDelete, AiOutlineEdit } from 'react-icons/ai';
 import { connect } from 'react-redux';
 
-import { removeExpense as remove } from '../actions';
+import { removeExpense as remove, editExpense as edit } from '../actions';
 
 class Expense extends Component {
   render() {
-    const { expense, removeExpense } = this.props;
+    const { expense, removeExpense, editExpense } = this.props;
     const { description, tag, method, currency, value, exchangeRates, id } = expense;
     const { name, ask } = exchangeRates[currency];
 
@@ -27,6 +27,8 @@ class Expense extends Component {
           <button
             type="button"
             className="btn btn-warning expense-btn"
+            data-testid="edit-btn"
+            onClick={ () => editExpense(id) }
           >
             <AiOutlineEdit />
           </button>
@@ -47,6 +49,7 @@ class Expense extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(remove(id)),
+  editExpense: (id) => dispatch(edit(id)),
 });
 
 Expense.propTypes = {
@@ -60,6 +63,7 @@ Expense.propTypes = {
     exchangeRates: PropTypes.objectOf(PropTypes.object).isRequired,
   }).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Expense);
