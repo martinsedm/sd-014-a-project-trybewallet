@@ -1,6 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const initialState = {
-  total: '',
+  total: 0,
 };
 
 export default function user(
@@ -10,7 +10,7 @@ export default function user(
   case 'TOTAL':
     return ({
       ...state,
-      email: payload,
+      total: payload,
     });
 
   default:
