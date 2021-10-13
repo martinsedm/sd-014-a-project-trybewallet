@@ -22,7 +22,7 @@ class Login extends React.Component {
             />
           </label>
         </form>
-        <button type="submit">Entrar</button>
+        <button type="submit" disabled>Entrar</button>
       </fieldset>
 
     );
