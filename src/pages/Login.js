@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import '../css/Login.css';
+import { connect } from 'react-redux';
+import { USER_EMAIL } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -9,11 +12,14 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClickBtn = this.onClickBtn.bind(this);
   }
 
   onClickBtn() {
-    const { history } = this.props;
-    history.push
+    const { history, UserReducer } = this.props;
+    const { email } = this.state;
+    UserReducer(email);
+    history.push('/carteira');
   }
 
   validateEmail() {
@@ -30,36 +36,47 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const MIN_PASSWORD_LENGTH = 6;
     return (
-      <>
-        <input
-          data-testid="email-input"
-          onChange={ this.handleChange }
-          type="text"
-          name="email"
-          value={ email }
-        />
-        <input
-          data-testid="password-input"
-          onChange={ this.handleChange }
-          type="password"
-          name="password"
-          value={ password }
-        />
-        <button
-          type="button"
-          disabled={ !this.validateEmail()
-            || password.length < MIN_PASSWORD_LENGTH }
-          onClick={ this.onClickBtn }
-        >
-          Entrar
-        </button>
-      </>
+      <div className="container">
+        <div className="form-container sign-in-container">
+          <div className="main-container">
+            <h1>Sign In</h1>
+            <input
+              data-testid="email-input"
+              onChange={ this.handleChange }
+              type="text"
+              name="email"
+              value={ email }
+              placeholder="Insira seu email"
+            />
+            <input
+              data-testid="password-input"
+              onChange={ this.handleChange }
+              type="password"
+              name="password"
+              value={ password }
+              placeholder="Insira sua senha"
+            />
+            <button
+              type="button"
+              disabled={ !this.validateEmail()
+                || password.length < MIN_PASSWORD_LENGTH }
+              onClick={ this.onClickBtn }
+            >
+              Entrar
+            </button>
+          </div>
+        </div>
+      </div>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  UserReducer: (state) => dispatch(USER_EMAIL(state)) });
+
+export default connect(null, mapDispatchToProps)(Login);
+
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  UserReducer: PropTypes.func.isRequired,
 };
-
-export default Login;
