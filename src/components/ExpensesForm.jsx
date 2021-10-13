@@ -9,8 +9,7 @@ import TagInput from './TagInput';
 import DescriptionInput from './DescriptionInput';
 import ExpensesList from './ExpensesList';
 
-import { getCurrencies } from '../utils/currenciesAPI';
-import { addExpense as expense } from '../actions';
+import { addExpense as expense, setCurrencies as fetchCurrencies } from '../actions';
 
 class ExpensesForm extends Component {
   constructor() {
@@ -21,16 +20,15 @@ class ExpensesForm extends Component {
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
-      currencies: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.fetchCurrencies = this.fetchCurrencies.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    this.fetchCurrencies();
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
@@ -38,18 +36,13 @@ class ExpensesForm extends Component {
   }
 
   handleClick() {
-    const { currencies, ...expenseInfo } = this.state;
     const { addExpense } = this.props;
-    addExpense(expenseInfo);
-  }
-
-  async fetchCurrencies() {
-    const currencies = await getCurrencies();
-    this.setState({ currencies });
+    addExpense(this.state);
   }
 
   render() {
-    const { value, currency, method, tag, description, currencies } = this.state;
+    const { value, currency, method, tag, description } = this.state;
+    const { currencies, isFetching } = this.props;
     return (
       <>
         <form className="expenses-form">
@@ -73,7 +66,9 @@ class ExpensesForm extends Component {
             Adicionar despesa
           </button>
         </form>
+        { isFetching && <h3>Carregando</h3>}
         <ExpensesList />
+
       </>
     );
   }
@@ -81,10 +76,19 @@ class ExpensesForm extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (expenseInfo) => dispatch(expense(expenseInfo)),
+  setCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+  isFetching: state.wallet.isFetching,
 });
 
 ExpensesForm.propTypes = {
   addExpense: PropTypes.func.isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(ExpensesForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
