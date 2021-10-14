@@ -48,6 +48,7 @@ class Login extends React.Component {
                 name="email"
                 value={ email }
                 placeholder="Insira seu email"
+                className="input-login"
               />
               <input
                 data-testid="password-input"
@@ -56,12 +57,14 @@ class Login extends React.Component {
                 name="password"
                 value={ password }
                 placeholder="Insira sua senha"
+                className="input-login"
               />
               <button
                 type="button"
                 disabled={ !this.validateEmail()
                   || password.length < MIN_PASSWORD_LENGTH }
                 onClick={ this.onClickBtn }
+                className="button-login"
               >
                 Entrar
               </button>

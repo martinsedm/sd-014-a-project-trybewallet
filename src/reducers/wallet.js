@@ -7,7 +7,7 @@ const initialState = {
 };
 
 function convertToTotal(oldTotal, { value, currency, exchangeRates }) {
-  return (oldTotal + value * exchangeRates[currency].ask);
+  return Math.round((oldTotal + value * exchangeRates[currency].ask) * 100) / 100;
 }
 
 export default function user(

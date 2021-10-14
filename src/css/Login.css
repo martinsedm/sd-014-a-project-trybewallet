@@ -19,10 +19,10 @@ h1 {
 	margin: 0;
 }
 
-button {
+.button-login {
 	border-radius: 20px;
-	border: 1px solid #FF4B2B;
-	background-color: #FF4B2B;
+	border: 1px solid #1B2A41;
+	background-color: #1B2A41;
 	color: #FFFFFF;
 	font-size: 12px;
 	font-weight: bold;
@@ -32,15 +32,15 @@ button {
 	transition: transform 80ms ease-in;
 }
 
-button:active {
+.button-login:active {
 	transform: scale(0.95);
 }
 
-button:focus {
+.button-login:focus {
 	outline: none;
 }
 
-button.ghost {
+.button-login.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
@@ -56,7 +56,7 @@ button.ghost {
 	text-align: center;
 }
 
-input {
+.input-login {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;

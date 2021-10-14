@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import './css/App.css';
+
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 import NotFound from './pages/NotFound';

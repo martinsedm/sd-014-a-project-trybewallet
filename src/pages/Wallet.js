@@ -7,6 +7,7 @@ import Tag from '../components/Tag';
 import PaymentForm from '../components/PaymentForm';
 import Currency from '../components/Currency';
 import '../css/Wallet.css';
+import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends React.Component {
   constructor() {
@@ -20,6 +21,7 @@ class Wallet extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.onClickBtn = this.onClickBtn.bind(this);
+    this.addExpenses = this.addExpenses.bind(this);
   }
 
   async onClickBtn() {
@@ -43,45 +45,59 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
-  render() {
+  addExpenses() {
     const { expenseValue, expenseDesc,
       expenseTag, expenseCurrency, expensePaymentForm } = this.state;
+
+    return (
+      <form className="expense">
+        <InputGen
+          config={ ['number', 'expenseValue', 'expenseValue-Input', expenseValue,
+            false, this.handleChange, 'Valor', 'input-wallet'] }
+        />
+        <InputGen
+          config={ ['text', 'expenseDesc', 'expenseDesc-Input', expenseDesc,
+            false, this.handleChange, 'Descrição', 'input-wallet'] }
+        />
+        <Currency
+          name="expenseCurrency"
+          value={ expenseCurrency }
+          onChange={ this.handleChange }
+        />
+        <PaymentForm
+          name="expensePaymentForm"
+          value={ expensePaymentForm }
+          onChange={ this.handleChange }
+        />
+        <Tag name="expenseTag" value={ expenseTag } onChange={ this.handleChange } />
+        <button onClick={ this.onClickBtn } type="button">Adicionar despesa</button>
+      </form>
+    );
+  }
+
+  render() {
     const { email, total } = this.props;
     return (
       <>
         <header className="header">
-          <p data-testid="email-field">{email || 'Nenhum email'}</p>
-          <p data-testid="total-field">{total || 0}</p>
-          <p data-testid="header-currency-field">BRL</p>
+          <p className="email header-item" data-testid="email-field">
+            {email || 'Nenhum email'}
+          </p>
+          <div className="total-container header-item">
+            <p className="total" data-testid="total-field">{total || 0}</p>
+            <p className="currency header-item" data-testid="header-currency-field">
+              BRL
+            </p>
+          </div>
         </header>
-        <section>
-          <form>
-            <InputGen
-              config={ ['number', 'expenseValue', 'expenseValue-Input', expenseValue,
-                false, this.handleChange, 'Valor', 'expenseValue'] }
-            />
-            <InputGen
-              config={ ['text', 'expenseDesc', 'expenseDesc-Input', expenseDesc,
-                false, this.handleChange, 'Descrição', 'expenseDesc'] }
-            />
-            <Currency
-              name="expenseCurrency"
-              value={ expenseCurrency }
-              onChange={ this.handleChange }
-            />
-            <PaymentForm
-              name="expensePaymentForm"
-              value={ expensePaymentForm }
-              onChange={ this.handleChange }
-            />
-            <Tag
-              name="expenseTag"
-              value={ expenseTag }
-              onChange={ this.handleChange }
-            />
-            <button onClick={ this.onClickBtn } type="button">Adicionar despesa</button>
-          </form>
+        <section className="expense-container">
+          { this.addExpenses() }
         </section>
+        <main>
+          <table>
+            <ExpenseTable />
+          </table>
+        </main>
       </>
     );
   }
