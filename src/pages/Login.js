@@ -24,7 +24,8 @@ class Login extends React.Component {
       [name]: value,
     }, () => {
       const { password } = this.state;
-      const disabledBtn = !document.loginForm.checkValidity() || (password !== '123456');
+      const formLogin = document.getElementById('login-form');
+      const disabledBtn = !formLogin.checkValidity() || (password !== '123456');
       this.setState({
         disabledBtn,
       });
@@ -46,7 +47,7 @@ class Login extends React.Component {
     if (logged) return (<Redirect to="/carteira" />);
     return (
       <section>
-        <form name="loginForm">
+        <form name="loginForm" id="login-form">
           <fieldset>
             <legend>Faça seu login</legend>
             <label htmlFor="email-input">
