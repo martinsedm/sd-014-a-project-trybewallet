@@ -134,7 +134,7 @@ describe('7 - Implemente a lógica para preencher as opções do campo "Moedas",
       'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
       'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
     ];
-
+    console.log(coinOptionsValues);
     expect(coinOptionsValues).toEqual(expectedCoinOptions);
 
     expect(mockedExchange).toBeCalled();
