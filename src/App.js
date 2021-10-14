@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Wallet from './pages/Wallet';
+import Login from './pages/Login.jsx';
+import Wallet from './pages/Wallet.jsx';
 
 function App() {
   return (

@@ -35,7 +35,7 @@ class Login extends React.Component {
     if (redirect) return <Redirect to="/carteira" />
 
     return (
-      <main>
+      <form>
         <label htmlFor="email">
           E-mail
           <input
@@ -63,7 +63,7 @@ class Login extends React.Component {
         >
           Entrar
         </button>
-      </main>
+      </form>
     );
   }
 }
