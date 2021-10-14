@@ -7,12 +7,13 @@ class Header extends React.Component {
     super();
     this.state = {
       total: 0,
+      currency: 'BRL',
     };
   }
 
   render() {
     const { email } = this.props;
-    const { total } = this.state;
+    const { total, currency } = this.state;
     return (
       <section>
         <div data-testid="email-field">
@@ -22,6 +23,10 @@ class Header extends React.Component {
         <div data-testid="total-field">
           <span>Total:</span>
           {total}
+        </div>
+        <div data-testid="header-currency-field">
+          <span>Currency:</span>
+          {currency}
         </div>
 
       </section>
