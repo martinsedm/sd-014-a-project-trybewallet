@@ -8,9 +8,9 @@ class PaymentForm extends Component {
       <label htmlFor="payment-form">
         Método de pagamento
         <select value={ value } onChange={ onChange } name={ name } id="payment-form">
-          <option value="Money">Dinheiro</option>
-          <option value="CreditCard">Cartão de Crédito</option>
-          <option value="DebitCard">Cartão de Débito</option>
+          <option value="Cartão de crédito">Cartão de Crédito</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de débito">Cartão de Débito</option>
         </select>
       </label>
     );

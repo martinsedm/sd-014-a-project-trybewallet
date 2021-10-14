@@ -3,7 +3,12 @@ const initialState = {
   total: 0,
   currencies: [],
   error: null,
+  expenses: [],
 };
+
+function convertToTotal(oldTotal, { value, currency, exchangeRates }) {
+  return (oldTotal + value * exchangeRates[currency].ask);
+}
 
 export default function user(
   state = initialState, { payload, type },
@@ -23,6 +28,12 @@ export default function user(
     return ({
       ...state,
       error: payload,
+    });
+  case 'ADD_EXPENSE':
+    return ({
+      ...state,
+      expenses: [...state.expenses, payload],
+      total: convertToTotal(state.total, payload),
     });
   default:
     return (state);

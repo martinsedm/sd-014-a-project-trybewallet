@@ -15,11 +15,12 @@ class Currency extends Component {
       <label htmlFor="currencies">
         Moeda
         <select name={ name } value={ value } onChange={ onChange } id="currencies">
-          {currencies.length > 0 ? currencies.map((ele) => (
-            <option key={ ele[0] } value={ `${ele[0]}` }>
-              {ele[1].name}
-            </option>
-          ))
+          {currencies.length > 0 ? currencies.filter((ele) => ele[0] !== 'USDT')
+            .map((ele) => (
+              <option key={ ele[0] } value={ `${ele[0]}` }>
+                {ele[1].name}
+              </option>
+            ))
             : <option value="Null">Nenhuma opção disponível</option>}
         </select>
       </label>

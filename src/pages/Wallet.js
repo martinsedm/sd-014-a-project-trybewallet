@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addExpense, getCurrencyThunk } from '../actions/index';
 import InputGen from '../components/InputGen';
 import Tag from '../components/Tag';
 import PaymentForm from '../components/PaymentForm';
@@ -13,11 +14,29 @@ class Wallet extends React.Component {
     this.state = {
       expenseValue: 0,
       expenseDesc: '',
-      expenseTag: '',
-      expenseCurrency: '',
-      expensePaymentForm: '',
+      expenseTag: 'Lazer',
+      expenseCurrency: 'USD',
+      expensePaymentForm: 'Cartão de Crédito',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.onClickBtn = this.onClickBtn.bind(this);
+  }
+
+  async onClickBtn() {
+    const { expenses, currencies, getCurrencies, sendExpense } = this.props;
+    const { expenseValue, expenseCurrency, expenseDesc,
+      expensePaymentForm, expenseTag } = this.state;
+    await getCurrencies();
+    const expense = {
+      id: expenses.length,
+      value: expenseValue,
+      description: expenseDesc,
+      currency: expenseCurrency,
+      method: expensePaymentForm,
+      tag: expenseTag,
+      exchangeRates: Object.fromEntries(currencies),
+    };
+    sendExpense(expense);
   }
 
   handleChange({ target: { name, value } }) {
@@ -39,11 +58,11 @@ class Wallet extends React.Component {
           <form>
             <InputGen
               config={ ['number', 'expenseValue', 'expenseValue-Input', expenseValue,
-                false, 'onChange', 'Valor', 'expenseValue'] }
+                false, this.handleChange, 'Valor', 'expenseValue'] }
             />
             <InputGen
               config={ ['text', 'expenseDesc', 'expenseDesc-Input', expenseDesc,
-                false, 'onChange', 'Descrição', 'expenseDesc'] }
+                false, this.handleChange, 'Descrição', 'expenseDesc'] }
             />
             <Currency
               name="expenseCurrency"
@@ -60,6 +79,7 @@ class Wallet extends React.Component {
               value={ expenseTag }
               onChange={ this.handleChange }
             />
+            <button onClick={ this.onClickBtn } type="button">Adicionar despesa</button>
           </form>
         </section>
       </>
@@ -71,12 +91,23 @@ function mapStateToProps(state) {
   return {
     email: state.user.email,
     total: state.wallet.total,
+    expenses: state.wallet.expenses,
+    currencies: state.wallet.currencies,
   };
 }
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  sendExpense: (payload) => dispatch(addExpense(payload)),
+  getCurrencies: () => dispatch(getCurrencyThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   total: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  sendExpense: PropTypes.func.isRequired,
 };
