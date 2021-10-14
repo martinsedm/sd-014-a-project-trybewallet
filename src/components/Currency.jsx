@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getCurrencyThunk } from '../actions/index';
 
 class Currency extends Component {
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   render() {
-    const { currency } = this.props;
+    const { currencies, name, value, onChange } = this.props;
     return (
-      <label htmlFor="currency">
+      <label htmlFor="currencies">
         Moeda
-        <select id="currency">
-          {currency ? currency.map((ele) => (
-            <option key={ ele } value={ `${ele}` }>
-              {ele}
+        <select name={ name } value={ value } onChange={ onChange } id="currencies">
+          {currencies.length > 0 ? currencies.map((ele) => (
+            <option key={ ele[0] } value={ `${ele[0]}` }>
+              {ele[1].name}
             </option>
           ))
-            : 'Nenhuma moeda disponível'}
+            : <option value="Null">Nenhuma opção disponível</option>}
         </select>
       </label>
     );
@@ -23,12 +29,22 @@ class Currency extends Component {
 
 function mapStateToProps(state) {
   return {
-    currency: state.wallet.currency,
+    currencies: state.wallet.currencies,
   };
 }
 
-export default connect(mapStateToProps)(Currency);
+function mapDispatchToProps(dispatch) {
+  return {
+    getCurrencies: () => dispatch(getCurrencyThunk()),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Currency);
 
 Currency.propTypes = {
-  currency: PropTypes.arrayOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
 };

@@ -13,6 +13,9 @@ class Wallet extends React.Component {
     this.state = {
       expenseValue: 0,
       expenseDesc: '',
+      expenseTag: '',
+      expenseCurrency: '',
+      expensePaymentForm: '',
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,7 +25,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { expenseValue, expenseDesc } = this.state;
+    const { expenseValue, expenseDesc,
+      expenseTag, expenseCurrency, expensePaymentForm } = this.state;
     const { email, total } = this.props;
     return (
       <>
@@ -41,9 +45,21 @@ class Wallet extends React.Component {
               config={ ['text', 'expenseDesc', 'expenseDesc-Input', expenseDesc,
                 false, 'onChange', 'Descrição', 'expenseDesc'] }
             />
-            <Currency />
-            <PaymentForm />
-            <Tag />
+            <Currency
+              name="expenseCurrency"
+              value={ expenseCurrency }
+              onChange={ this.handleChange }
+            />
+            <PaymentForm
+              name="expensePaymentForm"
+              value={ expensePaymentForm }
+              onChange={ this.handleChange }
+            />
+            <Tag
+              name="expenseTag"
+              value={ expenseTag }
+              onChange={ this.handleChange }
+            />
           </form>
         </section>
       </>
