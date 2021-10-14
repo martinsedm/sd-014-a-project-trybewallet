@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import { sendLoginInfo } from '../actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -37,6 +40,12 @@ export default class Login extends Component {
   }
 
   handleClick() {
+    const { setLoginToStore } = this.props;
+    const { email, senha } = this.state;
+    setLoginToStore(({
+      email,
+      senha,
+    }));
     this.setState({
       redirect: true,
     });
@@ -63,8 +72,24 @@ export default class Login extends Component {
           data-testid="password-input"
           onChange={ this.handleChange }
         />
-        <button disabled={ this.enableButton() } type="button" onClick={ this.handleClick }>Entrar</button>
+        <button
+          disabled={ this.enableButton() }
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Entrar
+        </button>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  setLoginToStore: (value) => dispatch(sendLoginInfo(value)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  setLoginToStore: PropTypes.func.isRequired,
+};
