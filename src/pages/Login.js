@@ -35,7 +35,6 @@ class Login extends React.Component {
   handleClick() {
     const { email, password } = this.state;
     const { notifyLogin } = this.props;
-    console.log(email, password);
     notifyLogin({ email, password });
     this.setState({
       logged: true,
