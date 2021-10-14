@@ -75,15 +75,15 @@ class Login extends React.Component {
 }
 
 // export default Login;
-const mapStateToProps = (state) => ({
-  loginStatus: state.user.email,
-});
+// const mapStateToProps = (state) => ({
+//   loginStatus: state.user.email,
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   regUser: (payload) => dispatch(saveEmail(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
 
 Login.propTypes = {
   regUser: PropTypes.func.isRequired,
