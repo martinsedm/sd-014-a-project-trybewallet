@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { setEmailValue } from '../actions';
 
@@ -15,8 +16,9 @@ class Login extends React.Component {
 
   clickSubmit() {
     const { email } = this.state;
-    const { dispatchSet } = this.props;
+    const { dispatchSet, history } = this.props;
     dispatchSet(email);
+    history.push('/carteira');
   }
 
   // Função genérica para salvar o que é digitado no input dentro do estado
@@ -66,6 +68,13 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  dispatchSet: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchSet: (email) => dispatch(setEmailValue(email)),
