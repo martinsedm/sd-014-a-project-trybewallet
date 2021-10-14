@@ -1,4 +1,8 @@
 import React from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { notifyLoginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -8,6 +12,7 @@ class Login extends React.Component {
       email: '',
       password: '',
       disabledBtn: true,
+      logged: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -28,11 +33,17 @@ class Login extends React.Component {
 
   handleClick() {
     const { email, password } = this.state;
+    const { notifyLogin } = this.props;
     console.log(email, password);
+    notifyLogin({ email, password });
+    this.setState({
+      logged: true,
+    });
   }
 
   render() {
-    const { email, password, disabledBtn } = this.state;
+    const { email, password, disabledBtn, logged } = this.state;
+    if (logged) return (<Redirect to="/carteira" />);
     return (
       <section>
         <form name="loginForm">
@@ -74,4 +85,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  notifyLogin: (user) => dispatch(notifyLoginAction(user)),
+});
+
+Login.propTypes = {
+  notifyLogin: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
