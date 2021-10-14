@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { setEmailValue } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -6,9 +8,15 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.clickSubmit = this.clickSubmit.bind(this);
+  }
+
+  clickSubmit() {
+    const { email } = this.state;
+    const { dispatchSet } = this.props;
+    dispatchSet(email);
   }
 
   // Função genérica para salvar o que é digitado no input dentro do estado
@@ -46,11 +54,21 @@ class Login extends React.Component {
             />
           </label>
         </form>
-        <button type="submit" disabled={ !validateEmail || password.length < MAXLENGTH }>Entrar</button>
+        <button
+          type="submit"
+          disabled={ !validateEmail || password.length < MAXLENGTH }
+          onClick={ this.clickSubmit }
+        >
+          Entrar
+        </button>
       </fieldset>
 
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSet: (email) => dispatch(setEmailValue(email)),
+}
+);
+export default connect(null, mapDispatchToProps)(Login);
