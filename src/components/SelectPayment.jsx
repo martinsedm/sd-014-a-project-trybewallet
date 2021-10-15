@@ -24,20 +24,10 @@ class SelectPayment extends Component {
   }
 }
 
-export default SelectPayment;
+SelectPayment.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
-//   <label htmlFor="tag">
-//   Tag
-//     <select
-//       name="tag"
-//       id="tag"
-//       // value={ payment }
-//       // onChange={ this.handleChange }
-//     >
-//       <option value="food">Alimentação</option>
-//       <option value="leisure">Lazer</option>
-//       <option value="work">Trabalho</option>
-//       <option value="transportation">Transporte</option>
-//       <option value="health">Saúde</option>
-//     </select>
-//   </label>
+export default SelectPayment;

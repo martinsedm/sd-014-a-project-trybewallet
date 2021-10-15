@@ -6,11 +6,11 @@ class SelectTag extends Component {
     const { name, id, label } = this.props;
     return (
       <form>
-        <label htmlFor="tag">
-          Tag
+        <label htmlFor={ id }>
+          { label }
           <select
-            name="tag"
-            id="tag"
+            name={ name }
+            id={ id }
             // value={ payment }
             // onChange={ this.handleChange }
           >
@@ -25,5 +25,11 @@ class SelectTag extends Component {
     );
   }
 }
+
+SelectTag.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
 export default SelectTag;

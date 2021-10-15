@@ -24,33 +24,10 @@ class SelectCurrency extends Component {
   }
 }
 
-export default SelectCurrency;
+SelectCurrency.propTypes = {
+  id: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
 
-// <label htmlFor="payment">
-//   Método de pagamento
-//   <select
-//     name="payment"
-//     id="payment"
-//     // value={ payment }
-//     // onChange={ this.handleChange }
-//   >
-//     <option value="cash">Dinheiro</option>
-//     <option value="credit">Cartão de crédito</option>
-//     <option value="debit">Cartão de débito</option>
-//   </select>
-//   </label>
-//   <label htmlFor="tag">
-//   Tag
-//     <select
-//       name="tag"
-//       id="tag"
-//       // value={ payment }
-//       // onChange={ this.handleChange }
-//     >
-//       <option value="food">Alimentação</option>
-//       <option value="leisure">Lazer</option>
-//       <option value="work">Trabalho</option>
-//       <option value="transportation">Transporte</option>
-//       <option value="health">Saúde</option>
-//     </select>
-//   </label>
+export default SelectCurrency;
