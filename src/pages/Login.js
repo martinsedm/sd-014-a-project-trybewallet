@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { login as loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -8,11 +10,19 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.validateInput = this.validateInput.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     return this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { history, login } = this.props;
+    login({ email });
+    history.push('/carteira');
   }
 
   // Source: https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
@@ -27,7 +37,6 @@ class Login extends React.Component {
     return (
       <div>
         <form>
-
           <form>
             <label htmlFor="email">
               Email:
@@ -59,6 +68,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ !this.validateInput(email, password) }
+            onClick={ this.handleClick }
           >
             Entrar
           </button>
@@ -68,4 +78,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(loginAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
