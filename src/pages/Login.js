@@ -46,17 +46,15 @@ class Login extends Component {
           value={ email }
           type="email"
           onChange={ this.handleChange }
-        >
-          Email
-        </Input>
+          label="Email"
+        />
         <Input
           name="password"
           value={ password }
           type="password"
           onChange={ this.handleChange }
-        >
-          Senha
-        </Input>
+          label="Senha"
+        />
         <button
           type="button"
           disabled={ this.verifyFilds() }

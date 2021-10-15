@@ -6,7 +6,12 @@ class Header extends Component {
   countExpenses = () => {
     const { expenses } = this.props;
     if (expenses.length === 0) return 0;
-    const totalExpense = expenses.reduce((acc, cur) => acc + cur);
+    const totalExpense = expenses.reduce(
+      (acc, { value, currency, exchangeRates }) => (
+        acc + value * exchangeRates[currency].ask
+      ),
+      0,
+    );
     return totalExpense;
   }
 
