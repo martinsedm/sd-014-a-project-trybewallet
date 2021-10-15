@@ -1,16 +1,13 @@
-const INITIAL_STATE = { 
+const INITIAL_STATE = {
   email: '',
   password: '',
 };
 
-const user = (
-  state = INITIAL_STATE, 
-  action,
-) => { 
+function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    default:
-      return state;
+  default:
+    return state;
   }
-};
+}
 
-export default user;
+export default userReducer;

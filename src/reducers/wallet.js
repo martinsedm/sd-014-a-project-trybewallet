@@ -1,13 +1,13 @@
-const INITIAL_STATE = { 
+const INITIAL_STATE = {
   currencies: [],
   expenses: [],
 };
 
-function walletReducer(state = INITIAL_STATE, action) { 
+function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    default:
-      return state;
+  default:
+    return state;
   }
-};
+}
 
 export default walletReducer;
