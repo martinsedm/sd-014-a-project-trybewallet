@@ -4,58 +4,58 @@
 }
 
 .page {
+  background-color: whitesmoke;
   display: flex;
   flex-direction: column;
-  overflow: auto;
   align-items: center;
   height: 100vh;
   width: 100vw;
-  background-color: whitesmoke;
-  /* background-color: #141414; */
+  overflow: auto;
 }
 
 .login {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
   background-color: white;
   padding: 20px 30px;
-  width: 25%;
   height: 50vh;
+  width: 25%;
 }
 
 .header {
   display: flex;
-  width: 100%;
   background-color: white;
-  justify-content: space-between;
+  width: 100%;
   align-items: center;
+  justify-content: space-between;
   padding: 10px 20px;
 }
 
 .infos-container {
   display: flex;
-  width: 45%;
   justify-content: space-around;
-}
-.expenses-form {
-  display: flex;
-  width: 100%;
-  padding: 20px;
-  background-color: #202020;
-  justify-content: space-between;
+  width: 45%;
 }
 
-.expenses-form label:nth-of-type(1) {
+.expenses-form {
+  display: flex;
+  background-color: #202020;
+  justify-content: space-between;
+  padding: 20px;
+  width: 100%;
+}
+
+.expenses-form label:nth-of-type( 1 ) {
   width: 10%;
 }
 
-.expenses-form label:nth-of-type(3) {
+.expenses-form label:nth-of-type( 3 ) {
   width: 30%;
 }
 
-.expenses-form label:nth-of-type(5) {
+.expenses-form label:nth-of-type( 5 ) {
   width: 17%;
 }
 
@@ -80,14 +80,14 @@
 
 .row .col {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   flex-basis: 9%;
   font-size: 12px;
 }
 
 .expense-btn {
-  padding: 0px 8px;
-  margin: 1px;
   color: black;
+  margin: 1px;
+  padding: 0 8px;
 }
