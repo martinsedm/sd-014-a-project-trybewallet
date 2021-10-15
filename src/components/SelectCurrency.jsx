@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SelectCurrency extends React.Component {
   render() {
@@ -30,5 +31,23 @@ class SelectCurrency extends React.Component {
     );
   }
 }
+
+SelectCurrency.propTypes = {
+  result: PropTypes.objectOf(PropTypes.object).isRequired,
+  USD: PropTypes.object.isRequired,
+  CAD: PropTypes.object.isRequired,
+  EUR: PropTypes.object.isRequired,
+  GBP: PropTypes.object.isRequired,
+  ARS: PropTypes.object.isRequired,
+  BTC: PropTypes.object.isRequired,
+  LTC: PropTypes.object.isRequired,
+  JPY: PropTypes.object.isRequired,
+  CHF: PropTypes.object.isRequired,
+  AUD: PropTypes.object.isRequired,
+  CNY: PropTypes.object.isRequired,
+  ILS: PropTypes.object.isRequired,
+  ETH: PropTypes.object.isRequired,
+  XRP: PropTypes.object.isRequired,
+};
 
 export default SelectCurrency;
