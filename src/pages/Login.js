@@ -10,15 +10,30 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      isEmailValid: '',
+      isEmailValid: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
+  }
+
+  validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
   }
 
   handleChange({ target: { name, value } }) {
-    this.setState({ [name]: value });
+    this.setState(
+      { [name]: value },
+      () => {
+        const { email } = this.state;
+        const isEmailValid = this.validateEmail(email);
+        this.setState(
+          { isEmailValid },
+        );
+      },
+    );
   }
 
   handleClick() {
@@ -53,7 +68,7 @@ class Login extends React.Component {
           />
           <button
             type="button"
-            disabled={ password.length < MIN_LENGTH && !isEmailValid }
+            disabled={ password.length < MIN_LENGTH || !isEmailValid }
             onClick={ this.handleClick }
           >
             Entrar
