@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import Button from '../components/Button';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
 import Input from '../components/Input';
+import { loginAction } from '../actions';
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
 
@@ -33,7 +36,9 @@ export default class Login extends Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, send } = this.state;
+    const { logAction } = this.props;
+    if (send) return <Redirect to="/carteira" />;
     return (
       <div>
         <Input
@@ -55,8 +60,11 @@ export default class Login extends Component {
         <button
           type="button"
           disabled={ this.verifyFilds() }
-          onClick={ (e) => {
-            e.preventDefault();
+          onClick={ () => {
+            logAction(email);
+            this.setState({
+              send: true,
+            });
           } }
         >
           Entrar
@@ -65,3 +73,13 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  logAction: (email) => dispatch(loginAction(email)),
+});
+
+Login.propTypes = {
+  logAction: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
