@@ -24,10 +24,10 @@ class Wallet extends React.Component {
         payment: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       },
     };
-    this.handlechange = this.handlechange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handlechange({ target: { name, value } }) {
+  handleChange({ target: { name, value } }) {
     const { form } = this.state;
     this.setState({
       form: {
@@ -43,7 +43,7 @@ class Wallet extends React.Component {
       <div>
         <Header data={ { email, total, currency } } />
         <div>
-          <Form { ...form } callback={ this.handlechange } />
+          <Form { ...form } callback={ this.handleChange } />
         </div>
       </div>
     );
