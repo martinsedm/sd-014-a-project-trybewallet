@@ -16,5 +16,18 @@ export function getCurrencyValue(value, currency) {
   return (value * currency.ask).toFixed(2);
 }
 
-export const methodList = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-export const expenseCatList = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+export const methodList = [
+  '',
+  'Dinheiro',
+  'Cartão de crédito',
+  'Cartão de débito',
+];
+
+export const expenseCatList = [
+  '',
+  'Alimentação',
+  'Lazer',
+  'Trabalho',
+  'Transporte',
+  'Saúde',
+];

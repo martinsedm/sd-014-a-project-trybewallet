@@ -1,19 +1,18 @@
-// Coloque aqui suas actions
-
+// Login page
 export const login = (email) => ({
   type: 'LOGIN',
   email,
 });
 
+// Wallet page
+export const addCurrencies = (currenciesList) => ({
+  type: 'ADD_CURRENCIES',
+  currenciesList,
+});
+
 export const deleteExpense = (id) => ({
   type: 'DELETE_EXPENSE',
   id,
-});
-
-export const addExpenses = (expenses, currencies) => ({
-  type: 'ADD_EXPENSES',
-  expenses,
-  currencies,
 });
 
 export const editExpenses = (expense) => ({
@@ -30,10 +29,11 @@ export const updateExpenses = (expenses) => ({
   type: 'UPDATE_EXPENSES',
   expenses,
 });
-
-export const addCurrencies = (currenciesList) => ({
-  type: 'ADD_CURRENCIES',
-  currenciesList,
+//
+export const addExpenses = (expenses, currencies) => ({
+  type: 'ADD_EXPENSES',
+  expenses,
+  currencies,
 });
 
 export const saveExpenses = (expenses) => async (dispatch) => {

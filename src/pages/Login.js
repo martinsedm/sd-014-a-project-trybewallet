@@ -29,9 +29,7 @@ class Login extends React.Component {
     history.push('/carteira');
   }
 
-  handleInput = ({ target: { id, value } }) => {
-    this.setState({ [id]: value });
-  }
+  handleInput = ({ target: { id, value } }) => this.setState({ [id]: value });
 
   render() {
     const { email, password } = this.state;

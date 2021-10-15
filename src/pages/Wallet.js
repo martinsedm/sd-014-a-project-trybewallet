@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import {
   saveExpenses,
   updateExpenses,
@@ -20,7 +21,7 @@ class Wallet extends React.Component {
     this.state = {
       description: '',
       value: '',
-      currency: '',
+      currency: 'USD',
       method: '',
       tag: '',
     };
@@ -40,36 +41,11 @@ class Wallet extends React.Component {
 
   handleButton = () => {
     const { expensesToState } = this.props;
-    const { description, currency, tag, method, value } = this.state;
-    expensesToState({
-      description, currency, tag, method, value,
-    });
-    this.setState({
-      description: '',
-      value: '',
-      currency,
-      method,
-      tag,
-    });
+    expensesToState(this.state);
+    this.setState({ description: '', value: '' });
   }
 
-  handleInput = ({ target: { id, value } }) => {
-    this.setState({ [id]: value });
-  }
-
-  renderDefaultForm = () => {
-    const { value, description } = this.state;
-    const { currencyList } = this.props;
-    return (
-      <ExpensesForm
-        currencyList={ currencyList }
-        handleInput={ this.handleInput }
-        handleButton={ this.handleButton }
-        value={ value }
-        description={ description }
-      />
-    );
-  }
+  handleInput = ({ target: { id, value } }) => this.setState({ [id]: value });
 
   handleEditButton = () => {
     const { expenses, edit, expenseToEdit } = this.props;
@@ -97,6 +73,20 @@ class Wallet extends React.Component {
         handleButton={ this.handleEditButton }
         expense={ expenseToEdit }
         currencyList={ currencyList }
+      />
+    );
+  }
+
+  renderDefaultForm = () => {
+    const { value, description } = this.state;
+    const { currencyList } = this.props;
+    return (
+      <ExpensesForm
+        currencyList={ currencyList }
+        handleInput={ this.handleInput }
+        handleButton={ this.handleButton }
+        value={ value }
+        description={ description }
       />
     );
   }
