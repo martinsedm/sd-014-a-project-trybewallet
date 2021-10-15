@@ -11,12 +11,23 @@ class Wallet extends React.Component {
 
     this.state = {
       totalExpenses: 0,
+      apiResponse: undefined,
     };
+  }
+
+  componentDidMount() {
+    this.fetchApi();
+  }
+
+  async fetchApi() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const json = await response.json();
+    this.setState({ apiResponse: json });
   }
 
   render() {
     const { email } = this.props;
-    const { totalExpenses } = this.state;
+    const { totalExpenses, apiResponse: api } = this.state;
     return (
       <>
         <header className="header-wallet">
@@ -34,7 +45,7 @@ class Wallet extends React.Component {
               Descrição
               <input type="text" id="description-input" />
             </label>
-            <SelectCurrency />
+            { api && <SelectCurrency result={ api } /> }
             <SelectPayment />
             <SelectTag />
           </form>
