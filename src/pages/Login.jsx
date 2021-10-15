@@ -1,7 +1,10 @@
-import React from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { saveEmailInState as saveEmailInStateAction } from '../actions';
 import '../styles/login.css';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -23,6 +26,7 @@ class Login extends React.Component {
       const MIN_LENGTH = 6;
       const PASSWORD_LENGTH = password.length >= MIN_LENGTH;
       const EMAIL_FORMAT = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(email);
+      // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
       // const EMAIL_FORMAT = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi.test(email);
 
       if (PASSWORD_LENGTH && EMAIL_FORMAT) {
@@ -34,8 +38,10 @@ class Login extends React.Component {
   }
 
   handleClick() {
-    const { history } = this.props;
-    console.log('click');
+    const { history, saveEmailInState } = this.props;
+    const { email } = this.state;
+
+    saveEmailInState(email);
     history.push('/carteira');
   }
 
@@ -76,4 +82,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  saveEmailInState: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveEmailInState: (email) => dispatch(saveEmailInStateAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
