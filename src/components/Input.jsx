@@ -7,7 +7,6 @@ export default class Input extends React.Component {
     return (
       <label htmlFor={ htmlFor }>
         { label }
-        <br />
         <input
           data-testid={ testid }
           id={ htmlFor }
@@ -15,7 +14,6 @@ export default class Input extends React.Component {
           onChange={ onChange }
           type={ type }
         />
-        <br />
       </label>
     );
   }
