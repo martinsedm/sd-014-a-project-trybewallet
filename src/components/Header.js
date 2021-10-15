@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { userEmail, expenses } = this.props;
+    const { userEmail } = this.props;
     return (
       <header>
         <p data-testid="email-field">{userEmail}</p>
-        <p data-testid="total-field">{expenses ? 0 : !expenses}</p>
+        <p data-testid="total-field">{0}</p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
     );
@@ -17,7 +17,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   userEmail: PropTypes.objectOf(PropTypes.any).isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  // expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
