@@ -1,0 +1,32 @@
+.ctn-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login-input {
+    padding: 10px;
+    width: 350px;
+    height: 40px;
+    border: none;
+    background: #ecf0f1;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.login-button {
+    padding: 10px;
+    width: 360px;
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    color: rgb(24, 153, 228);
+    margin: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-logo {
+    width: 400px;
+}
