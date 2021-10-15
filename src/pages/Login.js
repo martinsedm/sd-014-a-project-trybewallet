@@ -12,12 +12,16 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      emailCorrect: false,
     };
   }
 
   setEmail(event) {
     const { value } = event.target;
-    this.setState({ email: value });
+    this.setState({
+      email: value,
+      emailCorrect: this.validateEmail(value),
+    });
   }
 
   setPassword(event) {
@@ -32,13 +36,17 @@ class Login extends React.Component {
     // configurar a atualizacao da getStore
     console.log(email, password);
 
-    // ir para a nova Página
-    console.log(history);
     history.push('/carteira');
   }
 
+  // função retirada de: https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/
+  validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
   render() {
-    const { email, password } = this.state;
+    const { email, password, emailCorrect } = this.state;
     const MIN_LENGTH_PASSWORD = 6;
     return (
       <form>
@@ -65,7 +73,7 @@ class Login extends React.Component {
         </label>
         <button
           type="button"
-          disabled={ password.length < MIN_LENGTH_PASSWORD }
+          disabled={ password.length < MIN_LENGTH_PASSWORD || !emailCorrect }
           onClick={ this.walletPage }
         >
           Entrar
