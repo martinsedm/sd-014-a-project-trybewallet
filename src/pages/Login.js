@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import P from 'prop-types';
+import { addEmailAC } from '../actions';
 import Input from '../components/Input';
 import Button from '../components/Button';
 
@@ -10,6 +13,7 @@ class Login extends React.Component {
       email: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -17,6 +21,12 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick(email) {
+    const { props: { addEmail, history } } = this;
+    addEmail(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -44,7 +54,7 @@ class Login extends React.Component {
         />
         <Button
           type="button"
-          onClick={ () => console.log('ola') }
+          onClick={ () => this.handleClick(email) }
           content="Entrar"
           isDisabled={ !isValidPwd || !isValidEmail }
         />
@@ -53,4 +63,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email) => dispatch(addEmailAC(email)),
+});
+
+Login.propTypes = {
+  addEmail: P.func.isRequired,
+  history: P.objectOf(P.any).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

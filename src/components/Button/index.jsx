@@ -20,7 +20,7 @@ Button.propTypes = {
   type: P.string.isRequired,
   onClick: P.func.isRequired,
   content: P.string.isRequired,
-  isDisabled: P.string.isRequired,
+  isDisabled: P.bool.isRequired,
 };
 
 export default Button;
