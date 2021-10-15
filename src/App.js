@@ -1,15 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
-import Login from './pages/Login';
-import Wallet from './pages/Wallet';
 
 function App() {
-  return (
-    <Switch>
-      <Route exact path="/" render={ (props) => <Login { ...props } /> } />
-      <Route exact path="/carteira" render={ (props) => <Wallet { ...props } /> } />
-    </Switch>
-  );
+  return <div>Hello, TrybeWallet!</div>;
 }
 
 export default App;
