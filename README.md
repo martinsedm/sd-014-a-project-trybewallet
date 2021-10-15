@@ -78,7 +78,7 @@ Neste projeto, verificamos se voce é capaz de:
 
 Neste projeto você vai desenvolver uma carteira de controle de gastos com conversor de moedas, ao utilizar essa aplicação um usuário deverá ser capaz de:
   - Adicionar, remover e editar um gasto;
-  - Visualizar uma tabelas com seus gastos;
+  - Visualizar uma tabela com seus gastos;
   - Visualizar o total de gastos convertidos para uma moeda de escolha;
 
 Para entregar o seu projeto você deverá criar um Pull Request neste repositório.
@@ -96,9 +96,9 @@ Através dessa aplicação, será possível realizar as operações básicas de 
 
   - Projeto individual.
 
-  - Serão dois dias de projeto.
+  - Serão três dias de projeto.
   
-  - Data de entrega para avaliação final do projeto: `DD/MM/YYYY - 14:00h`.
+  - Data de entrega para avaliação final do projeto: `26/10/2021 - 14:00h`.
 
 ---
 
