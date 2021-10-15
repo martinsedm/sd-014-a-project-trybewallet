@@ -50,32 +50,37 @@ class Login extends Component {
     return (
       <div className="login-container">
         <main>
-
-          <input
-            placeholder="Email"
-            type="text"
-            name="email"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="email-input"
-          />
-
-          <input
-            placeholder="password"
-            type="password"
-            name="password"
-            value={ password }
-            onChange={ this.handleChange }
-            data-testid="password-input"
-          />
-
-          <button
-            type="submit"
-            onClick={ this.handleClick }
-            disabled={ !isValid }
-          >
-            Entrar
-          </button>
+          <form>
+            <label htmlFor="email">
+              Email
+              <input
+                type="text"
+                name="email"
+                placeholder="Email"
+                value={ email }
+                onChange={ this.handleChange }
+                data-testid="email-input"
+              />
+            </label>
+            <label htmlFor="password">
+              Senha
+              <input
+                type="password"
+                name="password"
+                placeholder="password"
+                value={ password }
+                onChange={ this.handleChange }
+                data-testid="password-input"
+              />
+            </label>
+            <button
+              type="submit"
+              disabled={ !isValid }
+              onClick={ this.handleClick }
+            >
+              Entrar
+            </button>
+          </form>
         </main>
       </div>
     );
