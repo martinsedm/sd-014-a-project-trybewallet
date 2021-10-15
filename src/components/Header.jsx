@@ -21,9 +21,7 @@ class Header extends React.Component {
         </h1>
         <input type="text" data-testid="total-field" value={ valeuTotal } name="total" />
         <fieldset>
-          <select data-testid="header-currency-field">
-            <option> BRL </option>
-          </select>
+          <div data-testid="header-currency-field"> BRL </div>
         </fieldset>
       </>
     );

@@ -2,7 +2,31 @@ import React from 'react';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      responseApi: [],
+    };
+    this.fetchApi = this.fetchApi.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchApi();
+  }
+
+  async fetchApi() {
+    const url = 'https://economia.awesomeapi.com.br/json/all';
+    const requestApi = await fetch(url);
+    const response = await requestApi.json();
+    const cent = Object.values(response).splice(1);
+    this.setState({
+      responseApi: cent,
+    });
+  }
+
   render() {
+    const { responseApi } = this.state;
+    console.log(responseApi);
     return (
       <>
         <Header />
@@ -18,7 +42,11 @@ class Wallet extends React.Component {
           <label htmlFor="value-moeda">
             Moeda
             <select id="value-moeda">
-              <option> a </option>
+              { responseApi.map((value) => (
+                <option key={ value.code }>
+                  { value.code }
+                </option>
+              ))}
             </select>
           </label>
           <label htmlFor="value-metodo">
