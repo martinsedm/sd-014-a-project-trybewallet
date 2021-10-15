@@ -1,5 +1,5 @@
 import React from 'react';
-import { emailAuthentication, emailVerification, passwordAuthentication, passwordVerification } from '../services/authentication';
+import { emailAuthentication, passwordAuthentication } from '../services/authentication';
 
 class Login extends React.Component {
   constructor(props) {
