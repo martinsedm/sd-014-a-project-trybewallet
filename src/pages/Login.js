@@ -7,15 +7,16 @@ class Login extends React.Component {
       email: '',
       password: '',
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = ({ target: { name, value } }) => {
+  handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
-  isValidEmail = (email) => email.match(/^[\w.]+@[\w.]+\w+\.\w+$/);
+  isValidEmail(email) { return email.match(/^[\w.]+@[\w.]+\w+\.\w+$/); }
 
-  isValidLogin = () => {
+  isValidLogin() {
     const PASSWORD_MIN_LENGTH = 6;
     const { email, password } = this.state;
     return password.length >= PASSWORD_MIN_LENGTH && this.isValidEmail(email);
