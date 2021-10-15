@@ -43,7 +43,7 @@ class Login extends React.Component {
         />
         <input
           value={ password }
-          type="text"
+          type="password"
           name="password"
           id="password"
           data-testid="password-input"
