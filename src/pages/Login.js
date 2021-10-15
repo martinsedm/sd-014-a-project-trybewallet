@@ -8,6 +8,7 @@ class Login extends React.Component {
       email: '',
       senha: '',
       disabled: true,
+      btnClicado: false,
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
     this.loginValidation = this.loginValidation.bind(this);
@@ -35,11 +36,13 @@ class Login extends React.Component {
   }
 
   clickButton() {
-    return <Redirect to="/Wallet" />;
+    this.setState({
+      btnClicado: true,
+    });
   }
 
   render() {
-    const { email, senha, disabled } = this.state;
+    const { email, senha, disabled, btnClicado } = this.state;
     return (
       <div>
         <label htmlFor="email">
@@ -74,6 +77,7 @@ class Login extends React.Component {
         >
           Entrar
         </button>
+        { btnClicado && <Redirect to="/Wallet" />}
       </div>
     );
   }
