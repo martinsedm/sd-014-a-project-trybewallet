@@ -3,8 +3,17 @@ import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      sumExpenses: 0,
+    };
+  }
+
   render() {
     const { setEmailUser } = this.props;
+    const { sumExpenses } = this.state;
     return (
       <header className="ctn-header">
         <div>
@@ -15,7 +24,8 @@ class Header extends Component {
           className="total-field"
           data-testid="total-field"
         >
-          Despesa Total: R$
+          Despesa Total:
+          { sumExpenses }
         </p>
         <p
           className="header-currency-field"
