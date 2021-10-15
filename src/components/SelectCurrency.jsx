@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class SelectCurrency extends React.Component {
   render() {
-    const { result } = this.props;
+    const { result, handleChange, currency } = this.props;
     const { USD, CAD, EUR, GBP, ARS, BTC, LTC } = result;
     const { JPY, CHF, AUD, CNY, ILS, ETH, XRP } = result;
 
@@ -11,7 +11,7 @@ class SelectCurrency extends React.Component {
     return (
       <label htmlFor="currency-select">
         Moeda
-        <select id="currency-select">
+        <select id="currency-select" onChange={ handleChange } value={ currency } name="currency">
           <option value={ USD.code }>{ USD.code }</option>
           <option value={ CAD.code }>{ CAD.code }</option>
           <option value={ EUR.code }>{ EUR.code }</option>

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SelectPayment from '../components/SelectPayment';
 import SelectCurrency from '../components/SelectCurrency';
 import SelectTag from '../components/SelectTag';
+import { expenseThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
@@ -12,11 +13,26 @@ class Wallet extends React.Component {
     this.state = {
       totalExpenses: 0,
       apiResponse: undefined,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'cash',
+      tag: 'food',
     };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.fetchApi = this.fetchApi.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   async fetchApi() {
@@ -26,8 +42,9 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
-    const { totalExpenses, apiResponse: api } = this.state;
+    const { email, saveExpense } = this.props;
+    const { totalExpenses, apiResponse } = this.state;
+    const { value, description, currency, method } = this.state;
     return (
       <>
         <header className="header-wallet">
@@ -37,17 +54,35 @@ class Wallet extends React.Component {
         </header>
         <main>
           <form>
-            <label htmlFor="expense-input">
+            <label htmlFor="value-input">
               Valor
-              <input type="number" id="expense-input" />
+              <input
+                type="number"
+                id="value-input"
+                name="value"
+                value={ value }
+                onChange={ this.handleChange }
+              />
             </label>
             <label htmlFor="description-input">
               Descrição
-              <input type="text" id="description-input" />
+              <input
+                type="text"
+                id="description-input"
+                name="description"
+                value={ description }
+                onChange={ this.handleChange }
+              />
             </label>
-            { api && <SelectCurrency result={ api } /> }
-            <SelectPayment />
-            <SelectTag />
+            { apiResponse && <SelectCurrency result={ apiResponse } handleChange={ this.handleChange } currency={ currency } /> }
+            <SelectPayment handleChange={ this.handleChange } method={ method } />
+            <SelectTag handleChange={ this.handleChange } method={ method } />
+            <button
+              type="button"
+              onClick={ () => saveExpense(this.state) }
+            >
+              Adicionar despesa
+            </button>
           </form>
         </main>
       </>
@@ -61,8 +96,15 @@ function mapStateToProps(state) {
   };
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    saveExpense: (data) => dispatch(expenseThunk(data)),
+  };
+}
+
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  saveExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
