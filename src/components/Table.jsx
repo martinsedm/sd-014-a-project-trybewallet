@@ -34,9 +34,10 @@ class Table extends Component {
                 <td>
                   <button
                     type="button"
+                    data-testid="edit-btn"
                     onClick={ () => editExpense(id) }
                   >
-                    Edit
+                    Editar Despesa
                   </button>
                   <button
                     type="button"
