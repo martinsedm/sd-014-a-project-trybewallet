@@ -1,7 +1,7 @@
 .div-login {
   display: flex;
-  height: 600px;
   align-items: center;
+  height: 600px;
   flex-direction: column;
   justify-content: center;
 }

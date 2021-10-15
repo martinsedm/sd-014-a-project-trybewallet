@@ -11,6 +11,7 @@ class Login extends React.Component {
       disabled: true,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   async handleChange({ target }) {
