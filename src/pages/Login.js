@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { setEmailUser } from '../actions';
 import logo from '../logo.svg';
 
-// import '../style/login.css';
+import '../style/login.css';
 
 class Login extends React.Component {
   constructor() {
