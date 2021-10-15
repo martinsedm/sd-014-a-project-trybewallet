@@ -3,6 +3,7 @@ export const EMAIL = 'EMAIL';
 export const GET_CURRENCY_SUCKSEX = 'GET_CURRENCY_SUCKSEX';
 export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export function USER_EMAIL(payload) {
   return {
@@ -39,6 +40,13 @@ export const getCurrencyThunk = () => async (dispatch) => {
 export function addExpense(payload) {
   return {
     type: ADD_EXPENSE,
+    payload,
+  };
+}
+
+export function removeExpense(payload) {
+  return {
+    type: REMOVE_EXPENSE,
     payload,
   };
 }
