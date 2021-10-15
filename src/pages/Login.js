@@ -9,7 +9,6 @@ export default class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      disabled: true,
       send: false,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -20,16 +19,27 @@ export default class Login extends Component {
     this.setState({
       [name]: value,
     });
+    this.verifyFilds();
+  }
+
+  verifyFilds() {
+    const { email, password } = this.state;
+    const NUMBER_MAX_PASSWORD = 5;
+    const re = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/;
+    if (re.test(email) && password.length > NUMBER_MAX_PASSWORD) {
+      return false;
+    }
+    return true;
   }
 
   render() {
-    const { email, password, disabled } = this.state;
+    const { email, password } = this.state;
     return (
       <div>
         <Input
           name="email"
           value={ email }
-          type="text"
+          type="email"
           onChange={ this.handleChange }
         >
           Email
@@ -44,7 +54,7 @@ export default class Login extends Component {
         </Input>
         <button
           type="button"
-          disabled={ disabled }
+          disabled={ this.verifyFilds() }
           onClick={ (e) => {
             e.preventDefault();
           } }
