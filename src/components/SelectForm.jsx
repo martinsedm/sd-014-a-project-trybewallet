@@ -24,7 +24,7 @@ class SelectForm extends Component {
 }
 
 SelectForm.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default SelectForm;

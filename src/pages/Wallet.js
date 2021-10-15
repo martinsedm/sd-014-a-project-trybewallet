@@ -133,11 +133,15 @@ class Wallet extends React.Component {
   }
 }
 
+Wallet.defaultProps = {
+  currencyToExchange: '',
+};
+
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  currencyToExchange: PropTypes.string.isRequired,
+  currencyToExchange: PropTypes.string,
   getIntCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
   removeExpense: PropTypes.func.isRequired,

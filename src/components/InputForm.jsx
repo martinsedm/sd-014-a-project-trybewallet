@@ -21,7 +21,7 @@ class InputForm extends Component {
 }
 
 InputForm.propTypes = {
-  data: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default InputForm;
