@@ -30,23 +30,12 @@ class Wallet extends React.Component {
     this.getCurrency();
   }
 
-  componentDidUpdate() {
-    console.log(this.state);
-  }
-
   getCurrency = async () => {
     const { addCurrenciesToState } = this.props;
     const request = await fetch('https://economia.awesomeapi.com.br/json/all');
     const currencyList = await request.json();
     if (currencyList.USDT) delete currencyList.USDT;
     addCurrenciesToState(Object.keys(currencyList));
-    this.setState({
-      description: '',
-      value: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-    });
   }
 
   handleButton = () => {
