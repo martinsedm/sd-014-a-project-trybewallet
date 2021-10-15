@@ -1,34 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      value: 0,
-      currency: '',
-      method: '',
-      tag: '',
-      description: '',
-
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  handleChange({ target }) {
-    const { name, value } = target;
-
-    this.setState({ [name]: value });
-  }
-
-  handleClick() {
-    console.log('click');
-  }
-
   render() {
     const { userEmail } = this.props;
 
@@ -51,6 +26,10 @@ class Wallet extends Component {
     );
   }
 }
+
+Wallet.propTypes = {
+  userEmail: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
