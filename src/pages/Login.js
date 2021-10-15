@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 class Login extends React.Component {
@@ -8,6 +9,7 @@ class Login extends React.Component {
       passwordInput: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -15,9 +17,10 @@ class Login extends React.Component {
     console.log(this.state);
   }
 
-  handleSubmit(event) {
+  handleSubmit() {
     console.log('Um nome foi enviado:');
-    event.preventDefault();
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
   render() {
@@ -61,5 +64,11 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+};
 
 export default Login;
