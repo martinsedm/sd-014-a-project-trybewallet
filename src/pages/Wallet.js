@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Form from '../components/Form';
+import Table from '../components/Table';
 import { categories, payment } from '../data/index';
 import { getIntCurrenciesThunk, addExpenseThunk } from '../actions';
 
@@ -30,6 +31,8 @@ class Wallet extends React.Component {
     this.handleExpense = this.handleExpense.bind(this);
     this.updateState = this.updateState.bind(this);
     this.calculateSum = this.calculateSum.bind(this);
+    this.removeExpense = this.removeExpense.bind(this);
+    this.editExpense = this.editExpense.bind(this);
   }
 
   componentDidMount() {
@@ -91,6 +94,14 @@ class Wallet extends React.Component {
     });
   }
 
+  removeExpense(id) {
+    console.log(id);
+  }
+
+  editExpense(id) {
+    console.log(id);
+  }
+
   handlechange({ target: { name, value } }) {
     const { form } = this.state;
     this.setState({
@@ -103,6 +114,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email, total, currencyToExchange, form } = this.state;
+    const { expenses } = this.props;
     return (
       <main>
         <Header data={ { email, total, currencyToExchange } } />
@@ -112,6 +124,14 @@ class Wallet extends React.Component {
             onChange={ this.handlechange }
             onClick={ this.handleExpense }
           />
+        </section>
+        <section>
+          { expenses.length !== 0
+          && <Table
+            expenses={ expenses }
+            removeExpense={ this.removeExpense }
+            editExpense={ this.editExpense }
+          /> }
         </section>
       </main>
     );
