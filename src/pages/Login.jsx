@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { saveEmail } from '../actions';
 
 class Login extends React.Component {
@@ -12,17 +13,17 @@ class Login extends React.Component {
       password: '',
       redirect: false,
     };
-  };
-  
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
 
   handleClick = () => {
-    const { email} = this.state;
+    const { email } = this.state;
     const { registerUser } = this.props;
-    this.setState({ redirect: true})
+    this.setState({ redirect: true });
     registerUser(email);
   }
 
@@ -30,9 +31,10 @@ class Login extends React.Component {
     const { email, password, redirect } = this.state;
     const MIN_CHARACTER = 6;
     // dica de regex com Pedro Alles T13 & https://regex101.com/library/jZ2cC4
-    const REGEX_VALID_EMAIL = /^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,})$/i;
-    
-    if (redirect) return <Redirect to="/carteira" />
+    // R DE REGEX (CULPA DO LINT)
+    const R = /^([a-z0-9]+(?:[._-][a-z0-9]+)*)@([a-z0-9]+(?:[.-][a-z0-9]+)*\.[a-z]{2,})$/;
+
+    if (redirect) return <Redirect to="/carteira" />;
 
     return (
       <form>
@@ -58,8 +60,8 @@ class Login extends React.Component {
         </label>
         <button
           type="submit"
-          disabled={ password.length < MIN_CHARACTER || !REGEX_VALID_EMAIL.test(email) }
-          onClick={ this.handleClick}
+          disabled={ password.length < MIN_CHARACTER || !R.test(email) }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -78,5 +80,8 @@ const mapDispatchToProps = (dispatch) => (
   }
 );
 
+Login.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+};
 
 export default connect(null, mapDispatchToProps)(Login);
