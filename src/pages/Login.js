@@ -1,5 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { loginInfo as loginInfoAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -13,6 +16,7 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.enableButton = this.enableButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -36,6 +40,12 @@ class Login extends React.Component {
     }
   }
   // Source: "https://stackoverflow.com/questions/43676695/email-validation-react-native-returning-the-result-as-invalid-for-all-the-e"
+
+  handleClick() {
+    const { email } = this.state;
+    const { loginInfo } = this.props;
+    loginInfo(email);
+  }
 
   render() {
     const { email, password, validData } = this.state;
@@ -71,7 +81,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ !validData }
-          // onClick={ }
+          onClick={ this.handleClick }
         >
           <Link to="/carteira">Entrar</Link>
         </button>
@@ -80,4 +90,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginInfo: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  loginInfo: (payload) => dispatch(loginInfoAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
