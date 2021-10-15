@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import Form from '../components/Form';
 import Table from '../components/Table';
 import { categories, payment } from '../data/index';
-import { getIntCurrenciesThunk, addExpenseThunk } from '../actions';
+import { getIntCurrenciesThunk, addExpenseThunk, removeExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class Wallet extends React.Component {
     this.handleExpense = this.handleExpense.bind(this);
     this.updateState = this.updateState.bind(this);
     this.calculateSum = this.calculateSum.bind(this);
-    this.removeExpense = this.removeExpense.bind(this);
     this.editExpense = this.editExpense.bind(this);
   }
 
@@ -94,10 +93,6 @@ class Wallet extends React.Component {
     });
   }
 
-  removeExpense(id) {
-    console.log(id);
-  }
-
   editExpense(id) {
     console.log(id);
   }
@@ -114,7 +109,7 @@ class Wallet extends React.Component {
 
   render() {
     const { email, total, currencyToExchange, form } = this.state;
-    const { expenses } = this.props;
+    const { expenses, removeExpense } = this.props;
     return (
       <main>
         <Header data={ { email, total, currencyToExchange } } />
@@ -129,7 +124,7 @@ class Wallet extends React.Component {
           { expenses.length !== 0
           && <Table
             expenses={ expenses }
-            removeExpense={ this.removeExpense }
+            removeExpense={ removeExpense }
             editExpense={ this.editExpense }
           /> }
         </section>
@@ -145,6 +140,7 @@ Wallet.propTypes = {
   currencyToExchange: PropTypes.string.isRequired,
   getIntCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -157,6 +153,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getIntCurrencies: () => dispatch(getIntCurrenciesThunk()),
   addExpense: (expense) => dispatch(addExpenseThunk(expense)),
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

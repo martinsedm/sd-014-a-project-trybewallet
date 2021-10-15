@@ -1,5 +1,6 @@
 export const LOGIN_TYPE = 'LOGIN_TYPE';
-export const ADD_WALLET = 'ADD_WALLET';
+export const ADD_EXPENSE = 'ADD_WALLET';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const FETCHING = 'FETCHING';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 
@@ -14,18 +15,23 @@ export const notifyLoginAction = (user) => ({
   },
 });
 
-export const isFetching = () => ({
+export const isFetchingAction = () => ({
   type: FETCHING,
 });
 
-export const addExpense = (expense) => ({
-  type: ADD_WALLET,
+export const addExpenseAction = (expense) => ({
+  type: ADD_EXPENSE,
   payload: {
     ...expense,
   },
 });
 
-export const addCurrencies = (currencies) => ({
+export const removeExpenseAction = (id) => ({
+  type: REMOVE_EXPENSE,
+  payload: id,
+});
+
+export const addCurrenciesAction = (currencies) => ({
   type: ADD_CURRENCIES,
   payload: [
     ...currencies,
@@ -34,24 +40,24 @@ export const addCurrencies = (currencies) => ({
 
 // actions assíncronas:
 export const getIntCurrenciesThunk = () => (dispatch) => {
-  dispatch(isFetching());
+  dispatch(isFetchingAction());
   return fetch(FETCH_ENDPOINT)
     .then((response) => response.json())
     .then((json) => {
       const currencies = Object.keys(json)
         .filter((currency) => currency.length === NUM_CHARS);
-      dispatch(addCurrencies(currencies));
-      dispatch(isFetching());
+      dispatch(addCurrenciesAction(currencies));
+      dispatch(isFetchingAction());
     });
 };
 
 export const addExpenseThunk = (expense) => (dispatch) => {
-  dispatch(isFetching());
+  dispatch(isFetchingAction());
   return fetch(FETCH_ENDPOINT)
     .then((response) => response.json())
     .then((currencies) => {
       const result = { ...expense, exchangeRates: { ...currencies } };
-      dispatch(addExpense(result));
-      dispatch(isFetching());
+      dispatch(addExpenseAction(result));
+      dispatch(isFetchingAction());
     });
 };
