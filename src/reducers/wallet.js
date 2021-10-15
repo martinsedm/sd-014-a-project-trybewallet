@@ -1,6 +1,8 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 import { ADD_EXPENSE, REMOVE_EXPENSE, FETCHING, ADD_CURRENCIES } from '../actions';
 
+const NEG_UM = -1;
+
 const INITIAL_STATE = {
   isFetching: false,
   editor: false,
@@ -15,7 +17,13 @@ const wallet = (state = INITIAL_STATE, action) => {
   case ADD_EXPENSE:
   {
     const { expenses } = state;
-    const id = expenses.length;
+    let id = expenses.length;
+    if (expenses.find(({ id: idNumber }) => idNumber === id)) {
+      const expensesCopy = expenses.map((x) => x);
+      const expensesSort = expensesCopy.sort((a, b) => (a.id > b.id ? 1 : NEG_UM));
+      const { id: idBigger } = expensesSort[id];
+      id = idBigger + 1;
+    }
     return {
       ...state,
       expenses: [...expenses, { ...action.payload, id }],
