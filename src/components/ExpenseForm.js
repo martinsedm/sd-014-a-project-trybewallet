@@ -17,7 +17,7 @@ class ExpenseForm extends React.Component {
           <select name="coins" id="coins">Coins</select>
         </label>
         <label htmlFor="payment">
-          Método de Pagamento:
+          Método de pagamento:
           <select name="payment" id="payment">
             Payment:
             <option>Dinheiro</option>
@@ -26,7 +26,7 @@ class ExpenseForm extends React.Component {
           </select>
         </label>
         <label htmlFor="expenseTag">
-          Método de Pagamento:
+          Tag:
           <select name="expenseTag" id="expenseTag">
             Tag:
             <option>Alimentação</option>
