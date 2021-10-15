@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { userAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -28,6 +31,8 @@ class Login extends React.Component {
     }
     if (notAllow === 2) {
       this.setState({ disabled: false });
+    } else {
+      this.setState({ disabled: true });
     }
   }
 
@@ -40,6 +45,7 @@ class Login extends React.Component {
 
   render() {
     const { disabled, email, password } = this.state;
+    const { saveEmail } = this.props;
 
     return (
       <form>
@@ -61,6 +67,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ disabled }
+            onClick={ () => saveEmail(email) }
           >
             Entrar
           </button>
@@ -70,4 +77,14 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+function mapDispatchToProps(dispatch) {
+  return {
+    saveEmail: (email) => dispatch(userAction(email)),
+  };
+}
+
+Login.propTypes = {
+  saveEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
