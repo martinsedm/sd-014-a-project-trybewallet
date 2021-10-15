@@ -15,7 +15,7 @@ function attTotal(expenses) {
     .round((acc + (ele.value * ele.exchangeRates[ele.currency].ask)) * 100) / 100, 0);
 }
 
-export default function user(
+export default function wallet(
   state = initialState, { payload, type },
 ) {
   switch (type) {
