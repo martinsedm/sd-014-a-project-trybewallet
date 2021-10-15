@@ -1,14 +1,47 @@
 import React from 'react';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
   render() {
+    const { email, password } = this.state;
+    const EMAIL_REGEX = /.+@.+\..+/;
+    const MIN_PASSWORD_LENGTH = '6';
     return (
       <form>
-        <input data-testid="email-input" type="text" name="email" />
+        <input
+          data-testid="email-input"
+          type="text"
+          name="email"
+          value={ email }
+          onChange={ this.handleChange }
+        />
         <br />
-        <input data-testid="password-input" type="text" name="name" />
+        <input
+          data-testid="password-input"
+          type="text"
+          name="password"
+          value={ password }
+          onChange={ this.handleChange }
+        />
         <br />
-        <input type="submit" value="Entrar" />
+        <button
+          type="submit"
+          disabled={ !EMAIL_REGEX.test(email) || password.length < MIN_PASSWORD_LENGTH }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
