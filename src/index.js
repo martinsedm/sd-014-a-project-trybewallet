@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import Login from './pages/Login';
+import Wallet from './pages/Wallet';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Switch>
+      <Route exact path="/" render={ () => <Login /> } />
+      <Route pathc="/carteira" render={ () => <Wallet /> } />
+      <App />
+    </Switch>
   </BrowserRouter>,
   document.getElementById('root'),
 );
