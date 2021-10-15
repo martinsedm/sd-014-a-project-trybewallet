@@ -7,20 +7,20 @@
 
 .login-input {
   background: #ecf0f1;
-  padding: 10px;
   border: none;
-  height: 40px;
+  padding: 10px;
   border-radius: 3px;
-  width: 350px;
+  height: 40px;
   margin: 5px;
+  width: 350px;
 }
 
 .login-button {
-  padding: 10px;
   border: none;
+  padding: 10px;
   height: 50px;
-  width: 360px;
   border-radius: 8px;
+  width: 360px;
   color: rgb(24, 153, 228);
   cursor: pointer;
   font-weight: 200;
