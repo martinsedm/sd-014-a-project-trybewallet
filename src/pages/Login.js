@@ -12,7 +12,7 @@ class Login extends React.Component {
           type="text"
           data-testid="password-input"
         />
-        <button>Entrar</button>
+        <button type="button">Entrar</button>
       </form>
     );
   }

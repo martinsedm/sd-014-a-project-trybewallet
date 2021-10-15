@@ -6,7 +6,7 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Route path="/" component={ Login }/>
+        <Route path="/" component={ Login } />
       </Switch>
     );
   }
