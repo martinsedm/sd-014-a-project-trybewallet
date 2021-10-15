@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import PurchaseForm from '../components/PurchaseForm';
+
 class Wallet extends React.Component {
   render() {
     const { email } = this.props;
@@ -13,6 +15,7 @@ class Wallet extends React.Component {
           <div data-testid="total-field">0</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
+        <PurchaseForm />
       </div>
     );
   }
