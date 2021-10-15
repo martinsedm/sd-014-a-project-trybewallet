@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
-    const { data: { email, total, currency } } = this.props;
+    const { data: { email, total, currencyToExchange } } = this.props;
     return (
       <header>
         <p>
@@ -16,7 +16,7 @@ class Header extends Component {
           {' '}
           <span data-testid="total-field">{ total }</span>
           {' '}
-          <span data-testid="header-currency-field">{ currency }</span>
+          <span data-testid="header-currency-field">{ currencyToExchange }</span>
         </p>
       </header>
     );
@@ -28,7 +28,7 @@ Header.propTypes = {
     {
       email: PropTypes.string.isRequired,
       total: PropTypes.number.isRequired,
-      currency: PropTypes.string.isRequired,
+      currencyToExchange: PropTypes.string.isRequired,
     },
   ).isRequired,
 };

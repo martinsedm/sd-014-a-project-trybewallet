@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import { categories, payment } from '../data/index';
+import { getIntCurrenciesThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    const { email } = props.user;
+    const { user: { email }, currencyToExchange } = props;
     this.state = {
       email,
       total: 0,
-      currency: 'BRL',
+      currencyToExchange,
       form: {
         value: 0,
         description: '',
@@ -26,6 +27,26 @@ class Wallet extends React.Component {
       },
     };
     this.handlechange = this.handlechange.bind(this);
+    this.updateState = this.updateState.bind(this);
+  }
+
+  componentDidMount() {
+    const { getIntCurrencies } = this.props;
+    getIntCurrencies();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { currencies } = this.props;
+    if (prevProps.currencies.length !== currencies.length) {
+      this.updateState('currencies', currencies);
+    }
+  }
+
+  updateState(key, value) {
+    const { form } = this.state;
+    this.setState({
+      form: { ...form, [key]: value },
+    });
   }
 
   handlechange({ target: { name, value } }) {
@@ -40,10 +61,10 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, total, currency, form } = this.state;
+    const { email, total, currencyToExchange, form } = this.state;
     return (
       <main>
-        <Header data={ { email, total, currency } } />
+        <Header data={ { email, total, currencyToExchange } } />
         <section>
           <Form { ...form } callback={ this.handlechange } />
         </section>
@@ -54,10 +75,20 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencyToExchange: PropTypes.string.isRequired,
+  getIntCurrencies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  currencies: state.wallet.currencies,
+  currencyToExchange: state.wallet.currencyToExchange,
+
 });
 
-export default connect(mapStateToProps, null)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  getIntCurrencies: () => dispatch(getIntCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
