@@ -1,11 +1,11 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { connect } from 'react-redux';
-// import { setEmailUser } from '../actions';
+import { connect } from 'react-redux';
+import { setEmailUser } from '../actions';
 import logo from '../logo.svg';
 
-import '../style/login.css';
+// import '../style/login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -61,7 +61,7 @@ class Login extends React.Component {
             className="login-button"
             type="button"
             disabled={ !this.emailValid() || !this.passwordValid() }
-            // onClick={ () => getEmail(email) }
+            onClick={ () => getEmail(email) }
           >
             Entrar
           </button>
@@ -71,12 +71,12 @@ class Login extends React.Component {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getEmail: (email) => dispatch(setEmailUser(email)),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  getEmail: (email) => dispatch(setEmailUser(email)),
+});
 
 Login.propTypes = {
   getEmail: PropTypes.func.isRequired,
 };
 
-export default(Login);
+export default connect(null, mapDispatchToProps)(Login);
