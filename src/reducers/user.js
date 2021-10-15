@@ -4,10 +4,10 @@ const INITIAL_USER = {
   email: '',
 };
 
-function userSave(state = INITIAL_USER, emailInput) {
-  switch (emailInput.type) {
+function userSave(state = INITIAL_USER, action) {
+  switch (action.type) {
   case SET_EMAIL:
-    return { ...state, email: emailInput.email };
+    return { ...state, email: action.email };
   default:
     return state;
   }
