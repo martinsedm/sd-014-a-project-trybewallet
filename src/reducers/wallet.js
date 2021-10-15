@@ -2,9 +2,6 @@
 import { GET_CURRENCIES_SUCCESS, GET_CURRENCIES_ERROR } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
   wallet: {
     currencies: [],
     expenses: [],

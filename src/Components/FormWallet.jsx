@@ -5,12 +5,30 @@ import { connect } from 'react-redux';
 import { getCurrenciesThunk } from '../actions';
 
 class FormWallet extends Component {
-  componentDidMount() {
+  constructor() {
+    super();
+    this.state = {
+      currencies: [],
+    };
+  }
+
+  async componentDidMount() {
     const { getCurrencies } = this.props;
-    getCurrencies();
+    await getCurrencies();
+    await this.convertWalletPropToArray();
+  }
+
+  convertWalletPropToArray() {
+    const { wallet } = this.props;
+    const walletArray = Object.entries(wallet);
+    const walletFiltered = walletArray.filter((currency) => currency[0] !== 'USDT');
+    this.setState({
+      currencies: walletFiltered,
+    });
   }
 
   render() {
+    const { currencies } = this.state;
     return (
       <form>
         <label htmlFor="input-valor">
@@ -24,7 +42,9 @@ class FormWallet extends Component {
         <label htmlFor="select-moeda">
           Moeda:
           <select id="select-moeda">
-            asdasdasd
+            { currencies.map((currency) => (
+              <option key={ currency[0] } value={ currency[0] }>{ currency[0] }</option>
+            )) }
           </select>
         </label>
         <label htmlFor="select-pagamento">
@@ -51,7 +71,7 @@ class FormWallet extends Component {
 }
 
 const mapStateToProps = ({ wallet }) => ({
-  wallet,
+  wallet: wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
