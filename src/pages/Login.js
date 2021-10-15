@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { login as loginAction } from '../actions';
@@ -37,34 +38,30 @@ class Login extends React.Component {
     return (
       <div>
         <form>
-          <form>
-            <label htmlFor="email">
-              Email:
-              <input
-                id="email"
-                type="email"
-                name="email"
-                value={ email }
-                onChange={ this.handleChange }
-                data-testid="email-input"
-                required
-              />
-            </label>
-          </form>
-          <form>
-            <label htmlFor="password">
-              Senha:
-              <input
-                id="password"
-                type="text"
-                name="password"
-                value={ password }
-                onChange={ this.handleChange }
-                data-testid="password-input"
-                required
-              />
-            </label>
-          </form>
+          <label htmlFor="email">
+            Email:
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={ email }
+              onChange={ this.handleChange }
+              data-testid="email-input"
+              required
+            />
+          </label>
+          <label htmlFor="password">
+            Senha:
+            <input
+              id="password"
+              type="text"
+              name="password"
+              value={ password }
+              onChange={ this.handleChange }
+              data-testid="password-input"
+              required
+            />
+          </label>
           <button
             type="button"
             disabled={ !this.validateInput(email, password) }
@@ -77,6 +74,13 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  login: PropTypes.func.isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email) => dispatch(loginAction(email)),
