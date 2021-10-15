@@ -1,47 +1,32 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
-import Input from '../components/Input';
-import SelectCurrency from '../components/SelectCurrency';
-import SelectPayment from '../components/SelectPayment';
-import SelectTag from '../components/SelectTag';
+import { fetchAPI } from '../actions';
+import Expenses from '../components/Expenses';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { currencyAPI } = this.props;
+    currencyAPI();
+  }
+
   render() {
     return (
       <>
         <Header />
-        <Input
-          label="Valor"
-          type="text"
-          name="value"
-          id="value"
-          placeholder="Valor"
-        />
-        <Input
-          label="Descrição"
-          type="text"
-          name="description"
-          id="description"
-          placeholder="Descrição"
-        />
-        <SelectCurrency
-          label="Moeda"
-          name="currency"
-          id="currency"
-        />
-        <SelectPayment
-          label="Método de pagamento"
-          name="payment"
-          id="payment"
-        />
-        <SelectTag
-          label="Tag"
-          name="tag"
-          id="id"
-        />
+        <Expenses />
       </>
     );
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  currencyAPI: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  currencyAPI: () => dispatch(fetchAPI()),
+});
+
+export default connect(null, mapDispatchToProps)(Wallet);
