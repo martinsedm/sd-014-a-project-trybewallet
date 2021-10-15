@@ -22,7 +22,10 @@ class Login extends React.Component {
   render() {
     const MIN_PWD_LENGTH = 6;
     const { state: { password, email } } = this;
-    const isDisabled = password.length >= MIN_PWD_LENGTH;
+    const isValidPwd = password.length >= MIN_PWD_LENGTH;
+    /* Regex tirada do site: */
+    /* https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/ */
+    const isValidEmail = email.match(/\S+@\S+\.\S+/);
     return (
       <form>
         <Input
@@ -43,7 +46,7 @@ class Login extends React.Component {
           type="button"
           onClick={ () => console.log('ola') }
           content="Entrar"
-          isDisabled={ !isDisabled }
+          isDisabled={ !isValidPwd || !isValidEmail }
         />
       </form>
     );
