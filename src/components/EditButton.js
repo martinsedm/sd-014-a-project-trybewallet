@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { editExpenses } from '../actions/index';
+import { editExpense } from '../actions/index';
 
 class EditButton extends React.Component {
   render() {
@@ -25,7 +25,7 @@ EditButton.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  edit: (expense) => { dispatch(editExpenses(expense)); },
+  edit: (expense) => { dispatch(editExpense(expense)); },
 });
 
 export default connect(null, mapDispatchToProps)(EditButton);

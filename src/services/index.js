@@ -8,12 +8,16 @@ export function passwordValidation(password) {
   return password.length >= MIN_PW_LENGTH;
 }
 
-export function getCurrencyName(ratesList, name) {
-  return ratesList[name].name.split('/')[0];
+export function getCurrencyName(expense) {
+  return expense.exchangeRates[expense.currency].name.split('/')[0];
 }
 
-export function getCurrencyValue(value, currency) {
-  return (value * currency.ask).toFixed(2);
+export function getAskValue(expense) {
+  return Number(expense.exchangeRates[expense.currency].ask).toFixed(2);
+}
+
+export function getFinalValue(expense) {
+  return (expense.value * expense.exchangeRates[expense.currency].ask).toFixed(2);
 }
 
 export const methodList = [

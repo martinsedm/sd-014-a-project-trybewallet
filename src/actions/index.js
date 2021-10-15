@@ -10,12 +10,19 @@ export const addCurrencies = (currenciesList) => ({
   currenciesList,
 });
 
+export const currenciesToState = () => async (dispatch) => {
+  const request = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const currencyList = await request.json();
+  if (currencyList.USDT) delete currencyList.USDT;
+  dispatch(addCurrencies(Object.keys(currencyList)));
+};
+
 export const deleteExpense = (id) => ({
   type: 'DELETE_EXPENSE',
   id,
 });
 
-export const editExpenses = (expense) => ({
+export const editExpense = (expense) => ({
   type: 'EDIT_EXPENSE',
   expense,
 });
@@ -29,18 +36,19 @@ export const updateExpenses = (expenses) => ({
   type: 'UPDATE_EXPENSES',
   expenses,
 });
-//
-export const addExpenses = (expenses, currencies) => ({
-  type: 'ADD_EXPENSES',
+
+// adicionar uma expense
+export const addExpense = (expenses, currencies) => ({
+  type: 'ADD_EXPENSE',
   expenses,
   currencies,
 });
 
-export const saveExpenses = (expenses) => async (dispatch) => {
+export const newExpense = (expenses) => async (dispatch) => {
   try {
     const request = await fetch('https://economia.awesomeapi.com.br/json/all');
     const currencies = await request.json();
-    return dispatch(addExpenses(expenses, currencies));
+    return dispatch(addExpense(expenses, currencies));
   } catch (e) {
     console.log(`Currency request failed: ${e}`);
   }

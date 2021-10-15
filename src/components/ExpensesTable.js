@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrencyName, getCurrencyValue } from '../services/index';
+import { getCurrencyName, getFinalValue, getAskValue } from '../services/index';
 import DeleteButton from './DeleteButton';
 import EditButton from './EditButton';
 
@@ -24,19 +24,15 @@ class ExpensesTable extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {expenses && expenses.map((expense, i) => (
-            <tr key={ i }>
+          {expenses && expenses.map((expense) => (
+            <tr key={ expense.id }>
               <td>{expense.description}</td>
               <td>{expense.tag}</td>
               <td>{expense.method}</td>
               <td>{expense.value}</td>
-              <td>{ getCurrencyName(expense.exchangeRates, expense.currency)}</td>
-              <td>{Number(expense.exchangeRates[expense.currency].ask).toFixed(2)}</td>
-              <td>
-                {
-                  getCurrencyValue(expense.value, expense.exchangeRates[expense.currency])
-                }
-              </td>
+              <td>{ getCurrencyName(expense)}</td>
+              <td>{ getAskValue(expense) }</td>
+              <td>{ getFinalValue(expense) }</td>
               <td>Real</td>
               <td><DeleteButton id={ expense.id } /></td>
               <td><EditButton expense={ expense } /></td>

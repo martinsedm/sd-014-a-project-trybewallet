@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  saveExpenses,
+  newExpense,
   updateExpenses,
-  editExpenses,
+  editExpense,
   editInput,
-  addCurrencies,
+  currenciesToState,
 } from '../actions';
 
 import Header from '../components/Header';
@@ -28,27 +28,20 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrency();
-  }
-
-  getCurrency = async () => {
-    const { addCurrenciesToState } = this.props;
-    const request = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const currencyList = await request.json();
-    if (currencyList.USDT) delete currencyList.USDT;
-    addCurrenciesToState(Object.keys(currencyList));
+    const { currencyNamesToState } = this.props;
+    currencyNamesToState();
   }
 
   handleButton = () => {
-    const { expensesToState } = this.props;
-    expensesToState(this.state);
+    const { saveNewExpense } = this.props;
+    saveNewExpense(this.state);
     this.setState({ description: '', value: '' });
   }
 
-  handleInput = ({ target: { id, value } }) => this.setState({ [id]: value });
+  handleDefaultInput = ({ target: { id, value } }) => this.setState({ [id]: value });
 
   handleEditButton = () => {
-    const { expenses, edit, expenseToEdit } = this.props;
+    const { expenses, saveUpdatedList, expenseToEdit } = this.props;
     const newList = expenses.reduce((acc, exp) => {
       if (exp.id === expenseToEdit.id) {
         acc.push(expenseToEdit);
@@ -57,7 +50,7 @@ class Wallet extends React.Component {
       acc.push(exp);
       return acc;
     }, []);
-    edit(newList);
+    saveUpdatedList(newList);
   }
 
   handleEditInput = ({ target: { id, value } }) => {
@@ -65,38 +58,34 @@ class Wallet extends React.Component {
     editExpenseInput({ [id]: value });
   }
 
-  renderEditForm = () => {
-    const { expenseToEdit, currencyList } = this.props;
-    return (
-      <EditForm
-        handleInput={ this.handleEditInput }
-        handleButton={ this.handleEditButton }
-        expense={ expenseToEdit }
-        currencyList={ currencyList }
-      />
-    );
-  }
+  renderEditForm = (expenseToEdit, currencyList) => (
+    <EditForm
+      handleInput={ this.handleEditInput }
+      handleButton={ this.handleEditButton }
+      expense={ expenseToEdit }
+      currencyList={ currencyList }
+    />
+  )
 
-  renderDefaultForm = () => {
-    const { value, description } = this.state;
-    const { currencyList } = this.props;
-    return (
-      <ExpensesForm
-        currencyList={ currencyList }
-        handleInput={ this.handleInput }
-        handleButton={ this.handleButton }
-        value={ value }
-        description={ description }
-      />
-    );
-  }
+  renderDefaultForm = (currencyList, value, description) => (
+    <ExpensesForm
+      handleInput={ this.handleDefaultInput }
+      handleButton={ this.handleButton }
+      currencyList={ currencyList }
+      value={ value }
+      description={ description }
+    />
+  )
 
   render() {
-    const { isEditing } = this.props;
+    const { isEditing, currencyList, expenseToEdit } = this.props;
+    const { value, description } = this.state;
     return (
       <div>
         <Header />
-        {isEditing ? this.renderEditForm() : this.renderDefaultForm()}
+        {isEditing
+          ? this.renderEditForm(expenseToEdit, currencyList)
+          : this.renderDefaultForm(currencyList, value, description)}
         <ExpensesTable />
       </div>
     );
@@ -104,22 +93,22 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  expensesToState: PropTypes.func.isRequired,
-  expenseToEdit: PropTypes.objectOf(PropTypes.any).isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  edit: PropTypes.func.isRequired,
-  addCurrenciesToState: PropTypes.func.isRequired,
+  saveNewExpense: PropTypes.func.isRequired,
+  currencyNamesToState: PropTypes.func.isRequired,
+  saveUpdatedList: PropTypes.func.isRequired,
   editExpenseInput: PropTypes.func.isRequired,
+  expenseToEdit: PropTypes.objectOf(PropTypes.any).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   currencyList: PropTypes.arrayOf(PropTypes.any).isRequired,
+  isEditing: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToState = (dispatch) => ({
-  addCurrenciesToState: (currencies) => { dispatch(addCurrencies(currencies)); },
-  expensesToState: (expenses) => { dispatch(saveExpenses(expenses)); },
-  edit: (expenses) => {
+  currencyNamesToState: () => { dispatch(currenciesToState()); },
+  saveNewExpense: (expenses) => { dispatch(newExpense(expenses)); },
+  saveUpdatedList: (expenses) => {
     dispatch(updateExpenses(expenses));
-    dispatch(editExpenses(null));
+    dispatch(editExpense(null));
   },
   editExpenseInput: (input) => {
     dispatch(editInput(input));
@@ -128,9 +117,9 @@ const mapDispatchToState = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   currencyList: state.wallet.currencies,
+  expenses: state.wallet.expenses,
   isEditing: state.edit.isEditing,
   expenseToEdit: state.edit.expense,
-  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToState)(Wallet);
