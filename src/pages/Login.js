@@ -1,9 +1,11 @@
 import React from 'react';
-// import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getEmail } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -17,6 +19,7 @@ class Login extends React.Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleButton = this.handleButton.bind(this);
   }
 
   // Usando Regex (https://stackoverflow.com/a/9204568) para verificar formatação do email e salvar no estado a sua validação;
@@ -60,6 +63,14 @@ class Login extends React.Component {
     }
   }
 
+  // Guarda o email na store ao mesmo tempo que muda de página;
+  handleButton() {
+    const { history, storeEmail } = this.props;
+    const { email } = this.state;
+    storeEmail(email);
+    history.push('/carteira');
+  }
+
   render() {
     const { email, password, button } = this.state;
     return (
@@ -88,6 +99,7 @@ class Login extends React.Component {
         <button
           disabled={ button }
           type="button"
+          onClick={ this.handleButton }
         >
           Entrar
         </button>
@@ -96,4 +108,13 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+// Manda a action de salvar o email para a store;
+const mapDispatchToProps = (dispatch) => ({
+  storeEmail: (payload) => dispatch(getEmail(payload)),
+});
+
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
