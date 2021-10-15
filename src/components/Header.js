@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
@@ -7,7 +8,7 @@ class Header extends React.Component {
     return (
       <header>
         <p data-testid="email-field">{userEmail}</p>
-        <p data-testid="total-field">{expenses.lenght}</p>
+        <p data-testid="total-field">{expenses ? 0 : !expenses}</p>
         <p data-testid="header-currency-field">BRL</p>
       </header>
     );
