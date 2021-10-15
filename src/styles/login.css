@@ -1,0 +1,20 @@
+.login-container {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+}
+
+.login-container main {
+
+  background: rgb(73, 73, 73);
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.login-container input {
+  width: 80%;
+}
