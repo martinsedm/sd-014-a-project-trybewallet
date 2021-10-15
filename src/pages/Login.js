@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveStateLogin as saveStateLoginAction } from '../actions';
+import { saveStateLogin, saveStateLogin as saveStateLoginAction } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -12,6 +12,7 @@ class Login extends Component {
       habilit: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -31,9 +32,16 @@ class Login extends Component {
     });
   }
 
+  handleClick() {
+    const { history, saveStateLogin } = this.props;
+    const { email } = this.state;
+
+    saveStateLogin(email);
+    history.push('/carteira');
+  }
+
   render() {
     const { email, password, habilit } = this.state;
-    const { saveStateLogin } = this.props;
     return (
       <div className="login">
         Login
@@ -65,7 +73,7 @@ class Login extends Component {
         <button
           type="submit"
           desabilit={ !habilit }
-          onClick={ () => saveStateLogin({ email }) }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -76,6 +84,9 @@ class Login extends Component {
 
 Login.propTypes = {
   saveStateLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
