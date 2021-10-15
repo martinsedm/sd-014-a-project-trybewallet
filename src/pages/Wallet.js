@@ -2,7 +2,27 @@ import React from 'react';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currency: [],
+    };
+  }
+
+  componentDidMount() {
+    this.resultAPI();
+  }
+
+  async resultAPI() {
+    const resultAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const resultAPIJson = await resultAPI.json();
+    const desiredCodes = Object.values(resultAPIJson)
+      .filter(({ codein }) => codein === 'BRL');
+    this.setState({ currency: desiredCodes });
+  }
+
   render() {
+    const { currency } = this.state;
     return (
       <div>
         <Header />
@@ -18,7 +38,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency" type="select" name="currency">
-              <option>moeda</option>
+              {currency.map(({ code }) => (
+                <option key={ code }>{code}</option>
+              ))}
             </select>
           </label>
           <label htmlFor="payment">
