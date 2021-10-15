@@ -10,7 +10,7 @@ const user = (state = INICIAL_STATE, action) => {
   switch (action.type) {
   case GET_EMAIL:
     return {
-      ...state,
+      ...state, // retorna o estado antigo junto da atualização abaixo;
       email: action.email,
     };
   default:
