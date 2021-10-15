@@ -9,12 +9,13 @@ class Form extends Component {
       value,
       description,
       currency,
-      pay,
-      category,
+      method,
+      tag,
       currencies,
       categories,
       payment,
-      callback,
+      onChange,
+      onClick,
     } = this.props;
     return (
       <form name="expenseForm" id="expense-form">
@@ -23,20 +24,26 @@ class Form extends Component {
             Cadastre uma despesa
           </legend>
           <InputForm
-            data={ ['Valor', 'value', value, 'number', callback] }
+            data={ ['Valor', 'value', value, 'number', onChange] }
           />
           <InputForm
-            data={ ['Descrição', 'description', description, 'text', callback] }
+            data={ ['Descrição', 'description', description, 'text', onChange] }
           />
           <SelectForm
-            data={ ['Moeda', 'currency', currency, currencies, callback] }
+            data={ ['Moeda', 'currency', currency, currencies, onChange] }
           />
           <SelectForm
-            data={ ['Método de pagamento', 'pay', pay, payment, callback] }
+            data={ ['Método de pagamento', 'method', method, payment, onChange] }
           />
           <SelectForm
-            data={ ['Tag', 'category', category, categories, callback] }
+            data={ ['Tag', 'tag', tag, categories, onChange] }
           />
+          <button
+            type="button"
+            onClick={ onClick }
+          >
+            Adicionar Despesa
+          </button>
         </fieldset>
       </form>
     );
@@ -50,12 +57,13 @@ Form.propTypes = {
   ]).isRequired,
   description: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
-  pay: PropTypes.string.isRequired,
-  category: PropTypes.string.isRequired,
+  method: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   payment: PropTypes.arrayOf(PropTypes.string).isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
-  callback: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default Form;

@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { ADD_WALLET, FETCHING, ADD_CURRENCIES_OBJ, ADD_CURRENCIES_ARR } from '../actions';
+import { ADD_WALLET, FETCHING, ADD_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -8,29 +8,28 @@ const INITIAL_STATE = {
   currencyToExchange: 'BRL',
   expenses: [],
   currencies: [],
-  currObj: {},
+  // currObj: {},
 };
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_WALLET:
+  {
+    const { expenses } = state;
+    const id = expenses.length;
     return {
       ...state,
-      expenses: [...state.expenses, { ...action.payload }],
+      expenses: [...expenses, { ...action.payload, id }],
     };
+  }
   case FETCHING:
     return {
       ...state,
       isFetching: !state.isFetching,
     };
-  case ADD_CURRENCIES_ARR:
+  case ADD_CURRENCIES:
     return {
       ...state,
       currencies: [...state.currencies, ...action.payload],
-    };
-  case ADD_CURRENCIES_OBJ:
-    return {
-      ...state,
-      currObj: { ...state.currObj, ...action.payload },
     };
   default:
     return state;

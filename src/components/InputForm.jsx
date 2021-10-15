@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class InputForm extends Component {
   render() {
-    const { data: [text, name, value, type, callback] } = this.props;
+    const { data: [text, name, value, type, onChange] } = this.props;
     return (
       <label htmlFor={ `${name}-id` }>
         { text }
@@ -12,7 +12,8 @@ class InputForm extends Component {
           id={ `${name}-id` }
           name={ name }
           value={ value }
-          onChange={ callback }
+          onChange={ onChange }
+          required
         />
       </label>
     );

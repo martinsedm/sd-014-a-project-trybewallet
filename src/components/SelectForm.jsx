@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class SelectForm extends Component {
   render() {
-    const { data: [text, name, value, options, callback] } = this.props;
+    const { data: [text, name, value, options, onChange] } = this.props;
     return (
       <label htmlFor={ `${name}-id` }>
         { text }
@@ -11,7 +11,8 @@ class SelectForm extends Component {
           id={ `${name}-id` }
           name={ name }
           value={ value }
-          onChange={ callback }
+          onChange={ onChange }
+          required
         >
           { options.map((option, index) => (
             <option key={ index } value={ option }>{option}</option>
