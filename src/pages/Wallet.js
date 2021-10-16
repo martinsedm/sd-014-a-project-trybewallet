@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FormSelect from '../components/FormSelect';
+import { paymentOptions, currencyOptions, tagOptions } from '../data';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class Wallet extends React.Component {
           Valor
           <input
             type="number"
-            name="value"
+            name="text"
             onChange={ this.handleChange }
             value={ value }
             id="value"
@@ -60,47 +62,27 @@ class Wallet extends React.Component {
             id="description"
           />
         </label>
-        <label htmlFor="currency">
-          Moeda
-          <select
-            name="currency"
-            onChange={ this.handleChange }
-            value={ currency }
-            id="currency"
-          >
-            <option value="dolar">Dolar</option>
-            <option value="plutao">Plutao</option>
-            <option value="hue">Hue</option>
-          </select>
-        </label>
-        <label htmlFor="payment">
-          Método de pagamento
-          <select
-            name="payment"
-            onChange={ this.handleChange }
-            value={ payment }
-            id="payment"
-          >
-            <option value="dinheiro">Dinheiro</option>
-            <option value="crédito">Cartão de Crédito</option>
-            <option value="débito">Cartão de Débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select
-            name="tag"
-            onChange={ this.handleChange }
-            value={ tag }
-            id="tag"
-          >
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saúde">Saúde</option>
-          </select>
-        </label>
+        <FormSelect
+          id="currency"
+          infoArray={ currencyOptions }
+          onChange={ this.handleChange }
+          label="Moeda"
+          value={ currency }
+        />
+        <FormSelect
+          id="payment"
+          infoArray={ paymentOptions }
+          onChange={ this.handleChange }
+          label="Método de pagamento"
+          value={ payment }
+        />
+        <FormSelect
+          id="tag"
+          infoArray={ tagOptions }
+          onChange={ this.handleChange }
+          label="Tag"
+          value={ tag }
+        />
       </form>
     );
   }
