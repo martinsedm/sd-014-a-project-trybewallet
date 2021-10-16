@@ -56,6 +56,7 @@ class Login extends React.Component {
                 name="email"
                 id="email-input"
                 data-testid="email-input"
+                required
                 value={ email }
                 onChange={ this.handleChange }
               />
@@ -67,6 +68,8 @@ class Login extends React.Component {
                 name="password"
                 id="password-input"
                 data-testid="password-input"
+                minLength="6"
+                required
                 value={ password }
                 onChange={ this.handleChange }
               />
