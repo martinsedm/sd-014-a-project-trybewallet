@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 
 class Select extends Component {
   render() {
-    const { name, label, options, onChange } = this.props;
+    const { label, name, htmlFor, options, onChange } = this.props;
     return (
-      <label htmlFor={ label }>
+      <label htmlFor={ htmlFor }>
         { label }
         :
         <select
           name={ name }
           onChange={ onChange }
-          id={ label }
+          id={ htmlFor }
         >
           {options.map((currency) => (
             <option key={ currency } value={ currency }>{currency}</option>
@@ -25,6 +25,7 @@ class Select extends Component {
 Select.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  htmlFor: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
