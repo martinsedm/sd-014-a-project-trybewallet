@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { logUser } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       email: '',
-      passwordInput: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,22 +16,23 @@ class Login extends React.Component {
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
-    console.log(this.state);
   }
 
-  handleSubmit() {
-    console.log('Um nome foi enviado:');
-    const { history } = this.props;
+  handleSubmit(e, user) {
+    e.preventDefault();
+    const { history, dispatchSetValue } = this.props;
     history.push('/carteira');
+    dispatchSetValue(user);
   }
 
   render() {
-    const { email, passwordInput } = this.state;
+    const { email, password } = this.state;
     const senhaMin = 6;
+    const re = /\S+@\S+\.\S+/;
     return (
       <>
         <div>Login</div>
-        <form>
+        <form onSubmit={ (e) => this.handleSubmit(e, { email, password }) }>
           <label htmlFor="email">
             Email:
             <input
@@ -39,6 +42,7 @@ class Login extends React.Component {
               value={ email }
               onChange={ this.handleChange }
               data-testid="email-input"
+              required={ /\S+@\S+\.\S+/ }
             />
           </label>
           <label htmlFor="password">
@@ -46,16 +50,18 @@ class Login extends React.Component {
             <input
               id="password"
               type="password"
-              name="passwordInput"
-              value={ passwordInput }
+              name="password"
+              value={ password }
               onChange={ this.handleChange }
               data-testid="password-input"
+              required
             />
           </label>
           <button
+            HTMLForm="submit"
             type="submit"
-            disabled={ passwordInput.length < senhaMin }
-            onClick={ this.handleSubmit }
+            disabled={ re.test(email) === false || password.length < senhaMin }
+
           >
             Entrar
           </button>
@@ -66,9 +72,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
+  dispatchSetValue: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-export default Login;
+const mapDispatchProps = (dispatch) => ({
+  dispatchSetValue: (valueLog) => dispatch(logUser(valueLog)),
+});
+
+const mapStateToProps = (state) => ({ user: state.user.email });
+
+export default connect(mapStateToProps, mapDispatchProps)(Login);

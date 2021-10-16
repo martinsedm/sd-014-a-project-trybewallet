@@ -5,13 +5,9 @@ const initialState = {
   user: {
     email: '',
   },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
 };
 
-const reducerUser = (state = initialState, action) => {
+const user = (state = initialState, action) => {
   switch (action.type) {
   case LOG_USER:
     return { ...state, user: action.payload };
@@ -20,4 +16,4 @@ const reducerUser = (state = initialState, action) => {
   }
 };
 
-export default reducerUser;
+export default user;
