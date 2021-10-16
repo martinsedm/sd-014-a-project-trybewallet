@@ -21,7 +21,7 @@ export class FormsLogin extends PureComponent {
   render() {
     const { email } = this.state;
     return (
-      <>
+      <form>
         <Input
           type="text"
           onChange={ this.handleChangeCheck }
@@ -40,7 +40,7 @@ export class FormsLogin extends PureComponent {
         <Button text="Entrar" />
         {// {login && <Redirect to="/carteira" />}
         }
-      </>
+      </form>
     );
   }
 }
