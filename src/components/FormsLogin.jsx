@@ -29,6 +29,7 @@ export class FormsLogin extends PureComponent {
           name="email"
           value={ email }
           TextLabel="Email: "
+          testId="email-input"
         />
         <Input
           type="password"
@@ -36,6 +37,7 @@ export class FormsLogin extends PureComponent {
           name="email"
           value={ email }
           TextLabel="Passaword: "
+          testId="password-input"
         />
         <Button text="Entrar" />
         {// {login && <Redirect to="/carteira" />}
