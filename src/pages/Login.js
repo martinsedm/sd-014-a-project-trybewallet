@@ -1,4 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { regUser } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
     this.genericHandler = this.genericHandler.bind(this);
     this.genericTester = this.genericTester.bind(this);
     this.formChecker = this.formChecker.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   genericHandler({ target: { name, value } }) {
@@ -31,7 +35,14 @@ class Login extends React.Component {
     return false;
   }
 
+  submitForm() {
+    // event.preventDefault();
+    const { email } = this.state;
+    regUser(email);
+  }
+
   render() {
+    // const { email } = this.state;
     const submitReady = this.formChecker();
     return (
       <div>
@@ -41,9 +52,8 @@ class Login extends React.Component {
             placeholder="Email"
             data-testid="email-input"
             type="email"
-            onChange={ this.genericHandler }
             name="email"
-            required
+            onChange={ this.genericHandler }
           />
           <br />
           <input
@@ -52,18 +62,29 @@ class Login extends React.Component {
             type="password"
             name="password"
             onChange={ this.genericHandler }
-            required
           />
           <br />
-          <button type="submit" disabled={ !submitReady }>Entrar</button>
-
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ !submitReady }
+              onClick={ this.submitForm }
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  regUser: (payload) => dispatch(regUser(payload)),
+});
+
+// export default Login;
+export default connect(null, mapDispatchToProps)(Login);
 
 // https://www.w3schools.com/jsref/jsref_regexp_test.asp --- JS  test()  syntax
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions --- regex for the email validation

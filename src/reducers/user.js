@@ -1,10 +1,15 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
-const initialState = [];
+import { USER_REG } from '../actions';
+
+const initialState = {
+  email: '',
+};
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-  case 'THIS_IS_A_MOCK':
-    return [...state, action.value];
+  case USER_REG:
+    console.log(`USER_REG: ${action.payload}`);
+    return { ...state, email: action.payload };
 
   default:
     return state;
