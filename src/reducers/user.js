@@ -1,4 +1,4 @@
-import { SET_USER_EMAIL } from '../actions';
+import { SET_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   user: {
@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SET_USER_EMAIL:
+  case SET_EMAIL:
     return {
       ...state,
       email: action.email,
