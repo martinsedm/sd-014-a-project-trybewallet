@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { actionLoginEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -8,40 +11,33 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      validData: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.enableButton = this.enableButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
-    },
-
-    () => {
-      this.enableButton();
     });
   }
 
-  enableButton() {
-    const { email, password } = this.state;
-    const MINIMUM_CHARACTERS = 6;
-    const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email);
-    const validPassword = password.length >= MINIMUM_CHARACTERS;
-    if (validEmail && validPassword) {
-      this.setState({
-        validData: true,
-      });
-    }
+  handleClick() {
+    const { login } = this.state;
+    const { history, loginEmail } = this.props;
+    loginEmail(login);
+    history.push('/carteira');
   }
 
-  // "https://stackoverflow.com/questions/43676695/email-validation-react-native-returning-the-result-as-invalid-for-all-the-e"
+  // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
+  // https://qastack.com.br/programming/5342375/regex-email-validation
 
   render() {
-    const { email, password, validData } = this.state;
+    const { email, password } = this.state;
+    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm;
+    const MAX_LENGTH = 6;
     return (
       <div>
         <form>
@@ -69,8 +65,10 @@ class Login extends React.Component {
           </label>
           <button
             type="button"
-            disabled={ !validData }
+            disabled={ !reg.test(email) || password.length < MAX_LENGTH }
+            onClick={ this.handleClick }
           >
+
             <Link to="/carteira">Entrar</Link>
           </button>
         </form>
@@ -79,4 +77,16 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  loginEmail: (payload) => dispatch(actionLoginEmail(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    action: PropTypes.string.isRequired,
+    push: PropTypes.func,
+  }).isRequired,
+  loginEmail: PropTypes.func.isRequired,
+};
