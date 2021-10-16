@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchAPI } from '../../../actions';
 
 class Selects extends Component {
+  componentDidMount() {
+    const { getCurrency } = this.props;
+    getCurrency();
+  }
+
   render() {
-    const { moeda, pagamento, tag, handleChange } = this.props;
+    const { moeda, pagamento, tag, handleChange, currencies } = this.props;
     return (
       <div>
         <label htmlFor="moeda">
@@ -14,7 +21,8 @@ class Selects extends Component {
             value={ moeda }
             onChange={ handleChange }
           >
-            <option value="API">API</option>
+            {currencies
+              .map((coin) => <option key={ coin } value={ coin }>{coin}</option>)}
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -50,11 +58,21 @@ class Selects extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrency: () => dispatch(fetchAPI()),
+});
+
 Selects.propTypes = {
+  getCurrency: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleChange: PropTypes.func.isRequired,
   moeda: PropTypes.string.isRequired,
   pagamento: PropTypes.string.isRequired,
   tag: PropTypes.string.isRequired,
 };
 
-export default Selects;
+export default connect(mapStateToProps, mapDispatchToProps)(Selects);

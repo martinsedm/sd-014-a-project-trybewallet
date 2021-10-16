@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Imputs from './imputs/Imputs';
 import Selects from './selects/Selects';
 
-export default class FormExpense extends Component {
+class FormExpense extends Component {
   constructor() {
     super();
     this.state = {
@@ -24,6 +24,7 @@ export default class FormExpense extends Component {
 
   render() {
     const { valor, descricao, moeda, pagamento, tag } = this.state;
+
     return (
       <form>
         <Imputs
@@ -41,3 +42,5 @@ export default class FormExpense extends Component {
     );
   }
 }
+
+export default FormExpense;
