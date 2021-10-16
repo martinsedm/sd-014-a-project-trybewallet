@@ -5,31 +5,37 @@ import Header from '../components/Header';
 import Form from '../components/Form';
 import Table from '../components/Table';
 import { categories, payment } from '../data/index';
-import { getIntCurrenciesThunk, addExpenseThunk, removeExpenseAction } from '../actions';
+import {
+  getIntCurrenciesThunk,
+  addExpenseThunk,
+  removeExpenseAction,
+  editExpenseModeAction,
+  saveExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    const { user: { email }, currencyToExchange } = props;
+    const { user: { email }, currencyToExchange, currencies } = props;
     this.state = {
       email,
       total: 0,
       currencyToExchange,
+      editorMode: false,
       form: {
         value: 0,
         currency: '',
         method: '',
         tag: '',
         description: '',
-        currencies: [],
+        currencies,
         categories,
         payment,
       },
     };
     this.handlechange = this.handlechange.bind(this);
     this.handleExpense = this.handleExpense.bind(this);
-    this.updateState = this.updateState.bind(this);
+    this.updateStateForm = this.updateStateForm.bind(this);
     this.calculateSum = this.calculateSum.bind(this);
     this.editExpense = this.editExpense.bind(this);
   }
@@ -40,14 +46,19 @@ class Wallet extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { currencies, expenses } = this.props;
+    const { currencies, expenses, editor, idToEdit } = this.props;
     const { currencyToExchange } = this.state;
-    if (prevProps.currencies.length !== currencies.length) {
-      this.updateState('currencies', currencies);
+    if (prevProps.currencies !== currencies) {
+      this.updateStateForm({ currencies });
     }
-    if ((prevProps.expenses.length !== expenses.length)
+    if ((prevProps.expenses !== expenses)
       || (prevState.currencyToExchange !== currencyToExchange)) {
       this.calculateSum(expenses);
+    }
+    if (editor && editor !== prevProps.editor) {
+      const { idToEdit: { value, currency, method, tag, description } } = this.props;
+      const formEdit = { value, currency, method, tag, description };
+      this.updateStateForm(formEdit, { editorMode: true, idToEdit: { ...idToEdit } });
     }
   }
 
@@ -57,8 +68,8 @@ class Wallet extends React.Component {
       const { ask } = exchangeRates[currency];
       const valueInReal = Math.round(100 * Number(value) * Number(ask)) / 100;
       if (currencyToExchange !== 'BRL') {
-        const { ask: aksAgain } = exchangeRates[currencyToExchange];
-        const valueInAnother = Math.round(100 * (valueInReal / Number(aksAgain))) / 100;
+        const { ask: askAgain } = exchangeRates[currencyToExchange];
+        const valueInAnother = Math.round(100 * (valueInReal / Number(askAgain))) / 100;
         return acc + valueInAnother;
       }
       return acc + valueInReal;
@@ -68,20 +79,30 @@ class Wallet extends React.Component {
     });
   }
 
-  updateState(key, value) {
+  updateStateForm(object, secondObj = {}) {
     const { form } = this.state;
     this.setState({
-      form: { ...form, [key]: value },
+      ...secondObj,
+      form: { ...form, ...object },
     });
   }
 
   handleExpense() {
-    const { addExpense } = this.props;
-    const { form } = this.state;
+    const { addExpense, saveExpense, editExpenseMode } = this.props;
+    const { editorMode, form, idToEdit } = this.state;
     const { value, currency, method, tag, description } = form;
-    const expense = { value, currency, method, tag, description };
-    addExpense(expense);
+    if (editorMode) {
+      const { id, exchangeRates } = idToEdit;
+      const expense = { id, value, currency, method, tag, description, exchangeRates };
+      saveExpense(expense);
+      editExpenseMode('');
+    } else {
+      const expense = { value, currency, method, tag, description };
+      addExpense(expense);
+    }
     this.setState({
+      editorMode: false,
+      idToEdit: {},
       form: {
         ...form,
         value: 0,
@@ -94,7 +115,8 @@ class Wallet extends React.Component {
   }
 
   editExpense(id) {
-    console.log(id);
+    const { editExpenseMode } = this.props;
+    editExpenseMode(id);
   }
 
   handlechange({ target: { name, value } }) {
@@ -108,7 +130,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, total, currencyToExchange, form } = this.state;
+    const { email, total, currencyToExchange, form, editorMode } = this.state;
+    const textButton = editorMode ? 'Editar Despesa' : 'Adicionar Despesa';
     const { expenses, removeExpense } = this.props;
     return (
       <main>
@@ -116,6 +139,7 @@ class Wallet extends React.Component {
         <section>
           <Form
             { ...form }
+            textButton={ textButton }
             onChange={ this.handlechange }
             onClick={ this.handleExpense }
           />
@@ -135,21 +159,32 @@ class Wallet extends React.Component {
 
 Wallet.defaultProps = {
   currencyToExchange: '',
+  editor: false,
+  idToEdit: {},
 };
 
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
+  editor: PropTypes.bool,
+  idToEdit: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.number,
+  ]),
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   currencyToExchange: PropTypes.string,
   getIntCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
   removeExpense: PropTypes.func.isRequired,
+  editExpenseMode: PropTypes.func.isRequired,
+  saveExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
   expenses: state.wallet.expenses,
+  editor: state.wallet.editor,
+  idToEdit: state.wallet.idToEdit,
   currencies: state.wallet.currencies,
   currencyToExchange: state.wallet.currencyToExchange,
 });
@@ -158,6 +193,8 @@ const mapDispatchToProps = (dispatch) => ({
   getIntCurrencies: () => dispatch(getIntCurrenciesThunk()),
   addExpense: (expense) => dispatch(addExpenseThunk(expense)),
   removeExpense: (id) => dispatch(removeExpenseAction(id)),
+  editExpenseMode: (id) => dispatch(editExpenseModeAction(id)),
+  saveExpense: (expense) => dispatch(saveExpenseAction(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

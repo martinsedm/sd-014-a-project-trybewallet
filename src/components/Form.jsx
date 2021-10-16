@@ -14,6 +14,7 @@ class Form extends Component {
       currencies,
       categories,
       payment,
+      textButton,
       onChange,
       onClick,
     } = this.props;
@@ -42,7 +43,7 @@ class Form extends Component {
             type="button"
             onClick={ onClick }
           >
-            Adicionar Despesa
+            { textButton }
           </button>
         </fieldset>
       </form>
@@ -62,6 +63,7 @@ Form.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   payment: PropTypes.arrayOf(PropTypes.string).isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
+  textButton: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
 };

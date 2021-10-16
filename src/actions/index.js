@@ -1,8 +1,10 @@
 export const LOGIN_TYPE = 'LOGIN_TYPE';
-export const ADD_EXPENSE = 'ADD_WALLET';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const FETCHING = 'FETCHING';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
+export const EDIT_MODE = 'EDIT_MODE';
+export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 
 const NUM_CHARS = 3;
 
@@ -26,6 +28,13 @@ export const addExpenseAction = (expense) => ({
   },
 });
 
+export const saveExpenseAction = (expense) => ({
+  type: SAVE_EXPENSE,
+  payload: {
+    ...expense,
+  },
+});
+
 export const removeExpenseAction = (id) => ({
   type: REMOVE_EXPENSE,
   payload: id,
@@ -36,6 +45,11 @@ export const addCurrenciesAction = (currencies) => ({
   payload: [
     ...currencies,
   ],
+});
+
+export const editExpenseModeAction = (id) => ({
+  type: EDIT_MODE,
+  payload: id,
 });
 
 // actions assíncronas:

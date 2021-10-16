@@ -28,8 +28,8 @@ class Table extends Component {
                 <td>{ method }</td>
                 <td>{ value }</td>
                 <td>{ exchangeRates[currency].name }</td>
-                <td>{ Math.round(100 * exchangeRates[currency].ask) / 100 }</td>
-                <td>{ Math.round(100 * exchangeRates[currency].ask * value) / 100}</td>
+                <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
+                <td>{ Math.round(100 * exchangeRates[currency].ask * (value)) / 100 }</td>
                 <td>Real</td>
                 <td>
                   <button
@@ -37,7 +37,7 @@ class Table extends Component {
                     data-testid="edit-btn"
                     onClick={ () => editExpense(id) }
                   >
-                    Editar Despesa
+                    Edite
                   </button>
                   <button
                     type="button"
