@@ -15,12 +15,12 @@ class FormWallet extends Component {
 
   renderMethod() {
     const { method } = this.state;
-    const methods = ['Dineheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
-      <label htmlFor="method">
+      <label htmlFor="method-input">
         Método de Pagamento
         <select
-          name="method"
+          id="method-input"
           value={ method }
         >
           { methods.map((item, index) => (
@@ -36,11 +36,11 @@ class FormWallet extends Component {
     const { currency } = this.state;
     const currencys = ['USD', 'ATF', 'KJD'];
     return (
-      <label htmlFor="currency">
+      <label htmlFor="currency-input">
         Moeda
         <select
-          name="currency"
           value={ currency }
+          id="currency-input"
         >
           { currencys.map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
@@ -52,13 +52,13 @@ class FormWallet extends Component {
 
   renderTag() {
     const { tag } = this.state;
-    const tags = ['Alimnentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
-      <label htmlFor="tag">
+      <label htmlFor="tag-input">
         Tag
         <select
-          name="tag"
           value={ tag }
+          id="tag-input"
         >
           { tags.map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
@@ -72,18 +72,18 @@ class FormWallet extends Component {
     return (
       <div>
         <form>
-          <label htmlFor="value">
+          <label htmlFor="value-input">
             Valor
             <input
               type="number"
-              name="value"
+              id="value-input"
             />
           </label>
-          <label htmlFor="description">
+          <label htmlFor="description-input">
             Descrição
             <input
               type="text"
-              name="description"
+              id="description-input"
             />
           </label>
           { this.renderCurrency() }
