@@ -5,12 +5,14 @@ class Input extends Component {
   render() {
     const { type, name, label, onChange } = this.props;
     return (
-      <label htmlFor={ name }>
+      <label htmlFor={ label }>
         { label }
+        :
         <input
           type={ type }
           name={ name }
           onChange={ onChange }
+          id={ label }
         />
       </label>
     );

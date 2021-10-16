@@ -23,38 +23,37 @@ class Expenses extends React.Component {
 
   render() {
     const { currencies } = this.props;
-    console.log(currencies);
     const { price, description, currency, payment, tag } = this.state;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
         <Input
-          label="Valor: "
+          label="Valor"
           type="text"
           name={ price }
           onChange={ this.handleChange }
         />
         <Input
-          label="Descrição: "
+          label="Descrição"
           type="text"
           name={ description }
           onChange={ this.handleChange }
         />
         <Select
-          label="Moeda: "
+          label="Moeda"
           name={ currency }
           options={ currencies }
           onChange={ this.handleChange }
         />
         <Select
-          label="Método de pagamento: "
+          label="Método de pagamento"
           name={ payment }
           options={ methods }
           onChange={ this.handleChange }
         />
         <Select
-          label="Tag: "
+          label="Tag"
           name={ tag }
           options={ tags }
           onChange={ this.handleChange }

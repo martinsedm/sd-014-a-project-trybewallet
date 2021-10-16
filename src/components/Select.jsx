@@ -5,11 +5,13 @@ class Select extends Component {
   render() {
     const { name, label, options, onChange } = this.props;
     return (
-      <label htmlFor="currency">
+      <label htmlFor={ label }>
         { label }
+        :
         <select
           name={ name }
           onChange={ onChange }
+          id={ label }
         >
           {options.map((currency) => (
             <option key={ currency } value={ currency }>{currency}</option>
