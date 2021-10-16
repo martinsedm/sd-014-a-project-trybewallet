@@ -1,10 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { fetchCurrencies } from '../actions';
 
 class WalletForm extends React.Component {
-  renderFields() {
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
+  renderCurrencyOptions() {
+    const { currencies } = this.props;
+    return currencies.filter((currency) => currency !== 'USDT')
+      .map(((currency) => (
+        <option key={ currency } value={ currency }>{currency}</option>
+      )));
+  }
+
+  renderInputs() {
     return (
       <fieldset>
-
         <label htmlFor="expense-value">
           Valor
           <input
@@ -19,15 +35,6 @@ class WalletForm extends React.Component {
             id="expense-description"
           />
         </label>
-        <label htmlFor="expense-currency">
-          Moeda
-          <select
-            type="text"
-            id="expense-currency"
-          >
-            {/* Colocar algumas <option></option>s aqui */}
-          </select>
-        </label>
       </fieldset>
     );
   }
@@ -35,6 +42,12 @@ class WalletForm extends React.Component {
   renderSelects() {
     return (
       <fieldset>
+        <label htmlFor="expense-currency">
+          Moeda
+          <select type="text" id="expense-currency">
+            { this.renderCurrencyOptions() }
+          </select>
+        </label>
         <label htmlFor="expense-payment">
           Método de pagamento
           <select
@@ -66,11 +79,24 @@ class WalletForm extends React.Component {
   render() {
     return (
       <form>
-        { this.renderFields() }
+        { this.renderInputs() }
         { this.renderSelects() }
       </form>
     );
   }
 }
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+WalletForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
