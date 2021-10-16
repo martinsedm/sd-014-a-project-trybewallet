@@ -7,12 +7,12 @@ class Header extends React.Component {
     const { email } = this.props;
     return (
       <header>
-        <h4 data-testid="email-field">
+        <h3 data-testid="email-field">
           {email}
-        </h4>
-        <h5 data-testid="total-field">
+        </h3>
+        <h4 data-testid="total-field">
           0
-        </h5>
+        </h4>
         <p data-testid="header-currency-field">
           BRL
         </p>
