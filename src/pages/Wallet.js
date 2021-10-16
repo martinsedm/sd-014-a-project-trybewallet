@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ExpensesForm from '../components/ExpensesForm';
+import ExpensesTable from '../components/ExpensesTable';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import { fetchCurrenciesThunk } from '../actions';
@@ -15,12 +16,13 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { loading } = this.props;
+    const { loading, expenses } = this.props;
 
     return (
       <>
         <Header />
         { loading ? <Loading /> : <ExpensesForm /> }
+        { expenses.length && <ExpensesTable /> }
       </>
     );
   }
@@ -29,11 +31,13 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   loading: PropTypes.bool.isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => (
   {
     loading: state.wallet.loading,
+    expenses: state.wallet.expenses,
   });
 
 const mapDispatchToProps = (dispatch) => (
