@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -30,11 +32,10 @@ class Login extends React.Component {
   }
 
   walletPage() {
-    const { email, password } = this.state;
-    const { history } = this.props;
+    const { history, dispatchToProps } = this.props;
 
-    // configurar a atualizacao da getStore
-    console.log(email, password);
+    // configurar a atualizacao da store
+    dispatchToProps(this.state);
 
     history.push('/carteira');
   }
@@ -85,6 +86,11 @@ class Login extends React.Component {
 
 Login.propTypes = {
   history: PropTypes.objectOf.isRequired,
+  dispatchToProps: PropTypes.func.isRequired,
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchToProps: (state) => dispatch(loginAction(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
