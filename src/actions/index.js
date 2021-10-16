@@ -1,17 +1,9 @@
 // // Coloque aqui suas actions
-// const ENTER_PAGE_DISABLED = 'ENTER_PAGE_DISABLED';
-// const EMAIL_INVALID_DISABLED = 'EMAIL_INVALID_DISABLED';
+export const LOGIN_EMAIL = 'LOGIN_EMAIL';
 
-// export const enterPageDisabled = () => ({
-//   type: ENTER_PAGE_DISABLED,
-// })
+const loginEmail = (email) => ({
+  type: LOGIN_EMAIL,
+  payload: email,
+});
 
-// export const emailInvalid= () => ({
-//   type: EMAIL_INVALID_DISABLED,
-// })
-
-// export const emailInvalid= () => ({
-//   type: EMAIL_INVALID_DISABLED,
-// })
-
-
+export default loginEmail;
