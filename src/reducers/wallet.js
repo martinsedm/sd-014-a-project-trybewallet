@@ -8,7 +8,7 @@ const initialState = {
   },
 };
 
-export default walletReducer = (state = initialState, { type, payload }) => {
+const wallet = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_CURRENCIES:
     return {
@@ -22,3 +22,5 @@ export default walletReducer = (state = initialState, { type, payload }) => {
     return state;
   }
 };
+
+export default wallet;

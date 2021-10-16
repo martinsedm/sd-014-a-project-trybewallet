@@ -7,7 +7,7 @@ const initialState = {
   },
 };
 
-export default userReducer = (state = initialState, { type, payload }) => {
+const user = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_USER:
     return {
@@ -21,3 +21,5 @@ export default userReducer = (state = initialState, { type, payload }) => {
     return state;
   }
 };
+
+export default user;

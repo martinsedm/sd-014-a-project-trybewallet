@@ -14,6 +14,6 @@ export const addExpense = (payload) => ({
 });
 
 export const addCurrencies = (payload) => ({ // action assincrono
-  type,
+  type: ADD_CURRENCIES,
   payload,
 });
