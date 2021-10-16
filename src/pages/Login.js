@@ -36,10 +36,10 @@ class Login extends React.Component {
     });
   }
 
-  handleClick() {
+  async handleClick() {
     const { email } = this.state;
     const { history, addEmailInput } = this.props;
-    addEmailInput(email);
+    await addEmailInput(email);
     history.push('/carteira');
   }
 

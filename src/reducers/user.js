@@ -10,7 +10,7 @@ const user = (state = INICIAL_STATE, action) => {
   case ADD_EMAIL:
     return { ...state, email: action.email };
   default:
-    return { state };
+    return state;
   }
 };
 
