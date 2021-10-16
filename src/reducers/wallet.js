@@ -1,4 +1,4 @@
-import { SUBMIT_WALLET } from '../actions';
+import { SUBMIT_WALLET, SUBMIT_WALLET_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -10,8 +10,13 @@ const wallet = (state = INITIAL_STATE, action) => {
   case SUBMIT_WALLET:
     return {
       ...state,
-      currencies: action.payload.currencies,
-      expenses: action.payload.expenses,
+      expenses: [...state.expenses, { ...action.payload,
+        exchangeRates: action.result }],
+    };
+  case SUBMIT_WALLET_CURRENCIES:
+    return {
+      ...state,
+      currencies: action.currencies,
     };
   default:
     return state;

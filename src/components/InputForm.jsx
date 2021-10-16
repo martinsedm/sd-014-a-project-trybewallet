@@ -8,7 +8,7 @@ class InputForm extends Component {
       <div>
         <label htmlFor={name}>
           {label}
-          <input type='text' name={name} id={name} onChange={onChange} />
+          <input type={type} name={name} id={name} onChange={onChange} />
         </label>
       </div>
     );
