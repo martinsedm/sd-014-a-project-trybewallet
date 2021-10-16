@@ -5,5 +5,4 @@ class Wallet extends React.Component {
     return <div>TrybeWallet</div>;
   }
 }
-
 export default Wallet;
