@@ -1,6 +1,6 @@
 import { SET_USER } from '../actions';
 
-const INITIAL_STATE = { email: 'ini' };
+const INITIAL_STATE = { email: '' };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {

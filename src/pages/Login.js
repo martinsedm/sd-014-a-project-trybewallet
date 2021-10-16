@@ -42,6 +42,7 @@ const Login = ({ setUser }) => {
           disabled={ !password.isValid || !emailAddress.isValid }
           type="submit"
           onClick={ () => setUser(emailAddress) }
+          className="btn__login"
         >
           Entrar
         </button>
