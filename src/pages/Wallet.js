@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormSelect from '../components/FormSelect';
-import { paymentOptions, currencyOptions, tagOptions } from '../data';
+import { paymentOptions, tagOptions } from '../data';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -13,11 +13,30 @@ class Wallet extends React.Component {
       currency: 'Dólar',
       payment: 'dinheiro',
       tag: 'alimentação',
+      currencies: [],
+      // expenses: [],
     };
 
     this.renderHeader = this.renderHeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderForm = this.renderForm.bind(this);
+    this.fetchCurrencyAPI = this.fetchCurrencyAPI.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencyAPI();
+  }
+
+  async fetchCurrencyAPI() {
+    const URL = 'https://economia.awesomeapi.com.br/json/all';
+    const currencies = await (await fetch(URL)).json();
+
+    // stack overflow
+    delete currencies.USDT;
+
+    this.setState({
+      currencies: Object.keys(currencies),
+    });
   }
 
   handleChange({ target }) {
@@ -39,7 +58,7 @@ class Wallet extends React.Component {
   }
 
   renderForm() {
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, currency, payment, tag, currencies } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -64,7 +83,7 @@ class Wallet extends React.Component {
         </label>
         <FormSelect
           id="currency"
-          infoArray={ currencyOptions }
+          infoArray={ currencies }
           onChange={ this.handleChange }
           label="Moeda"
           value={ currency }
@@ -104,5 +123,9 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.user.email,
 });
+
+// const mapDispatchToProps = (dispatch) => ({
+//   currencies: (payload) => dispatch(GET_CURRENCIES_FROM_API(payload))
+// });
 
 export default connect(mapStateToProps)(Wallet);
