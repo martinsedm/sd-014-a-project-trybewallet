@@ -6,11 +6,11 @@ class SelectForm extends Component {
     const { name, options, onChange, label } = this.props;
     return (
       <div>
-        <label htmlFor={name}>
+        <label htmlFor={ name }>
           {label}
-          <select name={name} id={name} onChange={onChange}>
+          <select name={ name } id={ name } onChange={ onChange }>
             {options.map((item) => (
-              <option key={item} value={item}>
+              <option key={ item } value={ item }>
                 {item}
               </option>
             ))}
@@ -22,3 +22,10 @@ class SelectForm extends Component {
 }
 
 export default SelectForm;
+
+SelectForm.propTypes = {
+  name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};

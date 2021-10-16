@@ -6,9 +6,9 @@ class InputForm extends Component {
     const { type, name, label, onChange } = this.props;
     return (
       <div>
-        <label htmlFor={name}>
+        <label htmlFor={ name }>
           {label}
-          <input type={type} name={name} id={name} onChange={onChange} />
+          <input type={ type } name={ name } id={ name } onChange={ onChange } />
         </label>
       </div>
     );
@@ -16,3 +16,10 @@ class InputForm extends Component {
 }
 
 export default InputForm;
+
+InputForm.propTypes = {
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
