@@ -7,8 +7,8 @@ import './App.css';
 const App = () => (
   <Switch>
     <div className="container">
-      <Route exact path="/" component={Login} />
-      <Route path="/carteira" component={Wallet} />
+      <Route exact path="/" component={ Login } />
+      <Route path="/carteira" component={ Wallet } />
     </div>
   </Switch>
 );
