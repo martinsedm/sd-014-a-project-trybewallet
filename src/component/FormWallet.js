@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchAPI } from '../actions';
+import { addItem, fetchAPI } from '../actions';
 
 class FormWallet extends Component {
   constructor() {
     super();
 
     this.state = {
-      // value: 0,
-      // description: '',
+      value: 0,
+      description: '',
       method: 'Dinheiro',
       tag: 'Alimentação',
       currency: 'USD',
     };
+
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
     const { setFetchAPI } = this.props;
     setFetchAPI();
+  }
+
+  onClick(e) {
+    e.preventDefault();
+    const { saveExpense, setFetchAPI } = this.props;
+    setFetchAPI();
+    saveExpense(this.state);
   }
 
   renderMethod() {
@@ -30,6 +39,7 @@ class FormWallet extends Component {
         <select
           id="method-input"
           value={ method }
+          onChange={ (e) => this.setState({ method: e.target.value }) }
         >
           { methods.map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
@@ -49,6 +59,7 @@ class FormWallet extends Component {
         <select
           value={ currency }
           id="currency-input"
+          onChange={ (e) => this.setState({ currency: e.target.value }) }
         >
           { currenciesNames.map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
@@ -67,6 +78,7 @@ class FormWallet extends Component {
         <select
           value={ tag }
           id="tag-input"
+          onChange={ (e) => this.setState({ tag: e.target.value }) }
         >
           { tags.map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
@@ -77,6 +89,7 @@ class FormWallet extends Component {
   }
 
   render() {
+    const { value, description } = this.state;
     return (
       <div>
         <form>
@@ -85,6 +98,8 @@ class FormWallet extends Component {
             <input
               type="number"
               id="value-input"
+              value={ value }
+              onChange={ (e) => this.setState({ value: e.target.value }) }
             />
           </label>
           <label htmlFor="description-input">
@@ -92,11 +107,20 @@ class FormWallet extends Component {
             <input
               type="text"
               id="description-input"
+              value={ description }
+              onChange={ (e) => this.setState({ description: e.target.value }) }
             />
           </label>
           { this.renderCurrency() }
           { this.renderMethod() }
           { this.renderTag() }
+          <button
+            type="submit"
+            className="add-spend-btn"
+            onClick={ this.onClick }
+          >
+            Adicionar despesa
+          </button>
         </form>
       </div>
     );
@@ -105,15 +129,19 @@ class FormWallet extends Component {
 
 const mapStateToProps = (state) => ({
   currenciesNames: state.wallet.currenciesNames,
+  exchangeRates: state.wallet.exchangeRates,
+  sumExpenses: state.wallet.sumExpenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setFetchAPI: () => dispatch(fetchAPI()),
+  saveExpense: (expense) => dispatch(addItem(expense)),
 });
 
 FormWallet.propTypes = {
   currenciesNames: PropTypes.arrayOf(PropTypes.object).isRequired,
   setFetchAPI: PropTypes.arrayOf(PropTypes.object).isRequired,
+  saveExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
