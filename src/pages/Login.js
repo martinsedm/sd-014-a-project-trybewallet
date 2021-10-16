@@ -13,6 +13,9 @@ class Login extends React.Component {
           data-testid="password-input"
           placeholder="Password"
         />
+        <button type="button">
+          Entrar
+        </button>
       </div>
     );
   }
