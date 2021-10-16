@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setUser as setUserAction } from '../actions';
 import './Login.css';
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [emailAddress, setEmailAddress] = useState({ address: '', isValid: false });
   const [password, setPassword] = useState({ password: '', isValid: false });
-
   const PASSWORD_MIN_LENGTH = 6;
 
   const handlePassword = ({ target: { value } }) => {
@@ -15,25 +18,48 @@ const Login = () => {
     const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
     if (testEmail.test(value)) {
       setEmailAddress({ address: value, isValid: true });
-    } else { setEmailAddress({ isValid: false }); }
+    } else {
+      setEmailAddress({ isValid: false });
+    }
   };
 
   return (
     <main className="login__container">
       <h3>Login</h3>
-      <input type="email" data-testid="email-input" onChange={ handleEmailAddress } />
+      <input
+        type="email"
+        data-testid="email-input"
+        onChange={ handleEmailAddress }
+      />
       <input
         data-testid="password-input"
         type="password"
-        minLength="6"
         onChange={ handlePassword }
         value={ password.password }
       />
-      <button disabled={ !password.isValid || !emailAddress.isValid } type="submit">
-        Entrar
-      </button>
+      <Link to="/carteira">
+        <button
+          disabled={ !password.isValid || !emailAddress.isValid }
+          type="submit"
+          onClick={ () => setUser(emailAddress) }
+        >
+          Entrar
+        </button>
+      </Link>
     </main>
   );
 };
 
-export default Login;
+const mapStateToProps = (state) => ({
+  user: state.user.value,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setUser: (email) => dispatch(setUserAction(email.address)),
+});
+
+Login.propTypes = {
+  setUser: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
