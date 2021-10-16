@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 // import { connect } from 'react-redux';
 // import { Redirect } from 'react-router';
-import Input from '../componentsGeneric/Input';
-import { Button } from '../componentsGeneric/Button';
+import Input from './Input';
+import { Button } from './Button';
 
 export class FormsLogin extends PureComponent {
   constructor() {
