@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './Login.css';
 
 const Login = () => {
   const [emailAddress, setEmailAddress] = useState({ address: '', isValid: false });
@@ -18,7 +19,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <main className="login__container">
       <h3>Login</h3>
       <input type="email" data-testid="email-input" onChange={ handleEmailAddress } />
       <input
@@ -31,7 +32,7 @@ const Login = () => {
       <button disabled={ !password.isValid || !emailAddress.isValid } type="submit">
         Entrar
       </button>
-    </div>
+    </main>
   );
 };
 
