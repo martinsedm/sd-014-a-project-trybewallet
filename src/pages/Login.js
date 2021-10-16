@@ -22,9 +22,9 @@ class Login extends Component {
       const { email, password } = this.state;
       const CARACTER_MIN = 5;
       const PASSWORD = password.length > CARACTER_MIN;
-      console.log(PASSWORD);
+
       const VALID_EMAIL = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(email);
-      console.log(VALID_EMAIL);
+
       if (PASSWORD || VALID_EMAIL) {
         this.setState({ habilit: true });
       } else {

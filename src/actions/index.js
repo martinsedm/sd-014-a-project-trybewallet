@@ -1,7 +1,10 @@
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN';
 
-export const saveStateLogin = (payload) => ({
+export const saveStateLogin = (email, password) => ({
   type: LOGIN,
-  payload,
+  payload: {
+    email,
+    password,
+  },
 });
