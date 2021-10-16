@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { removeExpense } from '../actions/index';
+import { removeExpense, changeEditState } from '../actions/index';
 
 class ExpenseTable extends Component {
   constructor() {
     super();
     this.onClickBtnDel = this.onClickBtnDel.bind(this);
+    this.onClickBtnEdit = this.onClickBtnEdit.bind(this);
   }
 
   onClickBtnDel({ target: { id } }) {
     const { rmvExpense, expenses } = this.props;
     rmvExpense(expenses.find((expense) => expense.id === Number(id)));
+  }
+
+  onClickBtnEdit({ target: { id } }) {
+    const { setEditState } = this.props;
+    setEditState({
+      load: true,
+      newSet: false,
+      expense: Number(id),
+    });
   }
 
   getExpensesCells() {
@@ -24,7 +34,7 @@ class ExpenseTable extends Component {
           <td>{method}</td>
           <td>{value}</td>
           <td>{exchangeRates[currency].name.split('/')[0]}</td>
-          <td>{Math.round(exchangeRates[currency].ask * 100) / 100}</td>
+          <td>{(parseFloat(exchangeRates[currency].ask)).toFixed(2)}</td>
           <td>
             {Math.round((value * exchangeRates[currency].ask) * 100) / 100}
           </td>
@@ -79,12 +89,12 @@ class ExpenseTable extends Component {
 function mapStateToProps(state) {
   return {
     expenses: state.wallet.expenses,
-    edit: state.wallet.edit,
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
   rmvExpense: (payload) => dispatch(removeExpense(payload)),
+  setEditState: (payload) => dispatch(changeEditState(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
@@ -92,4 +102,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   rmvExpense: PropTypes.func.isRequired,
+  setEditState: PropTypes.func.isRequired,
 };

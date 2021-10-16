@@ -11,7 +11,7 @@ class Header extends Component {
           {email || 'Nenhum email'}
         </p>
         <div className="total-container header-item">
-          <p className="total" data-testid="total-field">{total || 0}</p>
+          <p className="total" data-testid="total-field">{total}</p>
           <p className="currency header-item" data-testid="header-currency-field">
             BRL
           </p>
@@ -32,5 +32,9 @@ export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  total: PropTypes.number.isRequired,
+  total: PropTypes.number,
+};
+
+Header.defaultProps = {
+  total: 0,
 };

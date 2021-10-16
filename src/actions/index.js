@@ -4,6 +4,8 @@ export const GET_CURRENCY_SUCKSEX = 'GET_CURRENCY_SUCKSEX';
 export const GET_CURRENCY_ERROR = 'GET_CURRENCY_ERROR';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const CHANGE_EDIT_STATE = 'CHANGE_EDIT_STATE';
+export const SET_EDITED_EXPENSE = 'SET_EDITED_EXPENSE';
 
 export function USER_EMAIL(payload) {
   return {
@@ -29,9 +31,7 @@ export function getCurrencyError(payload) {
 export const getCurrencyThunk = () => async (dispatch) => {
   try {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const json = await response.json();
-    const payload = Object.entries(json);
-    dispatch(getCurrencySuckSex(payload));
+    dispatch(getCurrencySuckSex(await response.json()));
   } catch (error) {
     dispatch(getCurrencyError(error));
   }
@@ -47,6 +47,20 @@ export function addExpense(payload) {
 export function removeExpense(payload) {
   return {
     type: REMOVE_EXPENSE,
+    payload,
+  };
+}
+
+export function changeEditState(payload) {
+  return {
+    type: CHANGE_EDIT_STATE,
+    payload,
+  };
+}
+
+export function setEditedExpense(payload) {
+  return {
+    type: SET_EDITED_EXPENSE,
     payload,
   };
 }
