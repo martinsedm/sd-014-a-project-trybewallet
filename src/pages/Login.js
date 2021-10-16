@@ -33,10 +33,7 @@ class Login extends React.Component {
 
   walletPage() {
     const { history, dispatchToProps } = this.props;
-
-    // configurar a atualizacao da store
     dispatchToProps(this.state);
-
     history.push('/carteira');
   }
 

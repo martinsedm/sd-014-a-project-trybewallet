@@ -8,7 +8,6 @@ const INITIAL_STATE = {
 };
 
 function user(state = INITIAL_STATE, action) {
-  console.log(action.state);
   switch (action.type) {
   case LOGIN_ACTION:
     return {
