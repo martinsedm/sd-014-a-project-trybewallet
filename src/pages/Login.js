@@ -26,8 +26,9 @@ class Login extends React.Component {
 
   render() {
     const lengthPassword = 6;
+    const ValidateEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     const { email, password, redirect } = this.state;
-   // if (redirect) return <Redirect to="/carteira" />;
+    if (redirect) return <Redirect to="/carteira" />;
     return (
       <div>
         <form>
@@ -50,7 +51,7 @@ class Login extends React.Component {
           <button
             type="submit"
             onClick={ this.handleClick }
-            disabled={ password.length < lengthPassword }
+            disabled={ password.length < lengthPassword || !ValidateEmail.test(email) }
 
           >
             Entrar
