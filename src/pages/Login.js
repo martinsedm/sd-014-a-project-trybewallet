@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveStateLogin, saveStateLogin as saveStateLoginAction } from '../actions';
+import { saveStateLogin as saveStateLoginAction } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -20,11 +20,12 @@ class Login extends Component {
 
     this.setState({ [name]: value }, () => {
       const { email, password } = this.state;
-      const CARACTER_MIN = 6;
-      const PASSWORD = password.length >= CARACTER_MIN;
+      const CARACTER_MIN = 5;
+      const PASSWORD = password.length > CARACTER_MIN;
+      console.log(PASSWORD);
       const VALID_EMAIL = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(email);
-
-      if (PASSWORD && VALID_EMAIL) {
+      console.log(VALID_EMAIL);
+      if (PASSWORD || VALID_EMAIL) {
         this.setState({ habilit: true });
       } else {
         this.setState({ habilit: false });
@@ -43,7 +44,7 @@ class Login extends Component {
   render() {
     const { email, password, habilit } = this.state;
     return (
-      <div className="login">
+      <div className="login-container">
         Login
         <label htmlFor="email">
           Email
@@ -53,6 +54,7 @@ class Login extends Component {
             type="text"
             name="email"
             value={ email }
+            onChange={ this.handleChange }
             placeholder="Email"
           />
         </label>
@@ -61,7 +63,7 @@ class Login extends Component {
             Password
             <input
               data-testid="password-input"
-              type="password"
+              type="text"
               id="pass"
               placeholder="password"
               value={ password }
@@ -72,7 +74,7 @@ class Login extends Component {
         </div>
         <button
           type="submit"
-          desabilit={ !habilit }
+          disabled={ !habilit }
           onClick={ this.handleClick }
         >
           Entrar
