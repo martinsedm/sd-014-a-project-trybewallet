@@ -4,6 +4,7 @@ import {
   IN_PROGRESS,
   GET_CURRENCIES_SUCCESS,
   GET_CURRENCIES_ERROR,
+  ADD_EXPENSE,
 } from '../actions';
 
 const initialWalletState = {
@@ -22,6 +23,9 @@ const wallet = (state = initialWalletState, { type, payload }) => {
     return { ...state, currencies: payload, loading: false };
   case GET_CURRENCIES_ERROR:
     return { ...state, error: payload };
+  case ADD_EXPENSE:
+    payload.id = state.expenses.length;
+    return { ...state, expenses: [...state.expenses, payload] };
   default:
     return state;
   }

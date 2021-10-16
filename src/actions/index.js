@@ -1,9 +1,12 @@
 // Coloque aqui suas actions
+import { fetchCurrencies } from '../services/awesomeAPI';
+
 export const SET_USER_VALUE = 'SET_USER_VALUE';
 export const SET_WALLET_VALUE = 'SET_WALLET_VALUE';
 export const IN_PROGRESS = 'IN_PROGRESS';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const setUserValue = (payload) => ({
   type: SET_USER_VALUE,
@@ -29,11 +32,17 @@ export const getCurrenciesError = (payload) => ({
   payload,
 });
 
+export const addExpense = (payload) => (
+  {
+    type: ADD_EXPENSE,
+    payload,
+  }
+);
+
 export const fetchCurrenciesThunk = () => async (dispatch) => {
   dispatch(inProgress());
   try {
-    const URL = 'https://economia.awesomeapi.com.br/json/all';
-    const currencies = await (await fetch(URL)).json();
+    const currencies = await fetchCurrencies();
     const payload = Object.keys(currencies).filter((currency) => currency !== 'USDT');
     dispatch(getCurrenciesSuccess(payload));
   } catch (error) {
