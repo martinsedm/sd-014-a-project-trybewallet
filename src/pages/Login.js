@@ -7,10 +7,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        email: '',
-        password: '',
-      },
+      email: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.emailValidation = this.emailValidation.bind(this);
@@ -18,33 +16,29 @@ class Login extends React.Component {
   }
 
   onSubmit() {
-    console.log('onSubmit called..');
     const { history, dispatchUserInfo } = this.props;
-    const { user } = this.state;
-    dispatchUserInfo(user);
+    const { email } = this.state;
+    dispatchUserInfo(email);
     history.push('/carteira');
   }
 
   // Peguei o regex do link https://www.w3resource.com/javascript/form/email-validation.php
   emailValidation() {
-    const { user } = this.state;
+    const { email } = this.state;
     const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    return regex.test(String(user.email).toLowerCase());
+    return regex.test(String(email).toLowerCase());
   }
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState((previousState) => ({
-      user: {
-        ...previousState.user,
-        [name]: value,
-      },
-    }));
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
     const minPasswordLength = 6;
-    const { user } = this.state;
+    const { password } = this.state;
     return (
       <form>
         <label htmlFor="email">
@@ -67,7 +61,7 @@ class Login extends React.Component {
         </label>
         <button
           type="button"
-          disabled={ !this.emailValidation() || user.password.length < minPasswordLength }
+          disabled={ !this.emailValidation() || password.length < minPasswordLength }
           onClick={ this.onSubmit }
         >
           Entrar
