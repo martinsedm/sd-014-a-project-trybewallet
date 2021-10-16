@@ -12,8 +12,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { isFetching, currency } = this.props;
-    console.log(isFetching);
+    const { currency } = this.props;
     return (
       <div>
         <Header />

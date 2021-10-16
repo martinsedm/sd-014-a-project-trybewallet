@@ -39,8 +39,8 @@ class Login extends React.Component {
   async handleClick() {
     const { email } = this.state;
     const { history, addEmailInput } = this.props;
-    await addEmailInput(email);
     history.push('/carteira');
+    await addEmailInput(email);
   }
 
   render() {
