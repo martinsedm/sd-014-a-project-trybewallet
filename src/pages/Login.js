@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { actionSubmitLogin } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -20,12 +23,16 @@ class Login extends React.Component {
   }
 
   handleClick(event) {
+    const { loginDone } = this.props;
+    const { email } = this.state;
     event.preventDefault();
+    loginDone(email);
     this.setState({ redirect: true });
   }
 
   render() {
     const lengthPassword = 6;
+    // src: https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
     const ValidateEmail = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     const { email, password, redirect } = this.state;
     if (redirect) return <Redirect to="/carteira" />;
@@ -61,5 +68,10 @@ class Login extends React.Component {
     );
   }
 }
-
-export default Login;
+Login.propTypes = {
+  loginDone: PropTypes.func.isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  loginDone: (email) => dispatch(actionSubmitLogin(email)),
+});
+export default connect(null, mapDispatchToProps)(Login);
