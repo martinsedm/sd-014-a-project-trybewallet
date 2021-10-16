@@ -7,11 +7,12 @@ class FormsAddexpense extends Component {
   constructor() {
     super();
     this.state = {
-      price: '',
-      currency: '',
-      paymentForm: '',
-      tag: '',
+      value: '',
       description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      // devarar ter a lista de moedas resultado da api
     };
     this.handleChangeGeneric = this.handleChangeGeneric.bind(this);
   }
@@ -22,7 +23,7 @@ class FormsAddexpense extends Component {
   }
 
   render() {
-    const { price, currency, paymentForm, tag, description } = this.state;
+    const { value: price, currency, method: paymentForm, tag, description } = this.state;
     return (
       <form>
         <Input // possivel problema na logica, o valor será tipo string inicialmente.
