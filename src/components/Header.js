@@ -29,6 +29,41 @@ class Header extends Component {
         <p data-testid="email-field">{user.email}</p>
         <p data-testid="total-field">{expenses}</p>
         <p data-testid="header-currency-field">BRL</p>
+        <form>
+          <label htmlFor="expenses">
+            Valor
+            <input type="text" name="expenses" />
+          </label>
+          <label htmlFor="description">
+            Descrição
+            <input type="text" name="description" />
+          </label>
+          <label htmlFor="currency">
+            Moeda
+            <select>
+              {/* <option value="currency">API</option> */}
+            </select>
+          </label>
+          <label htmlFor="payment">
+            Método de pagamento
+            <select>
+              <option value="cash">Dinheiro</option>
+              <option value="credit">Cartão de crédito</option>
+              <option value="debit">Cartão de débito</option>
+            </select>
+          </label>
+          <label htmlFor="tag">
+            Tag
+            <select>
+              <option value="food-expenses">Alimentação</option>
+              <option value="recreation-expenses">Lazer</option>
+              <option value="job-expenses">Trabalho</option>
+              <option value="transport-expenses">Transporte</option>
+              <option value="healthcare-expenses">Saúde</option>
+            </select>
+          </label>
+
+        </form>
       </div>
     );
   }
