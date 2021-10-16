@@ -22,7 +22,7 @@ class Wallet extends React.Component {
       <>
         <Header />
         { loading ? <Loading /> : <ExpensesForm /> }
-        { expenses.length && <ExpensesTable /> }
+        { expenses.length > 0 && <ExpensesTable /> }
       </>
     );
   }
