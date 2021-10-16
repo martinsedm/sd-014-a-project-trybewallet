@@ -22,6 +22,7 @@ class Expenses extends React.Component {
   }
 
   render() {
+    const { price, description, currency, payment, tag } = this.state;
     const { currencies } = this.props;
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -31,29 +32,34 @@ class Expenses extends React.Component {
           label="Valor"
           type="text"
           name="price"
+          value={ price }
           onChange={ this.handleChange }
         />
         <Input
           label="Descrição"
           type="text"
           name="description"
+          value={ description }
           onChange={ this.handleChange }
         />
         <Select
           label="Moeda"
           name="currency"
+          value={ currency }
           options={ currencies }
           onChange={ this.handleChange }
         />
         <Select
           label="Método de pagamento"
           name="payment"
+          value={ payment }
           options={ methods }
           onChange={ this.handleChange }
         />
         <Select
           label="Tag"
           name="tag"
+          value={ tag }
           options={ tags }
           onChange={ this.handleChange }
         />
