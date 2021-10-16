@@ -7,7 +7,7 @@ const initialState = {
   },
 };
 
-export default (state = initialState, { type, payload }) => {
+export default userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_USER:
     return {
