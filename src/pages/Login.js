@@ -1,37 +1,50 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { setUserInfoAction } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      email: '',
-      password: '',
+      user: {
+        email: '',
+        password: '',
+      },
     };
     this.handleChange = this.handleChange.bind(this);
     this.emailValidation = this.emailValidation.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit() {
-
+    console.log('onSubmit called..');
+    const { history, dispatchUserInfo } = this.props;
+    const { user } = this.state;
+    dispatchUserInfo(user);
+    history.push('/carteira');
   }
 
-  // Peguei o formato do email do link https://www.w3resource.com/javascript/form/email-validation.php
+  // Peguei o regex do link https://www.w3resource.com/javascript/form/email-validation.php
   emailValidation() {
-    const { email } = this.state;
-    const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    return re.test(String(email).toLowerCase());
+    const { user } = this.state;
+    const regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(String(user.email).toLowerCase());
   }
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState((previousState) => ({
+      user: {
+        ...previousState.user,
+        [name]: value,
+      },
+    }));
   }
 
   render() {
     const minPasswordLength = 6;
-    const { password } = this.state;
+    const { user } = this.state;
     return (
       <form>
         <label htmlFor="email">
@@ -53,8 +66,9 @@ class Login extends React.Component {
           />
         </label>
         <button
-          type="submit"
-          disabled={ !this.emailValidation() || password.length < minPasswordLength }
+          type="button"
+          disabled={ !this.emailValidation() || user.password.length < minPasswordLength }
+          onClick={ this.onSubmit }
         >
           Entrar
         </button>
@@ -63,4 +77,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  dispatchUserInfo: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchUserInfo: (payload) => dispatch(setUserInfoAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
