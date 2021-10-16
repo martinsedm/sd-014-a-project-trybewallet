@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { regUser } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
@@ -37,8 +38,9 @@ class Login extends React.Component {
 
   submitForm() {
     // event.preventDefault();
+    const { dispatchRegUser } = this.props;
     const { email } = this.state;
-    regUser(email);
+    dispatchRegUser(email);
   }
 
   render() {
@@ -79,8 +81,12 @@ class Login extends React.Component {
   }
 }
 
+Login.propTypes = {
+  dispatchRegUser: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
-  regUser: (payload) => dispatch(regUser(payload)),
+  dispatchRegUser: (payload) => dispatch(regUser(payload)),
 });
 
 // export default Login;
