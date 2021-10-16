@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetchData from '../helpers/fetch';
 
 class Form extends Component {
   constructor() {
@@ -10,10 +11,15 @@ class Form extends Component {
       method: '',
       tag: '',
       description: '',
+      data: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    fetchData().then((data) => this.setState({ data }));
   }
 
   handleChange({ target }) {
@@ -27,7 +33,8 @@ class Form extends Component {
   }
 
   render() {
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, tag, description, data } = this.state;
+
     return (
       <form>
         <label htmlFor="value">
@@ -47,7 +54,15 @@ class Form extends Component {
             name="currency"
             value={ currency }
             onChange={ this.handleChange }
-          />
+          >
+            { Object.values(data).map((currency, i) => {
+              if (currency.codein !== 'BRLT' && currency.code !== 'DOGE') {
+                return (
+                  <option key={ i }>{currency.code}</option>
+                );
+              }
+            })}
+          </select>
         </label>
         <label htmlFor="method">
           Método de pagamento
