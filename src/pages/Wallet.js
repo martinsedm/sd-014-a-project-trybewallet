@@ -1,6 +1,6 @@
 import React from 'react';
 import HeaderWallet from '../components/HeaderWallet';
-import ExpenseTable from '../components/ExpenseTable';
+import ExpensesTable from '../components/ExpensesTable';
 // componente ler o state global para passar a lista de despesas para o componente ExpensaTable
 
 class Wallet extends React.Component {
@@ -10,7 +10,7 @@ class Wallet extends React.Component {
       <>
         <HeaderWallet />
         <main>
-          <ExpenseTable />
+          <ExpensesTable />
         </main>
       </>
     );
