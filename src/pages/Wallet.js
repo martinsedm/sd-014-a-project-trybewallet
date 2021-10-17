@@ -2,14 +2,39 @@ import React from 'react';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      moedas: [],
+    };
+    this.fetchMoedas = this.fetchMoedas.bind(this);
+    this.salvarMoedas = this.salvarMoedas.bind(this);
+  }
+
+  componentDidMount() {
+    this.salvarMoedas();
+  }
+
+  async salvarMoedas() {
+    const mo = await this.fetchMoedas();
+    const moedas = Object.keys(mo).filter((moeda) => moeda !== 'USDT');
+    this.setState({ moedas });
+  }
+
+  async fetchMoedas() {
+    const moedas = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
+    return moedas;
+  }
+
   render() {
+    const { moedas } = this.state;
     return (
       <div>
         <Header />
         <form>
           <label htmlFor="valor">
             {'Valor: '}
-            <input type="text" name="valor" id="valor" />
+            <input type="number" name="valor" id="valor" />
           </label>
           <label htmlFor="desc">
             {'Descrição: '}
@@ -18,7 +43,9 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             {'Moeda: '}
             <select name="moeda" id="moeda">
-              <option>BRL</option>
+              {moedas.map((moeda, index) => (
+                <option key={ index }>{moeda}</option>
+              ))}
             </select>
           </label>
           <label htmlFor="pag">
