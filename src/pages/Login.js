@@ -68,7 +68,7 @@ class Login extends React.Component {
           onClick={ this.clickButton }
           msg="Entrar"
         />
-        { btnClicado && <Redirect to="/Wallet" />}
+        { btnClicado && <Redirect to="/carteira" />}
       </div>
     );
   }

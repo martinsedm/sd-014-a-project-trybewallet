@@ -18,7 +18,7 @@ class Buttons extends Component {
 
 Buttons.propTypes = {
   onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.func.isRequired,
+  disabled: PropTypes.bool.isRequired,
   msg: PropTypes.string.isRequired,
 };
 
