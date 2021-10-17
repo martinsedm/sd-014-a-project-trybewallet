@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import P from 'prop-types';
+import { addCurrenciesThunk } from '../../actions';
 import Input from '../Input';
 import Select from '../Select';
 
@@ -11,12 +14,16 @@ class ExpendituresForm extends React.Component {
     this.state = {
       valueField: 0,
       currency: '',
-      optionsCurr: ['Teste', 'Teste2'],
       payment: 'Dinheiro',
       category: 'Alimentação',
-      description: '',
+      desc: '',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   handleChange({ target }) {
@@ -27,8 +34,8 @@ class ExpendituresForm extends React.Component {
   }
 
   render() {
-    const { state } = this;
-    const { valueField, currency, optionsCurr, payment, category, description } = state;
+    const { valueField, currency, payment, category, desc } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <Input
@@ -41,7 +48,7 @@ class ExpendituresForm extends React.Component {
         />
         <Select
           label="Moeda"
-          options={ optionsCurr }
+          options={ currencies }
           name="currency"
           value={ currency }
           onChange={ this.handleChange }
@@ -66,7 +73,7 @@ class ExpendituresForm extends React.Component {
         <Input
           type="text"
           onChange={ this.handleChange }
-          value={ description }
+          value={ desc }
           name="description"
           testId="description-input"
           label="Descrição"
@@ -76,4 +83,17 @@ class ExpendituresForm extends React.Component {
   }
 }
 
-export default ExpendituresForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(addCurrenciesThunk()),
+});
+
+ExpendituresForm.propTypes = {
+  getCurrencies: P.func.isRequired,
+  currencies: P.arrayOf(P.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpendituresForm);
