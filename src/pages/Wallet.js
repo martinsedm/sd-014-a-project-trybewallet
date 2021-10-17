@@ -44,8 +44,7 @@ class Wallet extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { currencies, expenses, currencyToExchange, editor, idToEdit } = this.props;
-    // const { currencyToExchange } = this.state;
+    const { currencies, expenses, currencyToExchange, editor } = this.props;
     if (prevProps.currencies !== currencies) {
       this.updateStateForm({ currencies });
     }
@@ -56,7 +55,7 @@ class Wallet extends React.Component {
     if (editor && editor !== prevProps.editor) {
       const { idToEdit: { value, currency, method, tag, description } } = this.props;
       const formEdit = { value, currency, method, tag, description };
-      this.updateStateForm(formEdit, { editorMode: true, idToEdit: { ...idToEdit } });
+      this.updateStateForm(formEdit);
     }
   }
 
@@ -86,8 +85,8 @@ class Wallet extends React.Component {
   }
 
   handleExpense() {
-    const { addExpense, saveExpense, editExpenseMode, editor } = this.props;
-    const { form, idToEdit } = this.state;
+    const { addExpense, saveExpense, editExpenseMode, editor, idToEdit } = this.props;
+    const { form } = this.state;
     const { value, currency, method, tag, description } = form;
     if (editor) {
       const { id, exchangeRates } = idToEdit;
@@ -99,7 +98,6 @@ class Wallet extends React.Component {
       addExpense(expense);
     }
     this.setState({
-      idToEdit: {},
       form: {
         ...form,
         value: 0,
@@ -137,7 +135,6 @@ class Wallet extends React.Component {
     const textButton = editor ? 'Editar Despesa' : 'Adicionar Despesa';
     return (
       <main>
-        { email.length === 0 && <MakeLogin />}
         <Header data={ { email, total, currencyToExchange } } />
         <section>
           <Form
@@ -155,6 +152,7 @@ class Wallet extends React.Component {
             editExpense={ this.editExpense }
           /> }
         </section>
+        { email.length === 0 && <MakeLogin />}
       </main>
     );
   }
