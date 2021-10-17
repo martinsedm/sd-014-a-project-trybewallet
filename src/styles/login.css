@@ -56,6 +56,7 @@
   font-weight: 400;
   line-height: 1.428;
   margin-bottom: 0;
+  min-height: 38px;
   padding: 6px 12px;
   text-align: center;
   touch-action: manipulation;
@@ -64,8 +65,7 @@
   width: 100%;
 }
 
-.checkbox-inline , 
-.radio-inline {
+.checkbox-inline {
   cursor: pointer;
   display: inline-block;
   font-weight: 400;
