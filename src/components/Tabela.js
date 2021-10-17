@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DeleteButton from './DeleteButton';
 
 class Tabela extends Component {
   render() {
     const headerTable = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     const { expenses } = this.props;
-    console.log(expenses);
     return (
       <div>
         <table>
@@ -17,7 +17,7 @@ class Tabela extends Component {
                 <th key={ idx }>{item}</th>
               ))}
             </tr>
-            { expenses.map((item) => (
+            { expenses.map((item, idx) => (
               <tr key={ item.id }>
                 <td>{item.description}</td>
                 <td>{item.tag}</td>
@@ -27,7 +27,7 @@ class Tabela extends Component {
                 <td>{Number(item.exchangeRates[item.currency].ask).toFixed(2)}</td>
                 <td>Real</td>
                 <td>{(item.exchangeRates[item.currency].ask * item.value).toFixed(2)}</td>
-                <td>Editar/Remover</td>
+                <td><DeleteButton idx={ idx } /></td>
               </tr>
             ))}
           </tbody>

@@ -2,6 +2,7 @@
 export const USER_INPUT = 'USER_INPUT';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const loginAction = (email) => ({
   type: USER_INPUT,
@@ -19,6 +20,11 @@ const addExpenseAction = (exchangeRates, state) => ({
     ...state,
     exchangeRates,
   },
+});
+
+export const deleteExpenseAction = (expenses) => ({
+  type: DELETE_EXPENSE,
+  expenses,
 });
 
 export function fetchCoinAPI() {

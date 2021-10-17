@@ -308,14 +308,12 @@ describe('10 - Crie um botão para deletar uma despesa da tabela contendo as seg
         exchangeRates: mockData,
       },
     ];
-
     expect(store.getState().wallet.expenses).toStrictEqual(newExpenses);
   });
 
   test('Ao clicar no botão para remover uma despesa, o valor correspondente deve ser subtraído e a despesa total deve ser atualizada no header', () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira', initial);
     const deleteBtn = screen.getAllByTestId('delete-btn')[0];
-
     fireEvent.click(deleteBtn);
 
     const newExpenses = [
