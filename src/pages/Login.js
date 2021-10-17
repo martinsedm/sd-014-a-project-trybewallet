@@ -1,12 +1,18 @@
 import React from 'react';
+import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setUserValue } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
       email: '',
       password: '',
+      redirect: false,
     };
   }
 
@@ -16,12 +22,20 @@ class Login extends React.Component {
     });
   }
 
+  handleClick() {
+    const { dispatch } = this.props;
+    const { email } = this.state;
+    dispatch(email);
+    this.setState({ redirect: true });
+  }
+
   render() {
   // https://stackoverflow.com/questions/5342375/regex-email-validation//
     const minPasswordLength = 6;
-    const { email, password } = this.state;
+    const { email, password, redirect } = this.state;
     const emailSyntaxRegex = /^([\w.-]+)@([\w-]+)((\.(\w){2,3})+)$/i;
     const validateEmail = emailSyntaxRegex.test(email);
+    if (redirect) return <Redirect to="/carteira" />;
 
     return (
       <form>
@@ -43,7 +57,8 @@ class Login extends React.Component {
         />
         <button
           type="button"
-          disabled={ !(password.length >= minPasswordLength && validateEmail) }
+          disabled={ !(password.length >= minPasswordLength && validateEmail)}
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -52,4 +67,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatchPayload: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatch: (payload) => dispatch(setUserValue(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

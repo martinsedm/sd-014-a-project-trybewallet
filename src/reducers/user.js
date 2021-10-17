@@ -1,14 +1,16 @@
+import { SET_USER_VALUE } from '../actions/index';
+
 const initialUserState = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
-export default function user(state = initialUserState, { type, payload }) {
+const user = (state = initialUserState, { type, payload }) => {
   switch (type) {
-  case user:
-    return { ...state, user: payload };
+  case SET_USER_VALUE:
+    return { ...state, email: payload };
   default:
     return state;
   }
-}
+};
+
+export default user;
