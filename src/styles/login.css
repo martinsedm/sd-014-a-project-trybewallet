@@ -27,11 +27,6 @@
 }
 
 .form-control {
-  border-radius: 5px;
-  min-height: 38px;
-}
-
-.form-control {
   background-color: white;
   background-image: none;
   border: 1px solid #ccc;
@@ -42,6 +37,7 @@
   font-size: 14px;
   height: 34px;
   line-height: 1.428;
+  min-height: 38px;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   width: 100%;
 }
