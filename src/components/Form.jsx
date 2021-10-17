@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
-import fetchData from '../helpers/fetch';
+import { connect } from 'react-redux';
+import fetchAPI from '../helpers/fetchAPI';
+import { addExpenseAction } from '../actions';
+import '../styles/form.css';
 
 class Form extends Component {
   constructor() {
     super();
 
     this.state = {
-      value: 0,
-      currency: '',
-      method: '',
-      tag: '',
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Lazer',
       description: '',
-      data: {},
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -19,7 +22,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    fetchData().then((data) => this.setState({ data }));
+    fetchAPI().then((exchangeRates) => this.setState({ exchangeRates }));
   }
 
   handleChange({ target }) {
@@ -28,12 +31,16 @@ class Form extends Component {
     this.setState({ [name]: value });
   }
 
-  handleClick() {
-    console.log('click');
+  handleClick(event) {
+    event.preventDefault();
+
+    const { addExpense } = this.props;
+
+    addExpense(this.state);
   }
 
   render() {
-    const { value, currency, method, tag, description, data } = this.state;
+    const { value, currency, method, tag, description, exchangeRates } = this.state;
 
     return (
       <form>
@@ -41,7 +48,7 @@ class Form extends Component {
           Valor
           <input
             id="value"
-            type="text"
+            type="number"
             name="value"
             value={ value }
             onChange={ this.handleChange }
@@ -55,10 +62,10 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
-            { Object.values(data).map((currency, i) => {
-              if (currency.codein !== 'BRLT' && currency.code !== 'DOGE') {
+            { Object.values(exchangeRates).map((coins, i) => {
+              if (coins.codein !== 'BRLT' && coins.code !== 'DOGE') {
                 return (
-                  <option key={ i }>{currency.code}</option>
+                  <option key={ i }>{coins.code}</option>
                 );
               }
             })}
@@ -92,9 +99,20 @@ class Form extends Component {
             onChange={ this.handleChange }
           />
         </label>
+        <button
+          type="submit"
+          // disabled={ !isValid }
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default Form;
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expense) => dispatch(addExpenseAction(expense)),
+});
+
+export default connect(null, mapDispatchToProps)(Form);

@@ -37,7 +37,8 @@ class Login extends Component {
     });
   }
 
-  handleClick() {
+  handleClick(event) {
+    event.preventDefault();
     const { history, saveEmailInState } = this.props;
     const { email } = this.state;
 
@@ -48,31 +49,26 @@ class Login extends Component {
   render() {
     const { email, password, isValid } = this.state;
     return (
-      <div className="login-container">
-        <main>
-          <form>
-            <label htmlFor="email">
-              Email
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                value={ email }
-                onChange={ this.handleChange }
-                data-testid="email-input"
-              />
-            </label>
-            <label htmlFor="password">
-              Senha
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                value={ password }
-                onChange={ this.handleChange }
-                data-testid="password-input"
-              />
-            </label>
+      <main className="login-container">
+        <div className="main-content">
+          <form className="login-form">
+            <div>Login</div>
+            <input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              value={ email }
+              onChange={ this.handleChange }
+              data-testid="email-input"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              value={ password }
+              onChange={ this.handleChange }
+              data-testid="password-input"
+            />
             <button
               type="submit"
               disabled={ !isValid }
@@ -80,9 +76,10 @@ class Login extends Component {
             >
               Entrar
             </button>
+            <div className="sm-text">Ainda não tem uma conta</div>
           </form>
-        </main>
-      </div>
+        </div>
+      </main>
     );
   }
 }

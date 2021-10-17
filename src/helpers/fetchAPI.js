@@ -1,11 +1,11 @@
-const fetchData = async () => {
+const fetchAPI = async () => {
   try {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    return data;
+    const json = await response.json();
+    return json;
   } catch (error) {
     console.log(error);
   }
 };
 
-export default fetchData;
+export default fetchAPI;

@@ -4,16 +4,70 @@
   display: flex;
   height: 100vh;
   justify-content: center;
+  padding: 0 32px;
 }
 
-.login-container main {
-  background: rgb(73, 73, 73);
-  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+.main-content {
+  border: 1px solid #a0a0ac;
+  border-radius: 5px;
   display: flex;
   flex-direction: column;
-  width: 25%;
+  height: 400px;
+  max-width: 368px;
+  padding: 20px 20px;
+  text-align: center;
+  width: 100%;
 }
 
-.login-container input {
-  width: 80%;
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form input {
+  background: #fff;
+  border: 1px solid #a0a0ac;
+  border-radius: 5px;
+  height: 50px;
+  padding: 0 16px;
+  width: 100%;
+}
+
+.login-form button {
+  background: #179c4a;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  height: 50px;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.login-form button:disabled {
+  background: #63a17b;
+  cursor: not-allowed;
+}
+
+.sm-text {
+  font-size: 14px;
+  color: #a0a0ac;
+
+  margin: 32px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sm-text::before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #a0a0ac;
+  margin-right: 10px;
+}
+
+.sm-text::after {
+  
 }
