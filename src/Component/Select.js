@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 class Select extends Component {
   render() {
     const { escolha, name } = this.props;
+    console.log(escolha);
     return (
-      <label htmlFor={name}>
+      <label htmlFor={ name }>
         {name}
-        <select id={name}>
+        <select id={ name }>
           {escolha.map((item) => <option key={ item }>{ item }</option>)}
         </select>
       </label>
