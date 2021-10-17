@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { addUser } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -39,7 +41,9 @@ class Login extends React.Component {
   // https://stackoverflow.com/questions/34735580/how-to-do-a-redirect-to-another-route-with-react-router
   entrar(e) {
     e.preventDefault();
-    const { history } = this.props;
+    const { history, addEmail } = this.props;
+    const { email } = this.state;
+    addEmail(email);
     history.push('/carteira');
   }
 
@@ -70,9 +74,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
+  addEmail: PropTypes.func,
   history: PropTypes.shape({
     push: PropTypes.func,
-  }).isRequired,
-};
+  }),
+}.isRequired;
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email) => dispatch(addUser(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
