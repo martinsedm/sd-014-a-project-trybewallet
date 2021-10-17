@@ -1,0 +1,49 @@
+header {
+  align-items: center;
+  background-color: rgb(243, 243, 243);
+  border-bottom: 1px solid rgb(224, 224, 224);
+  color: rgb(22, 22, 22);
+  display: flex;
+  height: 5vh;
+  justify-content: space-between;
+  padding-inline: 20px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.logo {
+  color: rgb(48, 184, 132);
+  font-size: 18px;
+  letter-spacing: -1.2px;
+  text-decoration: none;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}
+
+.header__info {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__info p {
+  font-weight: 300;
+}
+
+.expenses__info {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 20px;
+}
+
+.expenses__info h5 {
+  padding-inline: 10px;
+}
+
+.expenses__info p {
+  font-size: 14px;
+}

@@ -1,3 +1,11 @@
+main {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
 .login__container {
   align-items: center;
   background-color: rgb(235, 235, 235);

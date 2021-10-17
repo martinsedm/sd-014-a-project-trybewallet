@@ -24,29 +24,33 @@ const Login = ({ setUser }) => {
   };
 
   return (
-    <main className="login__container">
-      <h3>Login</h3>
-      <input
-        type="email"
-        data-testid="email-input"
-        onChange={ handleEmailAddress }
-      />
-      <input
-        data-testid="password-input"
-        type="password"
-        onChange={ handlePassword }
-        value={ password.password }
-      />
-      <Link to="/carteira">
-        <button
-          disabled={ !password.isValid || !emailAddress.isValid }
-          type="submit"
-          onClick={ () => setUser(emailAddress) }
-          className="btn__login"
-        >
-          Entrar
-        </button>
-      </Link>
+    <main>
+      <div className="login__container">
+        <h3>Login</h3>
+        <input
+          type="email"
+          data-testid="email-input"
+          onChange={ handleEmailAddress }
+          placeholder="Email"
+        />
+        <input
+          data-testid="password-input"
+          type="password"
+          onChange={ handlePassword }
+          value={ password.password }
+          placeholder="Senha"
+        />
+        <Link to="/carteira">
+          <button
+            disabled={ !password.isValid || !emailAddress.isValid }
+            type="submit"
+            onClick={ () => setUser(emailAddress) }
+            className="btn__login"
+          >
+            Entrar
+          </button>
+        </Link>
+      </div>
     </main>
   );
 };

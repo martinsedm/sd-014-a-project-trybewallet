@@ -1,3 +1,4 @@
-.wallet__container {
+.wallet {
   display: flex;
+  height: 95vh;
 }
