@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import formValidation from '../service/formValidation';
+import { addUser } from '../actions/index';
 // import { Redirect } from 'react-router';
 import Input from './Input';
 import { Button } from './Button';
@@ -8,35 +10,48 @@ export class FormsLogin extends PureComponent {
   constructor() {
     super();
     this.state = {
-      email: '',
+      email: {
+        isValid: false,
+        value: '',
+      },
+      password: {
+        isValid: false,
+        value: '',
+      },
     };
     this.handleChangeCheck = this.handleChangeCheck.bind(this);
   }
 
-  handleChangeCheck() {
-    // const { name, value } = target;
-    // faça verificação do email
+  handleChangeCheck({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: {
+        isValid: formValidation(name, value),
+        value,
+      },
+    });
   }
 
   render() {
-    const { email } = this.state;
+    const { email, password } = this.state;
     return (
       <form>
         <Input
           type="text"
           onChange={ this.handleChangeCheck }
+          value={ email.value }
           id="email"
           name="email"
-          value={ email }
           TextLabel="Email: "
           testId="email-input"
         />
         <Input
           type="password"
           id="password"
-          name="email"
-          value={ email }
-          TextLabel="Passaword: "
+          onChange={ this.handleChangeCheck }
+          value={ password.value }
+          name="password"
+          TextLabel="Password: "
           testId="password-input"
         />
         <Button text="Entrar" />
@@ -47,4 +62,8 @@ export class FormsLogin extends PureComponent {
   }
 }
 
-export default FormsLogin;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (payload) => dispatch(addUser(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(FormsLogin);
