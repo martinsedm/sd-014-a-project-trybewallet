@@ -14,22 +14,23 @@
   flex-direction: column;
   height: 400px;
   max-width: 368px;
-  padding: 20px 20px;
+  padding: 20px;
   text-align: center;
   width: 100%;
 }
 
 .login-form {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .login-form input {
-  background: #fff;
+  background: white;
   border: 1px solid #a0a0ac;
   border-radius: 5px;
   height: 50px;
+  margin-top:10px;
   padding: 0 16px;
   width: 100%;
 }
@@ -38,7 +39,7 @@
   background: #179c4a;
   border: 0;
   border-radius: 5px;
-  color: #fff;
+  color: white;
   cursor: pointer;
   height: 50px;
   margin-top: 30px;
@@ -51,23 +52,18 @@
 }
 
 .sm-text {
-  font-size: 14px;
+  align-items: center;
   color: #a0a0ac;
-
-  margin: 32px 0;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  font-size: 14px;
+  margin: 32px 0;
 }
 
 .sm-text::before {
-  content: "";
+  content: '';
   flex: 1;
   height: 1px;
   background: #a0a0ac;
   margin-right: 10px;
-}
-
-.sm-text::after {
-  
 }

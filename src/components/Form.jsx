@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchAPI from '../helpers/fetchAPI';
 import { addExpenseAction } from '../actions';
-import '../styles/form.css';
 
 class Form extends Component {
   constructor() {
@@ -10,9 +9,9 @@ class Form extends Component {
 
     this.state = {
       value: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Lazer',
+      currency: '',
+      method: '',
+      tag: '',
       description: '',
       exchangeRates: {},
     };
@@ -62,6 +61,7 @@ class Form extends Component {
             value={ currency }
             onChange={ this.handleChange }
           >
+            <option value="" disabled hidden>Moeda</option>
             { Object.values(exchangeRates).map((coins, i) => {
               if (coins.codein !== 'BRLT' && coins.code !== 'DOGE') {
                 return (
@@ -74,6 +74,7 @@ class Form extends Component {
         <label htmlFor="method">
           Método de pagamento
           <select id="method" name="method" value={ method } onChange={ this.handleChange }>
+            <option value="" disabled hidden> Método de pagamento</option>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de débito">Cartão de débito</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -82,6 +83,7 @@ class Form extends Component {
         <label htmlFor="tag">
           Tag
           <select id="tag" name="tag" value={ tag } onChange={ this.handleChange }>
+            <option value="" disabled hidden>Tag</option>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>

@@ -76,7 +76,7 @@ class Login extends Component {
             >
               Entrar
             </button>
-            <div className="sm-text">Ainda não tem uma conta</div>
+            <div className="sm-text">Ainda não tem uma conta?</div>
           </form>
         </div>
       </main>

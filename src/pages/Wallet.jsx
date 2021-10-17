@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
+import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends Component {
   render() {
@@ -16,15 +17,17 @@ class Wallet extends Component {
           <div>
             <span data-testid="email-field">{ userEmail }</span>
             <span>
-              Despesas:
-              <strong data-testid="total-field">{ updatedTotal || 0 }</strong>
+              Despesa Total:
+              <strong data-testid="total-field">
+                {` R$ ${updatedTotal || 0}` }
+              </strong>
+              <strong data-testid="header-currency-field"> BRL</strong>
             </span>
-
-            <span data-testid="header-currency-field">BRL</span>
           </div>
         </header>
         <main>
           <Form handleChange={ this.handleChange } />
+          <ExpenseTable />
         </main>
       </>
     );
