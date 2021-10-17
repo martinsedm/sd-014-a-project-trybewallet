@@ -26,8 +26,7 @@
   text-align: center;
 }
 
-.form-control , 
-.btn {
+.form-control {
   border-radius: 5px;
   min-height: 38px;
 }
