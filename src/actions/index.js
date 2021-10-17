@@ -1,15 +1,12 @@
 // Coloque aqui suas actions
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export class index extends Component {
   render() {
     return (
-      <div>
-        
-      </div>
-    )
+      <div />
+    );
   }
 }
 
-export default index
-
+export default index;
