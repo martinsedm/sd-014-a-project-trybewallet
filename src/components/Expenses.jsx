@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { getExpenses as getExpensesAction } from '../actions';
+import AddButton from './AddButton';
 import Input from './Input';
 import Select from './Select';
+
+const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
 class Expenses extends React.Component {
   constructor(props) {
@@ -23,9 +28,7 @@ class Expenses extends React.Component {
 
   render() {
     const { value, description, currency, payment, tag } = this.state;
-    const { currencies } = this.props;
-    const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { currencies, getExpenses } = this.props;
     return (
       <form>
         <Input
@@ -68,6 +71,7 @@ class Expenses extends React.Component {
           options={ tags }
           onChange={ this.handleChange }
         />
+        <AddButton onClick={ getExpenses } />
       </form>
     );
   }
@@ -75,10 +79,15 @@ class Expenses extends React.Component {
 
 Expenses.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(Expenses);
+const mapDispatchToProps = (dispatch) => ({
+  getExpenses: (expenses) => dispatch(getExpensesAction(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

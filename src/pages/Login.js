@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import propTypes from 'prop-types';
 import { login as loginAction } from '../actions';
 
 class Login extends Component {
@@ -73,7 +73,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Login.propTypes = {
-  login: propTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

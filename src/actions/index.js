@@ -5,6 +5,7 @@ export const LOGIN = 'LOGIN';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
+export const GET_EXPENSES = 'GET_EXPENSES';
 
 export const login = (email) => ({ type: LOGIN, email });
 
@@ -24,6 +25,8 @@ export const getCurrenciesError = (error) => ({
   isLoading: false,
   error,
 });
+
+export const getExpenses = (expenses) => ({ type: GET_EXPENSES, expenses });
 
 export const fetchAPI = () => async (dispatch) => {
   try {

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchAPI } from '../actions';
 import Expenses from '../components/Expenses';
+import Loading from '../components/Loading';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -12,10 +13,11 @@ class Wallet extends React.Component {
   }
 
   render() {
+    const { isLoading } = this.props;
     return (
       <>
         <Header />
-        <Expenses />
+        { isLoading ? <Loading /> : <Expenses /> }
       </>
     );
   }
@@ -23,10 +25,15 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   currencyAPI: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
+
+const mapStateToProps = (state) => ({
+  isLoading: state.wallet.isLoading,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   currencyAPI: () => dispatch(fetchAPI()),
 });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
