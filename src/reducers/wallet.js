@@ -1,10 +1,15 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-const initialState = [];
+import { QUERY_CURRENCY } from '../actions';
+
+const initialState = {
+  currencies: [],
+
+};
 
 const walletReducer = (state = initialState, action) => {
   switch (action.type) {
-  case 'THIS_IS_A_MOCK':
-    return [...state, action.value];
+  case QUERY_CURRENCY:
+    return [...state, action.payload];
 
   default:
     return state;

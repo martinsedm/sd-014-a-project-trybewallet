@@ -1,6 +1,47 @@
 import React from 'react';
+import fetchCurrency from './CurrencyQuery';
 
 class WalletForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currencies: [],
+    };
+    this.currencyMapper = this.currencyMapper.bind(this);
+    this.currencyToState = this.currencyToState.bind(this);
+  }
+
+  componentDidMount() {
+    this.currencyToState();
+    this.currencyMapper();
+  }
+
+  async currencyToState() {
+    const currencyList = Object.values(await fetchCurrency());
+    const currCodes = currencyList.map((elem) => (elem.code));
+    this.setState({
+      currencies: currCodes,
+    });
+  }
+
+  currencyMapper() {
+    const { currencies } = this.state;
+    const currToOptions = currencies.map((curr) => (
+      <option key={ curr.code }>
+        {curr}
+      </option>
+    ));
+
+    return (
+      <label htmlFor="currency">
+        Moeda
+        <select name="currency" id="currency">
+          {currToOptions}
+        </select>
+      </label>
+    );
+  }
+
   render() {
     return (
       <form>
@@ -22,13 +63,8 @@ class WalletForm extends React.Component {
             id="expenses-description"
           />
         </label>
-        <label htmlFor="currency">
-          Moeda
-          <select name="currency" id="currency">
-            <option value="Mock">Mock</option>
-            <option value="Mack">Mack</option>
-          </select>
-        </label>
+        <br />
+        <this.currencyMapper />
         <label htmlFor="pay-method">
           Método de pagamento
           <select name="pay-method" id="pay-method">
