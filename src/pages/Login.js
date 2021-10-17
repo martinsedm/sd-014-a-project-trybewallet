@@ -15,7 +15,6 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.validateEmail = this.validateEmail.bind(this);
   }
 
   validateEmail(email) {
@@ -28,9 +27,8 @@ class Login extends React.Component {
       { [name]: value },
       () => {
         const { email } = this.state;
-        const isEmailValid = this.validateEmail(email);
         this.setState(
-          { isEmailValid },
+          { isEmailValid: this.validateEmail(email) },
         );
       },
     );

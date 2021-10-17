@@ -1,5 +1,6 @@
 export const LOGIN = 'LOGIN';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const makeLogin = (email) => ({
   type: LOGIN,
@@ -24,3 +25,8 @@ export const fetchCurrencies = () => (
     }
   }
 );
+
+export const addExpense = (expense) => ({
+  type: ADD_EXPENSE,
+  payload: expense,
+});
