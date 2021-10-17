@@ -11,25 +11,28 @@ class Select extends Component {
           :
           <select name={ nome } id={ nome } onChange={ onChange }>
             {(nome === 'moeda')
-               && <>
-                 <option value="BRL">BRL</option>
-                 <option value="USD">USD</option>
-               </>}
-
+                && (
+                  <>
+                    <option value="BRL">BRL</option>
+                    <option value="USD">USD</option>
+                  </>
+                )}
             {(nome === 'Método de Pagamento')
-            && <>
-              <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de crédito">Cartão de crédito</option>
-              <option value="Cartão de débito">Cartão de débito</option>
-            </>}
+            && (
+              <>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão de crédito">Cartão de crédito</option>
+                <option value="Cartão de débito">Cartão de débito</option>
+              </>)}
             {(nome === 'tag')
-            && <>
-              <option value="Alimentação">Alimentação</option>
-              <option value="Lazer">Lazer</option>
-              <option value="Trabalho">Trabalho</option>
-              <option value="Transporte">Transporte</option>
-              <option value="Saúde">Saúde</option>
-            </>}
+            && (
+              <>
+                <option value="Alimentação">Alimentação</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Saúde">Saúde</option>
+              </>)}
           </select>
         </label>
       </div>
