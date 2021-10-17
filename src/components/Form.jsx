@@ -19,10 +19,17 @@ class Form extends Component {
       onClick,
     } = this.props;
     return (
-      <form name="expenseForm" id="expense-form">
+      <form
+        name="expenseForm"
+        id="expense-form"
+        onSubmit={ (e) => {
+          e.preventDefault();
+          onClick();
+        } }
+      >
         <fieldset>
           <legend>
-            Cadastre uma despesa
+            Sua despesa
           </legend>
           <InputForm
             data={ ['Valor', 'value', value, 'number', onChange] }
@@ -39,10 +46,7 @@ class Form extends Component {
           <SelectForm
             data={ ['Tag', 'tag', tag, categories, onChange] }
           />
-          <button
-            type="button"
-            onClick={ onClick }
-          >
+          <button type="submit">
             { textButton }
           </button>
         </fieldset>
