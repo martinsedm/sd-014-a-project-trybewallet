@@ -39,7 +39,10 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { getIntCurrencies } = this.props;
+    const { getIntCurrencies, expenses } = this.props;
+    if (expenses.length > 0) {
+      this.calculateSum(expenses);
+    }
     getIntCurrencies();
   }
 
