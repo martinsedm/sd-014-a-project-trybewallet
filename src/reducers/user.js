@@ -2,6 +2,7 @@ import { LOGIN_TYPE } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
+  password: '',
 };
 
 const user = (state = INITIAL_STATE, action) => {

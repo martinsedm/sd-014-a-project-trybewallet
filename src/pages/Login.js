@@ -39,7 +39,7 @@ class Login extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
     const { notifyLogin } = this.props;
-    notifyLogin({ email, password, logged: true });
+    notifyLogin({ email, password });
     this.setState({
       logged: true,
     });

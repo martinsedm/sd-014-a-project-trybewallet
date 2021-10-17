@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import Table from '../components/Table';
+import MakeLogin from '../components/MakeLogin';
 import { categories, payment } from '../data/index';
 import {
   getIntCurrenciesThunk,
@@ -16,12 +17,9 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    const { user: { email }, currencyToExchange, currencies } = props;
+    const { currencies } = props;
     this.state = {
-      email,
       total: 0,
-      currencyToExchange,
-      editorMode: false,
       form: {
         value: 0,
         currency: '',
@@ -45,14 +43,14 @@ class Wallet extends React.Component {
     getIntCurrencies();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { currencies, expenses, editor, idToEdit } = this.props;
-    const { currencyToExchange } = this.state;
+  componentDidUpdate(prevProps) {
+    const { currencies, expenses, currencyToExchange, editor, idToEdit } = this.props;
+    // const { currencyToExchange } = this.state;
     if (prevProps.currencies !== currencies) {
       this.updateStateForm({ currencies });
     }
     if ((prevProps.expenses !== expenses)
-      || (prevState.currencyToExchange !== currencyToExchange)) {
+      || (prevProps.currencyToExchange !== currencyToExchange)) {
       this.calculateSum(expenses);
     }
     if (editor && editor !== prevProps.editor) {
@@ -63,7 +61,7 @@ class Wallet extends React.Component {
   }
 
   calculateSum(expenses) {
-    const { currencyToExchange } = this.state;
+    const { currencyToExchange } = this.props;
     const total = expenses.reduce((acc, { currency, value, exchangeRates }) => {
       const { ask } = exchangeRates[currency];
       const valueInReal = Math.round(100 * Number(value) * Number(ask)) / 100;
@@ -88,10 +86,10 @@ class Wallet extends React.Component {
   }
 
   handleExpense() {
-    const { addExpense, saveExpense, editExpenseMode } = this.props;
-    const { editorMode, form, idToEdit } = this.state;
+    const { addExpense, saveExpense, editExpenseMode, editor } = this.props;
+    const { form, idToEdit } = this.state;
     const { value, currency, method, tag, description } = form;
-    if (editorMode) {
+    if (editor) {
       const { id, exchangeRates } = idToEdit;
       const expense = { id, value, currency, method, tag, description, exchangeRates };
       saveExpense(expense);
@@ -101,7 +99,6 @@ class Wallet extends React.Component {
       addExpense(expense);
     }
     this.setState({
-      editorMode: false,
       idToEdit: {},
       form: {
         ...form,
@@ -130,11 +127,17 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, total, currencyToExchange, form, editorMode } = this.state;
-    const textButton = editorMode ? 'Editar Despesa' : 'Adicionar Despesa';
-    const { expenses, removeExpense } = this.props;
+    const {
+      user: { email },
+      expenses,
+      removeExpense,
+      currencyToExchange,
+      editor } = this.props;
+    const { total, form } = this.state;
+    const textButton = editor ? 'Editar Despesa' : 'Adicionar Despesa';
     return (
       <main>
+        { email.length === 0 && <MakeLogin />}
         <Header data={ { email, total, currencyToExchange } } />
         <section>
           <Form
