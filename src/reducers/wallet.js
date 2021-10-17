@@ -1,1 +1,15 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+const initialWalletValue = {
+  wallet: {
+    currencies: [],
+    expenses: [],
+  },
+};
+
+export default function wallet(state = initialWalletValue, { type, payload }) {
+  switch (type) {
+  case wallet:
+    return { ...state, wallet: payload };
+  default:
+    return state;
+  }
+}
