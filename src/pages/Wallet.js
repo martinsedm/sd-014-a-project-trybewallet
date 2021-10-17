@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import ExpensesForm from '../components/ExpensesForm';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   render() {
@@ -12,10 +13,11 @@ class Wallet extends React.Component {
       <div>
         <header>
           <div data-testid="email-field">{ email }</div>
-          <div data-testid="total-field">{ total }</div>
+          <div data-testid="total-field">{ total.toFixed(2) }</div>
           <div data-testid="header-currency-field">BRL</div>
         </header>
         <ExpensesForm />
+        <ExpensesTable />
       </div>
     );
   }
