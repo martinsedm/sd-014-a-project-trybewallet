@@ -148,6 +148,7 @@ class Wallet extends React.Component {
           { expenses.length !== 0
           && <Table
             expenses={ expenses }
+            email={ email }
             disableBtn={ editor }
             removeExpense={ removeExpense }
             editExpense={ this.editExpense }

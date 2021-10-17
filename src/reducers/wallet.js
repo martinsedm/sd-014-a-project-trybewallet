@@ -1,10 +1,11 @@
 import {
   ADD_EXPENSE,
   REMOVE_EXPENSE,
-  FETCHING,
+  // FETCHING,
   ADD_CURRENCIES,
   EDIT_MODE,
-  SAVE_EXPENSE } from '../actions';
+  SAVE_EXPENSE,
+  UPDATE_BY_LS } from '../actions';
 
 const NEG_UM = -1;
 
@@ -26,8 +27,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     if (expenses.find(({ id: idNumber }) => idNumber === id)) {
       const expensesFiltered = expenses
         .map((x) => x).sort((a, b) => (a.id > b.id ? 1 : NEG_UM));
-      const { id: idBigger } = expensesFiltered[id - 1];
-      id = idBigger + 1;
+      id = expensesFiltered[id - 1] + 1;
     }
     return { ...state, expenses: [...expenses, { ...action.payload, id }],
     };
@@ -51,10 +51,12 @@ const wallet = (state = INITIAL_STATE, action) => {
     const found = expenses.find(({ id }) => id === action.payload);
     return { ...state, editor: !state.editor, idToEdit: { ...found } };
   }
-  case FETCHING:
-    return { ...state, isFetching: !state.isFetching };
+  // case FETCHING:
+  //   return { ...state, isFetching: !state.isFetching };
   case ADD_CURRENCIES:
     return { ...state, currencies: [...state.currencies, ...action.payload] };
+  case UPDATE_BY_LS:
+    return { ...state, expenses: action.payload };
   default:
     return state;
   }

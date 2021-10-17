@@ -5,6 +5,7 @@ export const FETCHING = 'FETCHING';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const EDIT_MODE = 'EDIT_MODE';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
+export const UPDATE_BY_LS = 'UPDATE_BY_LS';
 
 const NUM_CHARS = 3;
 
@@ -50,6 +51,11 @@ export const addCurrenciesAction = (currencies) => ({
 export const editExpenseModeAction = (id) => ({
   type: EDIT_MODE,
   payload: id,
+});
+
+export const updateByLocalStorageAction = (expenses) => ({
+  type: UPDATE_BY_LS,
+  payload: expenses,
 });
 
 // actions assíncronas:
