@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import TableHead from './TableHead';
 
 class Table extends Component {
   render() {
-    const { expenses, removeExpense, editExpense } = this.props;
+    const { expenses, removeExpense, editExpense, disableBtn } = this.props;
     return (
       <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
-          </tr>
-        </thead>
+        <TableHead />
         <tbody>
           { expenses
             .map(({ id, description, tag, method, value, currency, exchangeRates }) => (
@@ -35,6 +24,7 @@ class Table extends Component {
                   <button
                     type="button"
                     data-testid="edit-btn"
+                    disabled={ disableBtn }
                     onClick={ () => editExpense(id) }
                   >
                     Edite
@@ -42,6 +32,7 @@ class Table extends Component {
                   <button
                     type="button"
                     data-testid="delete-btn"
+                    disabled={ disableBtn }
                     onClick={ () => removeExpense(id) }
                   >
                     x
@@ -56,6 +47,7 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  disableBtn: PropTypes.bool.isRequired,
   removeExpense: PropTypes.func.isRequired,
   editExpense: PropTypes.func.isRequired,
 };
