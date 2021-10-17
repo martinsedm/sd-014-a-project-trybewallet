@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 
 import Input from './Input';
 import Select from './Select';
-import { addExpense as addExpenseThunk } from '../actions';
+import {
+  addExpense as addExpenseThunk,
+  saveExpense as saveExpenseThunk,
+} from '../actions';
 import { fetchCurrencies } from '../services/awesomeAPI';
 
 class ExpensesForm extends React.Component {
@@ -20,8 +23,22 @@ class ExpensesForm extends React.Component {
       exchangeRates: {},
     };
 
+    this.getExpense = this.getExpense.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { edit } = this.props;
+    if (edit !== prevProps.edit) {
+      this.getExpense(edit);
+      console.log(this.state);
+    }
+  }
+
+  getExpense(edit) {
+    const { expenses } = this.props;
+    this.setState(expenses.find((expense) => expense.id === edit));
   }
 
   handleChange({ target: { name, value } }) {
@@ -31,14 +48,19 @@ class ExpensesForm extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    const { addExpense } = this.props;
-    const exchangeRates = await fetchCurrencies();
-    this.setState({ exchangeRates });
-    addExpense(this.state);
+    const { edit, addExpense, saveExpense } = this.props;
+    if (edit >= 0) {
+      saveExpense(this.state);
+    } else {
+      const exchangeRates = await fetchCurrencies();
+      this.setState({ exchangeRates });
+      addExpense(this.state);
+    }
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, edit } = this.props;
+    const { value, description, currency, method, tag } = this.state;
 
     return (
       <form onSubmit={ this.handleSubmit }>
@@ -46,39 +68,41 @@ class ExpensesForm extends React.Component {
           <Input
             htmlFor="value"
             label="Valor:"
-            testid="value-input"
             type="number"
             onChange={ this.handleChange }
+            value={ `${value}` }
           />
           <Input
             htmlFor="description"
             label="Descrição:"
-            testid="description-input"
             type="text"
             onChange={ this.handleChange }
+            value={ description }
           />
           <Select
             htmlFor="currency"
             label="Moeda:"
-            testid="currency-select"
             onChange={ this.handleChange }
             options={ currencies }
+            value={ currency }
           />
           <Select
             htmlFor="method"
             label="Método de pagamento:"
-            testid="payment-select"
             onChange={ this.handleChange }
             options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+            value={ method }
           />
           <Select
             htmlFor="tag"
             label="Tag:"
-            testid="tag-select"
             onChange={ this.handleChange }
             options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+            value={ tag }
           />
-          <button type="submit">Adicionar despesa</button>
+          <button type="submit">
+            { edit >= 0 ? 'Editar despesa' : 'Adicionar despesas' }
+          </button>
         </fieldset>
       </form>
     );
@@ -88,14 +112,20 @@ class ExpensesForm extends React.Component {
 ExpensesForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   addExpense: PropTypes.func.isRequired,
+  saveExpense: PropTypes.func.isRequired,
+  edit: PropTypes.number.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  edit: state.wallet.edit,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (state) => dispatch(addExpenseThunk(state)),
+  saveExpense: (state) => dispatch(saveExpenseThunk(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

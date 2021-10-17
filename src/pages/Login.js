@@ -53,14 +53,12 @@ class Login extends React.Component {
           <Input
             htmlFor="email"
             label="Email:"
-            testid="email-input"
             type="email"
             onChange={ this.handleChange }
           />
           <Input
             htmlFor="password"
             label="Senha:"
-            testid="password-input"
             type="password"
             onChange={ this.handleChange }
           />

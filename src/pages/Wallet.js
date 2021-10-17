@@ -28,8 +28,12 @@ class Wallet extends React.Component {
   }
 }
 
+Wallet.defaultProps = {
+  loading: false,
+};
+
 Wallet.propTypes = {
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
   fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
