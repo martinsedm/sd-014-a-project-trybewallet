@@ -2,36 +2,42 @@
   margin: 50px auto;
   width: 560px;
 }
+
 .login-field form {
   background: #e7e5e5;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  margin-bottom: 0px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0;
   padding: 50px;
 }
+
 .login-field input {
   margin-bottom: 15px;
   width: 100%;
 }
+
 .login-field button {
   margin-bottom: 15px;
   margin-top: 15px;
   width: 100%;
 }
+
 .login-field h2 {
   margin: 0 0 15px;
   text-align: center;
 }
+
 .form-control,
 .btn {
   border-radius: 5px;
   min-height: 38px;
 }
+
 .form-control {
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  background-color: white;
   -webkit-transition: border-color ease-in-out 0.15s,
     -webkit-box-shadow ease-in-out 0.15s;
-  background-color: white;
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -40,19 +46,20 @@
   display: block;
   font-size: 14px;
   height: 34px;
-  line-height: 1.42857143;
+  line-height: 1.428;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   width: 100%;
 }
+
 .btn {
-  -ms-touch-action: manipulation;
   border: 1px solid transparent;
+  -ms-touch-action: manipulation;
   border-radius: 4px;
   cursor: pointer;
   display: inline-block;
   font-size: 14px;
-  font-weight:bold;
-  line-height: 1.42857143;
+  font-weight: bold;
+  line-height: 1.428;
   margin-bottom: 0;
   padding: 6px 12px;
   text-align: center;
@@ -61,6 +68,7 @@
   white-space: nowrap;
   width: 100%;
 }
+
 .checkbox-inline,
 .radio-inline {
   cursor: pointer;
@@ -71,27 +79,31 @@
   position: relative;
   vertical-align: middle;
 }
+
 .btn-block {
   display: block;
   width: 100%;
 }
+
 .btn-primary {
   background-color: #337ab7;
   border-color: #2e6da4;
   color: white;
 }
+
 label {
   max-width: 100%;
 }
+
 .pull-left {
   display: block;
   float: left;
-  writing-mode:horizontal-tb;
-  text-orientation:sideways;
+  text-orientation: sideways;
+  writing-mode: horizontal-tb;
 }
 
 .pull-left-item {
-  display:flex;
+  display: flex;
   text-orientation: upright;
 }
 
