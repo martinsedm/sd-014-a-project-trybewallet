@@ -29,15 +29,15 @@ class ExpensesForm extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { edit } = this.props;
-    if (edit !== prevProps.edit) {
+    const { wallet: { edit } } = this.props;
+    if (edit !== prevProps.wallet.edit) {
       this.getExpense(edit);
       console.log(this.state);
     }
   }
 
   getExpense(edit) {
-    const { expenses } = this.props;
+    const { wallet: { expenses } } = this.props;
     this.setState(expenses.find((expense) => expense.id === edit));
   }
 
@@ -48,7 +48,7 @@ class ExpensesForm extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    const { edit, addExpense, saveExpense } = this.props;
+    const { wallet: { edit }, addExpense, saveExpense } = this.props;
     if (edit >= 0) {
       saveExpense(this.state);
     } else {
@@ -59,7 +59,7 @@ class ExpensesForm extends React.Component {
   }
 
   render() {
-    const { currencies, edit } = this.props;
+    const { wallet: { currencies, edit } } = this.props;
     const { value, description, currency, method, tag } = this.state;
 
     return (
@@ -110,17 +110,18 @@ class ExpensesForm extends React.Component {
 }
 
 ExpensesForm.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  wallet: PropTypes.objectOf(PropTypes.any).isRequired,
   addExpense: PropTypes.func.isRequired,
   saveExpense: PropTypes.func.isRequired,
-  edit: PropTypes.number.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  // edit: PropTypes.number.isRequired,
+  // expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-  edit: state.wallet.edit,
-  expenses: state.wallet.expenses,
+  wallet: state.wallet,
+  // currencies: state.wallet.currencies,
+  // edit: state.wallet.edit,
+  // expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({

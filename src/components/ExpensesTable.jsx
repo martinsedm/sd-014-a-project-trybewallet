@@ -23,7 +23,7 @@ class ExpensesTable extends React.Component {
   }
 
   render() {
-    const { expenses } = this.props;
+    const { wallet: { expenses } } = this.props;
     return (
       <table>
         <thead>
@@ -67,15 +67,13 @@ class ExpensesTable extends React.Component {
 }
 
 ExpensesTable.propTypes = {
-  edit: PropTypes.number.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  wallet: PropTypes.objectOf(PropTypes.any).isRequired,
   removeExpense: PropTypes.func.isRequired,
   editExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  edit: state.wallet.edit,
-  expenses: state.wallet.expenses,
+  wallet: state.wallet,
 });
 
 const mapDispatchToProps = (dispatch) => ({
