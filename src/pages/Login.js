@@ -44,6 +44,7 @@ class Login extends React.Component {
           testId="email-input"
           value={ email }
           name="email"
+          label="Email"
         />
         <Input
           type="password"
@@ -51,6 +52,7 @@ class Login extends React.Component {
           testId="password-input"
           value={ password }
           name="password"
+          label="Senha"
         />
         <Button
           type="button"
