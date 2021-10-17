@@ -1,3 +1,4 @@
+import { ADD_EMAIL } from '../actions';
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INICIANDO_ESTADO = {
   user: {
@@ -14,7 +15,9 @@ function user(state = INICIANDO_ESTADO, action) {
   case ADD_EMAIL:
     return {
       ...state,
-      user: action.payload.email,
+      user: {
+        email: action.email,
+      },
     };
   default:
     return state;

@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Buttons from '../Component/Buttons';
+
+import Inputs from '../Component/Inputs';
 
 class Login extends React.Component {
   constructor() {
@@ -28,7 +31,6 @@ class Login extends React.Component {
     const SENHA_MINIMA = 6;
 
     if (senha.length >= SENHA_MINIMA) {
-      console.log('aqui');
       this.setState({
         disabled: false,
       });
@@ -45,38 +47,27 @@ class Login extends React.Component {
     const { email, senha, disabled, btnClicado } = this.state;
     return (
       <div>
-        <label htmlFor="email">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={ email }
-            data-testid="email-input"
-            placeholder="Email"
-            onChange={ this.handleOnChancge }
-          />
-        </label>
-        <label htmlFor="senha">
-          <input
-            type="password"
-            minLength="6"
-            required
-            id="senha"
-            name="senha"
-            value={ senha }
-            data-testid="password-input"
-            placeholder="Senha"
-            onChange={ this.handleOnChancge }
-            onKeyUp={ this.loginValidation }
-          />
-        </label>
-        <button
-          type="submit"
+        <Inputs
+          type="email"
+          name="email"
+          value={ email }
+          dataTestid="email-input"
+          onChange={ this.handleOnChancge }
+        />
+        <Inputs
+          type="password"
+          name="senha"
+          value={ senha }
+          dataTestid="password-input"
+          placeholder="Senha"
+          onChange={ this.handleOnChancge }
+          onKeyUp={ this.loginValidation }
+        />
+        <Buttons
           disabled={ disabled }
           onClick={ this.clickButton }
-        >
-          Entrar
-        </button>
+          msg="Entrar"
+        />
         { btnClicado && <Redirect to="/Wallet" />}
       </div>
     );
