@@ -3,18 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    const { email } = this.props;
-    this.state = {
-      email,
-      despesa: 0,
-      cambio: 'BRL',
-    };
-  }
-
   render() {
-    const { email, despesa, cambio } = this.state;
+    const { email, despesa, cambio } = this.props;
     return (
       <header>
         <div>
@@ -28,15 +18,21 @@ class Header extends Component {
 }
 
 Header.propTypes = {
+  cambio: PropTypes.string,
+  despesa: PropTypes.number,
   email: PropTypes.string,
 };
 
 Header.defaultProps = {
+  cambio: 'BRL',
+  despesa: 0,
   email: 'Não informado',
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  despesa: state.wallet.despesa,
+  cambio: state.wallet.cambio,
 });
 
 export default connect(mapStateToProps, null)(Header);
