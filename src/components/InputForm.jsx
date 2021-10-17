@@ -13,6 +13,7 @@ class InputForm extends Component {
           name={ name }
           value={ value }
           onChange={ onChange }
+          placeholder={ text }
           required
         />
       </label>
