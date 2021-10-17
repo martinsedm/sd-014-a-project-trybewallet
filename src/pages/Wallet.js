@@ -24,6 +24,7 @@ class Wallet extends React.Component {
     this.fetchCurrencyAPI = this.fetchCurrencyAPI.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.manageCurrencyOptions = this.manageCurrencyOptions.bind(this);
+    this.fillTable = this.fillTable.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +72,22 @@ class Wallet extends React.Component {
     this.setState({
       currencies: Object.keys(currencies),
     });
+  }
+
+  fillTable() {
+    const { expenses } = this.props;
+    return expenses.map((exp) => (
+      <tr key={ exp.id }>
+        <td>{ exp.description }</td>
+        <td>{ exp.tag }</td>
+        <td>{ exp.method }</td>
+        <td>{ exp.value }</td>
+        <td>{ exp.exchangeRates[exp.currency].name }</td>
+        <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
+        <td>{ (exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
+        <td>Real</td>
+      </tr>
+    ));
   }
 
   handleChange({ target }) {
@@ -146,6 +163,32 @@ class Wallet extends React.Component {
     );
   }
 
+  renderTable() {
+    const { expenses } = this.props;
+    return (
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.length > 0 && this.fillTable() }
+          </tbody>
+        </table>
+      </section>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -157,6 +200,7 @@ class Wallet extends React.Component {
         >
           Adicionar despesa
         </button>
+        { this.renderTable() }
       </div>
     );
   }
