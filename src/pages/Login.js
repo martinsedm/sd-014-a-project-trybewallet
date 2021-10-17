@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { notifyLoginAction } from '../actions';
 
+const MIN_LENGTH_PASSWORD = 6;
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -11,31 +13,33 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      disabledBtn: true,
       logged: false,
+      disabledBtn: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
+    const formLogin = document.getElementById('login-form');
     this.setState({
       [name]: value,
-    }, () => {
+    },
+    () => {
       const { password } = this.state;
-      const formLogin = document.getElementById('login-form');
-      const disabledBtn = !formLogin.checkValidity() || (password !== '123456');
       this.setState({
-        disabledBtn,
+        disabledBtn: (!formLogin.checkValidity()
+         || password.length < MIN_LENGTH_PASSWORD),
       });
     });
   }
 
-  handleClick() {
+  handleSubmit(event) {
+    event.preventDefault();
     const { email, password } = this.state;
     const { notifyLogin } = this.props;
-    notifyLogin({ email, password });
+    notifyLogin({ email, password, logged: true });
     this.setState({
       logged: true,
     });
@@ -46,7 +50,7 @@ class Login extends React.Component {
     if (logged) return (<Redirect to="/carteira" />);
     return (
       <section>
-        <form name="loginForm" id="login-form">
+        <form name="loginForm" id="login-form" onSubmit={ this.handleSubmit }>
           <fieldset>
             <legend>Faça seu login</legend>
             <label htmlFor="email-input">
@@ -57,6 +61,8 @@ class Login extends React.Component {
                 id="email-input"
                 data-testid="email-input"
                 required
+                autoComplete="on"
+                placeholder="seu@email.com"
                 value={ email }
                 onChange={ this.handleChange }
               />
@@ -68,16 +74,17 @@ class Login extends React.Component {
                 name="password"
                 id="password-input"
                 data-testid="password-input"
-                minLength="6"
+                minLength={ MIN_LENGTH_PASSWORD }
                 required
+                autoComplete="on"
+                placeholder="mínimo de 6 caracteres"
                 value={ password }
                 onChange={ this.handleChange }
               />
             </label>
             <button
-              type="button"
+              type="submit"
               disabled={ disabledBtn }
-              onClick={ this.handleClick }
             >
               Entrar
             </button>
