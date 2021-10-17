@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import validator from 'validator';
 import { getEmailUser as getEmailUserAction } from '../actions';
 import ButtonLogin from '../components/ButtonLogin';
 import InputEmail from '../components/InputEmail';
@@ -11,14 +12,26 @@ class Login extends React.Component {
     super();
     this.state = {
       email: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
   }
 
+  checkLogin() {
+    const MIN_CHARACTERES = 5;
+    let result = true;
+    const { password, email } = this.state;
+    if ((password.length > MIN_CHARACTERES) && (validator.isEmail(email))) { // Consulta sobre o validador: https://www.geeksforgeeks.org/how-to-validate-an-email-in-reactjs/
+      result = false;
+    }
+    return result;
+  }
+
   submitLogin() {
     const { history, getEmailUser } = this.props;
-    getEmailUser(this.state);
+    const { email } = this.state;
+    getEmailUser(email);
     history.push('/carteira');
   }
 
@@ -28,7 +41,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { email } = this.state;
+    const { email, password } = this.state;
     return (
       <>
         <div> Login  </div>
@@ -38,9 +51,14 @@ class Login extends React.Component {
             name="email"
             onChange={ this.handleChange }
           />
-          <InputPassword />
+          <InputPassword
+            value={ password }
+            name="password"
+            onChange={ this.handleChange }
+          />
           <ButtonLogin
             onClick={ this.submitLogin }
+            disabled={ this.checkLogin() }
           />
         </section>
       </>
