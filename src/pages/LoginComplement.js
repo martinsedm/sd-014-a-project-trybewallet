@@ -13,8 +13,11 @@ export default class LoginComplement extends Component {
             type="checkbox"
             id="remember-password"
             name="remember-password"
+            className="pull-left-item"
           />
-          Remember
+          <p>
+            Remember me
+          </p>
         </label>
         <a
           href="http://localhost:3000/"
