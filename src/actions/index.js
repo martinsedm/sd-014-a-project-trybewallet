@@ -1,12 +1,8 @@
-// Coloque aqui suas actions
-import React, { Component } from 'react';
+export const SALVAR_EMAIL = 'SALVAR_EMAIL';
 
-export class index extends Component {
-  render() {
-    return (
-      <div />
-    );
-  }
-}
+const salvarEmail = (emailValue) => ({
+  type: SALVAR_EMAIL,
+  emailValue,
+});
 
-export default index;
+export default salvarEmail;
