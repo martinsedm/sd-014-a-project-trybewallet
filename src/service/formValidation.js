@@ -1,5 +1,5 @@
 const checkEmail = (value) => {
-  const regex = new RegExp(/^([a-z\d.-]+)@([a-z\d.-]+)$/);
+  const regex = new RegExp(/^([\w-]+\.)*[\w\- ]+@([\w\- ]+\.)+([\w-]{2,3})$/); // fonte dessa expresão https://www.devmedia.com.br/iniciando-expressoes-regulares/6557
   return regex.test(value);
 };
 

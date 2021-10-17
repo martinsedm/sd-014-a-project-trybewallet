@@ -18,8 +18,22 @@ export class FormsLogin extends PureComponent {
         isValid: false,
         value: '',
       },
+      disabledButton: false,
     };
     this.handleChangeCheck = this.handleChangeCheck.bind(this);
+    this.checkAllFormIsValid = this.checkAllFormIsValid.bind(this);
+  }
+
+  componentDidUpdate() {
+    this.checkAllFormIsValid(this.state);
+  }
+
+  checkAllFormIsValid(state) {
+    const listState = Object.keys(state).filter((key) => key !== 'disabledButton');
+    const result = listState.every((form) => state[form].isValid === true);
+    this.setState({
+      disabledButton: result,
+    });
   }
 
   handleChangeCheck({ target }) {
@@ -33,7 +47,7 @@ export class FormsLogin extends PureComponent {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, disabledButton } = this.state;
     return (
       <form>
         <Input
@@ -54,7 +68,11 @@ export class FormsLogin extends PureComponent {
           TextLabel="Password: "
           testId="password-input"
         />
-        <Button text="Entrar" />
+        <Button
+          disabled={ !disabledButton }
+          onClick
+          text="Entrar"
+        />
         {// {login && <Redirect to="/carteira" />}
         }
       </form>

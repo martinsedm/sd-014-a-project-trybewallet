@@ -1,11 +1,12 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export class Button extends PureComponent {
+export class Button extends Component {
   render() {
-    const { text, onClick, testId } = this.props;
+    const { text, onClick, testId, disabled } = this.props;
     return (
       <button
+        disabled={ disabled }
         type="button"
         onClick={ onClick }
         data-testid={ testId }
@@ -20,6 +21,7 @@ Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   testId: PropTypes.string.isRequired,
+  disabled: PropTypes.bool.isRequired,
 };
 
 export default Button;
