@@ -7,7 +7,7 @@ class SelectCategoria extends Component {
     return (
       <div>
         <label htmlFor="categoria">
-          tag
+          Tag
           <select
             id="categoria"
             name="categoria"
@@ -16,7 +16,7 @@ class SelectCategoria extends Component {
           >
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabaho</option>
+            <option value="trabalho">Trabalho</option>
             <option value="transporte">Transporte</option>
             <option value="saúde">Saúde</option>
           </select>
