@@ -39,7 +39,7 @@ class Wallet extends React.Component {
             value={ descricao }
             onChange={ this.onChange }
           />
-          <Select nome="moeda" value={ moeda } onChange={ this.onChange } />
+          <Select nome="moeda" value={ moeda } />
           <Select
             nome="Método de Pagamento"
             value={ metodoPagamento }

@@ -2,7 +2,27 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 class Select extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      objCoins: {},
+    };
+  }
+
+  componentDidMount() {
+    this.getCoins();
+  }
+
+  async getCoins() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const allCoins = await response.json();
+    this.setState({ objCoins: allCoins });
+  }
+
   render() {
+    const { objCoins } = this.state;
+    const listCoins = Object.keys(objCoins);
     const { nome, onChange } = this.props;
     return (
       <div>
@@ -10,13 +30,11 @@ class Select extends Component {
           { nome }
           :
           <select name={ nome } id={ nome } onChange={ onChange }>
-            {(nome === 'moeda')
-                && (
-                  <>
-                    <option value="BRL">BRL</option>
-                    <option value="USD">USD</option>
-                  </>
-                )}
+            {(nome === 'moeda') && (listCoins.map((coin) => (
+              (coin !== 'USDT') && (
+                <option key={ coin } value={ coin }>
+                  { coin }
+                </option>))))}
             {(nome === 'Método de Pagamento')
             && (
               <>
