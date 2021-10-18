@@ -11,9 +11,8 @@ class DeleteButton extends Component {
         data-testid="delete-btn"
         type="button"
         onClick={ () => {
-          // console.log(expenses);
-          expenses.splice(idx, 1);
-          deleteItem(expenses);
+          const newExpense = expenses.filter((iten, id) => id !== idx);
+          deleteItem(newExpense);
         } }
       >
         Deletar
