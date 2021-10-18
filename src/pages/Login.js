@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import validator from 'validator';
 import { getEmailUser as getEmailUserAction } from '../actions';
 import ButtonLogin from '../components/ButtonLogin';
 import InputEmail from '../components/InputEmail';
@@ -21,8 +20,8 @@ class Login extends React.Component {
   checkLogin() {
     const MIN_CHARACTERES = 5;
     let result = true;
-    const { password, email } = this.state;
-    if ((password.length > MIN_CHARACTERES) && (validator.isEmail(email))) { // Consulta sobre o validador: https://www.geeksforgeeks.org/how-to-validate-an-email-in-reactjs/
+    const { password } = this.state;
+    if ((password.length > MIN_CHARACTERES)) {
       result = false;
     }
     return result;
