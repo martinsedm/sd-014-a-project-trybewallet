@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { changeWallet } from '../actions';
 import Tag from '../components/Tag';
 import Input from '../components/Input';
 import Moeda from '../components/Moeda';
@@ -12,16 +14,17 @@ class Wallet extends React.Component {
     super();
     this.state = {
       moedas: [],
-      despesas: [],
-      valor: 0,
-      desc: '',
-      moeda: 'USD',
-      pag: 'Dinheiro',
+      expenses: [],
+      value: '0',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.salvarMoedas = this.salvarMoedas.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.adicionarDespesas = this.adicionarDespesas.bind(this);
+    this.enviar = this.enviar.bind(this);
   }
 
   componentDidMount() {
@@ -31,20 +34,36 @@ class Wallet extends React.Component {
   handleChange({ target }, callback) {
     const { name, value } = target;
     this.setState({ [name]: value }, callback);
-    console.log(this.state);
   }
 
-  adicionarDespesas() {
-    const { valor, desc, moeda, pag, tag } = this.state;
+  async adicionarDespesas(callback) {
+    const { value, description, currency, method, tag, expenses } = this.state;
+    const mo = await pegarMoedas();
     this.setState((anterior) => ({
-      despesas: [...anterior.despesas, {
-        valor,
-        desc,
-        moeda,
-        pag,
+      expenses: [...anterior.expenses, {
+        id: expenses.length,
+        value,
+        description,
+        currency,
+        method,
         tag,
+        exchangeRates: mo,
       }],
     }));
+    this.setState({
+      description: '',
+      value: '0',
+    }, callback);
+  }
+
+  enviar() {
+    this.adicionarDespesas(() => {
+      const { expenses } = this.state;
+      const { sendExpenses, despesa } = this.props;
+      const total = Number(expenses[expenses.length - 1].value) + despesa;
+      sendExpenses(expenses, total);
+      console.log(expenses);
+    });
   }
 
   async salvarMoedas() {
@@ -54,36 +73,42 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { moedas, despesas, moeda, pag, tag, desc, valor } = this.state;
+    const { moedas, expenses, value, description, currency, method, tag } = this.state;
     return (
       <div>
         <Header />
         <form>
           <Input
-            type="number"
-            name="valor"
+            type="text"
+            name="value"
             desc="Valor: "
             change={ this.handleChange }
-            value={ valor }
+            value={ value }
           />
           <Input
             type="text"
-            name="desc"
+            name="description"
             desc="Descrição: "
             change={ this.handleChange }
-            value={ desc }
+            value={ description }
           />
-          <Moeda change={ this.handleChange } moedas={ moedas } value={ moeda } />
-          <Pagamento change={ this.handleChange } value={ pag } />
+          <Moeda change={ this.handleChange } moedas={ moedas } value={ currency } />
+          <Pagamento change={ this.handleChange } value={ method } />
           <Tag change={ this.handleChange } value={ tag } />
-          <button onClick={ this.adicionarDespesas } type="button">
+          <button onClick={ this.enviar } type="button">
             Adicionar despesas
           </button>
         </form>
-        <Despesas despesas={ despesas } />
+        <Despesas despesas={ expenses } />
       </div>
     );
   }
 }
 
-export default Wallet;
+const mapDispatchToProps = (dispatch) => ({
+  sendExpenses: (expenses, despesa) => dispatch(changeWallet(despesa, null, expenses)),
+});
+
+const mapStateToProps = (state) => ({despesa: state.wallet.despesa});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

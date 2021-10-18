@@ -10,11 +10,12 @@ export const addUser = (email) => ({
   },
 });
 
-export const changeWallet = (despesa, cambio) => ({
+export const changeWallet = (despesa, cambio, expenses) => ({
   type: CHANGE_WALLET,
   payload: {
     despesa,
     cambio,
+    expenses,
   },
 });
 

@@ -7,7 +7,7 @@ class Moeda extends Component {
     return (
       <label htmlFor="moeda">
         {'Moeda: '}
-        <select name="moeda" id="moeda" onChange={ change } value={ value }>
+        <select name="currency" id="moeda" onChange={ change } value={ value }>
           {moedas.map((moeda, index) => (
             <option key={ index }>{moeda}</option>
           ))}

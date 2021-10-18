@@ -7,12 +7,12 @@ class Despesas extends Component {
     return (
       <div>
         {despesas.map((despesa, index) => (
-          <div key={ index }>
-            <p>{despesa.desc}</p>
-            <p>{despesa.moeda}</p>
-            <p>{despesa.pag}</p>
+          <div key={ index } id={ index }>
+            <p>{despesa.description}</p>
+            <p>{despesa.value}</p>
+            <p>{despesa.currency}</p>
+            <p>{despesa.method}</p>
             <p>{despesa.tag}</p>
-            <p>{despesa.valor}</p>
           </div>
         ))}
       </div>
