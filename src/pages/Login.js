@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { actionLoginEmail } from '../actions';
 
 class Login extends React.Component {
@@ -11,9 +11,11 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      validData: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.enableButton = this.enableButton.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -21,23 +23,36 @@ class Login extends React.Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    },
+    () => {
+      this.enableButton();
     });
   }
 
-  handleClick() {
-    const { login } = this.state;
-    const { history, loginEmail } = this.props;
-    loginEmail(login);
-    history.push('/carteira');
+  enableButton() {
+    const { email, password } = this.state;
+    const MINIMUM_CHARACTERS = 6;
+    const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email);
+    const validPassword = password.length >= MINIMUM_CHARACTERS;
+    if (validEmail && validPassword) {
+      this.setState({
+        validData: true,
+      });
+    }
   }
 
   // https://pt.stackoverflow.com/questions/1386/express%C3%A3o-regular-para-valida%C3%A7%C3%A3o-de-e-mail
   // https://qastack.com.br/programming/5342375/regex-email-validation
 
+  handleClick() {
+    const { email } = this.state;
+    const { loginInfo } = this.props;
+    loginInfo(email);
+  }
+
   render() {
-    const { email, password } = this.state;
-    const reg = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm;
-    const MAX_LENGTH = 6;
+    const { email, password, validData } = this.state;
+
     return (
       <div>
         <form>
@@ -65,10 +80,9 @@ class Login extends React.Component {
           </label>
           <button
             type="button"
-            disabled={ !reg.test(email) || password.length < MAX_LENGTH }
+            disabled={ !validData }
             onClick={ this.handleClick }
           >
-
             <Link to="/carteira">Entrar</Link>
           </button>
         </form>
@@ -78,15 +92,11 @@ class Login extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  loginEmail: (payload) => dispatch(actionLoginEmail(payload)),
+  loginInfo: (payload) => dispatch(actionLoginEmail(payload)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
-
 Login.propTypes = {
-  history: PropTypes.shape({
-    action: PropTypes.string.isRequired,
-    push: PropTypes.func,
-  }).isRequired,
-  loginEmail: PropTypes.func.isRequired,
+  loginInfo: PropTypes.func.isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(Login);
