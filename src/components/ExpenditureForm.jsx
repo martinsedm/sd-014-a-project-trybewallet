@@ -1,54 +1,76 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SelectInput from './SelectInput';
+import { setExpenditure, fetchCoins } from '../actions';
 
 class ExpenditureForm extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.submit = this.submit.bind(this);
+  }
+
+  handleChange({ target: { id, value } }) {
+    this.setState({ [id]: value });
+  }
+
+  submit(event) {
+    event.preventDefault();
+    const { setExpenditureGlobal, getCoins } = this.props;
+    getCoins().then(() => setExpenditureGlobal(this.state));
+  }
+
   render() {
     const { coins } = this.props;
     return (
-      <form>
+      <form onSubmit={ this.submit }>
         <label htmlFor="value">
           Valor
           <input
             type="number"
-            name="value"
             id="value"
             placeholder="Valor"
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="description">
           Descrição
           <input
             type="text"
-            name="description"
             id="description"
             placeholder="Descrição"
+            onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="coin">
-          Moeda
-          <select id="coin">
-            {coins.map(({ code }) => <option key={ code }>{code}</option>)}
-          </select>
-        </label>
-        <label htmlFor="paymentMethod">
-          Método de pagamento
-          <select name="paymentMethod" id="paymentMethod">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" id="tag">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        <SelectInput
+          id="currency"
+          label="Moeda"
+          // options={ coins.map(({ code }) => code) }
+          // options={ coins.map((coin) => Object.keys(coin)[0]) }
+          options={ Object.keys(coins) }
+          onChange={ this.handleChange }
+        />
+        <SelectInput
+          id="method"
+          label="Método de pagamento"
+          onChange={ this.handleChange }
+          options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+        />
+        <SelectInput
+          id="tag"
+          label="Tag"
+          onChange={ this.handleChange }
+          options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+        />
+        <input type="submit" value="Adicionar despesa" />
       </form>
     );
   }
@@ -58,8 +80,15 @@ const mapStateToProps = ({ wallet }) => ({
   coins: wallet.currencies,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  setExpenditureGlobal: (expenditure) => dispatch(setExpenditure(expenditure)),
+  getCoins: () => dispatch(fetchCoins()),
+});
+
 ExpenditureForm.propTypes = {
   coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setExpenditureGlobal: PropTypes.func.isRequired,
+  getCoins: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(ExpenditureForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenditureForm);
