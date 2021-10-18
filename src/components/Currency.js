@@ -11,8 +11,8 @@ class Currency extends React.Component {
         Moeda
         <select name="currency" id="currency" onChange={ onChange }>
           {currencies.map((currency) => (
-            <option key={ currency.code } value={ currency.code }>
-              {currency.code}
+            <option key={ currency } value={ currency }>
+              {currency}
             </option>
           ))}
         </select>
@@ -26,9 +26,7 @@ const mapStateToProps = (state) => ({
 });
 
 Currency.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.string,
-  })).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

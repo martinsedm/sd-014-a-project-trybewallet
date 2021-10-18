@@ -54,7 +54,7 @@ class ExpensesForm extends React.Component {
     this.setState({
       value: 0,
       description: '',
-      currency: 'USD',
+      currency: 'EUR',
       method: 'Dinheiro',
       tag: 'Alimentação',
     });
