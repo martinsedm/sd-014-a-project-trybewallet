@@ -1,4 +1,5 @@
 import React from 'react';
+import Input from '../components/Input';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,22 +31,21 @@ class Login extends React.Component {
     return (
       <div>
         <form>
-          <input
-            data-testid="email-input"
+          <Input
             name="email"
             onChange={ this.handleChange }
             placeholder="Email"
             type="email"
             value={ email }
           />
-          <input
-            data-testid="password-input"
+          <Input
             name="password"
             onChange={ this.handleChange }
             placeholder="Senha"
             type="password"
             value={ password }
           />
+
           <button disabled={ this.isDisabled() } type="button">
             Entrar
           </button>
