@@ -1,15 +1,13 @@
 import { SALVAR_EMAIL } from '../actions';
 
 const ESTADO_INICIAL = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function SalvarUsuario(state = ESTADO_INICIAL, action) {
   switch (action.type) {
   case SALVAR_EMAIL:
-    return { ...state, user: action.emailValue };
+    return { ...state, email: action.emailValue };
   default:
     return state;
   }
