@@ -11,7 +11,6 @@ export default class ExpenseTable extends Component {
       'Câmbio utilizado',
       'Valor convertido',
       'Moeda de conversão'];
-    console.log(headerTableTexts);
     // const { expenses } = this.props;
     return (
       <table>
