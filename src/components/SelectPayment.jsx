@@ -8,7 +8,12 @@ class SelectPayment extends React.Component {
     return (
       <label htmlFor="payment-method">
         Método de pagamento
-        <select id="payment-method" onChange={ handleChange } value={ method } name="method">
+        <select
+          id="payment-method"
+          onChange={ handleChange }
+          value={ method }
+          name="method"
+        >
           <option value="Dinheiro">Dinheiro</option>
           <option value="Cartão de crédito">Cartão de crédito</option>
           <option value="Cartão de débito">Cartão de débito</option>
