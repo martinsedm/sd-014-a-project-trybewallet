@@ -23,6 +23,8 @@ class FormsAddexpense extends Component {
   }
 
   render() {
+    const MethodsPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tagsExpense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value: price, currency, method: paymentForm, tag, description } = this.state;
     return (
       <form>
@@ -32,38 +34,42 @@ class FormsAddexpense extends Component {
           id="price"
           name="price"
           value={ price }
-          TextLabel="Valor: "
+          TextLabel="Valor"
         />
         <Select
           value={ currency }
+          options={ [] }
           name="currency"
-          textLabel="Moeda: "
+          textLabel="Moeda"
           onChange={ this.handleChangeGeneric }
         />
         <Select
           value={ paymentForm }
           name="payment"
-          textLabel="Forma de pagamento: "
+          textLabel="Método de pagamento"
           onChange={ this.handleChangeGeneric }
+          options={ MethodsPayment }
         />
         <Select
           value={ tag }
           name="tag"
-          textLabel="Tag: "
+          options={ tagsExpense }
+          textLabel="Tag"
           onChange={ this.handleChangeGeneric }
         />
-        <Select
+        <Input
+          type="text"
+          id="description"
           value={ description }
           name="description"
-          textLabel="Descrição"
           onChange={ this.handleChangeGeneric }
+          TextLabel="Descrição"
         />
         <Button
           onClick={ this.handleonCLick }
           text="Adicionar despesa"
         />
       </form>
-
     );
   }
 }

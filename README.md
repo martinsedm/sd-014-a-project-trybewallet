@@ -405,25 +405,25 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
 #### 6. Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:
 
-  * Um campo para adicionar valor da despesa.
+  * Um campo para adicionar valor da despesa.-
 
-    * O campo deverá ter a label `Valor`.
+    * O campo deverá ter a label `Valor`.-
 
-  * Um campo de texto para adicionar a descrição da despesa.
+  * Um campo de texto para adicionar a descrição da despesa.-
 
-    * O campo deverá ter a label `Descrição`.
+    * O campo deverá ter a label `Descrição`.-
 
-  * Um campo de select para adicionar em qual moeda será registrada a despesa.
+  * Um campo de select para adicionar em qual moeda será registrada a despesa.-
 
-    * O campo deverá ter a label `Moeda`.
+    * O campo deverá ter a label `Moeda`.-
 
-    * O campo deverá ser um `<select>`.
+    * O campo deverá ser um `<select>`.-
 
     * As opções do select serão preenchidas através da consulta à API. Isso será feito em um requisito mais a frente. Nesse momento você pode deixar o `<select>` vazio.
 
-  * Um campo para adicionar qual método de pagamento será utilizado.
+  * Um campo para adicionar qual método de pagamento será utilizado.-
 
-    * O campo deverá ter a label `Método de pagamento`.
+    * O campo deverá ter a label `Método de pagamento`.-
 
     * Este campo deve ser um `<select>`. A pessoa usuária deve poder escolher entre os campos: 'Dinheiro', 'Cartão de crédito' e 'Cartão de débito'.
 
