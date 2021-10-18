@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { deleteItem } from '../actions';
 
 class TableForm extends Component {
   render() {
-    const { setExpeses } = this.props;
+    const { setExpeses, itemSelected } = this.props;
     return (
       <table className="ctn-table">
         <thead className="table-thead">
           <tr>
-            <td>Descrição</td>
-            <td>Tag</td>
-            <td>Método de Pagamento</td>
-            <td>Valor</td>
-            <td>Moeda</td>
-            <td>Câmbio Utilizado</td>
-            <td>Valor Convertido</td>
-            <td>Moeda de Conversão</td>
+            <th>Descrição</th>
+            <th>Tag</th>
+            <th>Método de pagamento</th>
+            <th>Valor</th>
+            <th>Moeda</th>
+            <th>Câmbio utilizado</th>
+            <th>Valor convertido</th>
+            <th>Moeda de conversão</th>
+            <th>Editar/Excluir</th>
           </tr>
         </thead>
         <tbody className="table-tbody">
@@ -36,6 +38,14 @@ class TableForm extends Component {
                 }
               </td>
               <td>Real</td>
+              <button
+                data-testid="delete-btn"
+                type="button"
+                className="delete-btn"
+                onClick={ () => itemSelected(item) }
+              >
+                Deletar
+              </button>
             </tr>
           ))}
         </tbody>
@@ -44,12 +54,17 @@ class TableForm extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  setExpeses: state.wallet.expenses,
+const mapStateToProps = ({ wallet }) => ({
+  setExpeses: wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  itemSelected: (item) => dispatch(deleteItem(item)),
 });
 
 TableForm.propTypes = {
   setExpeses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  itemSelected: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(TableForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TableForm);

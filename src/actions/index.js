@@ -5,6 +5,7 @@ export const actionTypes = {
   SET_EMAIL_USER: 'SET_EMAIL_USER',
   DATA_CURRENCY: 'DATA_CURRENCY',
   ADD_ITEM: 'ADD_ITEM',
+  DELETE_ITEM: 'DELETE_ITEM',
 };
 
 export const setEmailUser = (email) => ({
@@ -20,6 +21,11 @@ export const dataCurrency = (data) => ({
 export const addItem = (expense) => ({
   type: actionTypes.ADD_ITEM,
   payload: expense,
+});
+
+export const deleteItem = (item) => ({
+  type: actionTypes.DELETE_ITEM,
+  payload: item,
 });
 
 export function fetchAPI() {

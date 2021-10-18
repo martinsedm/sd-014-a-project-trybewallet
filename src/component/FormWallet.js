@@ -61,7 +61,7 @@ class FormWallet extends Component {
           id="currency-input"
           onChange={ (e) => this.setState({ currency: e.target.value }) }
         >
-          { currenciesNames.map((item, index) => (
+          { (currenciesNames || []).map((item, index) => (
             <option key={ index } value={ item }>{ item }</option>
           )) }
         </select>
