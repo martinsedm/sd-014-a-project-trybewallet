@@ -83,8 +83,8 @@ class Login extends React.Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    setEmail(playload) {
-      const action = emailForAction(playload);
+    setEmail(payload) {
+      const action = emailForAction(payload);
       dispatch(action);
     },
   };
