@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { userLoginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
       redirect: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -24,11 +28,20 @@ class Login extends React.Component {
     const VALID_PASSWORD = 6;
 
     if (validEmail && password.length >= VALID_PASSWORD) {
-      this.setState({
-        redirect: true,
-      });
+      // this.setState({
+      //   redirect: true,
+      // });
       return true;
     }
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { userLogin } = this.props;
+    userLogin(email);
+    this.setState({
+      redirect: true,
+    });
   }
 
   render() {
@@ -54,7 +67,7 @@ class Login extends React.Component {
         <button
           type="button"
           disabled={ !this.verifyLogin(email, password) }
-          onClik={ this.handleClick }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -63,4 +76,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (payload) => dispatch(userLoginAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
