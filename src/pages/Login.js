@@ -12,9 +12,9 @@ class Login extends React.Component {
       disable: true,
     };
     this.handleChange = this.handleChange.bind(this);
-    this.mudar = this.mudar.bind(this);
     this.validarEmail = this.validarEmail.bind(this);
     this.entrar = this.entrar.bind(this);
+    this.mudar = this.mudar.bind(this);
   }
 
   // https://www.horadecodar.com.br/2020/09/13/como-validar-email-com-javascript/
