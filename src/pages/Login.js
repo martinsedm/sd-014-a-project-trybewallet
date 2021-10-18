@@ -9,8 +9,10 @@ class Login extends React.Component {
       senha: '',
     };
     this.handleChance = this.handleChance.bind(this);
+    this.buttonClick = this.buttonClick.bind(this);
   }
 
+  // atualiza estado local
   handleChance({ target }) {
     const { name, value } = target;
     this.setState({
@@ -18,23 +20,34 @@ class Login extends React.Component {
     });
   }
 
+  buttonClick() {
+    console.log('login');
+  }
+
   render() {
     const { email, senha } = this.state;
     return (
-      <form>
-        <input
-          data-testid="email-input"
-          onChange={ this.handleChance }
-          value={ email }
-          name="email"
-        />
-        <input
-          data-testid="password-input"
-          onChange={ this.handleChance }
-          value={ senha }
-          name="senha"
-          type="password"
-        />
+      <form onSubmit={ this.buttonClick }>
+        <label htmlFor="email">
+          <input
+            data-testid="email-input"
+            onChange={ this.handleChance }
+            value={ email }
+            name="email"
+          />
+          { !email.match(/^\S+@\S+$/i)
+            ? ' -e-mail inválido- ' : ' -ok- ' }
+        </label>
+        <label htmlFor="senha">
+          <input
+            data-testid="password-input"
+            onChange={ this.handleChance }
+            value={ senha }
+            name="senha"
+            type="password"
+            minLength="6"
+          />
+        </label>
         <button type="submit">
           Entrar
         </button>
