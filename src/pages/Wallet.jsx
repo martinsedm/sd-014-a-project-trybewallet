@@ -6,7 +6,8 @@ import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends Component {
   render() {
-    const { updatedTotal, userEmail } = this.props;
+    const { walletTotal, userEmail } = this.props;
+    const updatedTotal = walletTotal ? parseFloat(walletTotal).toFixed(2) : 0;
 
     return (
       <>
@@ -19,7 +20,7 @@ class Wallet extends Component {
             <span>
               Despesa Total:
               <strong data-testid="total-field">
-                {` R$ ${updatedTotal || 0}` }
+                {` R$ ${updatedTotal}` }
               </strong>
               <strong data-testid="header-currency-field"> BRL</strong>
             </span>
@@ -36,13 +37,12 @@ class Wallet extends Component {
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  updatedTotal: PropTypes.number.isRequired,
+  walletTotal: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-
   userEmail: state.user.email,
-  updatedTotal: state.wallet.total,
+  walletTotal: state.wallet.total,
 
 });
 
