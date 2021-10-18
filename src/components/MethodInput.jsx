@@ -6,6 +6,8 @@ class MethodInput extends Component {
   render() {
     const { methodOptions, method, handleChange } = this.props;
 
+    console.log(methodOptions);
+
     return (
       <label htmlFor="method">
         Método de pagamento

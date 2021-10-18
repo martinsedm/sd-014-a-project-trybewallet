@@ -4,25 +4,24 @@
   padding: 0;
 }
 
-html, body {
+html , body {
   background: white;
   color: #202022;
   font-size: 100%;
   height: 100vh;
 }
 
-*, button, input {
-  font: 400 16px "Roboto", -apple-system, system-ui, sans-serif;
+* , button , input {
+  font: 400 16px 'Roboto', -apple-system, system-ui, sans-serif;
 }
 
 /* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+input::-webkit-outer-spin-button , input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
+input[ type = "number" ] {
   -moz-appearance: textfield;
 }

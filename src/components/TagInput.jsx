@@ -6,6 +6,8 @@ class TagInput extends Component {
   render() {
     const { tagOptions, tag, handleChange } = this.props;
 
+    console.log(tagOptions);
+
     return (
       <label htmlFor="tag">
         Tag

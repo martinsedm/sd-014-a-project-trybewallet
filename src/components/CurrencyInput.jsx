@@ -4,7 +4,12 @@ import React, { Component } from 'react';
 class CurrencyInput extends Component {
   render() {
     const { currency, exchangeRates, handleChange } = this.props;
+    const currencies = Object.values(exchangeRates).reduce((acc, crr) => {
+      if (!crr.name.includes('Turismo')) acc.push(crr.code);
+      return acc;
+    }, []);
 
+    console.log(`${currencies}`);
     return (
       <label htmlFor="currency">
         Moeda
@@ -15,13 +20,9 @@ class CurrencyInput extends Component {
           onChange={ handleChange }
         >
           <option value="" disabled hidden>Moeda</option>
-          { Object.values(exchangeRates).map((currencies, i) => {
-            if (!currencies.name.includes('Turismo')) {
-              return (
-                <option key={ i }>{currencies.code}</option>
-              );
-            }
-          })}
+          { currencies.map((currencyCode, i) => (
+            <option key={ i } value={ currencyCode }>{currencyCode}</option>
+          )) }
         </select>
       </label>
     );
