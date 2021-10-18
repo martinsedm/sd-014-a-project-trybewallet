@@ -1,12 +1,10 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import formValidation from '../service/formValidation';
-import { addUser } from '../actions/index';
-// import { Redirect } from 'react-router';
 import Input from './Input';
-import { Button } from './Button';
 
-export class FormsLogin extends PureComponent {
+export class FormsLogin extends Component {
   constructor() {
     super();
     this.state = {
@@ -18,22 +16,16 @@ export class FormsLogin extends PureComponent {
         isValid: false,
         value: '',
       },
-      disabledButton: false,
     };
     this.handleChangeCheck = this.handleChangeCheck.bind(this);
     this.checkAllFormIsValid = this.checkAllFormIsValid.bind(this);
   }
 
-  componentDidUpdate() {
-    this.checkAllFormIsValid(this.state);
-  }
-
-  checkAllFormIsValid(state) {
-    const listState = Object.keys(state).filter((key) => key !== 'disabledButton');
-    const result = listState.every((form) => state[form].isValid === true);
-    this.setState({
-      disabledButton: result,
-    });
+  checkAllFormIsValid() {
+    const { state } = this;
+    const listState = Object.keys(state);
+    const result = listState.every((form) => state[form].isValid);
+    return result;
   }
 
   handleChangeCheck({ target }) {
@@ -47,7 +39,9 @@ export class FormsLogin extends PureComponent {
   }
 
   render() {
-    const { email, password, disabledButton } = this.state;
+    const { email, password } = this.state;
+    const { setEmail } = this.props;
+    this.checkAllFormIsValid();
     return (
       <form>
         <Input
@@ -68,20 +62,22 @@ export class FormsLogin extends PureComponent {
           TextLabel="Password: "
           testId="password-input"
         />
-        <Button
-          disabled={ !disabledButton }
-          onClick
-          text="Entrar"
-        />
-        {// {login && <Redirect to="/carteira" />}
-        }
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !this.checkAllFormIsValid() }
+            onClick={ () => setEmail(email.value) }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addEmail: (payload) => dispatch(addUser(payload)),
-});
+FormsLogin.propTypes = {
+  setEmail: PropTypes.func.isRequired,
+};
 
-export default connect(null, mapDispatchToProps)(FormsLogin);
+export default FormsLogin;

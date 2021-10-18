@@ -7,13 +7,13 @@ const initialState = {
   },
 };
 
-const user = (state = initialState, { type, payload }) => {
+const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_USER:
     return {
       ...state,
       user: {
-        email: payload.email,
+        email: payload,
       },
     };
 
@@ -22,4 +22,4 @@ const user = (state = initialState, { type, payload }) => {
   }
 };
 
-export default user;
+export default userReducer;

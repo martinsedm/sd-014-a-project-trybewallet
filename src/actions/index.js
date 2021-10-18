@@ -3,7 +3,7 @@ export const ADD_USER = 'ADD_USER';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const ADD_CURRENCIES = 'ADDCURRENCIES';
 
-export const addUser = (payload) => ({
+export const setUserEmail = (payload) => ({
   type: ADD_USER,
   payload,
 });
