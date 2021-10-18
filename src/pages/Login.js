@@ -32,6 +32,7 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const MINIMUM_CHARACTERS = 6;
     const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email);
+    // const validEmail = document.getElementById('form-login').checkValidity();
     const validPassword = password.length >= MINIMUM_CHARACTERS;
     if (validEmail && validPassword) {
       this.setState({
@@ -50,13 +51,13 @@ class Login extends React.Component {
   render() {
     const { email, password, validData } = this.state;
     return (
-      <form>
+      <form id="form-login">
         <fieldset>
           <legend>Faça seu login</legend>
           <label htmlFor="email">
             E-mail
             <input
-              type="text"
+              type="email"
               id="email"
               name="email"
               value={ email }
