@@ -5,14 +5,14 @@ import SelectForm from './SelectForm';
 class WalletForm extends React.Component {
   constructor() {
     super();
-    this.state = {
-      id: 0,
-      value: 0,
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: '',
-      description: '',
-    };
+    // this.state = {
+    //   id: 0,
+    //   value: 0,
+    //   currency: 'USD',
+    //   method: 'Dinheiro',
+    //   tag: '',
+    //   description: '',
+    // };
 
     this.handleChange = this.handleChange.bind(this);
   }
