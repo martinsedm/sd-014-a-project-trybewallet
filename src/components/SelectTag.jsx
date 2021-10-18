@@ -22,7 +22,7 @@ class SelectTag extends React.Component {
 
 SelectTag.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  tag: PropTypes.string.isRequired,
+  tag: PropTypes.string,
 };
 
 SelectTag.defaultProps = {
