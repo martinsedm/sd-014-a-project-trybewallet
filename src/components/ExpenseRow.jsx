@@ -6,8 +6,9 @@ import RemoveButton from './RemoveButton';
 class ExpenseRow extends Component {
   render() {
     const { expenseData } = this.props;
-    const { value, currency, method, tag, description, exchangeRates } = expenseData;
+    const { id, value, currency, method, tag, description, exchangeRates } = expenseData;
     const { name, ask } = exchangeRates[currency];
+    const convertedValue = value * ask;
 
     return (
       <tr>
@@ -17,11 +18,11 @@ class ExpenseRow extends Component {
         <td>{value}</td>
         <td>{(1 * ask).toFixed(2)}</td>
         <td>{name.split('/')[0]}</td>
-        <td>{(value * ask).toFixed(2)}</td>
+        <td>{(convertedValue).toFixed(2)}</td>
         <td>Real</td>
         <td>
-          <EditButton />
-          <RemoveButton />
+          <EditButton id={ id } />
+          <RemoveButton id={ id } convertedValue={ convertedValue } />
         </td>
       </tr>
     );
@@ -30,12 +31,13 @@ class ExpenseRow extends Component {
 
 ExpenseRow.propTypes = {
   expenseData: PropTypes.shape({
-    currency: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    exchangeRates: PropTypes.string.isRequired,
-    method: PropTypes.string.isRequired,
-    tag: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     value: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    exchangeRates: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
   }).isRequired,
 };
 

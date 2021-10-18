@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Form from '../components/Form';
+import AddExpenseForm from '../components/AddExpenseForm';
 import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends Component {
@@ -26,7 +26,7 @@ class Wallet extends Component {
           </div>
         </header>
         <main>
-          <Form handleChange={ this.handleChange } />
+          <AddExpenseForm handleChange={ this.handleChange } />
           <ExpenseTable />
         </main>
       </>

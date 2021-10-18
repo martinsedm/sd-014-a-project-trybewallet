@@ -2,8 +2,24 @@ import fetchAPI from '../helpers/fetchAPI';
 
 export const LOGIN_EMAIL = 'LOGIN_EMAIL';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const FETCH_CURRENCIES = 'FETCH_CURRENCIES';
 
-export const saveEmailInState = (payload) => ({
+export const fetchCurrenciesAction = () => async (dispatch) => {
+  const exchangeRates = await fetchAPI();
+
+  const payload = Object.values(exchangeRates).reduce((acc, crr) => {
+    if (!crr.name.includes('Turismo')) acc.push(crr.code);
+    return acc;
+  }, []);
+
+  dispatch({
+    type: FETCH_CURRENCIES,
+    payload,
+  });
+};
+
+export const saveEmailInStateAction = (payload) => ({
   type: LOGIN_EMAIL,
   payload,
 });
@@ -29,3 +45,8 @@ export const addExpenseAction = (formData) => async (dispatch) => {
     rate,
   });
 };
+
+export const removeExpenseAction = (payload) => ({
+  type: REMOVE_EXPENSE,
+  payload,
+});

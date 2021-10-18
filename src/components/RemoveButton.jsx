@@ -1,9 +1,66 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { removeExpenseAction } from '../actions';
 
-export default class RemoveButton extends Component {
+class RemoveButton extends Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+
+    const { id, walletExpenses, removeExpense, walletTotal, convertedValue } = this.props;
+    const updatedExpenses = walletExpenses.filter((expense) => expense.id !== id);
+    const updatedTotal = walletTotal - convertedValue;
+    const payload = {
+      updatedExpenses,
+      updatedTotal,
+    };
+
+    removeExpense(payload);
+  }
+
   render() {
     return (
-      <button type="submit">Remover</button>
+      <button
+        type="button"
+        onClick={ this.handleClick }
+        data-testid="delete-btn"
+      >
+        Remover
+      </button>
     );
   }
 }
+
+RemoveButton.propTypes = {
+  convertedValue: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  removeExpense: PropTypes.func.isRequired,
+  walletExpenses: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    filter: PropTypes.func.isRequired,
+    exchangeRates: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
+  }).isRequired,
+  walletTotal: PropTypes.number.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  walletExpenses: state.wallet.expenses,
+  walletTotal: state.wallet.total,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (expenses) => dispatch(removeExpenseAction(expenses)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RemoveButton);
