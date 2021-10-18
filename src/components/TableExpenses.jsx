@@ -6,7 +6,7 @@ import { deleteExpenseAction, totalExpenseAction } from '../actions';
 class TableExpenses extends React.Component {
   formatDelete({ target }) {
     const { expenses, deleteExpense, changeTotal } = this.props;
-    let newState = [];
+    const newState = [];
     expenses.forEach((expense) => {
       if (+expense.id !== +target.id) {
         newState.push(expense);
@@ -18,7 +18,6 @@ class TableExpenses extends React.Component {
       const { exchangeRates, value, currency } = expense;
       total += parseFloat(value) * exchangeRates[currency].ask;
     });
-    //  console.log(total.toFixed(2));
     changeTotal(total.toFixed(2));
   }
 
@@ -39,6 +38,7 @@ class TableExpenses extends React.Component {
           <td>
             <button
               id={ id }
+              type="button"
               data-testid="delete-btn"
               onClick={ (e) => this.formatDelete(e) }
             >
@@ -88,6 +88,8 @@ function mapDispatchToProps(dispatch) {
 
 TableExpenses.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object),
+  deleteExpense: PropTypes.func.isRequired,
+  changeTotal: PropTypes.func.isRequired,
 };
 
 TableExpenses.defaultProps = {
