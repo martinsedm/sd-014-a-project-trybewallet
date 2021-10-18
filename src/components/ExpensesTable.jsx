@@ -24,6 +24,7 @@ class ExpensesTable extends React.Component {
 
   render() {
     const { wallet: { expenses } } = this.props;
+    console.log(expenses);
     return (
       <table>
         <thead>
