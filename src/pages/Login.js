@@ -9,7 +9,6 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      // emailValido: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -19,11 +18,12 @@ class Login extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleClick() {
-    const { dispatchSalvarEmail } = this.props;
-    dispatchSalvarEmail(this.state);
-    console.log(dispatchSalvarEmail);
-    // history.push('/carteira');
+  handleClick(event) {
+    event.preventDefault();
+    const { dispatchSalvarEmail, history } = this.props;
+    const { email } = this.state;
+    dispatchSalvarEmail(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -75,7 +75,7 @@ Login.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchSalvarEmail: (emailValue) => dispatch(salvarEmailAction(emailValue)),
+  dispatchSalvarEmail: (email) => dispatch(salvarEmailAction(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
