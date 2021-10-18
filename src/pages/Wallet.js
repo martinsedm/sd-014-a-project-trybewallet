@@ -6,6 +6,7 @@ import Form from '../components/Form';
 import Table from '../components/Table';
 import MakeLogin from '../components/MakeLogin';
 import { categories, payment } from '../data/index';
+import { saveToLocalStorage } from '../services';
 import {
   getIntCurrenciesThunk,
   addExpenseThunk,
@@ -20,6 +21,7 @@ class Wallet extends React.Component {
     const { currencies } = props;
     this.state = {
       total: 0,
+      saved: false,
       form: {
         value: 0,
         currency: '',
@@ -36,6 +38,7 @@ class Wallet extends React.Component {
     this.updateStateForm = this.updateStateForm.bind(this);
     this.calculateSum = this.calculateSum.bind(this);
     this.editExpense = this.editExpense.bind(this);
+    this.saveTable = this.saveTable.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +52,7 @@ class Wallet extends React.Component {
   componentDidUpdate(prevProps) {
     const { currencies, expenses, currencyToExchange, editor } = this.props;
     if (prevProps.currencies !== currencies) {
-      this.updateStateForm({ currencies });
+      this.updateStateForm({ currencies }, { saved: false });
     }
     if ((prevProps.expenses !== expenses)
       || (prevProps.currencyToExchange !== currencyToExchange)) {
@@ -58,7 +61,7 @@ class Wallet extends React.Component {
     if (editor && editor !== prevProps.editor) {
       const { idToEdit: { value, currency, method, tag, description } } = this.props;
       const formEdit = { value, currency, method, tag, description };
-      this.updateStateForm(formEdit);
+      this.updateStateForm(formEdit, { saved: false });
     }
   }
 
@@ -76,6 +79,7 @@ class Wallet extends React.Component {
     }, 0);
     this.setState({
       total,
+      saved: false,
     });
   }
 
@@ -117,6 +121,12 @@ class Wallet extends React.Component {
     editExpenseMode(id);
   }
 
+  saveTable() {
+    const { expenses, user: { email } } = this.props;
+    saveToLocalStorage(email, expenses);
+    this.setState({ saved: true });
+  }
+
   handlechange({ target: { name, value } }) {
     const { form } = this.state;
     this.setState({
@@ -134,7 +144,7 @@ class Wallet extends React.Component {
       removeExpense,
       currencyToExchange,
       editor } = this.props;
-    const { total, form } = this.state;
+    const { total, saved, form } = this.state;
     const textButton = editor ? 'Editar Despesa' : 'Adicionar Despesa';
     return (
       <main>
@@ -151,12 +161,14 @@ class Wallet extends React.Component {
           { expenses.length !== 0
           && <Table
             expenses={ expenses }
-            email={ email }
+            disableSave={ email === '' }
             disableBtn={ editor }
             removeExpense={ removeExpense }
             editExpense={ this.editExpense }
+            saveTable={ this.saveTable }
           /> }
         </section>
+        { saved && <p>Lista salva</p> }
         { email.length === 0 && <MakeLogin />}
       </main>
     );
