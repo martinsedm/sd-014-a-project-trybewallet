@@ -1,13 +1,7 @@
 import { ADD_EMAIL } from '../actions';
 // Esse reducer será responsável por tratar as informações da pessoa usuária
 const INICIANDO_ESTADO = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
 };
 
 function user(state = INICIANDO_ESTADO, action) {
@@ -15,9 +9,7 @@ function user(state = INICIANDO_ESTADO, action) {
   case ADD_EMAIL:
     return {
       ...state,
-      user: {
-        email: action.email,
-      },
+      user: action.email,
     };
   default:
     return state;

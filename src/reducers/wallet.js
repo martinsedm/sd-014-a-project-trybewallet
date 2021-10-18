@@ -1,24 +1,22 @@
-import { ADD_DESPESA } from '../actions';
+import { ADD_DESPESA, ADD_MOEDAS } from '../actions';
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
 const ESTADO_INICIAL = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
 function wallet(state = ESTADO_INICIAL, action) {
   switch (action.type) {
+  case ADD_MOEDAS:
+    return {
+      ...state,
+      currencies: action.algo,
+    };
   case ADD_DESPESA:
     return {
       ...state,
-      payload: {
-        expenses: [], // entender como passar a action com a informação.
-      },
+      expenses: action.algo,
     };
   default:
     return state;

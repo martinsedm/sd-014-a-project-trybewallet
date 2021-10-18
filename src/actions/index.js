@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_DESPESA = 'ADD_DESPESA';
+export const ADD_MOEDAS = 'ADD_MOEDAS';
 
 export const addEmail = (email) => ({
   type: ADD_EMAIL,
@@ -9,8 +10,10 @@ export const addEmail = (email) => ({
 
 export const addDespesa = (despesa) => ({
   type: ADD_DESPESA,
-  payload: {
-    currencies: [], // nao sei exatamente o que colocar aqui..
-    expenses: [],
-  },
+  despesa,
+});
+
+export const addMoeda = (moeda) => ({
+  type: ADD_MOEDAS,
+  moeda,
 });

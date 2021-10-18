@@ -1,6 +1,8 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Buttons from '../Component/Buttons';
+import { addEmail } from '../actions';
 
 import Inputs from '../Component/Inputs';
 
@@ -10,11 +12,8 @@ class Login extends React.Component {
     this.state = {
       email: '',
       senha: '',
-      disabled: true,
-      btnClicado: false,
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
-    this.loginValidation = this.loginValidation.bind(this);
     this.clickButton = this.clickButton.bind(this);
   }
 
@@ -26,25 +25,19 @@ class Login extends React.Component {
     });
   }
 
-  loginValidation() {
-    const { senha } = this.state;
-    const SENHA_MINIMA = 6;
-
-    if (senha.length >= SENHA_MINIMA) {
-      this.setState({
-        disabled: false,
-      });
-    }
-  }
-
   clickButton() {
-    this.setState({
-      btnClicado: true,
-    });
+    const { history, dispatchEmail } = this.props;
+    const { email } = this.state;
+    dispatchEmail(email);
+    history.push('/carteira');
   }
 
   render() {
-    const { email, senha, disabled, btnClicado } = this.state;
+    const { email, senha } = this.state;
+    // Regex para verificar caracteres ref. 'https://www.devmedia.com.br/iniciando-expressoes-regulares/6557'
+    const regexEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const validEmail = regexEmail.test(email);
+    const SENHA_MINIMA = 6;
     return (
       <div>
         <Inputs
@@ -64,14 +57,24 @@ class Login extends React.Component {
           onKeyUp={ this.loginValidation }
         />
         <Buttons
-          disabled={ disabled }
+          disabled={ !(senha.length >= SENHA_MINIMA && validEmail) }
           onClick={ this.clickButton }
           msg="Entrar"
         />
-        { btnClicado && <Redirect to="/carteira" />}
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchEmail: (valueEmail) => dispatch(addEmail(valueEmail)),
+});
+
+Login.propTypes = {
+  dispatchEmail: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
