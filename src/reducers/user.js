@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   email: '',
 };
 
-const loginReducer = (state = INITIAL_STATE, action) => {
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case LOGIN_EMAIL:
     return { ...state, email: action.payload };
@@ -14,4 +14,4 @@ const loginReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default loginReducer;
+export default user;
