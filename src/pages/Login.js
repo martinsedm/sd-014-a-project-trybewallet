@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { loginSave as loginSaveAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,11 +14,22 @@ class Login extends React.Component {
     };
 
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
-  handleOnChange({ target }) {
-    const { name, value } = target;
-    this.setState({ [name]: value });
+  handleOnChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  handleOnClick(event) {
+    event.preventDefault();
+    const { dispatchLogin, history } = this.props;
+    const { email } = this.state;
+    console.log(email);
+    dispatchLogin(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -43,6 +58,7 @@ class Login extends React.Component {
             onChange={ this.handleOnChange }
           />
           <button
+            onClick={ this.handleOnClick }
             type="button"
             disabled={ password.length < passwordLength
                || email !== validateEmail }
@@ -55,4 +71,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatchLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchLogin: (email) => dispatch(loginSaveAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
