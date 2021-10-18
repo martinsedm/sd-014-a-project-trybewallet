@@ -1,13 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class ExpenseForm extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.mapcoins = this.mapcoins.bind(this);
-  }
-
   render() {
     const { currencies } = this.props;
     return (
