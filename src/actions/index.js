@@ -4,9 +4,14 @@ const LOG_IN = 'LOG_IN';
 export default LOG_IN;
 
 // Action Creator
-export function logInput(value) {
+export function emailForAction(value) {
   return {
     type: LOG_IN,
     playload: value,
   };
 }
+
+// Action Creator
+// export const fetchAPI = () => {
+
+// };
