@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import WalletForm from '../components/WalletForm';
+import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
   constructor() {
@@ -13,13 +14,12 @@ class Wallet extends React.Component {
     this.totalUpdate = this.totalUpdate.bind(this);
   }
 
-  async totalUpdate() {
+  totalUpdate() {
     const { expenses } = this.props;
-    const ttl = await expenses.reduce((acc, item) => {
+    const ttl = expenses.reduce((acc, item) => {
       const { currency, exchangeRates, value } = item;
       const rateKey = Object.keys(exchangeRates).find((element) => element === currency);
       const rate = exchangeRates[rateKey];
-      console.log(rate);
       const exchangedValue = Number(rate.ask) * Number(value);
       return acc + exchangedValue;
     }, 0);
@@ -35,6 +35,7 @@ class Wallet extends React.Component {
         <span data-testid="total-field">{ total }</span>
         <span data-testid="header-currency-field">BRL</span>
         <WalletForm totalUpdate={ this.totalUpdate } />
+        <WalletTable />
       </div>
     );
   }

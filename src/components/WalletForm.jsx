@@ -12,8 +12,8 @@ class WalletForm extends Component {
     this.state = {
       id: 0,
       value: 0,
-      currency: '',
-      method: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: '',
       description: '',
       exchangeRates: currencies,
