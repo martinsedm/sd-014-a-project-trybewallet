@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { userLoginEmail } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -11,6 +14,7 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -26,6 +30,13 @@ class Login extends Component {
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const validPassword = password.length >= MIN_CHAR;
     return regexEmail && validPassword;
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { userLogin, history } = this.props;
+    userLogin(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -51,7 +62,11 @@ class Login extends Component {
           />
         </div>
         <div>
-          <button type="button" disabled={ !this.validateEmail(email, password) }>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+            disabled={ !this.validateEmail(email, password) }
+          >
             Entrar
           </button>
         </div>
@@ -60,4 +75,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (payload) => dispatch(userLoginEmail(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
