@@ -6,9 +6,10 @@ class Form extends React.Component {
 
     this.renderSelect = this.renderSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.fetchCoins = this.fetchCoins.bind(this);
 
     this.state = {
-      moeda: '',
+      moeda: [],
       pagamento: '',
       despesa: '',
       valor: '',
@@ -16,8 +17,26 @@ class Form extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchCoins();
+  }
+
   handleChange({ target: { value, name } }) {
     this.setState({ [name]: value });
+  }
+
+  async fetchCoins() {
+    try {
+      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+      const responseJson = await response.json();
+      const coins = Object.keys(responseJson);
+      const coinsFiltered = coins.filter((item) => (
+        item !== 'USDT'
+      ));
+      this.setState({ moeda: coinsFiltered });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   renderSelect() {
@@ -27,18 +46,18 @@ class Form extends React.Component {
         <label htmlFor="moeda">
           Moeda:
           <select
-            name="moeda"
-            value={ moeda }
             id="moeda"
             onChange={ this.handleChange }
-          />
+          >
+            {moeda.map((item) => (
+              <option key={ item } value={ item }>{item}</option>
+            ))}
+          </select>
         </label>
         <label htmlFor="método-pagamento">
           Método de pagamento:
           <select
             htmlFor="pagamento"
-            name="pagamento"
-            value={ pagamento }
             id="método-pagamento"
             onChange={ this.handleChange }
           >
@@ -51,7 +70,6 @@ class Form extends React.Component {
           Tag:
           <select
             htmlFor="despesa"
-            value={ despesa }
             id="tag-despesa"
             onChange={ this.handleChange }
           >
