@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
+import { Route } from 'react-router';
 import './index.css';
-import App from './App';
+import Login from './pages/Login';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Route exact path="/" component={ Login } />
   </BrowserRouter>,
   document.getElementById('root'),
 );
