@@ -1,5 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import { addUserAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -8,11 +11,11 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      login: false,
-      disableButton: true,
+      // login: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.checkform = this.checkform.bind(this);
   }
 
   handleChange(event) {
@@ -22,34 +25,48 @@ class Login extends React.Component {
       [name]: value,
     });
 
-    const form = document.getElementById('form-login');
-    if (form.checkValidity()) {
-      this.setState({
-        disableButton: false,
-      });
-    }else{
-      this.setState({
-        disableButton: true,
-      });
-    }
+    // const { password } = this.state;
+    // const num = 6;
+    // const form = document.getElementById('form-login');
+    // if (form.checkValidity() && password.length >= num) {
+    //   this.setState({
+    //     disableButton: false,
+    //   });
+    // } else {
+    //   this.setState({
+    //     disableButton: true,
+    //   });
+    // }
   }
 
   handleClick() {
     const { email, password } = this.state;
-    if (email === 'alguem@alguem.com' && password === '123456') {
-      this.setState({
-        login: true,
-      });
+    const { addUser, history } = this.props;
+    if (email === 'alguem@email.com' && password === '123456') {
+      // this.setState({
+      //   login: true,
+      // });
+      addUser(email);
+      history.push('/carteira');
     }
   }
 
-  render() {
-    const { email, password, login, disableButton } = this.state;
-    if (login) {
-      return (
-        <Redirect to="/carteira" />
-      );
+  checkform() {
+    const { password } = this.state;
+    const num = 6;
+    const form = document.getElementById('form-login');
+    if (form != null && form.checkValidity() && password.length >= num) {
+      return false;
     }
+    return true;
+  }
+
+  render() {
+    const { email, password } = this.state;
+    // if (login) {
+    //   return (<Redirect to="/carteira" />);
+    // }
+    const disableButton = this.checkform();
     return (
       <section>
         <h2>TrybeWallet</h2>
@@ -95,4 +112,17 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  addUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+  addUser: (email) => dispatch(addUserAction(email)),
+
+});
+
+export default connect(null, mapDispatchToProps)(Login);
