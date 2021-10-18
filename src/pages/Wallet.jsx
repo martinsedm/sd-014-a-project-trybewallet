@@ -6,8 +6,14 @@ import ExpenseTable from '../components/ExpenseTable';
 
 class Wallet extends Component {
   render() {
-    const { walletTotal, userEmail } = this.props;
-    const updatedTotal = walletTotal ? parseFloat(walletTotal).toFixed(2) : 0;
+    const { userEmail, walletExpenses } = this.props;
+
+    const updatedTotal = walletExpenses
+      .reduce((acc, { value, currency, exchangeRates }) => {
+        const rate = exchangeRates[currency].ask;
+        const expenses = acc + (1 * value) * (1 * rate);
+        return expenses;
+      }, 0);
 
     return (
       <>
@@ -37,12 +43,12 @@ class Wallet extends Component {
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  walletTotal: PropTypes.number.isRequired,
+  walletExpenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   userEmail: state.user.email,
-  walletTotal: state.wallet.total,
+  walletExpenses: state.wallet.expenses,
 
 });
 
