@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { formatObjCurrencies } from '../service/requestAPIs';
+
 import Input from './Input';
 import Select from './Select';
 import { Button } from './Button';
@@ -27,6 +31,7 @@ class FormsAddexpense extends Component {
     const MethodsPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagsExpense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value: price, currency, method: paymentForm, tag, description } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <Input
@@ -39,7 +44,7 @@ class FormsAddexpense extends Component {
         />
         <Select
           value={ currency }
-          options={ [] }
+          options={ formatObjCurrencies(currencies[0], 'USDT') }
           name="currency"
           textLabel="Moeda"
           onChange={ this.handleChangeGeneric }
@@ -66,13 +71,14 @@ class FormsAddexpense extends Component {
           onChange={ this.handleChangeGeneric }
           TextLabel="Descrição"
         />
-        <Button
-          onClick={ this.handleonCLick }
-          text="Adicionar despesa"
-        />
+        <Button onClick={ this.handleonCLick } text="Adicionar despesa" />
       </form>
     );
   }
 }
+
+FormsAddexpense.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default FormsAddexpense;
