@@ -12,7 +12,7 @@ function userReducer(state = INICIAL_STATE, action) {
   case USER_CASE:
     return {
       ...state,
-      email: action.payload,
+      user: { email: action.payload },
     };
   default:
     return state;

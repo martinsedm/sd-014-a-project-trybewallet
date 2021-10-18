@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const USER_CASE = 'USER_CASE';
 export const EXPENSE_CASE = 'EXPENSE_CASE';
+export const TOTAL_EXPENSE = 'TOTAL_EXPENSE';
 
 export function userAction(data) {
   return {
@@ -12,6 +13,13 @@ export function userAction(data) {
 export function expenseAction(data) {
   return {
     type: EXPENSE_CASE,
+    payload: data,
+  };
+}
+
+export function totalExpenseAction(data) {
+  return {
+    type: TOTAL_EXPENSE,
     payload: data,
   };
 }

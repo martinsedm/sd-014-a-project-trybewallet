@@ -4,14 +4,13 @@ import PropTypes from 'prop-types';
 import SelectPayment from '../components/SelectPayment';
 import SelectCurrency from '../components/SelectCurrency';
 import SelectTag from '../components/SelectTag';
-import { expenseThunk } from '../actions';
+import { expenseThunk, totalExpenseAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      totalExpenses: 0,
       apiResponse: undefined,
       value: 0,
       description: '',
@@ -22,10 +21,11 @@ class Wallet extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.fetchApi = this.fetchApi.bind(this);
+    this.setupExpense = this.setupExpense.bind(this);
   }
 
   componentDidMount() {
-    this.fetchApi();
+    this.fetchApi(true);
   }
 
   handleChange({ target }) {
@@ -35,16 +35,37 @@ class Wallet extends React.Component {
     });
   }
 
-  async fetchApi() {
+  async setupExpense() {
+    const { value, description, currency } = this.state;
+    const { method, tag } = this.state;
+    const { saveExpense, totalExpenses, changeTotal } = this.props;
+    changeTotal(+totalExpenses + value);
+    const exchangeRates = await this.fetchApi(false);
+    const answer = {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    };
+    saveExpense(answer);
+  }
+
+  async fetchApi(config) {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const json = await response.json();
-    this.setState({ apiResponse: json });
+    if (config) {
+      this.setState({ apiResponse: json });
+    } else {
+      return json;
+    }
   }
 
   render() {
-    const { email, saveExpense } = this.props;
-    const { totalExpenses, apiResponse } = this.state;
-    const { value, description, currency, method } = this.state;
+    const { email, totalExpenses } = this.props;
+    const { apiResponse, value } = this.state;
+    const { description, currency, method } = this.state;
     return (
       <>
         <header className="header-wallet">
@@ -79,7 +100,7 @@ class Wallet extends React.Component {
             <SelectTag handleChange={ this.handleChange } method={ method } />
             <button
               type="button"
-              onClick={ () => saveExpense(this.state) }
+              onClick={ this.setupExpense }
             >
               Adicionar despesa
             </button>
@@ -92,13 +113,15 @@ class Wallet extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    email: state.user.email,
+    email: state.user.user.email,
+    totalExpenses: state.wallet.wallet.totalExpenses,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     saveExpense: (data) => dispatch(expenseThunk(data)),
+    changeTotal: (data) => dispatch(totalExpenseAction(data)),
   };
 }
 
