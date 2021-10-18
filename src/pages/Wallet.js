@@ -63,10 +63,9 @@ class Wallet extends React.Component {
       const { sendExpenses, sendDespesas, despesa } = this.props;
       const ultimo = expenses[expenses.length - 1];
       const cambio = ultimo.exchangeRates[ultimo.currency].ask;
-      const total = (Number(ultimo.value) * cambio) + despesa;
+      const total = ((Number(ultimo.value) * cambio) + Number(despesa)).toFixed(2);
       sendExpenses(expenses);
       sendDespesas(total);
-      console.log(expenses);
     });
   }
 

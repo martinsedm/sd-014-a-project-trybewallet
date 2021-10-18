@@ -19,7 +19,7 @@ class Header extends Component {
 
 Header.propTypes = {
   cambio: PropTypes.string,
-  despesa: PropTypes.number,
+  despesa: PropTypes.string,
   email: PropTypes.string,
 };
 

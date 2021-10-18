@@ -1,7 +1,7 @@
 import { CHANGE_DESPESA, CHANGE_EXPENSES, CHANGE_CAMBIO } from '../actions';
 
 const INITIAL_STATE = {
-  despesa: 0,
+  despesa: '0',
   cambio: 'BRL',
   expenses: [],
 };
