@@ -4,11 +4,9 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <div>
-      <BrowserRouter>
-        <Route exact path="/" component={ Login } />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Route exact path="/" component={ Login } />
+    </BrowserRouter>
   );
 }
 
