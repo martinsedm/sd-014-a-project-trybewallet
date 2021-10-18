@@ -17,7 +17,7 @@ class Formulario extends Component {
           />
         </label>
         <label htmlFor="despesa">
-          Descr. despesa:
+          Descrição
           <input
             type="text"
             id="despesa"

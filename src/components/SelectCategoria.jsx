@@ -8,7 +8,12 @@ class SelectCategoria extends Component {
       <div>
         <label htmlFor="categoria">
           Tag
-          <select name="categoria" value={ value } onChange={ handleChange }>
+          <select
+            id="categoria"
+            name="categoria"
+            value={ value }
+            onChange={ handleChange }
+          >
             <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabaho</option>

@@ -7,8 +7,13 @@ class SelectPagamento extends Component {
     return (
       <div>
         <label htmlFor="pagamento">
-          Método de pagamento:
-          <select name="pagamento" value={ pagamento } onChange={ handleChange }>
+          Método de pagamento
+          <select
+            id="pagamento"
+            name="pagamento"
+            value={ pagamento }
+            onChange={ handleChange }
+          >
             <option value="dinheiro">Dinheiro</option>
             <option value="cartaoDeCredito">Cartão de Crédito</option>
             <option value="cartaoDeDebito">Cartão de Débito</option>

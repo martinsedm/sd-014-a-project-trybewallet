@@ -14,7 +14,7 @@ class Wallet extends React.Component {
       despesa: '',
       categoria: '',
       pagamento: '',
-      // currencies: [],
+      currencies: [],
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -28,7 +28,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { valor, despesa, categoria, pagamento } = this.state;
+    const { valor, despesa, categoria, pagamento, currencies } = this.state;
     return (
       <div>
         <Header />
@@ -40,9 +40,17 @@ class Wallet extends React.Component {
             handleChange={ this.handleChange }
           />
           <label htmlFor="moeda">
-            Moeda:
-            {/* <select>
-            </select> */}
+            Moeda
+            <select
+              id="moeda"
+              name="moeda"
+              value={ pagamento }
+              onChange={ this.handleChange }
+            >
+              {currencies.map((currency, index) => (
+                <option key={ index } value={ currency }>{currency}</option>
+              ))}
+            </select>
           </label>
           <SelectPagamento value={ pagamento } handleChange={ this.handleChange } />
           <SelectCategoria value={ categoria } handleChange={ this.handleChange } />
