@@ -2,36 +2,33 @@ import {
   GET_CURRENCIES,
   GET_CURRENCIES_ERROR,
   GET_CURRENCIES_SUCCESS,
-  GET_EXPENSES } from '../actions';
+  GET_EXPENSES,
+  REMOVE_EXPENSE } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-  isLoading: false,
   error: null,
 };
 
 export default function wallet(
   state = INITIAL_STATE,
-  { type, currencies, expenses, error },
+  { type, currencies, expenses, error, expenseId },
 ) {
   switch (type) {
   case GET_CURRENCIES:
     return {
       ...state,
-      isLoading: true,
     };
   case GET_CURRENCIES_SUCCESS:
     return {
       ...state,
-      isLoading: false,
       currencies,
     };
   case GET_CURRENCIES_ERROR:
     return {
       ...state,
-      isLoading: false,
       error,
     };
   case GET_EXPENSES:
@@ -39,6 +36,12 @@ export default function wallet(
     return {
       ...state,
       expenses: [...state.expenses, expenses],
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== expenseId),
+      // ref https://stackoverflow.com/questions/34582678/is-this-the-correct-way-to-delete-an-item-using-redux
     };
   default:
     return state;

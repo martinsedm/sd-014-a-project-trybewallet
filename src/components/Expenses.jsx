@@ -13,11 +13,11 @@ class Expenses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '',
+      value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);

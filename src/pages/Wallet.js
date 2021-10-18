@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchAPI } from '../actions';
 import Expenses from '../components/Expenses';
-import Loading from '../components/Loading';
 import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
@@ -14,12 +13,12 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const { expenses } = this.props;
     return (
       <>
         <Header />
-        { isLoading ? <Loading /> : <Expenses /> }
-        <ExpensesTable />
+        <Expenses />
+        { expenses.length > 0 && <ExpensesTable /> }
       </>
     );
   }
@@ -27,11 +26,11 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   currencyAPI: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  isLoading: state.wallet.isLoading,
+const mapStateToProps = ({ wallet: { expenses } }) => ({
+  expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
