@@ -11,10 +11,16 @@ function wallet(state = INITIAL_STATE, action) {
       ...state,
       expenses: action.payload,
     };
-  case 'SET_TOTAL_VALUE':
+  case 'REMOVE_EXPENSE':
     return {
       ...state,
-      totalValue: Number(action.payload),
+      expenses: state.expenses.filter((exp) => exp.id !== action.payload),
+    };
+  case 'UPDATE_TOTAL_VALUE':
+    return {
+      ...state,
+      totalValue: state.expenses.reduce((acc, { value, exchangeRates, currency }) => (
+        acc + value * exchangeRates[currency].ask), 0),
     };
   default:
     return state;

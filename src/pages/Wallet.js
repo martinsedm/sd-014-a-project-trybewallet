@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import FormSelect from '../components/FormSelect';
 import { paymentOptions, tagOptions } from '../data';
-import { setExpensesAction, setTotalValueAction } from '../actions';
+import {
+  setExpensesAction,
+  removeExpenseAction,
+  updateTotalValueAction,
+} from '../actions';
+import WalletHeader from '../components/WalletHeader';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -18,13 +23,13 @@ class Wallet extends React.Component {
       expensesCount: 0,
     };
 
-    this.renderHeader = this.renderHeader.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.renderForm = this.renderForm.bind(this);
     this.fetchCurrencyAPI = this.fetchCurrencyAPI.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.manageCurrencyOptions = this.manageCurrencyOptions.bind(this);
     this.fillTable = this.fillTable.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
   }
 
   componentDidMount() {
@@ -32,7 +37,7 @@ class Wallet extends React.Component {
   }
 
   async onSubmit() {
-    const { dispatchExpense, updateTotalValue, totalValue } = this.props;
+    const { setExpenses, updateTotalValue } = this.props;
     const { expensesCount, value, description, currency, method, tag } = this.state;
     const exchangeRates = await this.fetchCurrencyAPI();
 
@@ -45,11 +50,11 @@ class Wallet extends React.Component {
       tag,
       exchangeRates,
     };
+
     const { expenses } = this.props;
     expenses.push(expense);
-
-    updateTotalValue(totalValue + Number(value) * (expense.exchangeRates[currency].ask));
-    dispatchExpense(expenses);
+    updateTotalValue();
+    setExpenses(expenses);
 
     this.setState({
       expensesCount: expensesCount + 1,
@@ -74,6 +79,12 @@ class Wallet extends React.Component {
     });
   }
 
+  deleteRow({ target }) {
+    const { removeExpense } = this.props;
+    const { id } = target;
+    removeExpense(Number(id));
+  }
+
   fillTable() {
     const { expenses } = this.props;
     return expenses.map((exp) => (
@@ -86,6 +97,16 @@ class Wallet extends React.Component {
         <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
         <td>{ (exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
         <td>Real</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ this.deleteRow }
+            id={ exp.id }
+          >
+            X
+          </button>
+        </td>
       </tr>
     ));
   }
@@ -95,23 +116,6 @@ class Wallet extends React.Component {
     this.setState({
       [name]: value,
     });
-  }
-
-  renderHeader() {
-    let { totalValue } = this.props;
-    const { email } = this.props;
-
-    if (!totalValue) {
-      totalValue = 0;
-    }
-
-    return (
-      <header>
-        <p data-testid="email-field">{ email }</p>
-        <p data-testid="total-field">{ totalValue }</p>
-        <p data-testid="header-currency-field">BRL</p>
-      </header>
-    );
   }
 
   renderForm() {
@@ -192,7 +196,7 @@ class Wallet extends React.Component {
   render() {
     return (
       <div>
-        { this.renderHeader() }
+        <WalletHeader />
         { this.renderForm() }
         <button
           type="button"
@@ -207,22 +211,21 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-  dispatchExpense: PropTypes.func.isRequired,
+  setExpenses: PropTypes.func.isRequired,
+  removeExpense: PropTypes.func.isRequired,
   updateTotalValue: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  totalValue: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
   expenses: state.wallet.expenses,
-  totalValue: state.wallet.totalValue,
+  totalValue: state.totalValue,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchExpense: (payload) => dispatch(setExpensesAction(payload)),
-  updateTotalValue: (payload) => dispatch(setTotalValueAction(payload)),
+  setExpenses: (payload) => dispatch(setExpensesAction(payload)),
+  removeExpense: (payload) => dispatch(removeExpenseAction(payload)),
+  updateTotalValue: (payload) => dispatch(updateTotalValueAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
