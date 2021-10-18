@@ -4,7 +4,7 @@ import '../styles/login.css';
 export default class LoginComplement extends Component {
   render() {
     return (
-      <div className="clearfix">
+      <div>
         <label
           htmlFor="remember-password"
           className="pull-left checkbox-inline"

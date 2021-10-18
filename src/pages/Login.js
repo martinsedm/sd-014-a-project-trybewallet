@@ -1,16 +1,17 @@
 import React from 'react';
-import '../styles/login.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { saveEmailAtState as saveEmailAtStateAction } from '../actions';
 import LoginComplement from './LoginComplement';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       email: '',
       password: '',
       isValid: false,
-      /* message: '', */
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -35,36 +36,43 @@ export default class Login extends React.Component {
   }
 
   handleLogin() {
-    const { history } = this.props;
-    history.push('/wallet');
+    const { history, saveEmailAtState } = this.props;
+    const { email } = this.state;
+    saveEmailAtState(email);
+    history.push('/carteira');
   }
 
   render() {
     const { email, password, isValid } = this.state;
     return (
       <div className="login-field">
-        <form>
-          <h2>Login</h2>
-          <label htmlFor="email">
+        <form
+          style={ {
+            margin: '60px',
+            width: '90%',
+          } }
+        >
+          <h2 className="text-center">Login</h2>
+          <label htmlFor="email" className="form-group">
             <input
+              style={ { width: '195%' } }
               placeholder="E-mail"
               data-testid="email-input"
               onChange={ this.handleChange }
               type="email"
               value={ email }
-              id="email"
               name="email"
               className="form-control"
             />
           </label>
-          <label htmlFor="password">
+          <label htmlFor="password" className="form-group">
             <input
+              style={ { width: '195%' } }
               className="form-control"
               placeholder="Password"
               data-testid="password-input"
               onChange={ this.handleChange }
               type="password"
-              id="password"
               name="password"
               value={ password }
             />
@@ -77,16 +85,24 @@ export default class Login extends React.Component {
           >
             Entrar
           </button>
-          <LoginComplement />
+          <nav>
+            <LoginComplement />
+          </nav>
         </form>
       </div>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  saveEmailAtState: (email) => dispatch(saveEmailAtStateAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
 Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  /*  onEmailSubmit: PropTypes.func.isRequired, */
+  saveEmailAtState: PropTypes.func.isRequired,
 };
