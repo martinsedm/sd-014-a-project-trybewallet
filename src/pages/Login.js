@@ -20,8 +20,9 @@ class Login extends React.Component {
   checkLogin() {
     const MIN_CHARACTERES = 5;
     let result = true;
-    const { password } = this.state;
-    if ((password.length > MIN_CHARACTERES)) {
+    const { password, email } = this.state;
+    if ((password.length > MIN_CHARACTERES)
+    && (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email))) { // regex: https://redux-form.com/7.3.0/examples/syncvalidation/
       result = false;
     }
     return result;
