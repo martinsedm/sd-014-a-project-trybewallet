@@ -35,9 +35,9 @@ class Wallet extends React.Component {
   }
 
   componentDidUpdate(previusProps) {
-    const { currenciesUp } = this.props;
-    if (previusProps.currenciesUp.length !== currenciesUp.length) {
-      this.stateUpdate('currencies', currenciesUp);
+    const { currencies } = this.props;
+    if (previusProps.currencies.length !== currencies.length) {
+      this.stateUpdate('currencies', currencies);
     }
   }
 
@@ -73,7 +73,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   user: PropTypes.objectOf(PropTypes.any).isRequired,
-  currenciesUp: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   currency: PropTypes.string.isRequired,
   getCurrencies: PropTypes.func.isRequired,
 };
@@ -81,7 +81,7 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   user: state.user,
   currency: state.wallet.currency,
-  currenciesUp: state.wallet.currenciesUp,
+  currencies: state.wallet.currencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({

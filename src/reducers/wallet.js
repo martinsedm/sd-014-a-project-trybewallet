@@ -1,4 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+// https://github.com/tryber/sd-014-a-project-trybewallet/pull/5/commits/16a0f4bbfceaa125380abc18c5dd4e2ad32e68b3
+// Ref citada acima.
 import { WALLET, FETCHING, RECEIVE_OJB, RECEIVE_ARR } from '../actions';
 
 const INITIAL_STATE = {
