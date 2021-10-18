@@ -23,6 +23,7 @@ class Wallet extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.fetchApi = this.fetchApi.bind(this);
     this.setupExpense = this.setupExpense.bind(this);
+    this.renderGenericInputs = this.renderGenericInputs.bind(this);
   }
 
   componentDidMount() {
@@ -79,10 +80,36 @@ class Wallet extends React.Component {
     }
   }
 
+  renderGenericInputs() {
+    const { value, description } = this.state;
+    return (
+      <>
+        <GenericInput
+          htmlFor="value-input"
+          type="number"
+          id="value-input"
+          name="value"
+          value={ value }
+          onChange={ this.handleChange }
+          text="Valor"
+        />
+        <GenericInput
+          htmlFor="description-input"
+          type="text"
+          id="description-input"
+          name="description"
+          value={ description }
+          onChange={ this.handleChange }
+          text="Descrição"
+        />
+      </>
+    );
+  }
+
   render() {
     const { email, totalExpenses } = this.props;
-    const { apiResponse, value } = this.state;
-    const { description, currency, method } = this.state;
+    const { apiResponse } = this.state;
+    const { currency, method } = this.state;
     return (
       <>
         <header className="header-wallet">
@@ -92,24 +119,7 @@ class Wallet extends React.Component {
         </header>
         <main>
           <form>
-            <GenericInput
-              htmlFor="value-input"
-              type="number"
-              id="value-input"
-              name="value"
-              value={ value }
-              onChange={ this.handleChange }
-              text="Valor"
-            />
-            <GenericInput
-              htmlFor="description-input"
-              type="text"
-              id="description-input"
-              name="description"
-              value={ description }
-              onChange={ this.handleChange }
-              text="Descrição"
-            />
+            { this.renderGenericInputs() }
             { apiResponse
             && <SelectCurrency
               result={ apiResponse }
