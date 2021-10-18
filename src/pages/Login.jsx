@@ -1,17 +1,35 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { selectUser as selectUserAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
       email: '',
-      password: '',
+      senha: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.checkInputs = this.checkInputs.bind(this);
+    this.enviarRelatorio = this.enviarRelatorio.bind(this);
   }
 
   checkInputs() {
+    const { email, senha } = this.state;
+    const minCarac = 6;
+    let result = true;
+    if (senha.length >= minCarac && email.includes('@')) {
+      result = false;
+    }
+    return result;
+  }
 
+  enviarRelatorio() {
+    const { selectUser, history } = this.props;
+    const { email } = this.state;
+    selectUser(email);
+    history.push('/carteira');
   }
 
   handleChange({ target }) {
@@ -20,8 +38,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { handleChange } = this;
-    const { email, password } = this.state;
+    const { handleChange, enviarRelatorio, checkInputs } = this;
+    const { email, senha } = this.state;
     return (
       <form>
         <label htmlFor="email">
@@ -31,22 +49,23 @@ class Login extends React.Component {
             type="email"
             name="email"
             onChange={ handleChange }
-            required
+            data-testid="email-input"
           />
         </label>
         <label htmlFor="senha">
           Senha
           <input
-            value={ password }
+            value={ senha }
             type="password"
             name="senha"
             onChange={ handleChange }
-            required
+            data-testid="password-input"
           />
         </label>
         <button
           type="button"
-          disabled={ 2 > 1 }
+          onClick={ enviarRelatorio }
+          disabled={ checkInputs() }
         >
           Entrar
         </button>
@@ -55,4 +74,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  selectUser: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  selectUser: (email) => dispatch(selectUserAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
