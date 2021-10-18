@@ -60,10 +60,10 @@ class Login extends Component {
         </label>
         <div>
           <label htmlFor="pass">
-            Password
+
             <input
               data-testid="password-input"
-              type="text"
+              type="password"
               id="pass"
               placeholder="password"
               value={ password }

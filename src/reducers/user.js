@@ -3,7 +3,7 @@ import { LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
+  // password: '',
 };
 
 function user(state = INITIAL_STATE, action) {
@@ -12,7 +12,7 @@ function user(state = INITIAL_STATE, action) {
     return {
       ...state,
       email: action.payload.email,
-      password: action.payload.password,
+      // password: action.payload.password,
     };
   default:
     return state;
