@@ -43,7 +43,7 @@ class Expenses extends React.Component {
       <form onSubmit={ this.handleSubmit }>
         <Input
           label="Valor"
-          type="text"
+          type="number"
           name="value"
           htmlFor="value"
           value={ value }

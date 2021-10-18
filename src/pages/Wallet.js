@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import { fetchAPI } from '../actions';
 import Expenses from '../components/Expenses';
 import Loading from '../components/Loading';
+import ExpensesTable from '../components/ExpensesTable';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class Wallet extends React.Component {
       <>
         <Header />
         { isLoading ? <Loading /> : <Expenses /> }
+        <ExpensesTable />
       </>
     );
   }
