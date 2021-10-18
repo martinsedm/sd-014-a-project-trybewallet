@@ -12,7 +12,7 @@ class Login extends Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.emailValidation = this.disableBtn.bind(this);
+    this.disableBtn = this.disableBtn.bind(this);
   }
 
   handleChange({ target: { name, value } }) {

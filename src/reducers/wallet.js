@@ -35,9 +35,10 @@ export default function wallet(
       error,
     };
   case GET_EXPENSES:
+    expenses.id = state.expenses.length;
     return {
       ...state,
-      expenses,
+      expenses: [...state.expenses, expenses],
     };
   default:
     return state;
