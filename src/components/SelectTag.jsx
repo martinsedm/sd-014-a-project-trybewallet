@@ -25,4 +25,8 @@ SelectTag.propTypes = {
   tag: PropTypes.string.isRequired,
 };
 
+SelectTag.defaultProps = {
+  tag: 'Alimentação',
+};
+
 export default SelectTag;

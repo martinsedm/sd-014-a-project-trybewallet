@@ -24,7 +24,7 @@ GenericInput.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,

@@ -6,6 +6,7 @@ import SelectCurrency from '../components/SelectCurrency';
 import SelectTag from '../components/SelectTag';
 import { expenseThunk, totalExpenseAction } from '../actions';
 import GenericInput from '../components/GenericInput';
+import TableExpenses from '../components/TableExpenses';
 
 class Wallet extends React.Component {
   constructor() {
@@ -16,8 +17,8 @@ class Wallet extends React.Component {
       value: 0,
       description: '',
       currency: 'USD',
-      method: 'cash',
-      tag: 'food',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -135,6 +136,7 @@ class Wallet extends React.Component {
               Adicionar despesa
             </button>
           </form>
+          <TableExpenses />
         </main>
       </>
     );
@@ -160,8 +162,12 @@ Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   saveExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
-  totalExpenses: PropTypes.number.isRequired,
+  totalExpenses: PropTypes.number,
   changeTotal: PropTypes.func.isRequired,
+};
+
+Wallet.defaultProps = {
+  totalExpenses: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
