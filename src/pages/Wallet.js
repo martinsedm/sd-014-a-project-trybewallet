@@ -38,10 +38,12 @@ class Wallet extends React.Component {
   async setupExpense() {
     const { value, description, currency } = this.state;
     const { method, tag } = this.state;
-    const { saveExpense, totalExpenses, changeTotal } = this.props;
-    changeTotal(+totalExpenses + value);
+    const { saveExpense, totalExpenses, changeTotal, expenses } = this.props;
+    const result = parseFloat(totalExpenses) + parseFloat(value);
+    changeTotal(result);
     const exchangeRates = await this.fetchApi(false);
     const answer = {
+      id: expenses.length,
       value,
       description,
       currency,
@@ -50,6 +52,12 @@ class Wallet extends React.Component {
       exchangeRates,
     };
     saveExpense(answer);
+    this.setState({
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'cash',
+    });
   }
 
   async fetchApi(config) {
@@ -70,7 +78,7 @@ class Wallet extends React.Component {
       <>
         <header className="header-wallet">
           <p data-testid="email-field">{ email }</p>
-          <p data-testid="total-field">{ totalExpenses }</p>
+          <p data-testid="total-field">{ totalExpenses || 0 }</p>
           <p data-testid="header-currency-field">BRL</p>
         </header>
         <main>
@@ -113,8 +121,9 @@ class Wallet extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    email: state.user.user.email,
-    totalExpenses: state.wallet.wallet.totalExpenses,
+    email: state.user.email,
+    totalExpenses: state.wallet.totalExpenses,
+    expenses: state.wallet.expenses,
   };
 }
 

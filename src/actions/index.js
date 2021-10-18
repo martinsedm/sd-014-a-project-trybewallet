@@ -25,11 +25,7 @@ export function totalExpenseAction(data) {
 }
 
 export function expenseThunk(data) {
-  return async function (dispatch) {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const json = await response.json();
-    console.log(data);
-    console.log(json);
+  return function (dispatch) {
     return dispatch(expenseAction(data));
   };
 }

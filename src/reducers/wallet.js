@@ -2,11 +2,9 @@
 import { EXPENSE_CASE, TOTAL_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    totalExpenses: 0,
-  },
+  currencies: [],
+  expenses: [],
+  totalExpenses: 0,
 };
 
 function walletReducer(state = INITIAL_STATE, action) {
@@ -14,14 +12,15 @@ function walletReducer(state = INITIAL_STATE, action) {
   case EXPENSE_CASE:
     return {
       ...state,
-      wallet: {
-        currencies: state.wallet.currencies,
-        expenses: [...state.wallet.expenses, action.payload],
-      }
+      totalExpenses: state.totalExpenses,
+      currencies: state.currencies,
+      expenses: [...state.expenses, action.payload],
     };
   case TOTAL_EXPENSE:
     return {
       ...state,
+      currencies: state.currencies,
+      expenses: [...state.expenses],
       totalExpenses: action.payload,
     };
   default:
