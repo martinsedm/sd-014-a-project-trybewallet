@@ -3,7 +3,7 @@ import P from 'prop-types';
 
 class Button extends React.Component {
   render() {
-    const { props: { type, onClick, content, isDisabled = false } } = this;
+    const { props: { type = 'button', onClick, content, isDisabled = false } } = this;
     return (
       <button
         type={ type === 'button' ? 'button' : 'submit' }
