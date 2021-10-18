@@ -4,8 +4,27 @@ import { connect } from 'react-redux';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = { totalValue: 0 };
+    this.handleTotal = this.handleTotal.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleTotal();
+  }
+
+  handleTotal() {
+    const { store: { wallet: { expenses } } } = this.props;
+    const totals = expenses.reduce((total, expense) => (
+      (expense.value * expense.exchangeRates[expense.currency].ask) + total),
+    0);
+    this.setState({ totalValue: totals.toFixed(2) });
+  }
+
   render() {
-    const { store: { user, wallet } } = this.props;
+    const { store: { user } } = this.props;
+    const { totalValue } = this.state;
     return (
       <main>
         <header>
@@ -15,12 +34,12 @@ class Wallet extends React.Component {
             <h3 data-testid="total-field">
               Despesa Total:
               {' '}
-              {wallet.expenses.length === 0 && 0 }
+              { totalValue }
             </h3>
             <span data-testid="header-currency-field">BRL</span>
           </div>
         </header>
-        <Form />
+        <Form handleTotal={ this.handleTotal } />
       </main>
     );
   }
