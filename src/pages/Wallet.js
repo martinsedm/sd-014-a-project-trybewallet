@@ -61,7 +61,7 @@ class Wallet extends React.Component {
 
     const valueExchanged = exchangeRates[currency].ask * value;
     const result = parseFloat(totalExpenses) + parseFloat(valueExchanged);
-    changeTotal(result);
+    changeTotal(result.toFixed(2));
   }
 
   handleChange({ target }) {
