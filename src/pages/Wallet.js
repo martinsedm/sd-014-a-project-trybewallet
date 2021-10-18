@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { changeWallet } from '../actions';
+import { changeDespesa, changeExpenses } from '../actions';
 import Tag from '../components/Tag';
 import Input from '../components/Input';
 import Moeda from '../components/Moeda';
@@ -59,9 +60,12 @@ class Wallet extends React.Component {
   enviar() {
     this.adicionarDespesas(() => {
       const { expenses } = this.state;
-      const { sendExpenses, despesa } = this.props;
-      const total = Number(expenses[expenses.length - 1].value) + despesa;
-      sendExpenses(expenses, total);
+      const { sendExpenses, sendDespesas, despesa } = this.props;
+      const ultimo = expenses[expenses.length - 1];
+      const cambio = ultimo.exchangeRates[ultimo.currency].ask;
+      const total = (Number(ultimo.value) * cambio) + despesa;
+      sendExpenses(expenses);
+      sendDespesas(total);
       console.log(expenses);
     });
   }
@@ -105,10 +109,18 @@ class Wallet extends React.Component {
   }
 }
 
+Wallet.propTypes = {
+  despesa: PropTypes.number,
+  sendDespesas: PropTypes.func,
+  sendExpenses: PropTypes.func,
+}.isRequired;
+
 const mapDispatchToProps = (dispatch) => ({
-  sendExpenses: (expenses, despesa) => dispatch(changeWallet(despesa, null, expenses)),
+  sendExpenses: (expenses) => dispatch(changeExpenses(expenses)),
+  sendDespesas: (despesas) => dispatch(changeDespesa(despesas)),
+
 });
 
-const mapStateToProps = (state) => ({despesa: state.wallet.despesa});
+const mapStateToProps = (state) => ({ despesa: state.wallet.despesa });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

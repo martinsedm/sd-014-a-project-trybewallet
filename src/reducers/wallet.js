@@ -1,4 +1,4 @@
-import { CHANGE_WALLET } from '../actions';
+import { CHANGE_DESPESA, CHANGE_EXPENSES, CHANGE_CAMBIO } from '../actions';
 
 const INITIAL_STATE = {
   despesa: 0,
@@ -8,12 +8,20 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case CHANGE_WALLET:
+  case CHANGE_DESPESA:
     return {
       ...state,
       despesa: action.payload.despesa,
-      cambio: action.payload.cambio,
+    };
+  case CHANGE_EXPENSES:
+    return {
+      ...state,
       expenses: action.payload.expenses,
+    };
+  case CHANGE_CAMBIO:
+    return {
+      ...state,
+      cambio: action.payload.cambio,
     };
   default:
     return state;
