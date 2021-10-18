@@ -11,6 +11,16 @@ class HeaderWallet extends Component {
     addCurrenciesApi();
   }
 
+  TotalExpensesExchange() {
+    const { getExpenses } = this.props;
+    let soma = 0;
+    getExpenses.forEach(({ value, currency, exchangeRates }) => {
+      const exchangeBRL = Number(value) * Number(exchangeRates[currency].ask);
+      soma += exchangeBRL;
+    });
+    return soma;
+  }
+
   render() {
     const {
       addCurrenciesApi,
@@ -21,7 +31,7 @@ class HeaderWallet extends Component {
       <header>
         <p data-testid="email-field">{`seu email: ${getEmail}`}</p>
         <p data-testid="total-field">
-          0
+          { this.TotalExpensesExchange() }
           <span data-testid="header-currency-field">BRL </span>
         </p>
         <FormsAddexpense

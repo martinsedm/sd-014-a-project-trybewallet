@@ -13,9 +13,9 @@ class FormsAddexpense extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChangeGeneric = this.handleChangeGeneric.bind(this);
     this.handleCLick = this.handleCLick.bind(this);
