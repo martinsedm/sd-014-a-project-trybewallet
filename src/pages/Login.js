@@ -17,6 +17,14 @@ class Login extends React.Component {
     });
   }
 
+  isDisabled() {
+    const { email, password } = this.state;
+    const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // Reference: https://emailregex.com/
+    const MIN_LENGTH = 6;
+    return !regex.test(email) || password.length < MIN_LENGTH;
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -38,7 +46,9 @@ class Login extends React.Component {
             type="password"
             value={ password }
           />
-          <button type="button">Entrar</button>
+          <button disabled={ this.isDisabled() } type="button">
+            Entrar
+          </button>
         </form>
       </div>
     );
