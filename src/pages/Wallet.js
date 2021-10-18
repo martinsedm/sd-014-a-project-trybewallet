@@ -51,6 +51,9 @@ class Wallet extends React.Component {
     }
   }
 
+  // https://github.com/tryber/sd-014-a-project-trybewallet/pull/5/commits/4298c80da562eb8add9677d1314dd88a0e02b610
+  // Ref citada acima.
+
   calculateSum(expenses) {
     const { currencyExchange } = this.state;
     const total = expenses.reduce((acc, { currency, value, exchangeRates }) => {
