@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import guardaEmail from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,6 +13,7 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.routeChange = this.routeChange.bind(this);
   }
 
   handleChange({ target }) {
@@ -19,6 +23,14 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+  }
+
+  routeChange() {
+    const { history, dispatchSetValue } = this.props;
+    const { email } = this.state;
+    dispatchSetValue(email);
+    const path = '/carteira';
+    history.push(path);
   }
 
   render() {
@@ -39,7 +51,6 @@ class Login extends React.Component {
           onChange={ this.handleChange }
         />
         <button
-          className="button"
           type="submit"
           disabled={
             !email
@@ -47,6 +58,7 @@ class Login extends React.Component {
             || email.split('.').includes('com') === false
             || (password.length >= MAX_LEN) === false
           }
+          onClick={ this.routeChange }
         >
           Entrar
         </button>
@@ -55,4 +67,19 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  dispatchSetValue: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (value) => dispatch(guardaEmail(value)),
+});
+
+const mapStateToProps = (state) => ({
+  user: state.userReducer.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
