@@ -202,10 +202,10 @@ Wallet.propTypes = {
 const mapStateToProps = (state) => ({
   user: state.user,
   expenses: state.wallet.expenses,
-  editor: state.wallet.editor,
+  editor: state.control.editor,
   idToEdit: state.wallet.idToEdit,
   currencies: state.wallet.currencies,
-  currencyToExchange: state.wallet.currencyToExchange,
+  currencyToExchange: state.control.currencyToExchange,
 });
 
 const mapDispatchToProps = (dispatch) => ({

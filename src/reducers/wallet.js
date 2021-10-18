@@ -10,10 +10,10 @@ import {
 const NEG_UM = -1;
 
 const INITIAL_STATE = {
-  isFetching: false,
-  editor: false,
+  // isFetching: false,
+  // editor: false,
   idToEdit: {},
-  currencyToExchange: 'BRL',
+  // currencyToExchange: 'BRL',
   expenses: [],
   currencies: [],
 };
@@ -49,10 +49,8 @@ const wallet = (state = INITIAL_STATE, action) => {
   {
     const { expenses } = state;
     const found = expenses.find(({ id }) => id === action.payload);
-    return { ...state, editor: !state.editor, idToEdit: { ...found } };
+    return { ...state, idToEdit: { ...found } };
   }
-  // case FETCHING:
-  //   return { ...state, isFetching: !state.isFetching };
   case ADD_CURRENCIES:
     return { ...state, currencies: [...state.currencies, ...action.payload] };
   case UPDATE_BY_LS:
