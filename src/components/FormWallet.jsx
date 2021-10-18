@@ -7,21 +7,21 @@ class FormWallet extends Component {
       <form>
         <label htmlFor="valor">
           Valor:
-          <input type="number" name="valor" />
+          <input type="number" id="valor" />
         </label>
         <label htmlFor="descricao">
           Descrição:
-          <input type="text" name="descricao" />
+          <input type="text" id="descricao" />
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select name="moeda">
+          <select id="moeda">
             <option value="">Options</option>
           </select>
         </label>
         <label htmlFor="pagamento">
           Método de pagamento:
-          <select name="pagamento">
+          <select id="pagamento">
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -29,7 +29,7 @@ class FormWallet extends Component {
         </label>
         <label htmlFor="tag">
           Tag:
-          <select name="tago">
+          <select id="tag">
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -41,22 +41,5 @@ class FormWallet extends Component {
     );
   }
 }
-
-// FormWallet.propTypes = {
-//   type: PropTypes.string.isRequired,
-//   label: PropTypes.string,
-//   value: PropTypes.string,
-//   name: PropTypes.string,
-//   id: PropTypes.string,
-//   onChange: PropTypes.func,
-// };
-
-// FormWallet.defaultProps = {
-//   label: '',
-//   value: '',
-//   name: '',
-//   id: '',
-//   onChange: null,
-// };
 
 export default FormWallet;
