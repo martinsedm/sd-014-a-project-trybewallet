@@ -15,8 +15,8 @@ class SelectPagamento extends Component {
             onChange={ handleChange }
           >
             <option value="dinheiro">Dinheiro</option>
-            <option value="cartaoDeCredito">Cartão de Crédito</option>
-            <option value="cartaoDeDebito">Cartão de Débito</option>
+            <option value="cartão de crédito">Cartão de Crédito</option>
+            <option value="cartão de débito">Cartão de Débito</option>
           </select>
         </label>
       </div>
