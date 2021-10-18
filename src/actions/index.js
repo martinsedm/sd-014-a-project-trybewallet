@@ -2,6 +2,7 @@ export const LOG_USER = 'LOG_USER';
 export const FETCH_CURRENCIES_SUCCESS = 'FETCH_CURRENCIES_SUCCESS';
 export const FETCH_CURRENCIES_ERROR = 'FETCH_CURRENCIES_ERROR';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 export const UPDATE_EXPENSES_TOTAL = 'UPDATE_EXPENSES_TOTAL';
 
 export const logUser = (payload) => ({
@@ -47,4 +48,9 @@ export const addExpense = (payload) => async (dispatch) => {
   } catch (error) {
     dispatch(fetchCurrenciesError(error));
   }
+};
+
+export const removeExpense = (id) => (dispatch) => {
+  dispatch({ type: REMOVE_EXPENSE, id });
+  dispatch(updateExpensesTotal());
 };

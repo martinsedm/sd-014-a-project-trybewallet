@@ -5,6 +5,7 @@ import {
   ADD_EXPENSE,
   FETCH_CURRENCIES_ERROR,
   FETCH_CURRENCIES_SUCCESS,
+  REMOVE_EXPENSE,
   UPDATE_EXPENSES_TOTAL,
 } from '../actions';
 
@@ -43,6 +44,11 @@ const walletReducer = (state = INITIAL_STATE, action) => {
         { id: state.nextExpenseId, ...action.payload },
       ],
       nextExpenseId: state.nextExpenseId + 1,
+    };
+  case REMOVE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.id),
     };
   case UPDATE_EXPENSES_TOTAL:
     return {
