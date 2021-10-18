@@ -127,10 +127,9 @@ class FormWallet extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currenciesNames: state.wallet.currenciesNames,
-  exchangeRates: state.wallet.exchangeRates,
-  sumExpenses: state.wallet.sumExpenses,
+const mapStateToProps = ({ wallet }) => ({
+  currenciesNames: wallet.currenciesNames,
+  exchangeRates: wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({

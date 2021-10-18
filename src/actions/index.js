@@ -1,22 +1,24 @@
 import { getCurrencyAPI } from '../services/fetchAPI';
-
 // Coloque aqui suas actions
-export const SET_EMAIL_USER = 'SET_EMAIL_USER';
-export const DATA_CURRENCY = 'DATA_CURRENCY';
-export const ADD_ITEM = 'ADD_ITEM';
+
+export const actionTypes = {
+  SET_EMAIL_USER: 'SET_EMAIL_USER',
+  DATA_CURRENCY: 'DATA_CURRENCY',
+  ADD_ITEM: 'ADD_ITEM',
+};
 
 export const setEmailUser = (email) => ({
-  type: SET_EMAIL_USER,
+  type: actionTypes.SET_EMAIL_USER,
   payload: email,
 });
 
 export const dataCurrency = (data) => ({
-  type: DATA_CURRENCY,
+  type: actionTypes.DATA_CURRENCY,
   payload: data,
 });
 
 export const addItem = (expense) => ({
-  type: ADD_ITEM,
+  type: actionTypes.ADD_ITEM,
   payload: expense,
 });
 

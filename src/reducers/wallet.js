@@ -1,6 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
-import { ADD_ITEM, DATA_CURRENCY } from '../actions';
+import { actionTypes } from '../actions';
 
 const INITIAL_STATE = {
   id: 0,
@@ -11,14 +11,14 @@ const INITIAL_STATE = {
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case DATA_CURRENCY:
+  case actionTypes.DATA_CURRENCY:
     return {
       ...state,
       currenciesNames: Object.keys(action.payload)
         .filter((item) => item !== 'USDT'),
       exchangeRates: action.payload,
     };
-  case ADD_ITEM: {
+  case actionTypes.ADD_ITEM: {
     return {
       ...state,
       id: state.id + 1,
