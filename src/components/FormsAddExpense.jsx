@@ -18,6 +18,7 @@ class FormsAddexpense extends Component {
       tag: '',
     };
     this.handleChangeGeneric = this.handleChangeGeneric.bind(this);
+    this.handleCLick = this.handleCLick.bind(this);
   }
 
   handleChangeGeneric({ target }) {
@@ -27,11 +28,23 @@ class FormsAddexpense extends Component {
     });
   }
 
+  async handleCLick() {
+    const { updateCurrencies, getCurrencies, getExpenses, addExpense } = this.props;
+    await updateCurrencies();
+    const indexExpense = getExpenses.length; // possivel bug quando for remover um item
+    const expense = {
+      id: indexExpense,
+      ...this.state,
+      exchangeRates: getCurrencies[0],
+    };
+    addExpense(expense);
+  }
+
   render() {
     const MethodsPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagsExpense = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value: price, currency, method: paymentForm, tag, description } = this.state;
-    const { currencies } = this.props;
+    const { getCurrencies } = this.props;
     return (
       <form>
         <Input
@@ -44,7 +57,7 @@ class FormsAddexpense extends Component {
         />
         <Select
           value={ currency }
-          options={ formatObjCurrencies(currencies[0], 'USDT') }
+          options={ formatObjCurrencies(getCurrencies[0]) }
           name="currency"
           textLabel="Moeda"
           onChange={ this.handleChangeGeneric }
@@ -71,14 +84,17 @@ class FormsAddexpense extends Component {
           onChange={ this.handleChangeGeneric }
           TextLabel="Descrição"
         />
-        <Button onClick={ this.handleonCLick } text="Adicionar despesa" />
+        <Button onClick={ this.handleCLick } text="Adicionar despesa" />
       </form>
     );
   }
 }
 
 FormsAddexpense.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getCurrencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  updateCurrencies: PropTypes.func.isRequired,
+  getExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 
 export default FormsAddexpense;

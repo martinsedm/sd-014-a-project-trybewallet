@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addCurrenciesThunk } from '../actions/index';
+import { addCurrenciesThunk, addExpense as addExpenseAction } from '../actions/index';
 
 import FormsAddexpense from './FormsAddExpense';
 
 class HeaderWallet extends Component {
   componentDidMount() {
-    const { addCurrencies } = this.props;
-    addCurrencies();
+    const { addCurrenciesApi } = this.props;
+    addCurrenciesApi();
   }
 
   render() {
-    const { getEmail, getCurrencies } = this.props;
+    const {
+      addCurrenciesApi,
+      addExpense, getEmail,
+      getCurrencies,
+      getExpenses } = this.props;
     return (
       <header>
         <p data-testid="email-field">{`seu email: ${getEmail}`}</p>
@@ -20,7 +24,12 @@ class HeaderWallet extends Component {
           0
           <span data-testid="header-currency-field">BRL </span>
         </p>
-        <FormsAddexpense currencies={ getCurrencies } />
+        <FormsAddexpense
+          updateCurrencies={ addCurrenciesApi }
+          getCurrencies={ getCurrencies }
+          getExpenses={ getExpenses }
+          addExpense={ addExpense }
+        />
       </header>
     );
   }
@@ -33,13 +42,16 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addCurrencies: () => dispatch(addCurrenciesThunk()),
+  addCurrenciesApi: () => dispatch(addCurrenciesThunk()),
+  addExpense: (payload) => dispatch(addExpenseAction(payload)),
 });
 
 HeaderWallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
-  addCurrencies: PropTypes.func.isRequired,
+  addCurrenciesApi: PropTypes.func.isRequired,
   getCurrencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HeaderWallet);
