@@ -1,17 +1,15 @@
-import { APPLICATION } from '../actions';
+import { USER_ACTION } from '../actions/userAction';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case APPLICATION:
+  case USER_ACTION:
     return {
       ...state,
-      user: action.payload.user,
+      email: action.payload,
     };
   default:
     return state;

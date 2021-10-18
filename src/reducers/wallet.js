@@ -1,19 +1,18 @@
-import { APPLICATION } from '../actions';
+import { WALLET_ACTION } from '../actions/walletAction';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
+
 };
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case APPLICATION:
+  case WALLET_ACTION:
     return {
       ...state,
-      currencies: action.payload.wallet.currencies,
-      expenses: action.payload.wallet.expenses,
+      currencies: action.payload.currencies,
+      expenses: action.payload.expenses,
     };
   default:
     return state;
