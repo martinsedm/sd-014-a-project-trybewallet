@@ -1,79 +1,96 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { actionFunc as funcAction } from '../actions';
+import { Redirect } from 'react-router';
+
+const six = 6;
 
 class Login extends Component {
-  // eventHandler = (event) => {
-  //   const { value } = event.target;
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      login: false,
+    };
+    this.eventHandler = this.eventHandler.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
+  }
 
-  //   this.setState({
-  //     name: value,
-  //   });
-  // }
+  eventHandler({ target }) {
+    const { value, id } = target;
+    if (id === 'email') {
+      this.setState({
+        email: value,
+      });
+    } else {
+      this.setState({
+        password: value,
+      });
+    }
+    console.log(target);
+  }
 
-  // logging() {
-  //   let { disabled } = this.props;
-  //   const senha = document.querySelector('#senha').value;
-  //   const email = document.querySelector('#email').value;
-  //   if (email === 'tryber@teste.com' && senha === '123456') {
-  //     disabled = true;
-  //   } else {
-  //     disabled = false;
-  //   }
-  // }
+  clickHandler() {
+    this.setState({
+      login: true,
+    });
+  }
+
+  verifyLogin() {
+    const { email, password } = this.state;
+
+    const verifyEmail = (mail) => {
+      const regex = /\S+@\S+\.\S+/;
+      return regex.test(mail);
+    };
+
+    const verifyPassword = (pwd) => pwd.length >= six;
+
+    return !(verifyPassword(password) && verifyEmail(email));
+  }
 
   render() {
-    // const { user } = this.props;
-    // const { value } = this.state;
+    const { password, email, login } = this.state;
     return (
-      <div>
-        <div>
+      <section>
+        <form>
           <label htmlFor="loginArea">
             Email:
             <input
               type="textarea"
-              // value={ value }
-              onChange={ this.eventHandler }
               data-testid="email-input"
+              onChange={ this.eventHandler }
               id="email"
+              value={ email }
+              placeholder="Email"
 
             />
           </label>
 
-          <label htmlFor="pwdArea">
+          <label htmlFor="passwordArea">
             Password:
             <input
               type="textarea"
-              // value={ value }
-              // onChange={ this.eventHandler }
               data-testid="password-input"
+              onChange={ this.eventHandler }
               id="password"
+              value={ password }
+              placeholder="Password"
             />
           </label>
 
           <button
-            type="button"
-            // onClick={ onClick }
             data-testid="login-submit-button"
-            disabled
+            disabled={ this.verifyLogin() }
+            onClick={ this.clickHandler }
+            type="button"
           >
             Entrar
           </button>
-        </div>
-      </div>
+          { login && <Redirect to="/carteira" /> }
+        </form>
+      </section>
     );
   }
 }
 
-// const VALID_EMAIL = 'alguem@email.com';
-// const VALID_PASSWORD = '123456';
-
-const mapStateToProps = (state) => ({
-  user: state.users,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  test: (func, func2) => dispatch(funcAction(func, func2)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
