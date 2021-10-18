@@ -22,8 +22,7 @@ class Wallet extends React.Component {
   }
 
   async fetchMoedas() {
-    const moedas = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
-    return moedas;
+    return ((await fetch('https://economia.awesomeapi.com.br/json/all')).json());
   }
 
   render() {
