@@ -29,9 +29,7 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-const mapStateToProps = ({ wallet: { expenses } }) => ({
-  expenses,
-});
+const mapStateToProps = ({ wallet: { expenses } }) => ({ expenses });
 
 const mapDispatchToProps = (dispatch) => ({
   currencyAPI: () => dispatch(fetchAPI()),

@@ -87,9 +87,7 @@ class Expenses extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
+const mapStateToProps = ({ wallet: { currencies } }) => ({ currencies });
 
 const mapDispatchToProps = (dispatch) => ({
   getExpenses: (expenses) => dispatch(getExpensesAction(expenses)),

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { login as loginAction } from '../actions';
+import Input from '../components/Input';
 
 class Login extends Component {
   constructor(props) {
@@ -34,26 +35,22 @@ class Login extends Component {
     const { login } = this.props;
     return (
       <form>
-        <label htmlFor="email">
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="password">
-          <input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Senha"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-          />
-        </label>
+        <Input
+          type="email"
+          name="email"
+          htmlFor="email"
+          placeholder="Email"
+          dataTestId="email-input"
+          onChange={ this.handleChange }
+        />
+        <Input
+          type="password"
+          name="password"
+          htmlFor="password"
+          placeholder="Senha"
+          dataTestId="password-input"
+          onChange={ this.handleChange }
+        />
         <Link to="/carteira">
           <button
             type="button"

@@ -1,5 +1,4 @@
 import {
-  GET_CURRENCIES,
   GET_CURRENCIES_ERROR,
   GET_CURRENCIES_SUCCESS,
   GET_EXPENSES,
@@ -17,10 +16,6 @@ export default function wallet(
   { type, currencies, expenses, error, expenseId },
 ) {
   switch (type) {
-  case GET_CURRENCIES:
-    return {
-      ...state,
-    };
   case GET_CURRENCIES_SUCCESS:
     return {
       ...state,
