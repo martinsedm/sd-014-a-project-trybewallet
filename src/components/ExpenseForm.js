@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { userLogin } from '../actions';
 
@@ -32,6 +33,7 @@ class ExpenseForm extends React.Component {
   }
 
   createSelectMoeda(inputId, name, type, value) {
+    const { currencies } = this.props;
     return (
       <select
         data-testid={ inputId }
@@ -40,10 +42,17 @@ class ExpenseForm extends React.Component {
         name={ name }
         onChange={ this.handleChange }
       >
-        <option value="AC">Acre</option>
-        <option value="AL">Alagoas</option>
-        <option value="AP">Amapá</option>
-        <option value="AM">Amazonas</option>
+        { currencies.map((currency) => (
+          <option key={ currency } value={ currency }>{ currency }</option>
+        ))}
+        {/* { currencies.forEach((currency) => (
+          <option
+            key={ currency }
+            value={ currency }
+          >
+            { currency }
+          </option>))} */}
+        <option value="DOLAR">DOLAR</option>
       </select>
     );
   }
@@ -83,7 +92,6 @@ class ExpenseForm extends React.Component {
   }
 
   render() {
-    const MIN_USER_INPUT = 6;
     const { valor, descricao, moeda, pagamento, tag } = this.state;
     return (
       <form>
@@ -96,7 +104,7 @@ class ExpenseForm extends React.Component {
           {this.createInputs('descricao-id', 'descricao', 'text', descricao)}
         </label>
         <label htmlFor="moeda-label">
-          Moeda:
+          Moeda
           {this.createSelectMoeda('moeda-Select', 'moeda', 'string', moeda)}
         </label>
         <label htmlFor="pagamento-label">
@@ -120,9 +128,16 @@ class ExpenseForm extends React.Component {
     );
   }
 }
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchUserLogin: (email) => dispatch(userLogin(email)),
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseForm);
+ExpenseForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
