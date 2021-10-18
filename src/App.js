@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
 

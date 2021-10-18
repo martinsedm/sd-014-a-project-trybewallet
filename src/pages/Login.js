@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { saveEmailAtState as saveEmailAtStateAction } from '../actions';
