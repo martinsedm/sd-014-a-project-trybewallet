@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import userReducer from './user';
-import walletReducer from './wallet';
+import user from './user';
+import wallet from './wallet';
 
 // Configure os seus reducers.
 const rootReducer = combineReducers({
-  userReducer,
-  walletReducer,
+  user,
+  wallet,
 });
 
 export default rootReducer;

@@ -2,20 +2,16 @@
 import { ADD_CURRENCIES } from '../actions';
 
 const initialState = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
-const walletReducer = (state = initialState, { type, payload }) => {
+const wallet = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_CURRENCIES:
     return {
       ...state,
-      wallet: {
-        expenses: payload, // nescesita da uma logica para trabalhar com o expenses
-      },
+      expenses: payload, // nescesita da uma logica para trabalhar com o expenses
     };
 
   default:
@@ -23,4 +19,4 @@ const walletReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default walletReducer;
+export default wallet;

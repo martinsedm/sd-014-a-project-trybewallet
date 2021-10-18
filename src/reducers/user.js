@@ -2,19 +2,15 @@
 import { ADD_USER } from '../actions';
 
 const initialState = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
-const userReducer = (state = initialState, { type, payload }) => {
+const user = (state = initialState, { type, payload }) => {
   switch (type) {
   case ADD_USER:
     return {
       ...state,
-      user: {
-        email: payload,
-      },
+      email: payload,
     };
 
   default:
@@ -22,4 +18,4 @@ const userReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default userReducer;
+export default user;
