@@ -11,12 +11,12 @@ class Formulario extends React.Component {
       dataAPI: [],
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
-    this.requisicaoAPI = this.requisicaoAPI.bind(this);
+    // this.requisicaoAPI = this.requisicaoAPI.bind(this);
   }
 
-  componentDidMount() {
-    this.requisicaoAPI();
-  }
+  // componentDidMount() {
+  //   this.requisicaoAPI();
+  // }
 
   handleOnChancge({ target }) {
     const { name } = target;
@@ -26,14 +26,14 @@ class Formulario extends React.Component {
     });
   }
 
-  async requisicaoAPI() {
-    const endpoint = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const response = await endpoint.json();
-    const data = response;
-    this.setState({
-      dataAPI: data,
-    });
-  }
+  // async requisicaoAPI() {
+  //   const endpoint = await fetch('https://economia.awesomeapi.com.br/json/all');
+  //   const response = await endpoint.json();
+  //   const data = response;
+  //   this.setState({
+  //     dataAPI: data,
+  //   });
+  // }
 
   render() {
     const { valor, descricao, dataAPI } = this.state;

@@ -9,7 +9,7 @@ function user(state = INICIANDO_ESTADO, action) {
   case ADD_EMAIL:
     return {
       ...state,
-      user: action.email,
+      email: action.email,
     };
   default:
     return state;
