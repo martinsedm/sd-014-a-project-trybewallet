@@ -1,7 +1,7 @@
 import { SET_COINS, SET_EXPENDITURE } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: [],
+  currencies: {},
   expenses: [],
 };
 

@@ -53,8 +53,6 @@ class ExpenditureForm extends React.Component {
         <SelectInput
           id="currency"
           label="Moeda"
-          // options={ coins.map(({ code }) => code) }
-          // options={ coins.map((coin) => Object.keys(coin)[0]) }
           options={ Object.keys(coins) }
           onChange={ this.handleChange }
         />
@@ -86,7 +84,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ExpenditureForm.propTypes = {
-  coins: PropTypes.arrayOf(PropTypes.object).isRequired,
+  coins: PropTypes.objectOf(PropTypes.any).isRequired,
   setExpenditureGlobal: PropTypes.func.isRequired,
   getCoins: PropTypes.func.isRequired,
 };
