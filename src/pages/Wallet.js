@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Form from '../components/Form';
 import Header from '../components/Header';
+import Table from '../components/Table';
 import { fetchCurrencies, expenseThunk } from '../actions';
 
 class Wallet extends React.Component {
@@ -16,11 +17,11 @@ class Wallet extends React.Component {
       currency,
       form: {
         value: 0,
-        description: '',
         currency: '',
-        currencies: [],
         method: '',
         tag: '',
+        description: '',
+        currencies: [],
         categories: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
         payment: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
       },
@@ -29,6 +30,8 @@ class Wallet extends React.Component {
     this.stateUpdate = this.stateUpdate.bind(this);
     this.handleExpense = this.handleExpense.bind(this);
     this.calculateSum = this.calculateSum.bind(this);
+    this.removeExpense = this.removeExpense.bind(this);
+    this.editExpense = this.editExpense.bind(this);
   }
 
   componentDidMount() {
@@ -39,10 +42,10 @@ class Wallet extends React.Component {
   componentDidUpdate(previusProps, previusState) {
     const { currencies, expenses } = this.props;
     const { currencyExchange } = this.state;
-    if (previusProps.currencies.length !== currencies.length) {
+    if (previusProps.currencies !== currencies) {
       this.stateUpdate('currencies', currencies);
     }
-    if ((previusProps.expenses.length !== expenses.length)
+    if ((previusProps.expenses !== expenses)
       || (previusState.currencyExchange !== currencyExchange)) {
       this.calculateSum(expenses);
     }
@@ -90,6 +93,14 @@ class Wallet extends React.Component {
     });
   }
 
+  removeExpense(id) {
+    console.log(id);
+  }
+
+  editExpense(id) {
+    console.log(id);
+  }
+
   handleChange({ target: { name, value } }) {
     const { form } = this.state;
     this.setState({
@@ -101,18 +112,27 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, total, currency, form } = this.state;
+    const { email, total, currencyExchange, form } = this.state;
+    const { expenses } = this.props;
     return (
-      <div>
-        <Header data={ { email, total, currency } } />
-        <div>
+      <main>
+        <Header data={ { email, total, currencyExchange } } />
+        <section>
           <Form
             { ...form }
             onChange={ this.handleChange }
             onClick={ this.handleExpense }
           />
-        </div>
-      </div>
+        </section>
+        <section>
+          { expenses.length !== 0
+            && <Table
+              expenses={ expenses }
+              removeExpense={ this.removeExpense }
+              editExpense={ this.editExpense }
+            />}
+        </section>
+      </main>
     );
   }
 }

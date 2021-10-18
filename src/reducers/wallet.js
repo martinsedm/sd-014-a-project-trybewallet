@@ -19,7 +19,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     const id = expenses.length;
     return {
       ...state,
-      expenses: [expenses, { ...action.payload, id }],
+      expenses: [...expenses, { ...action.payload, id }],
     };
   }
   case FETCHING:

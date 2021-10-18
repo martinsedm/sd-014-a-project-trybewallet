@@ -50,7 +50,7 @@ export const expenseThunk = (expense) => (dispatch) => {
   return fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((currencies) => {
-      const result = { ...expense, exchange: { ...currencies } };
+      const result = { ...expense, exchangeRates: { ...currencies } };
       dispatch(addExpense(result));
       dispatch(isFetching());
     });

@@ -11,11 +11,11 @@ class Form extends React.Component {
       value,
       description,
       currency,
-      currencies,
       method,
-      payment,
       tag,
+      currencies,
       categories,
+      payment,
       onChange,
       onClick,
     } = this.props;

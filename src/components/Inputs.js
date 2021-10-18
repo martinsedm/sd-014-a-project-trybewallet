@@ -13,6 +13,7 @@ class Inputs extends React.Component {
           name={ name }
           value={ value }
           onChange={ onChange }
+          required
         />
       </label>
     );

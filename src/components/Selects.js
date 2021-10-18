@@ -12,6 +12,7 @@ class Selects extends React.Component {
           name={ name }
           value={ value }
           onChange={ onChange }
+          required
         >
           { options.map((option, index) => (
             <option key={ index } value={ option }>
