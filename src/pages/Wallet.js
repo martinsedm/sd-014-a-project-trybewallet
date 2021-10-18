@@ -130,6 +130,7 @@ class Wallet extends React.Component {
   handlechange({ target: { name, value } }) {
     const { form } = this.state;
     this.setState({
+      saved: false,
       form: {
         ...form,
         [name]: value,
@@ -161,7 +162,7 @@ class Wallet extends React.Component {
           { expenses.length !== 0
           && <Table
             expenses={ expenses }
-            disableSave={ email === '' }
+            disableSave={ email === '' || editor }
             disableBtn={ editor }
             removeExpense={ removeExpense }
             editExpense={ this.editExpense }
