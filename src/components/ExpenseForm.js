@@ -1,7 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class ExpenseForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.mapcoins = this.mapcoins.bind(this);
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="expense">
@@ -14,7 +22,10 @@ class ExpenseForm extends React.Component {
         </label>
         <label htmlFor="coins">
           Moeda:
-          <select name="coins" id="coins">Coins</select>
+          <select name="coins" id="coins">
+            Coins
+            {currencies.map((coin) => (coin !== 'USDT' ? <option>{coin}</option> : null))}
+          </select>
         </label>
         <label htmlFor="payment">
           Método de pagamento:
@@ -41,4 +52,14 @@ class ExpenseForm extends React.Component {
   }
 }
 
-export default ExpenseForm;
+const mapStateToProps = (state) => (
+  {
+    currencies: state.wallet.currencies,
+  }
+);
+
+ExpenseForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+};
+
+export default connect(mapStateToProps, null)(ExpenseForm);
