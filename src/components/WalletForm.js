@@ -13,8 +13,8 @@ class WalletForm extends React.Component {
       value: '',
       description: '',
       currency: 'USD',
-      method: 'cash',
-      tag: 'food',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitExpense = this.submitExpense.bind(this);
@@ -50,12 +50,6 @@ class WalletForm extends React.Component {
           value={ value }
           onChange={ this.handleChange }
         />
-        <WalletInput
-          name="description"
-          labelText="Descrição"
-          value={ description }
-          onChange={ this.handleChange }
-        />
         <WalletSelect
           name="currency"
           labelText="Moeda"
@@ -75,6 +69,12 @@ class WalletForm extends React.Component {
           labelText="Tag"
           options={ tags }
           value={ tag }
+          onChange={ this.handleChange }
+        />
+        <WalletInput
+          name="description"
+          labelText="Descrição"
+          value={ description }
           onChange={ this.handleChange }
         />
         <input type="submit" value="Adicionar despesa" />
