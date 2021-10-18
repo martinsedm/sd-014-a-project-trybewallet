@@ -1,12 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { CURRENCY_SUCCESS, CURRENCY_ERROR } from '../actions';
+import { CURRENCY_SUCCESS, CURRENCY_ERROR, EXPENSE_CONSTRUCTOR } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    error: null,
-  },
+  currencies: [],
+  expenses: [],
+  error: null,
 };
 
 const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -18,6 +16,10 @@ const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
   case CURRENCY_ERROR:
     return {
       ...state, error: payload,
+    };
+  case EXPENSE_CONSTRUCTOR:
+    return {
+      ...state, expenses: [...state.expenses, payload],
     };
   default:
     return state;

@@ -2,9 +2,7 @@
 import { SAVE_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {

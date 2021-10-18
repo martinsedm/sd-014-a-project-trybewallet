@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCurrenciesThunk } from '../actions/index';
+import PropTypes from 'prop-types';
+import { getCurrenciesThunk, expenseConstructor } from '../actions/index';
 import fetchAPI from '../services/awesomeapi';
 import LabelInput from './LabelInput';
+import Select from './Select';
 
 class Form extends Component {
   constructor() {
     super();
 
     this.state = {
-      expense: 0,
+      id: 0,
+      value: 0,
       description: '',
-      coin: 'USD',
-      paymentMethod: 'Dinheiro',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       arr: [],
+      exchangeRates: {},
     };
   }
 
@@ -29,55 +33,54 @@ class Form extends Component {
 
   handleAPI = async () => {
     const api = await fetchAPI();
-    const arrAPI = Object.entries(api);
+    // retorno da API em arr sem USDT
+    const arrAPI = Object.keys(api);
     const arrAPIfiltered = arrAPI.filter((curr) => curr[0] !== 'USDT');
     this.setState({ arr: arrAPIfiltered });
+    // retorno da API em obj sem USDT
+    delete api.USDT;
+    this.setState({ exchangeRates: api });
   };
 
+  handleClick = async (event) => {
+    event.preventDefault();
+    const { pushExpenses, handleTotal } = this.props;
+    const { id } = this.state;
+    this.setState({ id: id + 1 });
+    const currState = { ...this.state };
+    delete currState.arr;
+    await pushExpenses(currState);
+    // atualiza cotação chamando novamente a API
+    await this.handleAPI();
+    handleTotal();
+  }
+
   render() {
-    const { expense, description, coin, paymentMethod, tag, arr } = this.state;
+    const { value, description, currency, method, tag, arr } = this.state;
+    const optionMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const optionTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 
     return (
       <form>
         <LabelInput
-          att={ ['expense', 'Valor', 'number', expense, this.handleChange] }
+          att={ ['value', 'Valor', 'number', value, this.handleChange] }
         />
         <LabelInput
           att={ ['description', 'Descrição', 'text', description, this.handleChange] }
         />
-        <label htmlFor="coin">
-          Moeda
-          <select name="coin" value={ coin } id="coin" onChange={ this.handleChange }>
-            {arr.map((curr, i) => (
-              <option key={ i } value={ curr[0] }>
-                {curr[0]}
-              </option>))}
-          </select>
-        </label>
-        <label htmlFor="paymentMethod">
-          Método de pagamento
-          <select
-            name="paymentMethod"
-            value={ paymentMethod }
-            id="paymentMethod"
-            onChange={ this.handleChange }
-          >
-            <option id="cash">Dinheiro</option>
-            <option id="credit-card">Cartão de crédito</option>
-            <option id="debit-card">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" value={ tag } id="tag" onChange={ this.handleChange }>
-            <option id="food">Alimentação</option>
-            <option id="leisure">Lazer</option>
-            <option id="work">Trabalho</option>
-            <option id="transport">Transporte</option>
-            <option id="health">Saúde</option>
-          </select>
-        </label>
-        <button type="submit">
+        <Select
+          att={ ['currency', currency, 'Moeda', this.handleChange] }
+          option={ arr }
+        />
+        <Select
+          att={ ['method', method, 'Método de pagamento', this.handleChange] }
+          option={ optionMethod }
+        />
+        <Select
+          att={ ['tag', tag, 'Tag', this.handleChange] }
+          option={ optionTag }
+        />
+        <button type="submit" onClick={ this.handleClick }>
           Adicionar despesa
         </button>
       </form>
@@ -85,8 +88,14 @@ class Form extends Component {
   }
 }
 
+Form.propTypes = {
+  pushExpenses: PropTypes.func.isRequired,
+  handleTotal: PropTypes.func.isRequired,
+};
+
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrenciesThunk()),
+  pushExpenses: (payload) => dispatch(expenseConstructor(payload)),
 });
 
 export default connect(null, mapDispatchToProps)(Form);

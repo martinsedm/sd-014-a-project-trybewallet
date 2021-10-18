@@ -4,20 +4,43 @@ import PropTypes from 'prop-types';
 import Form from '../components/Form';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      total: 0,
+    };
+  }
+
+  handleTotal = () => {
+    const { walletState: { expenses } } = this.props;
+
+    const newTotal = expenses.reduce((acc, item) => {
+      const convertion = Number(item.value)
+      * Number(item.exchangeRates[item.currency].ask);
+      return acc + convertion;
+    }, 0);
+
+    this.setState({ total: newTotal });
+  }
+
   render() {
+    const { total } = this.state;
+
     const { loginEmail } = this.props;
+
     return (
       <div>
         <header data-testid="email-field">
           {loginEmail || 'Usuário não logado'}
+          <section data-testid="total-field">
+            {total}
+          </section>
+          <section data-testid="header-currency-field">
+            BRL
+          </section>
         </header>
-        <section data-testid="total-field">
-          0
-        </section>
-        <section data-testid="header-currency-field">
-          BRL
-        </section>
-        <Form />
+        <Form handleTotal={ this.handleTotal } />
       </div>
     );
   }
@@ -25,10 +48,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   loginEmail: state.user.email,
+  walletState: state.wallet,
 });
 
 Wallet.propTypes = {
   loginEmail: PropTypes.string.isRequired,
+  walletState: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Wallet);
