@@ -5,13 +5,14 @@ import SelectForm from './SelectForm';
 class WalletForm extends React.Component {
   constructor() {
     super();
-    // this.state = {
-    //   value: 0,
-    //   description: '',
-    //   currency: '',
-    //   method: 'Dinheiro',
-    //   tag: '',
-    // };
+    this.state = {
+      id: 0,
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: '',
+      description: '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,20 +24,19 @@ class WalletForm extends React.Component {
   }
 
   render() {
-    // const { value, description, currency, method, tag } = this.state;
-
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const paymentMethods = [
       'Dinheiro',
       'Cartão de crédito',
       'Cartão de débito',
     ];
+
     return (
       <div>
         <form>
           <InputForm
-            type="text"
-            name="despesa"
+            type="number"
+            name="value"
             label="Valor"
             onChange={ this.handleChange }
           />
@@ -46,12 +46,12 @@ class WalletForm extends React.Component {
             label="Descrição:"
             onChange={ this.handleChange }
           />
-          <SelectForm
+          {/* <SelectForm
             label="Moeda"
             name="currency"
-            // options={ }
+            options={ }
             onChange={ this.handleChange }
-          />
+          /> */}
           <SelectForm
             label="Método de pagamento"
             name="method"
