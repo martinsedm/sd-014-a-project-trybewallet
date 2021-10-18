@@ -11,7 +11,12 @@ class SelectCurrency extends React.Component {
     return (
       <label htmlFor="currency-select">
         Moeda
-        <select id="currency-select" onChange={ handleChange } value={ currency } name="currency">
+        <select
+          id="currency-select"
+          onChange={ handleChange }
+          value={ currency }
+          name="currency"
+        >
           <option value={ USD.code }>{ USD.code }</option>
           <option value={ CAD.code }>{ CAD.code }</option>
           <option value={ EUR.code }>{ EUR.code }</option>
@@ -48,6 +53,8 @@ SelectCurrency.propTypes = {
   ILS: PropTypes.objectOf(PropTypes.any).isRequired,
   ETH: PropTypes.objectOf(PropTypes.any).isRequired,
   XRP: PropTypes.objectOf(PropTypes.any).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  currency: PropTypes.string.isRequired,
 };
 
 export default SelectCurrency;

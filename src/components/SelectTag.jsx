@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class SelectTag extends React.Component {
   render() {
@@ -18,5 +19,10 @@ class SelectTag extends React.Component {
     );
   }
 }
+
+SelectTag.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  tag: PropTypes.string.isRequired,
+};
 
 export default SelectTag;
