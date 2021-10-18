@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { expensesAction, fetchExchangeRates } from '../../actions';
 import Imputs from './imputs/Imputs';
 import Selects from './selects/Selects';
 
@@ -6,13 +9,16 @@ class FormExpense extends Component {
   constructor() {
     super();
     this.state = {
-      valor: '',
-      descricao: '',
-      moeda: '',
-      pagamento: 'dinheiro',
-      tag: 'alimentacao',
+      id: -1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -22,25 +28,58 @@ class FormExpense extends Component {
     });
   }
 
-  render() {
-    const { valor, descricao, moeda, pagamento, tag } = this.state;
+  async handleClick() {
+    const { getExchangeRates } = this.props;
+    await getExchangeRates();
+    const { expenses, exchangeRates } = this.props;
+    console.log(exchangeRates);
+    const { id } = this.state;
+    this.setState({
+      exchangeRates,
+      id: id + 1,
+    });
+    expenses(this.state);
+  }
 
+  render() {
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <Imputs
-          valor={ valor }
-          descricao={ descricao }
+          value={ value }
+          description={ description }
           handleChange={ this.handleChange }
         />
         <Selects
-          moeda={ moeda }
-          pagamento={ pagamento }
+          currency={ currency }
+          method={ method }
           tag={ tag }
           handleChange={ this.handleChange }
         />
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default FormExpense;
+FormExpense.propTypes = {
+  expenses: PropTypes.func.isRequired,
+  getExchangeRates: PropTypes.func.isRequired,
+  exchangeRates: PropTypes.objectOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  exchangeRates: state.wallet.coins,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getExchangeRates: () => dispatch(fetchExchangeRates()),
+  expenses: (state) => dispatch(expensesAction(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);

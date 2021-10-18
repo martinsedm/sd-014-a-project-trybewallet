@@ -3,26 +3,26 @@ import React, { Component } from 'react';
 
 class Imputs extends Component {
   render() {
-    const { valor, descricao, handleChange } = this.props;
+    const { value, description, handleChange } = this.props;
     return (
       <div>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor:
           <input
-            type="text"
-            name="valor"
-            id="valor"
-            value={ valor }
+            type="number"
+            name="value"
+            id="value"
+            value={ value }
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição:
           <input
             type="text"
-            name="descricao"
-            id="descricao"
-            value={ descricao }
+            name="description"
+            id="description"
+            value={ description }
             onChange={ handleChange }
           />
         </label>
@@ -32,8 +32,8 @@ class Imputs extends Component {
 }
 
 Imputs.propTypes = {
-  valor: PropTypes.string.isRequired,
-  descricao: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

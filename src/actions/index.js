@@ -1,6 +1,8 @@
 export const USER = 'USER';
-export const WALLET = 'WALLET';
+export const CURRENCIES = 'CURRENCIES';
+export const EXPENSES = 'EXPENSES';
 export const GET_CURRENCY = 'GET_CURRENCY';
+export const COINS = 'COINS';
 
 export const userAction = (email) => ({
   type: USER,
@@ -9,11 +11,24 @@ export const userAction = (email) => ({
   },
 });
 
-export const walletAction = (currencies, expenses) => ({
-  type: WALLET,
+export const currenciesAction = (currencies) => ({
+  type: CURRENCIES,
   payload: {
     currencies,
+  },
+});
+
+export const expensesAction = (expenses) => ({
+  type: EXPENSES,
+  payload: {
     expenses,
+  },
+});
+
+export const exchangeRatesAction = (coins) => ({
+  type: COINS,
+  payload: {
+    coins,
   },
 });
 
@@ -22,6 +37,15 @@ export function fetchAPI() {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const json = await response.json();
     delete json.USDT;
-    dispatch(walletAction(Object.keys(json), []));
+    dispatch(currenciesAction(Object.keys(json)));
+  };
+}
+
+export function fetchExchangeRates() {
+  return async (dispatch) => {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const json = await response.json();
+    delete json.USDT;
+    dispatch(exchangeRatesAction(json));
   };
 }
