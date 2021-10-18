@@ -425,7 +425,7 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
     * O campo deverá ter a label `Método de pagamento`.-
 
-    * Este campo deve ser um `<select>`. A pessoa usuária deve poder escolher entre os campos: 'Dinheiro', 'Cartão de crédito' e 'Cartão de débito'.
+    * Este campo deve ser um `<select>`. A pessoa usuária deve poder escolher entre os campos: 'Dinheiro', 'Cartão de crédito' e 'Cartão de débito'.-
 
   * Um campo para selecionar uma categoria (tag) para a despesa.
 

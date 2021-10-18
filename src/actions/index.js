@@ -1,4 +1,5 @@
-// Coloque aqui suas actions
+import apiCurrencies from '../service/requestAPIs';
+
 export const ADD_USER = 'ADD_USER';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const ADD_CURRENCIES = 'ADDCURRENCIES';
@@ -17,3 +18,8 @@ export const addCurrencies = (payload) => ({ // action assincrono
   type: ADD_CURRENCIES,
   payload,
 });
+
+export const addCurrenciesThunk = () => async (dispatch) => {
+  const response = await apiCurrencies();
+  dispatch(addCurrencies(response));
+};

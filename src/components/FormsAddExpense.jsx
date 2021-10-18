@@ -12,14 +12,15 @@ class FormsAddexpense extends Component {
       currency: '',
       method: '',
       tag: '',
-      // devarar ter a lista de moedas resultado da api
     };
     this.handleChangeGeneric = this.handleChangeGeneric.bind(this);
   }
 
-  handleChangeGeneric() {
-    // const { name, value } = target;
-    console.log('mudando o state');
+  handleChangeGeneric({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
   }
 
   render() {
@@ -28,11 +29,11 @@ class FormsAddexpense extends Component {
     const { value: price, currency, method: paymentForm, tag, description } = this.state;
     return (
       <form>
-        <Input // possivel problema na logica, o valor será tipo string inicialmente.
+        <Input
           type="number"
           onChange={ this.handleChangeGeneric }
-          id="price"
-          name="price"
+          id="value"
+          name="value"
           value={ price }
           TextLabel="Valor"
         />
@@ -45,7 +46,7 @@ class FormsAddexpense extends Component {
         />
         <Select
           value={ paymentForm }
-          name="payment"
+          name="method"
           textLabel="Método de pagamento"
           onChange={ this.handleChangeGeneric }
           options={ MethodsPayment }
