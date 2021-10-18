@@ -44,3 +44,21 @@ export function fetchExpense(state) {
     dispatch(addExpenseAction(coinJSON, state));
   };
 }
+
+// Actions para a edição da despesa
+
+export const INIT_EDIT = 'INIT_EDIT';
+export const EXPENSE_EDIT = 'EXPENSE_EDIT';
+
+export const initOrFinishEdit = (idxEdit, editing) => ({
+  type: INIT_EDIT,
+  payload: {
+    idxEdit,
+    editing: !editing,
+  },
+});
+
+export const editExpense = (expenses) => ({
+  type: EXPENSE_EDIT,
+  expenses,
+});
