@@ -5,6 +5,7 @@ import SelectPayment from '../components/SelectPayment';
 import SelectCurrency from '../components/SelectCurrency';
 import SelectTag from '../components/SelectTag';
 import { expenseThunk, totalExpenseAction } from '../actions';
+import GenericInput from '../components/GenericInput';
 
 class Wallet extends React.Component {
   constructor() {
@@ -28,20 +29,12 @@ class Wallet extends React.Component {
     this.fetchApi(true);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-  }
-
   async setupExpense() {
     const { value, description, currency } = this.state;
     const { method, tag } = this.state;
-    const { saveExpense, totalExpenses, changeTotal, expenses } = this.props;
-    const result = parseFloat(totalExpenses) + parseFloat(value);
-    changeTotal(result);
+    const { saveExpense, expenses } = this.props;
     const exchangeRates = await this.fetchApi(false);
+    this.calculateExchange(exchangeRates);
     const answer = {
       id: expenses.length,
       value,
@@ -57,6 +50,22 @@ class Wallet extends React.Component {
       description: '',
       currency: 'USD',
       method: 'cash',
+    });
+  }
+
+  calculateExchange(exchangeRates) {
+    const { value, currency } = this.state;
+    const { totalExpenses, changeTotal } = this.props;
+
+    const valueExchanged = exchangeRates[currency].ask * value;
+    const result = parseFloat(totalExpenses) + parseFloat(valueExchanged);
+    changeTotal(result);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
     });
   }
 
@@ -83,27 +92,30 @@ class Wallet extends React.Component {
         </header>
         <main>
           <form>
-            <label htmlFor="value-input">
-              Valor
-              <input
-                type="number"
-                id="value-input"
-                name="value"
-                value={ value }
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label htmlFor="description-input">
-              Descrição
-              <input
-                type="text"
-                id="description-input"
-                name="description"
-                value={ description }
-                onChange={ this.handleChange }
-              />
-            </label>
-            { apiResponse && <SelectCurrency result={ apiResponse } handleChange={ this.handleChange } currency={ currency } /> }
+            <GenericInput
+              htmlFor="value-input"
+              type="number"
+              id="value-input"
+              name="value"
+              value={ value }
+              onChange={ this.handleChange }
+              text="Valor"
+            />
+            <GenericInput
+              htmlFor="description-input"
+              type="text"
+              id="description-input"
+              name="description"
+              value={ description }
+              onChange={ this.handleChange }
+              text="Descrição"
+            />
+            { apiResponse
+            && <SelectCurrency
+              result={ apiResponse }
+              handleChange={ this.handleChange }
+              currency={ currency }
+            /> }
             <SelectPayment handleChange={ this.handleChange } method={ method } />
             <SelectTag handleChange={ this.handleChange } method={ method } />
             <button
@@ -137,6 +149,9 @@ function mapDispatchToProps(dispatch) {
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
   saveExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  totalExpenses: PropTypes.number.isRequired,
+  changeTotal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

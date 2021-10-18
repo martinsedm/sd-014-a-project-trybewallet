@@ -25,7 +25,7 @@ export function totalExpenseAction(data) {
 }
 
 export function expenseThunk(data) {
-  return function (dispatch) {
+  return function expenseThunked(dispatch) {
     return dispatch(expenseAction(data));
   };
 }
