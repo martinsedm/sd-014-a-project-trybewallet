@@ -1,7 +1,7 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 // https://github.com/tryber/sd-014-a-project-trybewallet/pull/5/commits/16a0f4bbfceaa125380abc18c5dd4e2ad32e68b3
 // Ref citada acima.
-import { WALLET, FETCHING, RECEIVE_OJB, RECEIVE_ARR } from '../actions';
+import { WALLET, FETCHING, RECEIVE } from '../actions';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -14,21 +14,20 @@ const INITIAL_STATE = {
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case WALLET:
+  {
+    const { expenses } = state;
+    const id = expenses.length;
     return {
       ...state,
-      expenses: [...state.expenses, { ...action.payload }],
+      expenses: [expenses, { ...action.payload, id }],
     };
+  }
   case FETCHING:
     return {
       ...state,
       isFetching: !state.isFetching,
     };
-  case RECEIVE_OJB:
-    return {
-      ...state,
-      currObj: { ...state.currObj, ...action.payload },
-    };
-  case RECEIVE_ARR:
+  case RECEIVE:
     return {
       ...state,
       currencies: [...state.currencies, ...action.payload],

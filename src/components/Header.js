@@ -12,7 +12,7 @@ class Header extends React.Component {
           <span data-testid="email-field">{ email }</span>
         </p>
         <p>
-          Despesa Total: R$
+          Despesa Total:
           {' '}
           <span data-testid="total-field">{ total }</span>
           {' '}
