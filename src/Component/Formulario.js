@@ -38,7 +38,6 @@ class Formulario extends React.Component {
   render() {
     const { valor, descricao, dataAPI } = this.state;
     const API = dataAPI.length === 0 ? ['Carregando...'] : dataAPI;
-    const escolha = ['nds', 'fdushu', 'fjdshf']; // usado para teste
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const categoria = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
