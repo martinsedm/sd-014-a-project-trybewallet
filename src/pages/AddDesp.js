@@ -1,9 +1,29 @@
 import React from 'react';
 
-class addDesp extends React.Component {
+class AddDesp extends React.Component {
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     resultado: [],
+  //   };
+  //   this.getAPI = this.getAPI.bind(this);
+  // }
+
+  // componentDidMount() {
+  //   async function getAPI() {
+  //     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  //     const responseJson = await response.json();
+  //     this.setState = { resultado: [responseJson] };
+  //   }
+  // }
+
+  handleSubmit(e) {
+    e.preventDefault();
+  }
+
   render() {
     return (
-      <form>
+      <form submit={ (e) => this.handleSubmit(e) }>
         <label htmlFor="valor">
           Valor:
           <input type="text" name="Valor" id="valor" />
@@ -26,9 +46,9 @@ class addDesp extends React.Component {
             <option>Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="despesa">
-          despesa:
-          <select type="text" name="despesa" id="despesa">
+        <label htmlFor="tag">
+          Tag:
+          <select type="text" name="tag" id="tag">
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -36,9 +56,10 @@ class addDesp extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
+        <button type="submit" id="submit" name="submit">Adicionar despesa</button>
       </form>
     );
   }
 }
 
-export default addDesp;
+export default AddDesp;

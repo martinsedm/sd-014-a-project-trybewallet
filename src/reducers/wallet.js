@@ -2,16 +2,14 @@
 import { WALLET_USER } from '../actions';
 
 const initialState = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
 const wallet = (state = initialState, action) => {
   switch (action.type) {
   case WALLET_USER:
-    return { ...state, wallet: action.payload };
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }

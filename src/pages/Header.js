@@ -9,13 +9,15 @@ class Header extends React.Component {
       <header>
         <p data-testid="email-field">{ user.email }</p>
         <p data-testid="total-field">0</p>
+        <p data-testid="header-currency-field"> BRL </p>
       </header>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.user,
+  user: state.user,
+  wallet: state.wallet,
 });
 
 Header.propTypes = {

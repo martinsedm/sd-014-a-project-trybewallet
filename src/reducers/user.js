@@ -2,15 +2,16 @@
 import { LOG_USER } from '../actions';
 
 const initialState = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
   case LOG_USER:
-    return { ...state, user: action.payload };
+    return {
+      ...state,
+      email: action.payload,
+    };
   default:
     return state;
   }

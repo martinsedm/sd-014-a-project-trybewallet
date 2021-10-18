@@ -1,5 +1,5 @@
 import React from 'react';
-import AddDesp from './addDesp';
+import AddDesp from './AddDesp';
 import Header from './Header';
 
 class Wallet extends React.Component {

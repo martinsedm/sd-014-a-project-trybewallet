@@ -2,9 +2,9 @@
 export const LOG_USER = 'LOG_USER';
 export const WALLET_USER = 'WALLET_USER';
 
-export const logUser = (payload) => (
+export const logUser = (user) => (
   {
-    type: LOG_USER, payload,
+    type: LOG_USER, payload: user,
   }
 );
 
