@@ -57,7 +57,7 @@ class Login extends React.Component {
         />
         <button
           type="button"
-          disabled={ !(password.length >= minPasswordLength && validateEmail)}
+          disabled={ !(password.length >= minPasswordLength && validateEmail) }
           onClick={ this.handleClick }
         >
           Entrar
@@ -68,7 +68,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  dispatchPayload: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
