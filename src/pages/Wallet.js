@@ -10,11 +10,11 @@ class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    const { user: { email }, currency } = props;
+    const { user: { email }, currencyExchange } = props;
     this.state = {
       email,
       total: 0,
-      currency,
+      currencyExchange,
       form: {
         value: 0,
         currency: '',
@@ -144,6 +144,7 @@ Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   addExpense: PropTypes.func.isRequired,
+  currencyExchange: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
