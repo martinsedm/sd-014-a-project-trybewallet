@@ -15,11 +15,18 @@ class Login extends React.Component {
     this.enviarRelatorio = this.enviarRelatorio.bind(this);
   }
 
+  validateEmail(email) {
+    // Redux tirado do site:
+    // https://www.codingame.com/playgrounds/9396/redux-form-validation-tutorial
+    const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return regex.test(String(email).toLowerCase());
+  }
+
   checkInputs() {
     const { email, senha } = this.state;
     const minCarac = 6;
     let result = true;
-    if (senha.length >= minCarac && email.includes('@')) {
+    if (senha.length >= minCarac && this.validateEmail(email)) {
       result = false;
     }
     return result;
