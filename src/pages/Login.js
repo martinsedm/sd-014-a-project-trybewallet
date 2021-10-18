@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import { Link } from 'react-router-dom';
-import validator from 'validator';
 import loginEmail from '../actions';
 
 class Login extends React.Component {
@@ -29,13 +28,12 @@ class Login extends React.Component {
     const { email, password } = this.state;
     const MIN_CHARACTERES_PASSWORD = 5;
     const passwordValidate = password.length >= MIN_CHARACTERES_PASSWORD;
-    const emailValidate = validator.isEmail(email); // usei uma biblioteca
 
     // Outra forma de validar sem a biblioteca que instalei
     // fonte: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
-    //  const testEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email);
+    const testEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w\w+)+$/.test(email);
 
-    if (emailValidate && passwordValidate) {
+    if (testEmail && passwordValidate) {
       this.setState({
         disabled: false,
       });

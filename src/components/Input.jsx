@@ -7,12 +7,10 @@ class Input extends Component {
     const { setCurrencies } = this.props;
     return (
       <form>
-
         <label htmlFor="valor">
           Valor :
           <input type="text" name="valor" id="valor" />
         </label>
-
         <label htmlFor="Moeda">
           Moeda :
           <select id="Moeda">
@@ -44,6 +42,7 @@ class Input extends Component {
           Descrição :
           <input type="text" name="Descrição" id="Descrição" />
         </label>
+        <button type="button">Adicionar despesa</button>
       </form>
     );
   }
