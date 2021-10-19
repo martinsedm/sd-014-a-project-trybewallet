@@ -8,7 +8,6 @@ class ExpensesForm extends React.Component {
     this.state = {
       expenseValue: 0,
       description: '',
-      currency: '',
       payment: '',
       tag: '',
     };
@@ -23,7 +22,7 @@ class ExpensesForm extends React.Component {
   }
 
   render() {
-    const { expenseValue, description, currency, payment, tag } = this.state;
+    const { expenseValue, description, payment, tag } = this.state;
     return (
       <form>
         <fieldset>
@@ -48,7 +47,7 @@ class ExpensesForm extends React.Component {
               onChange={ this.handleChange }
             />
           </label>
-          <SelectCurrency currency={ currency } />
+          <SelectCurrency handleChange={ this.handleChange } />
           <label htmlFor="payment">
             Método de pagamento
             <select name="payment" id="payment" value={ payment }>

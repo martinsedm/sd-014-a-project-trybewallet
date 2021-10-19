@@ -1,18 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { getCurrencyApiThunk } from '../actions';
 
 class SelectCurrency extends React.Component {
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
   render() {
-    const { currency } = this.props;
+    const { handleChange, currencies } = this.props;
+    const responseFiltered = currencies
+      .filter((currency) => (currency !== 'USDT'));
     return (
       <label htmlFor="currency">
         Moeda
         <select
           name="currency"
           id="currency"
-          value={ currency }
+          onChange={ handleChange }
         >
-          <option>BRL</option>
+          { responseFiltered.map((currency) => (
+            <option key={ currency } value={ currency }>{ currency }</option>
+          )) }
         </select>
       </label>
     );
@@ -20,7 +32,17 @@ class SelectCurrency extends React.Component {
 }
 
 SelectCurrency.propTypes = {
-  currency: PropTypes.string.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setCurrencies: PropTypes.func.isRequired,
 };
 
-export default SelectCurrency;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(getCurrencyApiThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectCurrency);
