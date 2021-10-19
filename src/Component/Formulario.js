@@ -1,22 +1,22 @@
 import React from 'react';
 import Inputs from './Inputs';
 import Select from './Select';
+import { requisicaoAPI } from '../actions';
 
 class Formulario extends React.Component {
   constructor() {
     super();
     this.state = {
-      valor: '',
-      descricao: '',
-      dataAPI: [],
+      Valor: '',
+      Descricao: '',
+      Moeda: '',
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
-    // this.requisicaoAPI = this.requisicaoAPI.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.requisicaoAPI();
-  // }
+  componentDidMount() {
+    console.log(requisicaoAPI());
+  }
 
   handleOnChancge({ target }) {
     const { name } = target;
@@ -26,18 +26,9 @@ class Formulario extends React.Component {
     });
   }
 
-  // async requisicaoAPI() {
-  //   const endpoint = await fetch('https://economia.awesomeapi.com.br/json/all');
-  //   const response = await endpoint.json();
-  //   const data = response;
-  //   this.setState({
-  //     dataAPI: data,
-  //   });
-  // }
-
   render() {
-    const { valor, descricao, dataAPI } = this.state;
-    const API = dataAPI.length === 0 ? ['Carregando...'] : dataAPI;
+    const { Valor, Descricao, Moeda } = this.state;
+    // const API = dataAPI.length === 0 ? ['Carregando...'] : dataAPI;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const categoria = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
@@ -45,18 +36,18 @@ class Formulario extends React.Component {
         <Inputs
           type="number"
           name="Valor"
-          value={ valor }
+          value={ Valor }
           onChange={ this.handleOnChancge }
         />
         <Inputs
           type="text"
           name="Descrição"
-          value={ descricao }
+          value={ Descricao }
           onChange={ this.handleOnChancge }
         />
         {/* Moeda que sera registrado a despesa - requisisao pela API */}
         <Select
-          escolha={ API }
+          escolha={ Moeda }
           name="Moeda"
         />
         {/* Metodo de pagamento */}

@@ -11,12 +11,12 @@ function wallet(state = ESTADO_INICIAL, action) {
   case ADD_MOEDAS:
     return {
       ...state,
-      currencies: action.algo,
+      currencies: action.payload,
     };
   case ADD_DESPESA:
     return {
       ...state,
-      expenses: action.algo,
+      expenses: action.payload,
     };
   default:
     return state;

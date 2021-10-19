@@ -8,21 +8,12 @@ export const addEmail = (email) => ({
   email,
 });
 
-export const addDespesa = (despesa) => ({
+export const addDespesa = (payload) => ({
   type: ADD_DESPESA,
-  despesa,
+  payload,
 });
 
-export const addMoeda = (moeda) => ({
+export const addMoeda = (payload) => ({
   type: ADD_MOEDAS,
-  moeda,
+  payload,
 });
-
-export const requisicaoAPI = async () => {
-  const endpoint = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const response = await endpoint.json();
-  const data = response;
-  this.setState({
-    dataAPI: data,
-  });
-};
