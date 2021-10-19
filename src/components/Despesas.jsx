@@ -6,15 +6,36 @@ class Despesas extends Component {
     const { despesas } = this.props;
     return (
       <div>
-        {despesas.map((despesa, index) => (
-          <div key={ index } id={ index }>
-            <p>{despesa.description}</p>
-            <p>{despesa.value}</p>
-            <p>{despesa.currency}</p>
-            <p>{despesa.method}</p>
-            <p>{despesa.tag}</p>
-          </div>
-        ))}
+        <table>
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tag</th>
+              <th>Método de pagamento</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+              <th>Câmbio utilizado</th>
+              <th>Valor convertido</th>
+              <th>Moeda de conversão</th>
+              <th>Editar/Excluir</th>
+            </tr>
+          </thead>
+          <tbody>
+            {despesas.map((despesa, index) => (
+              <tr key={ index } id={ index }>
+                <td>{despesa.description}</td>
+                <td>{despesa.tag}</td>
+                <td>{despesa.method}</td>
+                <td>{despesa.value}</td>
+                <td>{despesa.currency}</td>
+                <td>{despesa.currency}</td>
+                <td>{despesa.currency}</td>
+                <td>{despesa.currency}</td>
+                <td>{despesa.currency}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }
