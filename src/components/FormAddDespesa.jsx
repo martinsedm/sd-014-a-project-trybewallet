@@ -1,4 +1,5 @@
 import React from 'react';
+import SelecMoeda from './SelecMoeda';
 
 class FormAddDespesa extends React.Component {
   constructor() {
@@ -6,11 +7,20 @@ class FormAddDespesa extends React.Component {
     this.state = {
       valor: 0,
       descricao: '',
-      moeda: '',
+      moeda: 'USD',
       pagamento: 'Dinheiro',
       tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.filtrarMoedas = this.filtrarMoedas.bind(this);
+  }
+
+  filtrarMoedas() {
+    const { moedas } = this.props;
+    const keysMoedas = Object.keys(moedas);
+    const moedasValidas = keysMoedas
+      .filter((moeda) => moeda !== 'USDT');
+    return moedasValidas;
   }
 
   handleChange({ target }) {
@@ -20,7 +30,7 @@ class FormAddDespesa extends React.Component {
 
   render() {
     const { valor, descricao, moeda, pagamento, tag } = this.state;
-    const { handleChange } = this;
+    const { handleChange, filtrarMoedas } = this;
     return (
       <form>
         <label htmlFor="valor">
@@ -39,12 +49,11 @@ class FormAddDespesa extends React.Component {
             onChange={ handleChange }
           />
         </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select name="moeda" value={ moeda } onChange={ handleChange }>
-            <option value="Moeda">Moeda</option>
-          </select>
-        </label>
+        <SelecMoeda
+          moeda={ moeda }
+          handleChange={ handleChange }
+          filtrarMoedas={ filtrarMoedas }
+        />
         <label htmlFor="pagamento">
           Método de pagamento
           <select name="pagamento" value={ pagamento } onChange={ handleChange }>
