@@ -19,7 +19,7 @@ export const getError = (payload) => (
   {
     type: GET_ERROR, payload,
   });
-// thunk é uma função que retorna a chamada de outra função
+// thunk
 export const getValueThunk = () => async (dispacth) => {
   try {
     const fetchApi = await fetch('https://economia.awesomeapi.com.br/json/all');
