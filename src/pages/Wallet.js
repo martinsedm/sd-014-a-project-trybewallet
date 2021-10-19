@@ -1,31 +1,34 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import Header from '../components/Header';
+import FormsInput from '../components/FormsInput';
+import FormsSelect from '../components/FormsSelect';
 
-class Header extends Component {
+class Wallet extends React.Component {
+  constructor() {
+    super();
+
+    this.handleChanges = this.handleChanges.bind(this);
+  }
+
+  handleChanges({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
   render() {
-    const { getEmail } = this.props;
     return (
-      <header>
-        <span data-testid="email-field">
-          Olá,
-          { getEmail }
-        </span>
-        <span data-testid="total-field">
-          Despesa Total: R$ 0
-        </span>
-        <span data-testid="header-currency-field">BRL</span>
-      </header>
+      <>
+        <Header />
+        <FormsInput />
+        <FormsSelect />
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  getEmail: state.user.email,
+  emailGot: state.user.email,
 });
 
-Header.propTypes = {
-  getEmail: PropTypes.string.isRequired,
-};
-
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(Wallet);
