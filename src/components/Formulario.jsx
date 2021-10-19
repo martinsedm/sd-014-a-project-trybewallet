@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 class Formulario extends Component {
   render() {
-    const { valor, despesa, handleChange } = this.props;
+    const { value, description, handleChange } = this.props;
     return (
       <div>
         <label htmlFor="valor">
@@ -11,8 +11,8 @@ class Formulario extends Component {
           <input
             type="number"
             id="valor"
-            name="valor"
-            value={ valor }
+            name="value"
+            value={ value }
             onChange={ handleChange }
           />
         </label>
@@ -21,8 +21,8 @@ class Formulario extends Component {
           <input
             type="text"
             id="despesa"
-            name="despesa"
-            value={ despesa }
+            name="description"
+            value={ description }
             onChange={ handleChange }
           />
         </label>
@@ -32,8 +32,8 @@ class Formulario extends Component {
 }
 
 Formulario.propTypes = {
-  despesa: PropTypes.string.isRequired,
-  valor: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

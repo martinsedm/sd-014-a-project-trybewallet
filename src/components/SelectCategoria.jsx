@@ -3,22 +3,22 @@ import React, { Component } from 'react';
 
 class SelectCategoria extends Component {
   render() {
-    const { value, handleChange } = this.props;
+    const { tag, handleChange } = this.props;
     return (
       <div>
         <label htmlFor="categoria">
           Tag
           <select
             id="categoria"
-            name="categoria"
-            value={ value }
+            name="tag"
+            value={ tag }
             onChange={ handleChange }
           >
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saúde">Saúde</option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
       </div>
@@ -28,7 +28,7 @@ class SelectCategoria extends Component {
 
 SelectCategoria.propTypes = {
   handleChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
 };
 
 export default SelectCategoria;

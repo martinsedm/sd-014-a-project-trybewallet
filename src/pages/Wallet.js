@@ -6,20 +6,22 @@ import SelectPagamento from '../components/SelectPagamento';
 import SelectCategoria from '../components/SelectCategoria';
 import Formulario from '../components/Formulario';
 import Header from '../components/Header';
-import { getApiAction } from '../actions';
+import { getApiAction, getExpenseApiAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      valor: 0,
-      despesa: '',
-      categoria: '',
-      pagamento: '',
-      moeda: '',
+      value: 0,
+      description: '',
+      method: '',
+      currency: '',
+      tag: '',
+      id: -1,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -35,35 +37,51 @@ class Wallet extends React.Component {
     });
   }
 
+  handleClick() {
+    const { getAllApi } = this.props;
+    const { value, description, method, currency, tag, id } = this.state;
+    const newId = id + 1;
+    this.setState({
+      id: newId,
+    });
+
+    getAllApi({ value, description, method, currency, tag, id: newId });
+  }
+
   render() {
-    const { valor, despesa, categoria, pagamento, moeda } = this.state;
+    const { value, description, method, currency, tag } = this.state;
     const { currencies } = this.props;
     return (
       <div>
         <Header />
-
         <form name="valor">
           <Formulario
-            valor={ valor }
-            despesa={ despesa }
+            valor={ value }
+            despesa={ description }
             handleChange={ this.handleChange }
           />
           <label htmlFor="moeda">
             Moeda
             <select
               id="moeda"
-              name="moeda"
-              value={ moeda }
+              name="currency"
+              value={ currency }
               onChange={ this.handleChange }
             >
-              {currencies.map((currency, index) => (
-                <option key={ index } value={ currency }>{currency}</option>
+              {currencies.map((curr, index) => (
+                <option key={ index } value={ curr }>{curr}</option>
               ))}
             </select>
           </label>
-          <SelectPagamento value={ pagamento } handleChange={ this.handleChange } />
-          <SelectCategoria value={ categoria } handleChange={ this.handleChange } />
+          <SelectPagamento value={ method } handleChange={ this.handleChange } />
+          <SelectCategoria value={ tag } handleChange={ this.handleChange } />
         </form>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </div>
     );
   }
@@ -71,12 +89,14 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getAllApi: PropTypes.func.isRequired,
   getApi: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
 
   getApi: () => dispatch(getApiAction()),
+  getAllApi: (expense) => dispatch(getExpenseApiAction(expense)),
 
 });
 
