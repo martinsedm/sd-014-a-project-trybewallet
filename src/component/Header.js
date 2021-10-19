@@ -30,8 +30,11 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  total: state.wallet.expenses.reduce((total, { value, currency, exchangeRates }) => total
-    + value * exchangeRates[currency].ask, 0),
+  total: state.wallet.expenses.reduce(
+    (gastototal, { value, currency, exchangeRates }) => gastototal
+    + value * exchangeRates[currency].ask, 0,
+  ),
+  qualquer: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);
