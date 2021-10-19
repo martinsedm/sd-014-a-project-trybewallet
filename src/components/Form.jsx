@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { fetchAPI } from '../actions';
 
 class Form extends Component {
+  componentDidMount() {
+    const { apiCall } = this.props;
+    apiCall();
+  }
+
+  renderOptions() {
+    const { currencies } = this.props;
+    return currencies.filter((currency) => currency !== 'USDT')
+      .map((currency, index) => (
+        <option key={ index } value={ currency }>{ currency }</option>
+      ));
+  }
+
   render() {
     return (
       <form>
@@ -20,7 +37,7 @@ class Form extends Component {
           Moeda:
           {' '}
           <select id="moeda" name="moeda">
-            <option value="BRL">BRL</option>
+            { this.renderOptions() }
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -50,4 +67,17 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  apiCall: () => dispatch(fetchAPI()),
+});
+
+Form.propTypes = {
+  apiCall: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
