@@ -26,15 +26,15 @@ export default class ExpenseForm extends Component {
           Método de pagamento
           <select id="payment-method">
             <option value="dinheiro">Dinheiro</option>
-            <option value="cartao">Cartão de Cŕedito</option>
-            <option value="debito">Débito</option>
+            <option value="cartao">Cartão de crédito</option>
+            <option value="debito">Cartão de débito</option>
           </select>
         </label>
         <br />
         <label htmlFor="tag">
           Tag
           <select id="tag">
-            <option value="dinheiro">Alimentação</option>
+            <option value="alimentacao">Alimentação</option>
             <option value="lazer">Lazer</option>
             <option value="trabalho">Trabalho</option>
             <option value="transporte">Transporte</option>
