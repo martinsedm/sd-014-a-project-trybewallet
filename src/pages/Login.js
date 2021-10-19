@@ -25,6 +25,7 @@ class Login extends React.Component {
           />
           <button
             type="submit"
+            disabled
           >
             Entrar
           </button>
