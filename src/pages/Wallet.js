@@ -6,19 +6,13 @@ import FormInputs from '../components/FormInputs';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
-  // componentDidMount() {
-  //   const { currencyApi } = this.props;
-  //   currencyApi();
-  // }
-
   render() {
-    // const { expenses } = this.props;
     return (
-      <>
+      <div>
         <h1>TrybeWallet</h1>
         <Header />
         <FormInputs />
-      </>
+      </div>
     );
   }
 }
