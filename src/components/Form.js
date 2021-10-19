@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
 import { tagOptions, paymentOptions } from '../data';
+import { getCurrencies as getCurrenciesAction } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -18,12 +21,19 @@ class Form extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+
+    getCurrencies();
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
   render() {
     const { value, description, currency, payment, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <Input
@@ -46,7 +56,7 @@ class Form extends React.Component {
         </Input>
         <Select
           name="currency"
-          options={ [] }
+          options={ currencies }
           onChange={ this.handleChange }
           value={ currency }
         >
@@ -73,4 +83,17 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesAction()),
+});
+
+Form.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
