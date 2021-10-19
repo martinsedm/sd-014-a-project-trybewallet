@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removeConta } from '../actions';
 
 class Table extends React.Component {
+  removerLinha() {
+    // const { deletador } = this.props;
+    // deletador(linha);
+  }
+
   render() {
     const { carteira } = this.props;
     return (
@@ -31,6 +37,11 @@ class Table extends React.Component {
               { parseFloat(cur.exchangeRates[cur.currency].ask * cur.value).toFixed(2)}
             </td>
             <td>Real</td>
+            <td>
+              <button type="button" onClick={ this.removerLinha(cur) }>
+                Deletar
+              </button>
+            </td>
           </tr>
         ))}
       </table>
@@ -40,7 +51,10 @@ class Table extends React.Component {
 const mapStateToProps = (state) => ({
   carteira: state.wallet.expenses,
 });
+const mapDispatchToProps = (dispatch) => ({
+  deletador: (conta) => dispatch(removeConta(conta)),
+});
 Table.propTypes = {
   carteira: PropTypes.arrayOf.isRequired,
 };
-export default connect(mapStateToProps)(Table);
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

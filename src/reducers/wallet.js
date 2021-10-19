@@ -16,6 +16,11 @@ const wallet = (
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+  // case REMOVER_CONTA:
+  //   return {
+  //     ...state,
+  //     expenses: [...state.expenses].filter((cur) => cur !== action.payload),
+  //   };
   default:
     return state;
   }
