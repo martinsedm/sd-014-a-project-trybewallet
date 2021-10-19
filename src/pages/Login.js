@@ -40,7 +40,7 @@ class Login extends React.Component {
   }
 
   render() {
-    const { dispatchEmail, dispatchPassword } = this.props;
+    const { email, password, dispatchEmail, dispatchPassword } = this.props;
     const { emailIsValid, passwordIsValid } = this.state;
     return (
       <>
@@ -52,6 +52,7 @@ class Login extends React.Component {
             this.validateEmailAndPassword(target);
           } }
           name="email-input"
+          value={ email }
         />
         <input
           type="text"
@@ -61,6 +62,7 @@ class Login extends React.Component {
             this.validateEmailAndPassword(target);
           } }
           name="password-input"
+          value={ password }
         />
         <Link to="/carteira">
           <button
