@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 class Select extends Component {
   render() {
-    const { nome, options, id, onChange, value } = this.props;
+    const { label, options, id, onChange, value } = this.props;
     return (
       <label htmlFor={ id }>
-        { nome }
+        { label }
         { ' ' }
         <select
           id={ id }
@@ -27,7 +27,7 @@ class Select extends Component {
 }
 
 Select.propTypes = {
-  nome: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.any).isRequired,
   id: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
