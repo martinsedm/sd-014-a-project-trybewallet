@@ -32,12 +32,6 @@ class Wallet extends React.Component {
     setApi();
   }
 
-  setItemId() {
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-    }));
-  }
-
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
@@ -105,7 +99,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   setApi: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   addExpense: PropTypes.func.isRequired,
 };
 
