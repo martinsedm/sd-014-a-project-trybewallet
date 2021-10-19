@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
+import SelectCoin from './Expenditure_components/SelectCoin';
 
 class FormExpenditure extends Component {
   constructor() {
     super();
     this.state = {
       value: '',
-      coin: '',
-      desc: '',
-      payment: '',
+      description: '',
+      currency: '',
+      method: '',
       tag: '',
     };
     this.handle = this.handle.bind(this);
@@ -19,7 +20,7 @@ class FormExpenditure extends Component {
   }
 
   render() {
-    const { value, coin, desc, payment, tag } = this.state;
+    const { value, currency, description: desc, method, tag } = this.state;
     return (
       <section>
         <form>
@@ -30,19 +31,14 @@ class FormExpenditure extends Component {
 
           <label htmlFor="desc">
             Descrição
-            <input id="desc" name="desc" onChange={ this.handle } value={ desc } />
+            <input id="desc" name="description" onChange={ this.handle } value={ desc } />
           </label>
 
-          <label htmlFor="coin">
-            Moeda
-            <select id="coin" name="coin" onChange={ this.handle } value={ coin }>
-              <option value="moeda">moeda</option>
-            </select>
-          </label>
+          <SelectCoin handle={ this.handle } value={ currency } />
 
-          <label htmlFor="pay">
+          <label htmlFor="method">
             Método de pagamento
-            <select id="pay" name="payment" onChange={ this.handle } value={ payment }>
+            <select id="method" name="method" onChange={ this.handle } value={ method }>
               <option value="money">Dinheiro</option>
               <option value="creditCard">Cartão de crédito</option>
               <option value="debitCard">Cartão de débito</option>
