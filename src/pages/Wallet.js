@@ -5,9 +5,30 @@ import { fetchCurrencyApi } from '../actions';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      exchangeRates,
+    };
+
+    this.setItemId = this.setState.bind(this);
+  }
+
   componentDidMount() {
     const { setApi } = this.props;
     setApi();
+  }
+
+  setItemId() {
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
   }
 
   render() {
@@ -50,6 +71,7 @@ class Wallet extends React.Component {
               <option value="saúde">Saúde</option>
             </select>
           </label>
+          <button type="button" conClick="">Adicionar Despesa</button>
         </form>
       </>
     );

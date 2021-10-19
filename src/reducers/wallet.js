@@ -3,6 +3,7 @@ import { ADD_EXPENCIES, SET_CURRENCY } from '../actions';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  id: 0,
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
