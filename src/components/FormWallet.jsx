@@ -36,12 +36,12 @@ class FormWallet extends React.Component {
     ));
   }
 
-  renderCurrencies() {
-    const { currencies } = this.props;
-    return currencies.map((currency, index) => (
-      <option value={ currency } key={ index }>{currency}</option>
-    ));
-  }
+  // renderCurrencies() {
+  //   const { currencies } = this.props;
+  //   return currencies.map((currency, index) => (
+  //     <option value={ currency } key={ index }>{currency}</option>
+  //   ));
+  // }
 
   render() {
     // const { value, description, currency, paymentMethod, tagType } = this.state;
