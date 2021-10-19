@@ -7,12 +7,12 @@ class AddDespP1 extends React.Component {
       value: '',
       description: '',
     };
-    this.handleC = this.handleC.bind(this);
+    this.handleCh = this.handleCh.bind(this);
   }
 
   //   const responseJsonl26 = [Object.values(responseJson)];
 
-  handleC({ target: { name, value } }) {
+  handleCh({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
@@ -21,24 +21,24 @@ class AddDespP1 extends React.Component {
     console.log(this.state);
     return (
       <div>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor:
           <input
             type="text"
-            name="valor"
-            id="valor"
+            name="value"
+            id="value"
             value={ value }
-            onChange={ this.handleC }
+            onChange={ this.handleCh }
           />
         </label>
-        <label htmlFor="descrição">
+        <label htmlFor="description">
           Descrição:
           <input
             type="text"
-            name="descricao"
-            id="descrição"
+            name="description"
+            id="description"
             value={ description }
-            onChange={ this.handleC }
+            onChange={ this.handleCh }
           />
         </label>
       </div>

@@ -35,28 +35,29 @@ class AddDesp extends React.Component {
     const arrayOptTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const arrayOptPag = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     console.log(loading, currency, method, tag);
+    console.log(this.state);
     return (
       <div>
         {loading ? (
           <form>
             <AddDespP1 />
-            <label htmlFor="moeda">
+            <label htmlFor="currency">
               Moeda:
-              <select name={ currency }>
+              <select name="currency" id="currency">
                 {currencies.map((item, index) => (
                   <option key={ index } value={ item }>{item}</option>
                 ))}
               </select>
             </label>
-            <label htmlFor="mpagamento">
+            <label htmlFor="method">
               Método de pagamento:
-              <select type="text" id="mpagamento" name="method">
+              <select id="method" name="method">
                 {arrayOptPag.map((i) => (<option key={ i } value={ i }>{i}</option>))}
               </select>
             </label>
             <label htmlFor="tag">
               Tag:
-              <select type="text" name="tag" id="tag">
+              <select name="tag" id="tag">
                 {arrayOptTag.map((i) => (<option key={ i } value={ i }>{i}</option>))}
               </select>
             </label>
