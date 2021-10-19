@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { gravaConta } from '../actions';
 import Inputs from '../Components/Inputs';
+import Table from '../Components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -97,6 +98,7 @@ class Wallet extends React.Component {
           </label>
           <button type="submit" onClick={ this.gravar }>Adicionar despesas</button>
         </form>
+        <Table />
       </>);
   }
 }
