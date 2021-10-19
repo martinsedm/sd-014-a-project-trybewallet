@@ -6,19 +6,13 @@ import { removeExpense as removeExpenseAction } from '../actions';
 class ExpensesTable extends Component {
   render() {
     const { expenses, removeExpense } = this.props;
+    const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
+      'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
       <table>
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
+            { titles.map((title, index) => <th key={ index }>{ title }</th>)}
           </tr>
         </thead>
         <tbody>

@@ -7,7 +7,7 @@ export default class Input extends Component {
     return (
       <label htmlFor={ htmlFor }>
         { label }
-        :
+        {' '}
         <input
           type={ type }
           name={ name }

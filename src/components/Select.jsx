@@ -7,7 +7,7 @@ export default class Select extends Component {
     return (
       <label htmlFor={ htmlFor }>
         { label }
-        :
+        {' '}
         <select
           name={ name }
           onChange={ onChange }
