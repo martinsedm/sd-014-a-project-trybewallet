@@ -1,4 +1,4 @@
-import { LOGIN_INFO } from '../actions';
+import types from '../types';
 
 const INITIAL_STATE = {
   email: '',
@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case LOGIN_INFO:
+  case types.LOGIN_INFO:
     return {
       ...state,
       email: action.payload.email,
