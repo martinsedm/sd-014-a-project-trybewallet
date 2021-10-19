@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import FormSelect from '../components/FormSelect';
-import { paymentOptions, tagOptions } from '../data';
 import {
   setExpensesAction,
   removeExpenseAction,
   updateTotalValueAction,
 } from '../actions';
 import WalletHeader from '../components/WalletHeader';
+import WalletForm from '../components/WalletForm';
+import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -24,11 +24,9 @@ class Wallet extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.renderForm = this.renderForm.bind(this);
     this.fetchCurrencyAPI = this.fetchCurrencyAPI.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.manageCurrencyOptions = this.manageCurrencyOptions.bind(this);
-    this.fillTable = this.fillTable.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
   }
 
@@ -52,6 +50,7 @@ class Wallet extends React.Component {
     };
 
     const { expenses } = this.props;
+
     expenses.push(expense);
     updateTotalValue();
     setExpenses(expenses);
@@ -85,31 +84,31 @@ class Wallet extends React.Component {
     removeExpense(Number(id));
   }
 
-  fillTable() {
-    const { expenses } = this.props;
-    return expenses.map((exp) => (
-      <tr key={ exp.id }>
-        <td>{ exp.description }</td>
-        <td>{ exp.tag }</td>
-        <td>{ exp.method }</td>
-        <td>{ exp.value }</td>
-        <td>{ exp.exchangeRates[exp.currency].name }</td>
-        <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
-        <td>{ (exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
-        <td>Real</td>
-        <td>
-          <button
-            type="button"
-            data-testid="delete-btn"
-            onClick={ this.deleteRow }
-            id={ exp.id }
-          >
-            X
-          </button>
-        </td>
-      </tr>
-    ));
-  }
+  // fillTable() {
+  //   const { expenses } = this.props;
+  //   return expenses.map((exp) => (
+  //     <tr key={ exp.id }>
+  //       <td>{ exp.description }</td>
+  //       <td>{ exp.tag }</td>
+  //       <td>{ exp.method }</td>
+  //       <td>{ exp.value }</td>
+  //       <td>{ exp.exchangeRates[exp.currency].name }</td>
+  //       <td>{ parseFloat(exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
+  //       <td>{ (exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
+  //       <td>Real</td>
+  //       <td>
+  //         <button
+  //           type="button"
+  //           data-testid="delete-btn"
+  //           onClick={ this.deleteRow }
+  //           id={ exp.id }
+  //         >
+  //           X
+  //         </button>
+  //       </td>
+  //     </tr>
+  //   ));
+  // }
 
   handleChange({ target }) {
     const { name, value } = target;
@@ -118,93 +117,56 @@ class Wallet extends React.Component {
     });
   }
 
-  renderForm() {
-    const { value, description, currency, method, tag, currencies } = this.state;
-    return (
-      <form>
-        <label htmlFor="value">
-          Valor
-          <input
-            type="number"
-            name="value"
-            onChange={ this.handleChange }
-            value={ value }
-            id="value"
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição
-          <input
-            type="text"
-            name="description"
-            onChange={ this.handleChange }
-            value={ description }
-            id="description"
-          />
-        </label>
-        <FormSelect
-          id="currency"
-          infoArray={ currencies }
-          onChange={ this.handleChange }
-          label="Moeda"
-          value={ currency }
-        />
-        <FormSelect
-          id="method"
-          infoArray={ paymentOptions }
-          onChange={ this.handleChange }
-          label="Método de pagamento"
-          value={ method }
-        />
-        <FormSelect
-          id="tag"
-          infoArray={ tagOptions }
-          onChange={ this.handleChange }
-          label="Tag"
-          value={ tag }
-        />
-      </form>
-    );
-  }
-
-  renderTable() {
-    const { expenses } = this.props;
-    return (
-      <section>
-        <table>
-          <thead>
-            <tr>
-              <th>Descrição</th>
-              <th>Tag</th>
-              <th>Método de pagamento</th>
-              <th>Valor</th>
-              <th>Moeda</th>
-              <th>Câmbio utilizado</th>
-              <th>Valor convertido</th>
-              <th>Moeda de conversão</th>
-              <th>Editar/Excluir</th>
-            </tr>
-          </thead>
-          <tbody>
-            { expenses.length > 0 && this.fillTable() }
-          </tbody>
-        </table>
-      </section>
-    );
-  }
+  // renderTable() {
+  //   const { expenses } = this.props;
+  //   return (
+  //     <section>
+  //       <table>
+  //         <thead>
+  //           <tr>
+  //             <th>Descrição</th>
+  //             <th>Tag</th>
+  //             <th>Método de pagamento</th>
+  //             <th>Valor</th>
+  //             <th>Moeda</th>
+  //             <th>Câmbio utilizado</th>
+  //             <th>Valor convertido</th>
+  //             <th>Moeda de conversão</th>
+  //             <th>Editar/Excluir</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+  //           { expenses.length > 0 && this.fillTable() }
+  //         </tbody>
+  //       </table>
+  //     </section>
+  //   );
+  // }
 
   render() {
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      currencies,
+    } = this.state;
+    const { expenses } = this.props;
     return (
       <div>
         <WalletHeader />
-        { this.renderForm() }
-        <button
-          type="button"
-          onClick={ this.onSubmit }
-        >
-          Adicionar despesa
-        </button>
-        { this.renderTable() }
+        <WalletForm
+          value={ Number(value) }
+          description={ description }
+          currency={ currency }
+          method={ method }
+          tag={ tag }
+          currencies={ currencies }
+          handleChange={ this.handleChange }
+          onSubmit={ this.onSubmit }
+        />
+        <WalletTable expenses={ expenses } deleteRow={ this.deleteRow } />
       </div>
     );
   }
