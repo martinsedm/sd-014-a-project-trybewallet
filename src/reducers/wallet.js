@@ -1,4 +1,4 @@
-import { SAVE_API, SAVE_API_EXPENSE } from '../actions';
+import { DELETE_EXPENSE, SAVE_API, SAVE_API_EXPENSE } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 const INITIAL_STATE = {
@@ -24,6 +24,11 @@ function wallet(state = INITIAL_STATE, action) {
         tag: action.state.tag,
         exchangeRates: action.exchangeRates,
       }],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.idExpense),
     };
   default:
     return {

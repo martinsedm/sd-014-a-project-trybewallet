@@ -2,6 +2,7 @@
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const SAVE_API = 'SAVE_API';
 export const SAVE_API_EXPENSE = 'SAVE_API_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 const saveUser = (email) => ({
   type: SAVE_EMAIL,
@@ -32,3 +33,8 @@ export const fetchAPIExpenses = (state) => async (dispatch) => {
   const response = await request.json();
   dispatch(apiStoreExpense(state, response));
 };
+
+export const deleteExpense = (idExpense) => ({
+  type: DELETE_EXPENSE,
+  idExpense,
+});
