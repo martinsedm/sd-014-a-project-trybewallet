@@ -6,11 +6,11 @@ const INITIAL_STATE = {
   },
 };
 
-const walletReducer = (state = INITIAL_STATE, { type /*  payload */ }) => {
+const wallet = (state = INITIAL_STATE, { type /*  payload */ }) => {
   switch (type) {
   default:
     return state;
   }
 };
 
-export default walletReducer;
+export default wallet;
