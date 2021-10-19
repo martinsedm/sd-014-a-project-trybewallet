@@ -1,4 +1,5 @@
-import { SET_CURRENCIES, SET_EXPENSES } from '../actions';
+// import { TAKE_CURRENCIES, GET_CURRENCIES, SET_EXPENSES } from '../actions';
+import { GET_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -7,16 +8,21 @@ const INITIAL_STATE = {
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SET_CURRENCIES:
+  // case TAKE_CURRENCIES:
+  //   return {
+  //     ...state,
+  //     currencies: action.payload,
+  //   };
+  case GET_CURRENCIES:
     return {
       ...state,
-      currencies: action.payload,
+      currencies: action.currencies,
     };
-  case SET_EXPENSES:
-    return {
-      ...state,
-      expenses: action.payload,
-    };
+  // case SET_EXPENSES:
+  //   return {
+  //     ...state,
+  //     currencies: action.payload,
+  //   };
   default:
     return state;
   }
