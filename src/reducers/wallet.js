@@ -17,7 +17,7 @@ function wallet(state = ESTADO_INICIAL, action) {
   case ADD_DESPESA:
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [action.payload],
     };
   case ADD_MODEDA_ERROR:
     return {

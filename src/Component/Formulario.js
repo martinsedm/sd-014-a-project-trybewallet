@@ -1,20 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAPIThunk } from '../actions';
+import { getAPIThunk, addDespesa } from '../actions';
 
 import Inputs from './Inputs';
 import Select from './Select';
+import Buttons from './Buttons';
 
 class Formulario extends React.Component {
   constructor() {
     super();
     this.state = {
-      Valor: '',
-      Descricao: '',
-      Moeda: '',
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -30,42 +34,58 @@ class Formulario extends React.Component {
     });
   }
 
+  handleClick(event) {
+    event.preventDefault();
+    const { despesa, despesaRegistrada.length } = this.props;
+    const id = despesaRegistrada;
+    console.log(despesaRegistrada);
+    console.log('njfdhsiuofhdsuio');
+  }
+
   render() {
     const { moedas } = this.props;
     const arrayMoedas = Object.keys(moedas);
-
-    const { Valor, Descricao } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const pagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const categoria = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
         <Inputs
           type="number"
-          name="Valor"
-          value={ Valor }
+          name="value"
+          mgs="Valor"
+          value={ value }
           onChange={ this.handleOnChancge }
         />
         <Inputs
           type="text"
-          name="Descrição"
-          value={ Descricao }
+          name="description"
+          mgs="Descrição"
+          value={ description }
           onChange={ this.handleOnChancge }
         />
-        {/* Moeda que sera registrado a despesa - requisisao pela API */}
         <Select
           escolha={ arrayMoedas }
-          name="Moeda"
+          name="currency"
+          msg="Moeda"
+          value={ currency }
+          onChange={ this.handleOnChancge }
         />
-        {/* Metodo de pagamento */}
         <Select
           escolha={ pagamento }
-          name="Método de pagamento"
+          name="method"
+          msg="Método de pagamento"
+          value={ method }
+          onChange={ this.handleOnChancge }
         />
-        {/* categoria */}
         <Select
           escolha={ categoria }
-          name="Tag"
+          name="tag"
+          msg="Tag"
+          value={ tag }
+          onChange={ this.handleOnChancge }
         />
+        <button type="submit" onClick={ this.handleClick }>enviar</button>
       </form>
     );
   }
@@ -73,15 +93,18 @@ class Formulario extends React.Component {
 
 const mapStateToProps = (state) => ({
   moedas: state.wallet.currencies,
+  despesaRegistrada: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   moedasAPI: () => dispatch(getAPIThunk()),
+  despesa: (value) => dispatch(addDespesa(value)),
 });
 
 Formulario.propTypes = {
   moedasAPI: PropTypes.func.isRequired,
   moedas: PropTypes.objectOf(PropTypes.string).isRequired,
+  despesa: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Formulario);
