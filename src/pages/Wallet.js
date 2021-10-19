@@ -16,7 +16,7 @@ class Wallet extends React.Component {
     this.state = {
       moedas: [],
       expenses: [],
-      value: '0',
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -53,7 +53,7 @@ class Wallet extends React.Component {
     }));
     this.setState({
       description: '',
-      value: '0',
+      value: '',
     }, callback);
   }
 
@@ -76,7 +76,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { moedas, expenses, value, description, currency, method, tag } = this.state;
+    const { moedas, value, description, currency, method, tag } = this.state;
     return (
       <div>
         <Header />
@@ -102,7 +102,7 @@ class Wallet extends React.Component {
             Adicionar despesas
           </button>
         </form>
-        <Despesas despesas={ expenses } />
+        <Despesas />
       </div>
     );
   }

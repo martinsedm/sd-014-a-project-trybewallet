@@ -1,7 +1,36 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Despesas extends Component {
+  constructor() {
+    super();
+    this.moeda = this.moeda.bind(this);
+    this.cambio = this.cambio.bind(this);
+    this.valorConvertido = this.valorConvertido.bind(this);
+  }
+
+  moeda(despesa) {
+    const moedaName = despesa.exchangeRates[despesa.currency].name;
+    return moedaName;
+    // const REAL_LENGTH = -16;
+    // const slicado = moedaName.slice(0, REAL_LENGTH);
+    // console.log(moedaName);
+    // if (slicado === 'Dólar Americano') {
+    //   return 'Dólar Comercial';
+    // }
+    // return slicado;
+  }
+
+  valorConvertido(despesa) {
+    const cambio = despesa.exchangeRates[despesa.currency].ask;
+    return (despesa.value * cambio).toFixed(2);
+  }
+
+  cambio(despesa) {
+    return (Number(despesa.exchangeRates[despesa.currency].ask)).toFixed(2);
+  }
+
   render() {
     const { despesas } = this.props;
     return (
@@ -27,10 +56,10 @@ class Despesas extends Component {
                 <td>{despesa.tag}</td>
                 <td>{despesa.method}</td>
                 <td>{despesa.value}</td>
-                <td>{despesa.currency}</td>
-                <td>{despesa.currency}</td>
-                <td>{despesa.currency}</td>
-                <td>{despesa.currency}</td>
+                <td>{this.moeda(despesa)}</td>
+                <td>{`${this.cambio(despesa)}`}</td>
+                <td>{`${this.valorConvertido(despesa)}`}</td>
+                <td>Real</td>
                 <td>{despesa.currency}</td>
               </tr>
             ))}
@@ -47,4 +76,8 @@ Despesas.propTypes = {
   }),
 }.isRequired;
 
-export default Despesas;
+const mapStateToProps = (state) => ({
+  despesas: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps, null)(Despesas);
