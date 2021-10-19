@@ -1,8 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCurrencyApi } from '../actions';
 import Header from '../components/Header';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { setApi } = this.props;
+    setApi();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <>
         <Header />
@@ -18,7 +27,9 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda
             <select name="moeda" onChange="" id="moeda">
-              <option value="">Selecione uma moeda</option>
+              { currencies.map((currency, index) => (
+                <option key={ index } value={ currency }>{ currency }</option>
+              ))}
             </select>
           </label>
           <label htmlFor="pagamento">
@@ -45,4 +56,17 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  setApi: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setApi: () => dispatch(fetchCurrencyApi()),
+});
+
+const mapStateToProps = ({ wallet }) => ({
+  currencies: wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
