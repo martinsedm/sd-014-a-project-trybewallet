@@ -5,6 +5,7 @@ export const GET_CUR = 'GET_CUR';
 export const FAILED_REQ = 'FAILED_REQ';
 export const EXCHANGE_RATES = 'EXCHANGE_RATES';
 export const REQUEST_COTA = 'REQUEST_COTA';
+export const DELETE_BTN = 'DELETE_BTN';
 
 const addEmail = (email) => ({ type: ADD_EMAIL, email });
 export default addEmail;
@@ -39,3 +40,5 @@ export function fetchCota(
       id, value, description, currency, method, tag, exchangeRates: data }));
   };
 }
+
+export const deleteBtn = (id) => ({ type: DELETE_BTN, id });

@@ -1,5 +1,6 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_CUR, GET_CUR, EXCHANGE_RATES, REQUEST_COTA } from '../actions';
+import {
+  REQUEST_CUR, GET_CUR, EXCHANGE_RATES, REQUEST_COTA, DELETE_BTN } from '../actions';
 
 const INICIAL_STATE = {
   currencies: [],
@@ -23,6 +24,11 @@ const wallet = (state = INICIAL_STATE, action) => {
       isFetchingCota: false };
   default:
     return state;
+  case DELETE_BTN:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.id)],
+    };
   }
 };
 

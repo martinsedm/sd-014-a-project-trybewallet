@@ -39,8 +39,12 @@ class Select extends Component {
 
 Select.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  isFetching: PropTypes.bool.isRequired,
+  isFetching: PropTypes.bool,
   handleChange: PropTypes.func.isRequired,
+};
+
+Select.defaultProps = {
+  isFetching: false,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteBtn } from '../actions';
 
 class Table extends Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, delBtn } = this.props;
     return (
       <table>
         <thead>
@@ -21,7 +22,7 @@ class Table extends Component {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense) => (
+          {expenses.length > 0 && expenses.map((expense) => (
             <tr key={ expense.id }>
               <td>{expense.description}</td>
               <td>{expense.tag}</td>
@@ -37,7 +38,14 @@ class Table extends Component {
               <td>Real</td>
               <td>
                 <button type="button">Editar</button>
-                <button type="button" data-testid="delete-btn">x</button>
+                <button
+                  type="button"
+                  onClick={ () => delBtn(expense.id) }
+                  data-testid="delete-btn"
+                >
+                  x
+
+                </button>
               </td>
             </tr>))}
         </tbody>
@@ -48,10 +56,15 @@ class Table extends Component {
 
 Table.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  delBtn: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps, null)(Table);
+const mapDispatchToProps = (dispatch) => ({
+  delBtn: (id) => dispatch(deleteBtn(id)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);
