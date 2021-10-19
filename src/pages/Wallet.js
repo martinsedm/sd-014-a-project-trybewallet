@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { addExpense } from '../actions';
+import { addExpense as addExpenseAction, fetchInstantRate } from '../actions';
 import Header from '../components/Header';
+import getCurrencyRate from '../services/currencyAPI';
 
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 const payments = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
@@ -17,7 +18,7 @@ class Wallet extends React.Component {
         value: '',
         description: '',
         currency: 'USD',
-        payment: 'Dinheiro',
+        method: 'Dinheiro',
         tag: 'Alimentação',
         exchangeRates: '',
       },
@@ -31,29 +32,32 @@ class Wallet extends React.Component {
   }
 
   async resultAPI() {
-    const resultAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const resultAPIJson = await resultAPI.json();
-    const desiredCodes = Object.values(resultAPIJson)
-      .filter(({ codein }) => codein === 'BRL');
+    const CURRENCY_CODE_LENGTH = 3;
+    const resultAPI = await getCurrencyRate();
+    const initialsCodes = Object.keys(resultAPI)
+      .filter((code) => code.length === CURRENCY_CODE_LENGTH);
     this.setState({
-      currencies: desiredCodes,
-      expenses: { exchangeRates: desiredCodes } });
+      currencies: initialsCodes,
+    });
   }
 
   handleChange({ target: { name, value } }) {
-    this.setState({ expenses: { [name]: value } });
+    const { expenses } = this.state;
+    this.setState({ expenses: { ...expenses, [name]: value } });
   }
 
-  handleClick() {
-    const { addExpenses } = this.props;
-    const { expenses: { id } } = this.state;
-    this.setState({ expenses: { id: id + 1 } });
-    this.resultAPI();
-    addExpenses(this.state);
+  async handleClick() {
+    const { expenses, expenses: { id, value, description, currency, method, tag } } = this.state;
+    const { getInstantRate, instantRate, addExpense } = this.props;
+    await getInstantRate();
+    // this.setState({
+
+    // });
+    // addExpense({ id, value, description, currency, method, tag });
   }
 
   render() {
-    const { currencies, expenses: { value, description, currency, payment, tag } } = this.state;
+    const { currencies, expenses: { value, description, currency, method, tag } } = this.state;
     const { handleChange, handleClick } = this;
     return (
       <div>
@@ -70,14 +74,14 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency" type="select" name="currency" value={ currency } onChange={ handleChange }>
-              {currencies.map(({ code }) => (
+              {currencies.map((code) => (
                 <option key={ code }>{code}</option>
               ))}
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Método de pagamento:
-            <select id="payment" name="payment" value={ payment } onChange={ handleChange }>
+            <select id="method" name="method" value={ method } onChange={ handleChange }>
               {payments.map((paymentList) => (
                 <option key={ paymentList }>{paymentList}</option>))}
             </select>
@@ -95,15 +99,13 @@ class Wallet extends React.Component {
   }
 }
 
-Wallet.propTypes = {
-  expenses: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleClick: PropTypes.func.isRequired,
-};
-// const mapStateToProps = (state) => ({});
-
 const mapDispatchToProps = (dispatch) => ({
-  addExpenses: (expense) => dispatch(addExpense(expense)),
+  addExpense: (expense) => dispatch(addExpenseAction(expense)),
+  getInstantRate: () => dispatch(fetchInstantRate()),
 });
 
-export default connect(null, mapDispatchToProps)(Wallet);
+const mapStateToProps = (state) => ({
+  instantRate: state.wallet.exchangeRates,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -1,24 +1,22 @@
-import { ADD_EXPENSE } from '../actions';
+import { ADD_EXPENSE, RECEIVE_INSTANT_RATE, REQUEST_INSTANT_RATE } from '../actions';
 
-// const initialState = {
-//   currencies: [],
-//   expenses: [{
-//     currencyInitials: [],
-//     id: 0,
-//     value: '',
-//     description: '',
-//     currency: 'USD',
-//     payment: 'Dinheiro',
-//     tag: 'Alimentação',
-//     exchangeRates: '',
-//   }],
-// };
-const initialState = [];
+const initialState = {
+  expenses: [],
+};
 
 function walletReducer(state = initialState, action) {
   switch (action.type) {
   case ADD_EXPENSE:
-    return [...state, action.value];
+    return {
+      ...state,
+      expenses: [...state.expenses, action.value],
+    };
+  case REQUEST_INSTANT_RATE:
+    return state;
+  case RECEIVE_INSTANT_RATE:
+    return {
+      ...state,
+    };
   default:
     return state;
   }
