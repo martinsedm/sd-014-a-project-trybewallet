@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getValueThunk } from '../actions';
 
 class Form extends React.Component {
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -15,7 +24,9 @@ class Form extends React.Component {
         <label htmlFor="currency">
           Moeda:
           <select name="currency" id="currency">
-            <option value="">a</option>
+            {currencies.map((currencie) => (
+              <option key={ currencie } value={ currencie }>{ currencie }</option>))}
+            ;
           </select>
         </label>
 
@@ -44,4 +55,14 @@ class Form extends React.Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({ currencies: state.wallet.currencies });
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getValueThunk()),
+});
+
+Form.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
