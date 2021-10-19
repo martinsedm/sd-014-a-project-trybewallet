@@ -20,5 +20,4 @@ export const fetchInstantRate = () => async (dispatch) => {
   const resultAPI = await getCurrencyRate();
   dispatch(receiveInstantRate(resultAPI));
   dispatch(addExpense(resultAPI));
-  // console.log(resultAPI);
 };

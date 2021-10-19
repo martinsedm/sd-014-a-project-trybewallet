@@ -1,7 +1,12 @@
 import { ADD_EXPENSE, RECEIVE_INSTANT_RATE, REQUEST_INSTANT_RATE } from '../actions';
 
 const initialState = {
-  expenses: [],
+  expenses: [
+  //   {
+
+  //   // value: 0,
+  // },
+  ],
 };
 
 function walletReducer(state = initialState, action) {
