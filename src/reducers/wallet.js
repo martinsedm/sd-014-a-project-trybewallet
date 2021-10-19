@@ -1,4 +1,4 @@
-import { ACTION } from '../actions';
+import { WALLET } from '../actions';
 
 const INICIAL_STATE = {
   func: 'a',
@@ -7,7 +7,7 @@ const INICIAL_STATE = {
 
 function walletReducer(state = INICIAL_STATE, action) {
   switch (action.type) {
-  case ACTION:
+  case WALLET:
     return {
       ...state,
     };

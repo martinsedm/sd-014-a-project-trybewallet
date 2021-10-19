@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { userLogin } from '../actions';
 
 const six = 6;
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       email: '',
       password: '',
-      login: false,
+      logged: false,
     };
     this.eventHandler = this.eventHandler.bind(this);
     this.clickHandler = this.clickHandler.bind(this);
@@ -26,12 +29,11 @@ class Login extends Component {
         password: value,
       });
     }
-    console.log(target);
   }
 
   clickHandler() {
     this.setState({
-      login: true,
+      logged: true,
     });
   }
 
@@ -49,14 +51,15 @@ class Login extends Component {
   }
 
   render() {
-    const { password, email, login } = this.state;
+    const { password, email, logged } = this.state;
+    const { login } = this.props;
     return (
       <section>
         <form>
           <label htmlFor="loginArea">
             Email:
             <input
-              type="textarea"
+              type="email"
               data-testid="email-input"
               onChange={ this.eventHandler }
               id="email"
@@ -69,7 +72,7 @@ class Login extends Component {
           <label htmlFor="passwordArea">
             Password:
             <input
-              type="textarea"
+              type="password"
               data-testid="password-input"
               onChange={ this.eventHandler }
               id="password"
@@ -81,16 +84,28 @@ class Login extends Component {
           <button
             data-testid="login-submit-button"
             disabled={ this.verifyLogin() }
-            onClick={ this.clickHandler }
+            onClick={ () => login({ email }) }
             type="button"
           >
             Entrar
           </button>
-          { login && <Redirect to="/carteira" /> }
+          { logged && <Redirect to="/carteira" /> }
         </form>
       </section>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email) => dispatch(userLogin(email)),
+});
+
+// const mapStateToProps = (state) => ({
+//   userReducer: state.userReducer,
+// });
+
+export default connect(null, mapDispatchToProps)(Login);

@@ -1,9 +1,7 @@
-export const ACTION = 'ACTION';
+export const USER = 'USER';
+export const WALLET = 'WALLET';
 
-export const actionFunc = (func, func2) => ({
-  type: ACTION,
-  payload: {
-    func,
-    func2,
-  },
+export const userLogin = (email) => ({
+  type: USER,
+  email,
 });
