@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrency, getExpense } from '../actions';
 
 class Form extends React.Component {
   constructor() {
@@ -6,80 +9,87 @@ class Form extends React.Component {
 
     this.renderSelect = this.renderSelect.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.fetchCoins = this.fetchCoins.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchCurrency = this.fetchCurrency.bind(this);
 
     this.state = {
-      moeda: [],
-      pagamento: '',
-      despesa: '',
-      valor: '',
-      descricao: '',
+      method: '',
+      currency: '',
+      tag: '',
+      value: 0,
+      description: '',
+      exchangeRates: {},
     };
   }
 
   componentDidMount() {
-    this.fetchCoins();
+    const { fetchCurrencyThunk } = this.props;
+    fetchCurrencyThunk();
   }
 
-  handleChange({ target: { value, name } }) {
-    this.setState({ [name]: value });
+  async fetchCurrency() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const responseJson = await response.json();
+
+    this.setState({ exchangeRates: responseJson });
   }
 
-  async fetchCoins() {
-    try {
-      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-      const responseJson = await response.json();
-      const coins = Object.keys(responseJson);
-      const coinsFiltered = coins.filter((item) => (
-        item !== 'USDT'
-      ));
-      this.setState({ moeda: coinsFiltered });
-    } catch (error) {
-      console.error(error);
-    }
+  handleChange({ target: { value, id } }) {
+    this.setState({ [id]: value });
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    const { setExpense } = this.props;
+    await this.fetchCurrency();
+    await setExpense(this.state);
   }
 
   renderSelect() {
-    const { moeda, pagamento, despesa } = this.state;
+    const { currencies } = this.props;
+    const { tag, method, currency } = this.state;
     return (
       <div>
-        <label htmlFor="moeda">
+        <label htmlFor="currency">
           Moeda:
           <select
-            id="moeda"
+            id="currency"
             onChange={ this.handleChange }
+            value={ currency }
           >
-            {moeda.map((item) => (
-              <option key={ item } value={ item }>{item}</option>
+            {currencies.map((item) => (
+              <option key={ item } value={ item }>{item }</option>
             ))}
           </select>
         </label>
-        <label htmlFor="método-pagamento">
-          Método de pagamento:
+        <label htmlFor="method">
+          Método de Pagamento:
           <select
-            htmlFor="pagamento"
-            id="método-pagamento"
+            htmlFor="method"
+            id="method"
             onChange={ this.handleChange }
+            value={ method }
           >
-            <option value="dinheiro" id="pagamento">Dinheiro</option>
-            <option value="credito" id="pagamento">Cartão de crédito</option>
-            <option value="debito" id="pagamento">Cartão de débito</option>
+            <option value="Dinheiro" id="method">Dinheiro</option>
+            <option value="Cartão de crédito" id="method">Cartão de crédito</option>
+            <option value="Cartão de débito" id="method">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="tag-despesa">
+        <label htmlFor="tag">
           Tag:
           <select
-            htmlFor="despesa"
-            id="tag-despesa"
+            htmlFor="tag"
+            id="tag"
             onChange={ this.handleChange }
+            value={ tag }
           >
-            <option value="alimentação" id="despesa">
+            <option value="Alimentação" id="tag">
               Alimentação
             </option>
-            <option value="lazer" id="despesa">Lazer</option>
-            <option value="trabalho" id="despesa">Trabalho</option>
-            <option value="transporte" id="despesa">Transporte</option>
-            <option value="saúde" id="despesa">Saúde</option>
+            <option value="Lazer" id="tag">Lazer</option>
+            <option value="Trabalho" id="tag">Trabalho</option>
+            <option value="Transporte" id="tag">Transporte</option>
+            <option value="Saúde" id="tag">Saúde</option>
           </select>
         </label>
       </div>
@@ -87,34 +97,50 @@ class Form extends React.Component {
   }
 
   render() {
-    const { valor, descricao } = this.state;
+    const { value, description } = this.state;
     return (
-      <form>
-        <label htmlFor="valor">
+      <form onSubmit={ this.handleSubmit }>
+        <label htmlFor="value">
           Valor:
           <input
             type="number"
-            name="valor"
-            value={ valor }
-            id="valor"
+            name="value"
+            value={ value }
+            id="value"
             onChange={ this.handleChange }
           />
         </label>
         {this.renderSelect()}
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição:
           <input
             type="text"
-            name="descricao"
-            value={ descricao }
-            id="descricao"
+            name="description"
+            value={ description }
+            id="description"
             onChange={ this.handleChange }
           />
         </label>
+        <button type="submit">Adicionar Despesa</button>
 
       </form>
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchCurrencyThunk: PropTypes.func.isRequired,
+  setExpense: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setExpense: (value) => dispatch(getExpense(value)),
+  fetchCurrencyThunk: () => dispatch(fetchCurrency()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
