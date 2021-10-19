@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 class FormsSelect extends React.Component {
   render() {
-    const { currencies } = this.props;
+    const { onChange, currencies, onClick } = this.props;
     return (
       <>
         <label htmlFor="input-moeda">
           Moeda
-          <select id="input-moeda" name="currency">
+          <select id="input-moeda" name="currency" onChange={ onChange }>
             { currencies.map((currencie) => (
               <option
                 key={ currencie }
@@ -20,7 +20,7 @@ class FormsSelect extends React.Component {
         </label>
         <label htmlFor="input-pagamento">
           Método de pagamento
-          <select id="input-pagamento" name="method">
+          <select id="input-pagamento" name="method" onChange={ onChange }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -28,7 +28,7 @@ class FormsSelect extends React.Component {
         </label>
         <label htmlFor="input-categoria">
           Tag
-          <select id="input-categoria" name="tag">
+          <select id="input-categoria" name="tag" onChange={ onChange }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
@@ -36,14 +36,16 @@ class FormsSelect extends React.Component {
             <option>Saúde</option>
           </select>
         </label>
-        <button type="button">Adicionar Despesa</button>
+        <button type="button" onClick={ onClick }>Adicionar Despesa</button>
       </>
     );
   }
 }
 
 FormsSelect.propTypes = {
+  onChange: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default FormsSelect;

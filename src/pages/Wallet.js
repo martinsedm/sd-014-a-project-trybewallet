@@ -5,12 +5,22 @@ import Header from '../components/Header';
 import FormsInput from '../components/FormsInput';
 import FormsSelect from '../components/FormsSelect';
 import fetchCoins from '../actions/addCurrencies';
+import fetchPrices from '../actions/addExpenses';
 
 class Wallet extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+
     this.handleChanges = this.handleChanges.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -23,13 +33,24 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleClick() {
+    const { expenses, fetchExpenses } = this.props;
+    const id = expenses.length;
+    const newState = { ...this.state, id };
+    fetchExpenses(newState);
+  }
+
   render() {
     const { currencies } = this.props;
     return (
       <>
         <Header />
-        <FormsInput />
-        <FormsSelect currencies={ currencies } />
+        <FormsInput onChange={ this.handleChanges } />
+        <FormsSelect
+          onChange={ this.handleChanges }
+          currencies={ currencies }
+          onClick={ this.handleClick }
+        />
       </>
     );
   }
@@ -38,14 +59,19 @@ class Wallet extends React.Component {
 const mapStateToProps = (state) => ({
   emailGot: state.user.email,
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
+  exchangeRates: state.wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   fetchCurrencies: () => dispatch(fetchCoins()),
+  fetchExpenses: (expense) => dispatch(fetchPrices(expense)),
 });
 
 Wallet.propTypes = {
   fetchCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
