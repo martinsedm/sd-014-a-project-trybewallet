@@ -15,7 +15,7 @@ export const saveToLocalStorage = (email, expenses) => new Promise((resolve, rej
     }
     localStorage.setItem(TRYBE_WALLET_KEY, JSON.stringify(content));
     if (localStorage.getItem(TRYBE_WALLET_KEY)) resolve();
-    const error = new Error('Não foi possível salvar no LS');
+    const error = new Error('Não foi possível salvar no Local Storage');
     reject(error);
   }, TIME_OUT_SIMULATION);
 });
@@ -25,12 +25,12 @@ export const loadFromLocalStorage = (email) => new Promise((resolve, reject) => 
     const localStorageContent = localStorage.getItem(TRYBE_WALLET_KEY);
     const content = localStorageContent ? JSON.parse(localStorageContent) : [];
     const found = content.find(({ user }) => user === email);
-    console.log(EXPENSES_KEY in found);
-    if (EXPENSES_KEY in found) {
-      const { expenses } = found;
-      resolve(expenses);
-    } else if (found) {
-      const error = new Error('Erro ao acessar LS');
+    if (found) {
+      if (EXPENSES_KEY in found) {
+        const { expenses } = found;
+        resolve(expenses);
+      }
+      const error = new Error('Erro ao acessar Local Storage');
       reject(error);
     }
     resolve([]);

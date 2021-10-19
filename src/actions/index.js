@@ -73,7 +73,7 @@ export const changeCurrencyExchangeAction = (exchange) => ({
 // actions assíncronas:
 export const getIntCurrenciesThunk = () => (dispatch) => {
   dispatch(isFetchingAction());
-  return fetch(FETCH_ENDPOINT)
+  fetch(FETCH_ENDPOINT)
     .then((response) => response.json())
     .then((json) => {
       const currencies = Object.keys(json)
@@ -85,7 +85,7 @@ export const getIntCurrenciesThunk = () => (dispatch) => {
 
 export const addExpenseThunk = (expense) => (dispatch) => {
   dispatch(isFetchingAction());
-  return fetch(FETCH_ENDPOINT)
+  fetch(FETCH_ENDPOINT)
     .then((response) => response.json())
     .then((currencies) => {
       const result = { ...expense, exchangeRates: { ...currencies } };
