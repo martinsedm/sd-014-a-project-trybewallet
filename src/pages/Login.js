@@ -78,6 +78,10 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchSetValue: (value) => dispatch(guardaEmail(value)),
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
