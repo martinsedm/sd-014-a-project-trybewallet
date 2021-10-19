@@ -9,11 +9,9 @@ export const userLoginAction = (payload) => ({
   payload,
 });
 
-export const addExpenciesAction = (state, payload) => ({
+export const addExpenciesAction = (payload) => ({
   type: ADD_EXPENCIES,
-  expencies: [
-    ...state, payload,
-  ],
+  payload,
 });
 
 export const setCurrencyAction = (payload) => ({

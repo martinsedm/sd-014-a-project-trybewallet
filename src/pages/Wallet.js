@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencyApi } from '../actions';
+import {
+  fetchCurrencyApi,
+  addExpenciesAction,
+} from '../actions';
 import Header from '../components/Header';
 import { payments, tags } from '../services/Data';
 import Input from '../components/Input';
@@ -21,6 +24,7 @@ class Wallet extends React.Component {
 
     this.setItemId = this.setState.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -41,9 +45,16 @@ class Wallet extends React.Component {
     });
   }
 
+  handleClick(event) {
+    event.preventDefault();
+    const { addExpense, setApi } = this.props;
+    setApi();
+    addExpense(this.state);
+  }
+
   render() {
     const { currencies } = this.props;
-    const { expenseValue, description, currency, method, tag } = this.state;
+    const { expenseValue, description } = this.state;
     return (
       <>
         <Header />
@@ -52,40 +63,40 @@ class Wallet extends React.Component {
             id="valor:"
             label="Valor"
             type="text"
-            name={ expenseValue }
-            // value=""
+            name="expenseValue"
+            value={ expenseValue }
             onChange={ this.handleChange }
           />
           <Input
             id="descrição"
             label="Descrição:"
             type="text"
-            name={ description }
-            // value=""
+            name="description"
+            value={ description }
             onChange={ this.handleChange }
           />
           <Select
-            name={ currency }
+            name="currency"
             id="moeda"
             label="Moeda:"
             onChange={ this.handleChange }
             options={ currencies }
           />
           <Select
-            name={ method }
+            name="method"
             id="pagamento"
             label="Método de pagamento"
             onChange={ this.handleChange }
             options={ payments }
           />
           <Select
-            name={ tag }
+            name="tag"
             id="tag"
             label="Tag:"
             onChange={ this.handleChange }
             options={ tags }
           />
-          <button type="button" conClick="">Adicionar Despesa</button>
+          <button type="button" onClick={ this.handleClick }>Adicionar Despesa</button>
         </form>
       </>
     );
@@ -95,10 +106,12 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   setApi: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+  addExpense: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setApi: () => dispatch(fetchCurrencyApi()),
+  addExpense: (payload) => dispatch(addExpenciesAction(payload)),
 });
 
 const mapStateToProps = ({ wallet }) => ({

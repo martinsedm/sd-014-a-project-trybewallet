@@ -10,7 +10,10 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case ADD_EXPENCIES:
     return {
       ...state,
-      wallet: action.payload,
+      expenses: [
+        ...state.expenses,
+        action.payload,
+      ],
     };
   case SET_CURRENCY:
     return {
