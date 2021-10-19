@@ -34,7 +34,7 @@ class Login extends React.Component {
         <form>
           <input
             data-testid="email-input"
-            name= "email"
+            name="email"
             type="email"
             placeholder="Email"
             value={ email }
