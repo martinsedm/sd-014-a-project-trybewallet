@@ -18,8 +18,8 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   height: 100vh;
+  justify-content: center;
 }
 
 .div-login {
@@ -35,10 +35,10 @@
 }
 
 .table-wallet{
-  padding: 20px 5px;
-  margin-top: 20px;
-  justify-items: center;
   align-items: center;
+  justify-items: center;
+  margin-top: 20px;
+  padding: 20px 5px;
   text-align: center;
 }
 
