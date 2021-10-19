@@ -1,34 +1,45 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { userEmailAction } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
+      userEmail: '',
       password: '',
       validateEmail: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  validateEmail(email) {
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  validateEmail(userEmail) {
     const re = /\S+@\S+\.\S+/;
-    return re.test(String(email).toLowerCase());
+    return re.test(String(userEmail).toLowerCase());
   }
 
   handleChange({ target: { value, id } }) {
     this.setState({
       [id]: value,
     }, () => {
-      const { email } = this.state;
-      const enableEmail = this.validateEmail(email);
+      const { userEmail } = this.state;
+      const enableEmail = this.validateEmail(userEmail);
       this.setState({ validateEmail: enableEmail });
     });
   }
 
+  handleClick() {
+    const { userEmailDispatchAction } = this.props;
+    const { userEmail } = this.state;
+    userEmailDispatchAction(userEmail);
+  }
+
   render() {
-    const { email, password, validateEmail } = this.state;
+    const { userEmail, password, validateEmail } = this.state;
     const MIN_PASSWORD_CHARACTERS = 6;
 
     return (
@@ -37,10 +48,10 @@ class Login extends React.Component {
           Email:
           <input
             type="email"
-            id="email"
+            id="userEmail"
             data-testid="email-input"
             onChange={ this.handleChange }
-            value={ email }
+            value={ userEmail }
             required
           />
         </label>
@@ -61,6 +72,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ !(password.length >= MIN_PASSWORD_CHARACTERS && validateEmail) }
+            onClick={ this.handleClick }
           >
             Entrar
           </button>
@@ -70,4 +82,14 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  userEmailDispatchAction: (email) => (
+    dispatch(userEmailAction(email))
+  ),
+});
+
+Login.propTypes = {
+  userEmailDispatchAction: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
