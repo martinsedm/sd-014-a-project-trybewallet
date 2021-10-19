@@ -44,9 +44,9 @@ class AddDesp extends React.Component {
             <label htmlFor="moeda">
               Moeda:
               <select>
-                {/* {currencies.map((item, index) => (
-                  <option key={ index } value={ item }>{item}</option>
-                ))} */}
+                {currencies.map((item, index) => (
+                  <option key={ index } value={ item.code }>{item.code}</option>
+                ))}
               </select>
             </label>
             <label htmlFor="mpagamento">

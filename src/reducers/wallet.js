@@ -12,7 +12,7 @@ const wallet = (state = initialState, action) => {
     return { ...state, currencies: action.payload };
   case GET_API_MONEY_SUCCESS:
     return { ...state,
-      currencies: [action.payload.currencies],
+      currencies: action.payload.currencies,
     };
   default:
     return state;
