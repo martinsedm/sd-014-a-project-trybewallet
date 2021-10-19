@@ -2,6 +2,7 @@ import {
   FETCHING,
   EDIT_MODE,
   CHANGE_EXCHANGE,
+  ERROR,
 } from '../actions';
 
 const INITIAL_STATE = {
@@ -9,6 +10,10 @@ const INITIAL_STATE = {
   editor: false,
   currencyToExchange: 'BRL',
   currencies: [],
+  error: {
+    status: false,
+    message: '',
+  },
 };
 
 const control = (state = INITIAL_STATE, action) => {
@@ -21,6 +26,8 @@ const control = (state = INITIAL_STATE, action) => {
     return { ...state, isFetching: !state.isFetching };
   case CHANGE_EXCHANGE:
     return { ...state, currencyToExchange: action.payload };
+  case ERROR:
+    return { ...state, error: { status: true, message: action.payload } };
   default:
     return state;
   }

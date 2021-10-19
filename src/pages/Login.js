@@ -2,8 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { notifyLoginAction, updateByLocalStorageAction } from '../actions';
-import { loadFromLocalStorage } from '../services';
+import { notifyLoginAction, readLocalStorageThunk } from '../actions';
 
 const MIN_LENGTH_PASSWORD = 6;
 
@@ -39,12 +38,9 @@ class Login extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const { email, password } = this.state;
-    const { notifyLogin, updateByLocalStorage } = this.props;
+    const { notifyLogin, readLocalStorage } = this.props;
     notifyLogin({ email, password });
-    const expenses = loadFromLocalStorage(email);
-    if (expenses.length !== 0) {
-      updateByLocalStorage(expenses);
-    }
+    readLocalStorage(email);
     this.setState({
       logged: true,
     });
@@ -102,12 +98,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   notifyLogin: (user) => dispatch(notifyLoginAction(user)),
-  updateByLocalStorage: (email) => dispatch(updateByLocalStorageAction(email)),
+  readLocalStorage: (email) => dispatch(readLocalStorageThunk(email)),
 });
 
 Login.propTypes = {
   notifyLogin: PropTypes.func.isRequired,
-  updateByLocalStorage: PropTypes.func.isRequired,
+  readLocalStorage: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

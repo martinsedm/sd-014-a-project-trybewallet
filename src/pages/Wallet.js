@@ -6,14 +6,14 @@ import Form from '../components/Form';
 import Table from '../components/Table';
 import MakeLogin from '../components/MakeLogin';
 import { categories, payment } from '../data/index';
-import { saveToLocalStorage } from '../services';
 import {
   getIntCurrenciesThunk,
   addExpenseThunk,
   removeExpenseAction,
   editExpenseModeAction,
   saveExpenseAction,
-  changeCurrencyExchangeAction } from '../actions';
+  changeCurrencyExchangeAction,
+  saveToLocalStorageThunk } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -124,7 +124,7 @@ class Wallet extends React.Component {
   }
 
   saveTable() {
-    const { expenses, user: { email } } = this.props;
+    const { expenses, user: { email }, saveToLocalStorage } = this.props;
     saveToLocalStorage(email, expenses);
     this.setState({ saved: true });
   }
@@ -214,6 +214,7 @@ Wallet.propTypes = {
   editExpenseMode: PropTypes.func.isRequired,
   saveExpense: PropTypes.func.isRequired,
   changeCurrencyExchange: PropTypes.func.isRequired,
+  saveToLocalStorage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -232,6 +233,9 @@ const mapDispatchToProps = (dispatch) => ({
   editExpenseMode: (id) => dispatch(editExpenseModeAction(id)),
   saveExpense: (expense) => dispatch(saveExpenseAction(expense)),
   changeCurrencyExchange: (exchange) => dispatch(changeCurrencyExchangeAction(exchange)),
+  saveToLocalStorage: (email, expenses) => (
+    dispatch(saveToLocalStorageThunk(email, expenses))
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

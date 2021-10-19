@@ -1,3 +1,5 @@
+import { loadFromLocalStorage, saveToLocalStorage } from '../services';
+
 export const LOGIN_TYPE = 'LOGIN_TYPE';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
@@ -7,6 +9,7 @@ export const EDIT_MODE = 'EDIT_MODE';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const UPDATE_BY_LS = 'UPDATE_BY_LS';
 export const CHANGE_EXCHANGE = 'CHANGE_EXCHANGE';
+export const ERROR = 'ERROR';
 
 const NUM_CHARS = 3;
 
@@ -17,6 +20,11 @@ export const notifyLoginAction = (user) => ({
   payload: {
     ...user,
   },
+});
+
+export const notifiyErrorAction = (message) => ({
+  type: ERROR,
+  payload: message,
 });
 
 export const isFetchingAction = () => ({
@@ -83,5 +91,29 @@ export const addExpenseThunk = (expense) => (dispatch) => {
       const result = { ...expense, exchangeRates: { ...currencies } };
       dispatch(addExpenseAction(result));
       dispatch(isFetchingAction());
+    });
+};
+
+export const readLocalStorageThunk = (email) => (dispatch) => {
+  dispatch(isFetchingAction());
+  loadFromLocalStorage(email)
+    .then((expenses) => {
+      dispatch(updateByLocalStorageAction(expenses));
+      dispatch(isFetchingAction());
+    })
+    .catch((error) => {
+      dispatch(updateByLocalStorageAction([]));
+      dispatch(isFetchingAction());
+      dispatch(notifiyErrorAction(error.message));
+    });
+};
+
+export const saveToLocalStorageThunk = (email, expenses) => (dispatch) => {
+  dispatch(isFetchingAction());
+  saveToLocalStorage(email, expenses)
+    .then(() => dispatch(isFetchingAction()))
+    .catch((error) => {
+      dispatch(isFetchingAction());
+      dispatch(notifiyErrorAction(error.message));
     });
 };
