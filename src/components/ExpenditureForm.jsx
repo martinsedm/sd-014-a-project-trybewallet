@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
-import { setExpenditure, fetchCoins } from '../actions';
+import { setExpenditure as setExpenditureAction, fetchCoins } from '../actions';
 
 class ExpenditureForm extends React.Component {
   constructor() {
@@ -24,8 +24,8 @@ class ExpenditureForm extends React.Component {
 
   submit(event) {
     event.preventDefault();
-    const { setExpenditureGlobal, getCoins } = this.props;
-    getCoins().then(() => setExpenditureGlobal(this.state));
+    const { setExpenditure, getCoins } = this.props;
+    getCoins().then(() => setExpenditure(this.state));
   }
 
   render() {
@@ -79,13 +79,13 @@ const mapStateToProps = ({ wallet }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  setExpenditureGlobal: (expenditure) => dispatch(setExpenditure(expenditure)),
+  setExpenditure: (expenditure) => dispatch(setExpenditureAction(expenditure)),
   getCoins: () => dispatch(fetchCoins()),
 });
 
 ExpenditureForm.propTypes = {
   coins: PropTypes.objectOf(PropTypes.any).isRequired,
-  setExpenditureGlobal: PropTypes.func.isRequired,
+  setExpenditure: PropTypes.func.isRequired,
   getCoins: PropTypes.func.isRequired,
 };
 

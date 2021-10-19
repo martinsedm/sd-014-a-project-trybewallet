@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DeleteExpenseButton from './DeleteExpenseButton';
 
 class ExpenseTable extends React.Component {
   constructor() {
@@ -9,7 +10,7 @@ class ExpenseTable extends React.Component {
   }
 
   renderTableRow(expense) {
-    const { value, description, currency, method, tag, exchangeRates } = expense;
+    const { id, value, description, currency, method, tag, exchangeRates } = expense;
     return (
       <tr>
         <td>{description}</td>
@@ -21,7 +22,7 @@ class ExpenseTable extends React.Component {
         <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
         <td>{ Number(exchangeRates[currency].ask) * Number(value) }</td>
         <td>Real</td>
-        <td>botoes</td>
+        <td><DeleteExpenseButton id={ id } /></td>
       </tr>
     );
   }

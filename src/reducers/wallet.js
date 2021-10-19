@@ -1,4 +1,4 @@
-import { SET_COINS, SET_EXPENDITURE } from '../actions';
+import { SET_COINS, SET_EXPENDITURE, DELETE_EXPENDITURE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: {},
@@ -23,6 +23,11 @@ const wallet = (state = INITIAL_STATE, action) => {
           exchangeRates: { ...state.currencies },
         },
       ],
+    };
+  case DELETE_EXPENDITURE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload),
     };
   default:
     return state;
