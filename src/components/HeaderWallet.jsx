@@ -6,9 +6,9 @@ const HeaderWallet = (props) => {
   const { user, expenses } = props;
   // const moedaUSD = Object.values(response)/* .reduce((a, e) => a.concat(...Object.values(e)), []) */;
   // const cotacao = Object.values(response).find((g) => g.code === payload.code).bid;
-  const totalPrice = Math.round((expenses.reduce((a, e) => a + Math.round((e
+  const totalPrice = (expenses.reduce((a, e) => a + (e
     .value * (Object.values(e.exchangeRates).find((g) => g.code === e
-    .currency).bid)) * 100) / 100, 0)) * 100) / 100;
+    .currency).ask)), 0));
   // (Object.values(e.exchangeRates).find((g) => g.code === e.currency).bid)
   return (
     <header>
