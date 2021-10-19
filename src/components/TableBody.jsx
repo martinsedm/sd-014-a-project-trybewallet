@@ -2,20 +2,36 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class TableBody extends Component {
+  setCurrencies(rates, currency, value) {
+    const { exchange } = this.props;
+    let { name: currencyName } = rates[currency];
+    const index1 = currencyName.indexOf('/');
+    if (index1 > 0) {
+      currencyName = currencyName.slice(0, index1);
+    }
+    let exchangeName = 'Real';
+    let askValue = Number(rates[currency].ask);
+    if (exchange !== 'BRL') {
+      exchangeName = rates[exchange].name;
+      const index2 = exchangeName.indexOf('/');
+      exchangeName = exchangeName.slice(0, index2);
+      askValue /= Number(rates[exchange].ask);
+    }
+    const convertedValue = (Math
+      .round(100 * askValue * (value)) / 100);
+    return {
+      currencyName, exchangeName, askValue, convertedValue,
+    };
+  }
+
   render() {
     const { expenses, removeExpense, editExpense, disableBtn } = this.props;
     return (
       <tbody>
         { expenses
           .map(({ id, description, tag, method, value, currency, exchangeRates }) => {
-            let { name: currencyName } = exchangeRates[currency];
-            const index = currencyName.indexOf('/');
-            if (index > 0) {
-              currencyName = currencyName.slice(0, index);
-            }
-            const askValue = Number(exchangeRates[currency].ask).toFixed(2);
-            const convertedValue = (Math
-              .round(100 * exchangeRates[currency].ask * (value)) / 100).toFixed(2);
+            const { currencyName, exchangeName, askValue, convertedValue,
+            } = this.setCurrencies(exchangeRates, currency, value);
             return (
               <tr key={ id }>
                 <td>{ description }</td>
@@ -23,9 +39,9 @@ class TableBody extends Component {
                 <td>{ method }</td>
                 <td>{ value }</td>
                 <td>{ currencyName }</td>
-                <td>{ askValue }</td>
-                <td>{ convertedValue }</td>
-                <td>Real</td>
+                <td>{ askValue.toFixed(2) }</td>
+                <td>{ convertedValue.toFixed(2) }</td>
+                <td>{ exchangeName }</td>
                 <td>
                   <button
                     type="button"
@@ -57,6 +73,7 @@ TableBody.propTypes = {
   removeExpense: PropTypes.func.isRequired,
   editExpense: PropTypes.func.isRequired,
   disableBtn: PropTypes.bool.isRequired,
+  exchange: PropTypes.string.isRequired,
 };
 
 export default TableBody;

@@ -44,9 +44,7 @@ export const removeExpenseAction = (id) => ({
 
 export const addCurrenciesAction = (currencies) => ({
   type: ADD_CURRENCIES,
-  payload: [
-    ...currencies,
-  ],
+  payload: currencies,
 });
 
 export const editExpenseModeAction = (id) => ({

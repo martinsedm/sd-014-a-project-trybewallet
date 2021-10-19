@@ -1,7 +1,6 @@
 import {
   ADD_EXPENSE,
   REMOVE_EXPENSE,
-  // FETCHING,
   ADD_CURRENCIES,
   EDIT_MODE,
   SAVE_EXPENSE,
@@ -10,10 +9,7 @@ import {
 const NEG_UM = -1;
 
 const INITIAL_STATE = {
-  // isFetching: false,
-  // editor: false,
   idToEdit: {},
-  // currencyToExchange: 'BRL',
   expenses: [],
   currencies: [],
 };
@@ -52,7 +48,7 @@ const wallet = (state = INITIAL_STATE, action) => {
     return { ...state, idToEdit: { ...found } };
   }
   case ADD_CURRENCIES:
-    return { ...state, currencies: [...state.currencies, ...action.payload] };
+    return { ...state, currencies: action.payload };
   case UPDATE_BY_LS:
     return { ...state, expenses: action.payload };
   default:
