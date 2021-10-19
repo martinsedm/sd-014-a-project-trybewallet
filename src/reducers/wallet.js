@@ -5,6 +5,7 @@ const INITIAL_STATE = {
     currencies: [],
     expenses: [],
     total: 0,
+    error: null,
   },
 };
 
@@ -17,7 +18,7 @@ function wallet(state = INITIAL_STATE, { type, payload, rate }) {
   case WALLET_CURRENCIES:
     return {
       ...state,
-      currencies: action.payload.currencies,
+      currencies: payload.currencies,
     };
   case WALLET_EXPENSES:
     return {
