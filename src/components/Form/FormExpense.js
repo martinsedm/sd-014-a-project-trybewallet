@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { expensesAction, fetchExchangeRates } from '../../actions';
+import ExpenseTable from '../Table/https:/github.com/tryber/ExpenseTable';
 import Imputs from './imputs/Imputs';
 import Selects from './selects/Selects';
 
@@ -31,13 +32,15 @@ class FormExpense extends Component {
   async handleClick() {
     const { getExchangeRates } = this.props;
     await getExchangeRates();
+
     const { expenses, exchangeRates } = this.props;
-    console.log(exchangeRates);
     const { id } = this.state;
+
     this.setState({
       exchangeRates,
       id: id + 1,
     });
+
     expenses(this.state);
   }
 
@@ -62,6 +65,7 @@ class FormExpense extends Component {
         >
           Adicionar despesa
         </button>
+        <ExpenseTable />
       </form>
     );
   }
