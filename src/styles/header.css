@@ -1,0 +1,29 @@
+.containner-header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  width: 150px;
+  height: 40px;
+  margin-left: 50px;
+}
+
+.containner_user-infor {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 40%;
+  font-family: cursive;
+  font-size: 20px;
+}
+
+.conteinner-balance {
+  display: flex;
+}
+
+.BRL {
+  margin-left: 5px;
+}
