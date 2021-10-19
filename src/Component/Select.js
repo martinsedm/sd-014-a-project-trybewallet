@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 class Select extends Component {
   render() {
     const { escolha, name } = this.props;
-    console.log(escolha);
     return (
       <label htmlFor={ name }>
         {name}
