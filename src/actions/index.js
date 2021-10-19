@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const ADD_USER = 'ADD_USER';
-export const LOGGED = 'LOGGED';
+export const ADD_CURRENCIES = 'ADD_CURRENCIES';
+const END_POINT = 'https://economia.awesomeapi.com.br/json/all';
 
 export const addUserAction = (email) => ({
 
@@ -12,12 +13,31 @@ export const addUserAction = (email) => ({
 
 });
 
-export const notifyLoginAction = (login) => ({
+export const addCurrenciesAction = (currencies) => ({
 
-  type: LOGGED,
-
+  type: ADD_CURRENCIES,
   payload: {
-    login,
+    currencies,
   },
-
 });
+const numLength = 3;
+const arrayFiltered = (array) => array
+  .filter((currencie) => currencie.length === numLength);
+
+export const getApiAction = () => (dispatch) => (
+// dispatch(mySomeNotifyAction());
+
+  fetch(END_POINT)
+
+    .then((response) => response.json()
+
+      .then(
+
+        (json) => {
+          const currenciesApi = Object.keys(json);
+          const filteredCurrencies = arrayFiltered(currenciesApi);
+
+          dispatch(addCurrenciesAction(filteredCurrencies));
+        },
+
+      )));

@@ -1,9 +1,12 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 
 import SelectPagamento from '../components/SelectPagamento';
 import SelectCategoria from '../components/SelectCategoria';
 import Formulario from '../components/Formulario';
 import Header from '../components/Header';
+import { getApiAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -14,9 +17,14 @@ class Wallet extends React.Component {
       despesa: '',
       categoria: '',
       pagamento: '',
-      currencies: [],
+      moeda: '',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { getApi } = this.props;
+    getApi();
   }
 
   handleChange(event) {
@@ -28,7 +36,8 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { valor, despesa, categoria, pagamento, currencies } = this.state;
+    const { valor, despesa, categoria, pagamento, moeda } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <Header />
@@ -44,7 +53,7 @@ class Wallet extends React.Component {
             <select
               id="moeda"
               name="moeda"
-              value={ pagamento }
+              value={ moeda }
               onChange={ this.handleChange }
             >
               {currencies.map((currency, index) => (
@@ -60,4 +69,21 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getApi: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+
+  getApi: () => dispatch(getApiAction()),
+
+});
+
+const mapStateToProps = (state) => ({
+
+  currencies: state.wallet.currencies,
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
