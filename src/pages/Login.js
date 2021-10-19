@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import emailAction from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -10,12 +13,19 @@ class Login extends React.Component {
       isEmailValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // consulta no https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
   validateEmail(email) {
     const re = /\S+@\S+\.\S+/;
     return re.test(String(email).toLowerCase());
+  }
+
+  handleClick() {
+    const { addEmail } = this.props;
+    const { email } = this.state;
+    addEmail(email);
   }
 
   handleChange({ target }) {
@@ -64,6 +74,7 @@ class Login extends React.Component {
             <button
               type="submit"
               disabled={ !(password.length >= minChar && isEmailValid) }
+              onClick={ this.handleClick }
             >
               Entrar
             </button>
@@ -74,4 +85,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  addEmail: (email) => (dispatch(emailAction(email))),
+});
+
+Login.propTypes = {
+  addEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
