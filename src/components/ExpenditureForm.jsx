@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
+import coinApi from '../services/coinApi';
 import {
   setExpenditure as setExpenditureAction,
-  fetchCoins,
   editExpenditure as editExpenditureAction } from '../actions';
 
 const INITIAL_FORM = {
@@ -49,15 +49,14 @@ class ExpenditureForm extends React.Component {
     this.setState((prev) => ({ forms: { ...prev.forms, [id]: value } }));
   }
 
-  submit(event) {
+  async submit(event) {
     event.preventDefault();
-    const { setExpenditure, getCoins, editExpenditure } = this.props;
+    const { setExpenditure, editExpenditure } = this.props;
     const { forms, isEditing } = this.state;
     if (isEditing) return editExpenditure(forms);
-    getCoins().then(() => {
-      setExpenditure(forms);
-      this.setState({ forms: INITIAL_FORM });
-    });
+    const coins = await coinApi();
+    setExpenditure({ ...forms, exchangeRates: coins });
+    this.setState({ forms: INITIAL_FORM });
   }
 
   renderInputs() {
@@ -97,7 +96,7 @@ class ExpenditureForm extends React.Component {
           id="currency"
           label="Moeda"
           value={ currency }
-          options={ Object.keys(coins) }
+          options={ coins }
           onChange={ this.handleChange }
         />
         <SelectInput
@@ -143,17 +142,20 @@ const mapStateToProps = ({ wallet }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setExpenditure: (expenditure) => dispatch(setExpenditureAction(expenditure)),
-  getCoins: () => dispatch(fetchCoins()),
   editExpenditure: (expenditure) => dispatch(editExpenditureAction(expenditure)),
 });
 
 ExpenditureForm.propTypes = {
-  coins: PropTypes.objectOf(PropTypes.any).isRequired,
-  isEditing: PropTypes.bool.isRequired,
-  curExpenditure: PropTypes.objectOf(PropTypes.any).isRequired,
+  coins: PropTypes.arrayOf(PropTypes.string).isRequired,
+  isEditing: PropTypes.bool,
+  curExpenditure: PropTypes.objectOf(PropTypes.any),
   setExpenditure: PropTypes.func.isRequired,
-  getCoins: PropTypes.func.isRequired,
   editExpenditure: PropTypes.func.isRequired,
+};
+
+ExpenditureForm.defaultProps = {
+  isEditing: false,
+  curExpenditure: {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenditureForm);

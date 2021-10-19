@@ -20,7 +20,7 @@ export const setCoins = (coins) => ({
 export const fetchCoins = () => async (dispatch) => {
   // dispatch(uma action de loading)
   const coins = await coinApi();
-  dispatch(setCoins(coins));
+  dispatch(setCoins(Object.keys(coins)));
 };
 
 export const setExpenditure = (expenditure) => ({

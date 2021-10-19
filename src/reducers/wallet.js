@@ -6,7 +6,7 @@ import {
   EDIT_EXPENDITURE } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: {},
+  currencies: [],
   expenses: [],
   isEditing: false,
   curExpenditure: {},
@@ -28,7 +28,6 @@ const wallet = (state = INITIAL_STATE, action) => {
         {
           id: state.expenses.length,
           ...action.payload,
-          exchangeRates: { ...state.currencies },
         },
       ],
     };
