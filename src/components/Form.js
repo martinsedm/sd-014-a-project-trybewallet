@@ -1,21 +1,9 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import fetchCurrencies from '../services/walletAPI';
+import OptionsTags from './OptionsTags';
+import PayOptions from './PayOptions';
+import CurrenciesOptions from './CurrenciesOptions';
 
-class Form extends Component {
-  componentDidMount() {
-    const { getCurrencies } = this.props;
-    getCurrencies();
-  }
-
-  currenciesOptions() {
-    const { currencies } = this.props;
-    console.log(currencies[0]);
-    return currencies.map((currencie) => (
-      <option key={ currencie } value={ currencie }>{ currencie }</option>));
-  }
-
+export default class Form extends Component {
   render() {
     const payMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -34,48 +22,24 @@ class Form extends Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda">
-            { this.currenciesOptions() }
+            <CurrenciesOptions />
           </select>
         </label>
 
         <label htmlFor="método de pagamento">
           Método de pagamento:
           <select id="método de pagamento">
-            { payMethods.map((payMethod) => (
-              <option key={ payMethod } name={ payMethod } value={ payMethod }>
-                { payMethod }
-              </option>
-            )) }
+            <PayOptions payMethods={ payMethods } />
           </select>
         </label>
 
         <label htmlFor="tag">
           Tag:
           <select id="tag">
-            { tags.map((tag) => (
-              <option key={ tag } name={ tag } value={ tag }>
-                { tag }
-              </option>
-            )) }
+            <OptionsTags tags={ tags } />
           </select>
         </label>
-
       </form>
     );
   }
 }
-
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(fetchCurrencies()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
-
-Form.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
-  getCurrencies: PropTypes.func.isRequired,
-};
