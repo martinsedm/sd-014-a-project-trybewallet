@@ -1,4 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { saveEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -14,9 +18,14 @@ class Login extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleClick() {
+
+  }
+
   render() {
     const { email, password } = this.state;
     const minPasswordLength = 6;
+    const { userEmail } = this.props;
 
     return (
       <div>
@@ -36,17 +45,29 @@ class Login extends React.Component {
           placeholder="Digite sua senha"
           onChange={ this.handleChange }
         />
-        <button
-          type="button"
-          disabled={
-            (!email.includes('@' && '.com') || password.length < minPasswordLength)
-          }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={
+              (!email.includes('@' && '.com') || (password.length < minPasswordLength))
+            }
+            onClick={ () => (userEmail(email)) }
+          >
+            Entrar
+          </button>
+        </Link>
       </div>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  userEmail: (email) => (
+    dispatch(saveEmail(email))),
+});
+
+Login.propTypes = {
+  userEmail: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
