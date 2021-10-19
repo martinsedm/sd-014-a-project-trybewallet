@@ -13,9 +13,9 @@ class Form extends React.Component {
     this.fetchCurrency = this.fetchCurrency.bind(this);
 
     this.state = {
-      method: '',
-      currency: '',
-      tag: '',
+      method: 'Dinheiro',
+      currency: 'USD',
+      tag: 'Alimentação',
       value: 0,
       description: '',
       exchangeRates: {},

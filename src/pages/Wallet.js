@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import ExpenseTable from '../components/expenseTable';
 import Form from '../components/form';
 
 class Wallet extends React.Component {
@@ -15,14 +16,13 @@ class Wallet extends React.Component {
 
   totalExpenses() {
     const { expenses } = this.props;
-    console.log(expenses);
     const totalExpense = expenses.reduce((total, expense) => {
-      const valueItem = Math.round(Number(expense.value)
-      * Number(expense.exchangeRates[expense.currency].ask) * 100) / 100;
+      const valueItem = Number(expense.value)
+      * Number(expense.exchangeRates[expense.currency].ask);
       total += valueItem;
       return total;
     }, 0);
-    return totalExpense;
+    return Math.round(totalExpense * 100) / 100;
   }
 
   renderHeader() {
@@ -49,6 +49,7 @@ class Wallet extends React.Component {
       <div>
         {this.renderHeader()}
         <Form />
+        <ExpenseTable />
 
       </div>
     );

@@ -2,6 +2,7 @@
 export const GET_USER_LOGIN = 'GET_USER_LOGIN';
 export const GET_EXPENSE = 'GET_EXPENSE';
 export const GET_CURRENCY = 'GET_CURRENCY';
+export const DELETE_ITEM = 'DELETE_ITEM';
 
 export const getUserLogin = (payload) => ({
   type: GET_USER_LOGIN,
@@ -18,6 +19,11 @@ export const getCurrency = (payload) => ({
   payload,
 });
 
+export const deleteItem = (payload) => ({
+  type: DELETE_ITEM,
+  payload,
+});
+
 export function fetchCurrency() {
   return async (dispatch) => {
     try {
@@ -27,7 +33,6 @@ export function fetchCurrency() {
       const coinsFiltered = coins.filter((item) => (
         item !== 'USDT' && item !== 'DOGE'
       ));
-      console.log(coinsFiltered);
       dispatch(getCurrency(coinsFiltered));
     } catch (error) {
       console.error(error);
