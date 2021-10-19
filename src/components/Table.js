@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateExpense } from '../actions';
-import DeleteBtn from './DeleteBtn';
+import { editExpense as editExpenseAction,
+  removeExpense as removeExpenseAction } from '../actions';
+import TableButton from './TableButton';
 
 const tableHeaders = ['Descrição',
   'Tag',
@@ -17,13 +18,20 @@ const tableHeaders = ['Descrição',
 class Table extends Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
+    this.handleRemoveClick = this.handleRemoveClick.bind(this);
+    this.handleEditClick = this.handleEditClick.bind(this);
   }
 
-  handleClick({ target: { id } }) {
-    const { expenseInfo, updateExpenses } = this.props;
+  handleRemoveClick({ target: { id } }) {
+    const { expenseInfo, removeExpense } = this.props;
     const updatedExpenses = expenseInfo.filter((expense) => (expense.id) !== Number(id));
-    updateExpenses(updatedExpenses);
+    removeExpense(updatedExpenses);
+  }
+
+  handleEditClick({ target: { id } }) {
+    const { expenseInfo, editExpense } = this.props;
+    const expenseToEdit = expenseInfo.filter((expense) => (expense.id) === Number(id));
+    editExpense(expenseToEdit);
   }
 
   render() {
@@ -48,7 +56,24 @@ class Table extends Component {
                 <td>{Math.ceil(exchangeRates[currency].ask * 100) / 100 }</td>
                 <td>{Math.ceil(exchangeRates[currency].ask * value * 100) / 100}</td>
                 <td>Real</td>
-                <td><DeleteBtn idBtn={ id } handleClick={ this.handleClick } /></td>
+                <td>
+                  <TableButton
+                    idBtn={ id }
+                    handleClick={ this.handleEditClick }
+                    text="Editar"
+                    testId="edit-btn"
+                  />
+
+                </td>
+                <td>
+                  <TableButton
+                    idBtn={ id }
+                    handleClick={ this.handleRemoveClick }
+                    text="Apagar"
+                    testId="delete-btn"
+                  />
+
+                </td>
               </tr>
             ),
           )}
@@ -59,8 +84,9 @@ class Table extends Component {
 }
 
 Table.propTypes = {
+  editExpense: PropTypes.func.isRequired,
   expenseInfo: PropTypes.arrayOf(PropTypes.any).isRequired,
-  updateExpenses: PropTypes.func.isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -68,7 +94,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateExpenses: (expensesList) => dispatch(updateExpense(expensesList)),
+  removeExpense: (expensesList) => dispatch(removeExpenseAction(expensesList)),
+  editExpense: (expense) => dispatch(editExpenseAction(expense)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
