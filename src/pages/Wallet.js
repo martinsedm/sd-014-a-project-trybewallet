@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchAPI, fetchAPIExpenses } from '../actions';
 import Select from '../components/Select';
 import Table from '../components/Table';
+import Header from '../components/Header';
 
 const PAYMENT = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const ALIMENTAÇÃO = 'Alimentação';
@@ -22,7 +23,6 @@ class Wallet extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.inputValueAndDescription = this.inputValueAndDescription.bind(this);
     this.addExpense = this.addExpense.bind(this);
-    this.sumExpenses = this.sumExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -78,28 +78,13 @@ class Wallet extends React.Component {
     );
   }
 
-  sumExpenses() {
-    const { expenses } = this.props;
-    return expenses.reduce((acc, { currency, exchangeRates, value }) => {
-      const { ask } = exchangeRates[currency];
-      return acc + (ask * value);
-    }, 0);
-  }
-
   render() {
-    const { email, currency } = this.props;
+    const { currency } = this.props;
     const { moeda, pagamento, tag } = this.state;
     const COIN_TREATED = Object.keys(currency).filter((coin) => coin !== 'USDT');
     return (
       <div>
-        <p data-testid="email-field">{ email }</p>
-        <p
-          data-testid="total-field"
-        >
-          {`Despesa Total: R$ ${this.sumExpenses().toFixed(2)}`}
-
-        </p>
-        <p data-testid="header-currency-field">BRL</p>
+        <Header />
         <form>
           {this.inputValueAndDescription()}
           <Select
@@ -139,17 +124,13 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
   currencyAPI: PropTypes.func.isRequired,
   currency: PropTypes.arrayOf(PropTypes.object).isRequired,
   expenseAPI: PropTypes.func.isRequired,
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  email: state.user.email,
   currency: state.wallet.currencies,
-  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
