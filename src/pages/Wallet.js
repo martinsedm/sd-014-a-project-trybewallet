@@ -12,7 +12,8 @@ import {
   addExpenseThunk,
   removeExpenseAction,
   editExpenseModeAction,
-  saveExpenseAction } from '../actions';
+  saveExpenseAction,
+  changeCurrencyExchangeAction } from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class Wallet extends React.Component {
     this.calculateSum = this.calculateSum.bind(this);
     this.editExpense = this.editExpense.bind(this);
     this.saveTable = this.saveTable.bind(this);
+    this.handleExchange = this.handleExchange.bind(this);
   }
 
   componentDidMount() {
@@ -138,6 +140,11 @@ class Wallet extends React.Component {
     });
   }
 
+  handleExchange({ target: { value } }) {
+    const { changeCurrencyExchange } = this.props;
+    changeCurrencyExchange(value);
+  }
+
   render() {
     const {
       user: { email },
@@ -146,10 +153,18 @@ class Wallet extends React.Component {
       currencyToExchange,
       editor } = this.props;
     const { total, saved, form } = this.state;
+    const { currencies } = this.props;
     const textButton = editor ? 'Editar Despesa' : 'Adicionar Despesa';
     return (
       <main>
-        <Header data={ { email, total, currencyToExchange } } />
+        <Header
+          data={ {
+            email,
+            total,
+            currencies,
+            currencyToExchange,
+            onChange: this.handleExchange } }
+        />
         <section>
           <Form
             { ...form }
@@ -197,6 +212,7 @@ Wallet.propTypes = {
   removeExpense: PropTypes.func.isRequired,
   editExpenseMode: PropTypes.func.isRequired,
   saveExpense: PropTypes.func.isRequired,
+  changeCurrencyExchange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -214,6 +230,7 @@ const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(removeExpenseAction(id)),
   editExpenseMode: (id) => dispatch(editExpenseModeAction(id)),
   saveExpense: (expense) => dispatch(saveExpenseAction(expense)),
+  changeCurrencyExchange: (exchange) => dispatch(changeCurrencyExchangeAction(exchange)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

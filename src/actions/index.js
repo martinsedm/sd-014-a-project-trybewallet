@@ -6,6 +6,7 @@ export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const EDIT_MODE = 'EDIT_MODE';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const UPDATE_BY_LS = 'UPDATE_BY_LS';
+export const CHANGE_EXCHANGE = 'CHANGE_EXCHANGE';
 
 const NUM_CHARS = 3;
 
@@ -56,6 +57,11 @@ export const editExpenseModeAction = (id) => ({
 export const updateByLocalStorageAction = (expenses) => ({
   type: UPDATE_BY_LS,
   payload: expenses,
+});
+
+export const changeCurrencyExchangeAction = (exchange) => ({
+  type: CHANGE_EXCHANGE,
+  payload: exchange,
 });
 
 // actions assíncronas:
