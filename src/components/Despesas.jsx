@@ -41,12 +41,7 @@ class Despesas extends Component {
       const cambio = valor.exchangeRates[valor.currency].ask;
       const numberValue = Number(valor.value);
       total += (numberValue * cambio);
-      console.log(total);
     });
-    // const apagado = despesas.filter((despesa) => despesa.id === Number(e.target.id));
-    // const cambio = apagado[0].exchangeRates[apagado[0].currency].ask;
-    // const newTotal = Number((Number(total)
-    //   - (Number(apagado[0].value) * cambio)).toFixed(2));
     sendDespesas((total.toFixed(2)).toString());
     sendExpenses(newDespesas);
   }
