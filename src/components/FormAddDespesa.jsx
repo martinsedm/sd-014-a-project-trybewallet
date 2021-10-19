@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SelecMoeda from './SelecMoeda';
 
 class FormAddDespesa extends React.Component {
@@ -76,5 +77,9 @@ class FormAddDespesa extends React.Component {
     );
   }
 }
+
+FormAddDespesa.propTypes = {
+  moedas: PropTypes.objectOf(PropTypes.string).isRequired,
+};
 
 export default FormAddDespesa;
