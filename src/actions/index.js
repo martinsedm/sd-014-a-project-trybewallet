@@ -4,6 +4,8 @@ export const EXPENSES = 'EXPENSES';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const COINS = 'COINS';
 export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
+export const EDITE_EXPENSES = 'EDITE_EXPENSES';
+export const ATT_EXPENSE = 'ATT_EXPENSE';
 
 export const userAction = (email) => ({
   type: USER,
@@ -37,6 +39,21 @@ export const exchangeRatesAction = (coins) => ({
   type: COINS,
   payload: {
     coins,
+  },
+});
+
+export const editExpensesAction = (edit, id) => ({
+  type: EDITE_EXPENSES,
+  payload: {
+    edit,
+    id,
+  },
+});
+
+export const attExpensesAction = (expenses) => ({
+  type: ATT_EXPENSE,
+  payload: {
+    expenses,
   },
 });
 

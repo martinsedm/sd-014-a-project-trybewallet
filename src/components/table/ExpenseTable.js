@@ -1,16 +1,17 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { expensesRemoveAction } from '../../../../../actions';
+import { editExpensesAction, expensesRemoveAction } from '../../actions';
 
 class ExpenseTable extends Component {
   constructor() {
     super();
     this.handleExpenses = this.handleExpenses.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClickRemove = this.handleClickRemove.bind(this);
+    this.handleClickEdit = this.handleClickEdit.bind(this);
   }
 
-  handleClick(event) {
+  handleClickRemove(event) {
     event.preventDefault();
     const { expensesAtt, expenses } = this.props;
     const { target } = event;
@@ -21,48 +22,51 @@ class ExpenseTable extends Component {
     expensesAtt(remove);
   }
 
+  handleClickEdit(event) {
+    event.preventDefault();
+    const { expensesEdit } = this.props;
+    const { target } = event;
+    const { id } = target.closest('tr');
+    expensesEdit(true, Number(id));
+  }
+
   handleExpenses() {
     const NUMBER_AMOUNT = 2;
     const { expenses } = this.props;
     if (expenses !== undefined) {
       return (
-        expenses.map((expense) => (
-          <tr id={ expense.id } key={ expense.id }>
-            <td>{expense.description}</td>
-            <td>{expense.tag}</td>
-            <td>{expense.method}</td>
-            <td>{expense.value}</td>
-            <td>
-              {
-                Object.values(expense.exchangeRates)
-                  .find((exchangeRate) => exchangeRate.code === expense.currency)
-                  .name.split('/')[0]
-              }
-            </td>
-            <td>
-              {
-                Number(Object.values(expense.exchangeRates)
-                  .find((exchangeRate) => exchangeRate.code === expense.currency).ask)
-                  .toFixed(NUMBER_AMOUNT)
-              }
-            </td>
-            <td>
-              {(Number(Object.values(expense.exchangeRates)
-                .find((exchangeRate) => exchangeRate.code === expense.currency).ask)
-                * Number(expense.value)).toFixed(NUMBER_AMOUNT)}
-            </td>
-            <td>Real</td>
-            <td>
-              <button
-                type="submit"
-                onClick={ this.handleClick }
-                data-testid="delete-btn"
-              >
-                exluir
-              </button>
-            </td>
-          </tr>
-        ))
+        expenses
+          .map(({ id, description, tag, method, value, exchangeRates, currency }) => (
+            <tr id={ id } key={ id }>
+              <td>{description}</td>
+              <td>{tag}</td>
+              <td>{method}</td>
+              <td>{value}</td>
+              <td>{exchangeRates[currency].name.split('/')[0]}</td>
+              <td>{Number(exchangeRates[currency].ask).toFixed(NUMBER_AMOUNT)}</td>
+              <td>
+                {(Number(exchangeRates[currency].ask)
+                * value).toFixed(NUMBER_AMOUNT)}
+              </td>
+              <td>Real</td>
+              <td>
+                <button
+                  type="submit"
+                  onClick={ this.handleClickRemove }
+                  data-testid="delete-btn"
+                >
+                  exluir
+                </button>
+                <button
+                  type="submit"
+                  onClick={ this.handleClickEdit }
+                  data-testid="edit-btn"
+                >
+                  editar
+                </button>
+              </td>
+            </tr>
+          ))
       );
     }
   }
@@ -94,6 +98,7 @@ class ExpenseTable extends Component {
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   expensesAtt: PropTypes.func.isRequired,
+  expensesEdit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -102,6 +107,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   expensesAtt: (state) => dispatch(expensesRemoveAction(state)),
+  expensesEdit: (condition, id) => dispatch(editExpensesAction(condition, id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);

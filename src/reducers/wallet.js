@@ -1,9 +1,18 @@
-import { COINS, CURRENCIES, EXPENSES, REMOVE_EXPENSES } from '../actions';
+import {
+  COINS,
+  CURRENCIES,
+  EXPENSES,
+  REMOVE_EXPENSES,
+  EDITE_EXPENSES,
+  ATT_EXPENSE,
+} from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   coins: {},
+  edit: false,
+  id: 0,
 };
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -25,6 +34,18 @@ const walletReducer = (state = INITIAL_STATE, action) => {
   case REMOVE_EXPENSES:
     return {
       ...state,
+      expenses: action.payload.expenses,
+    };
+  case EDITE_EXPENSES:
+    return {
+      ...state,
+      edit: action.payload.edit,
+      id: action.payload.id,
+    };
+  case ATT_EXPENSE:
+    return {
+      ...state,
+      edit: false,
       expenses: action.payload.expenses,
     };
   default:

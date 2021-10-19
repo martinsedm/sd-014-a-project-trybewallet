@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { expensesAction, fetchExchangeRates } from '../../actions';
+import { attExpensesAction } from '../../actions';
 import ExpenseTable from '../table/ExpenseTable';
-import FormEditExpense from './FormEditExpense';
 import Imputs from './imputs/Imputs';
 import Selects from './selects/Selects';
 
-class FormExpense extends Component {
+class FormEditExpense extends Component {
   constructor() {
     super();
     this.state = {
-      id: -1,
+      id: 0,
       value: '',
       description: '',
       currency: 'USD',
@@ -21,6 +20,26 @@ class FormExpense extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleEdit();
+  }
+
+  handleEdit() {
+    const { expensesEdit, id } = this.props;
+    const attState = expensesEdit.find((expense) => expense.id === Number(id));
+    const { value, description, currency, method, tag, exchangeRates } = attState;
+    this.setState({
+      id: Number(id),
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+    });
   }
 
   handleChange({ target }) {
@@ -31,33 +50,15 @@ class FormExpense extends Component {
   }
 
   async handleClick() {
-    const { getExchangeRates } = this.props;
-    await getExchangeRates();
-
-    const { expenses, exchangeRates } = this.props;
-    const { id } = this.state;
-
-    this.setState({
-      exchangeRates,
-      id: id + 1,
-    });
-
-    expenses(this.state);
-
-    this.setState({
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: 'Alimentação',
-      exchangeRates: {},
-    });
+    const { expenses } = this.props;
+    const { expensesEdit, id } = this.props;
+    const attStateGlobal = expensesEdit.filter((expense) => expense.id !== Number(id));
+    attStateGlobal.push(this.state);
+    expenses(attStateGlobal.sort((a, b) => a.id - b.id));
   }
 
   render() {
     const { value, description, currency, method, tag } = this.state;
-    const { edit } = this.props;
-    if (edit === true) return <FormEditExpense />;
     return (
       <form>
         <Imputs
@@ -75,7 +76,7 @@ class FormExpense extends Component {
           type="button"
           onClick={ this.handleClick }
         >
-          Adicionar despesa
+          Editar despesa
         </button>
         <ExpenseTable />
       </form>
@@ -83,21 +84,20 @@ class FormExpense extends Component {
   }
 }
 
-FormExpense.propTypes = {
-  edit: PropTypes.bool.isRequired,
-  exchangeRates: PropTypes.objectOf(PropTypes.object).isRequired,
+FormEditExpense.propTypes = {
   expenses: PropTypes.func.isRequired,
-  getExchangeRates: PropTypes.func.isRequired,
+  expensesEdit: PropTypes.arrayOf(PropTypes.object).isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  exchangeRates: state.wallet.coins,
-  edit: state.wallet.edit,
+  // exchangeRates: state.wallet.coins,
+  expensesEdit: state.wallet.expenses,
+  id: state.wallet.id,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getExchangeRates: () => dispatch(fetchExchangeRates()),
-  expenses: (state) => dispatch(expensesAction(state)),
+  expenses: (state) => dispatch(attExpensesAction(state)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(FormEditExpense);
