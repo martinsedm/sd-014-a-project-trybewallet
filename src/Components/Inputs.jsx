@@ -6,7 +6,7 @@ class Inputs extends React.Component {
     const { nome, valor, callback } = this.props;
     return (
       <label htmlFor={ nome }>
-        {nome === 'valor' ? 'Valor:' : 'Descrição:'}
+        {nome === 'value' ? 'Valor:' : 'Descrição:'}
         <input
           type="text"
           name={ nome }

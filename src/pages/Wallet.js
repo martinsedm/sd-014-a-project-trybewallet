@@ -8,12 +8,15 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       moedas: [],
-      valor: '',
-      descricao: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
-      tag: '',
+      total: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: [],
     };
     this.changerValue = this.changerValue.bind(this);
     this.gravar = this.gravar.bind(this);
@@ -23,59 +26,68 @@ class Wallet extends React.Component {
     this.fetchMoney();
   }
 
-  fetchMoney() {
-    fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json()
-        .then((results) => (
-          this.setState({ moedas: Object.keys(results) })
-        )));
+  async fetchMoney() {
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const result = await response.json();
+    this.setState({ moedas: Object.keys(result) });
   }
 
   changerValue(event) {
-    const valor = event.target.value;
-    this.setState({ [event.target.id]: valor });
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   }
 
-  gravar(event) {
-    const { changeAll } = this.props;
+  async gravar(event) {
     event.preventDefault();
+    const { changeAll } = this.props;
     const estado = { ...this.state };
     delete estado.moedas;
-    changeAll(estado);
-    this.fetchMoney();
+    delete estado.total;
+    const resposta = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const resultado = await resposta.json();
+    const bid = resultado[estado.currency];
+    const totalValue = parseFloat(estado.value) * bid.ask;
+    changeAll({ ...estado, exchangeRates: resultado });
+    this.setState((atual) => ({
+      id: atual.id + 1,
+      total: atual.total + totalValue }));
   }
 
   render() {
-    const { moedas, valor, descricao } = this.state;
+    const { moedas, value, description, total } = this.state;
     const { usuario } = this.props;
     return (
       <>
         <p data-testid="email-field">{usuario}</p>
-        <p data-testid="total-field">0</p>
+        <p data-testid="total-field">{ total }</p>
         <p data-testid="header-currency-field">BRL</p>
         <form>
-          <Inputs nome="valor" valor={ valor } callback={ this.changerValue } />
-          <Inputs nome="descricao" valor={ descricao } callback={ this.changerValue } />
-          <label htmlFor="moeda">
+          <Inputs nome="value" valor={ value } callback={ this.changerValue } />
+          <Inputs
+            nome="description"
+            valor={ description }
+            callback={ this.changerValue }
+          />
+          <label htmlFor="currency">
             Moeda:
-            <select id="moeda" onChange={ this.changerValue }>
-              {moedas.map((coin) => (
+            <select id="currency" name="currency" onChange={ this.changerValue }>
+              {moedas.map((coin, indice) => (
                 coin !== 'USDT'
-                && <option value={ coin }>{coin}</option>
+                && <option key={ `${coin} ${indice}` } value={ coin }>{coin}</option>
               ))}
             </select>
           </label>
-          <label htmlFor="pagamento">
+          <label htmlFor="method">
             Método de pagamento:
-            <select id="pagamento" onChange={ this.changerValue }>
+            <select id="method" name="method" onChange={ this.changerValue }>
               <option value="Dinheiro">Dinheiro</option>
-              <option value="Cartão de Crédito">Cartão de Crédito</option>
-              <option value="Cartão de Débito">Cartão de Débito</option>
+              <option value="Cartão de crédito">Cartão de crédito</option>
+              <option value="Cartão de débito">Cartão de débito</option>
             </select>
           </label>
           <label htmlFor="tag">
             Tag:
-            <select id="tag" onChange={ this.changerValue }>
+            <select id="tag" name="tag" onChange={ this.changerValue }>
               <option value="Alimentação">Alimentação</option>
               <option value="Lazer">Lazer</option>
               <option value="Trabalho">Trabalho</option>
@@ -90,6 +102,7 @@ class Wallet extends React.Component {
 }
 const mapStateToProps = (state) => ({
   usuario: state.user.email,
+  tabela: state.wallet.expenses,
 });
 const mapDispatchStateToProps = (dispatch) => ({
   changeAll: (valores) => dispatch(gravaConta(valores)),
