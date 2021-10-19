@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 
 class Input extends Component {
   render() {
-    const { nome, tipo, onChange, value } = this.props;
+    const { nome, tipo, role, onChange, value } = this.props;
     return (
       <div>
         <label htmlFor={ nome }>
           { nome }
           :
           <input
-            type="text"
-            role={ tipo }
+            type={ tipo }
+            role={ role }
             id={ nome }
             name={ nome }
             value={ value }

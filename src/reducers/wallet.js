@@ -1,21 +1,31 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { UPDATE_WALLET_ACTION } from '../actions/index';
 
 const INITIAL_STATE = {
   wallet: {
     currencies: [],
     expenses: [],
   },
+  despesas: 0,
 };
 
-const WALLET_ACTION = 'WALLET_ACTION';
+let total = 0;
 
-function wallet(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case WALLET_ACTION:
-    return { state: action.wallet };
+  case UPDATE_WALLET_ACTION:
+    total += ((action.state.valor
+        * action.state.exchangeRates[action.state.moeda].ask) || 0);
+    console.log(action.state);
+    return {
+      ...state.wallet,
+      currencies: action.state.moeda,
+      expenses: action.state,
+      despesas: total.toFixed(2),
+    };
   default:
     return state;
   }
 }
 
-export default wallet;
+export default user;
