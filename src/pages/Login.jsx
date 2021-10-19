@@ -15,7 +15,6 @@ class Login extends Component {
       logged: false,
     };
     this.eventHandler = this.eventHandler.bind(this);
-    this.clickHandler = this.clickHandler.bind(this);
   }
 
   eventHandler({ target }) {
@@ -29,12 +28,6 @@ class Login extends Component {
         password: value,
       });
     }
-  }
-
-  clickHandler() {
-    this.setState({
-      logged: true,
-    });
   }
 
   verifyLogin() {
@@ -84,7 +77,10 @@ class Login extends Component {
           <button
             data-testid="login-submit-button"
             disabled={ this.verifyLogin() }
-            onClick={ () => login({ email }) }
+            onClick={ () => {
+              login({ email });
+              this.setState({ logged: true });
+            } }
             type="button"
           >
             Entrar
