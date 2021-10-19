@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAPI, fetchAPIExpenses } from '../actions';
 import Select from '../components/Select';
+import Table from '../components/Table';
 
 const PAYMENT = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const ALIMENTAÇÃO = 'Alimentação';
@@ -86,8 +87,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { email, currency, expenses } = this.props;
-    console.log(expenses);
+    const { email, currency } = this.props;
     const { moeda, pagamento, tag } = this.state;
     const COIN_TREATED = Object.keys(currency).filter((coin) => coin !== 'USDT');
     return (
@@ -132,6 +132,7 @@ class Wallet extends React.Component {
             onClick={ () => this.addExpense() }
           />
         </form>
+        <Table />
       </div>
     );
   }
