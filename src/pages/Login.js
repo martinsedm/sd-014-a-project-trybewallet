@@ -50,7 +50,7 @@ class Login extends React.Component {
           <input
             type="password"
             id="password"
-            testid="password-input"
+            data-testid="password-input"
             onChange={ this.handleChange }
           />
         </label>
@@ -59,7 +59,6 @@ class Login extends React.Component {
           to="/carteira"
         >
           <button
-            data-testid="password-input"
             type="button"
             disabled={ !(password.length >= MIN_PASSWORD_CHARACTERS && validateEmail) }
           >
