@@ -6,15 +6,13 @@ class TableBody extends Component {
     const { exchange } = this.props;
     let { name: currencyName } = rates[currency];
     const index1 = currencyName.indexOf('/');
-    if (index1 > 0) {
-      currencyName = currencyName.slice(0, index1);
-    }
+    currencyName = index1 > 0 ? currencyName.slice(0, index1) : currencyName;
     let exchangeName = 'Real';
     let askValue = Number(rates[currency].ask);
     if (exchange !== 'BRL') {
       exchangeName = rates[exchange].name;
       const index2 = exchangeName.indexOf('/');
-      exchangeName = exchangeName.slice(0, index2);
+      exchangeName = index2 > 0 ? exchangeName.slice(0, index2) : exchangeName;
       askValue /= Number(rates[exchange].ask);
     }
     const convertedValue = (Math

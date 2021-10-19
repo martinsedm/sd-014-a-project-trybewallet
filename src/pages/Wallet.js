@@ -18,7 +18,6 @@ import {
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
-
     const { currencies } = props;
     this.state = {
       total: 0,
@@ -47,9 +46,7 @@ class Wallet extends React.Component {
 
   componentDidMount() {
     const { getIntCurrencies, expenses } = this.props;
-    if (expenses.length > 0) {
-      this.calculateSum(expenses);
-    }
+    if (expenses.length > 0) this.calculateSum(expenses);
     getIntCurrencies();
   }
 
@@ -81,16 +78,12 @@ class Wallet extends React.Component {
       }
       return acc + valueInReal;
     }, 0);
-    this.setState({
-      total,
-      saved: false,
-    });
+    this.setState({ total, saved: false });
   }
 
   updateStateForm(object, secondObj = {}) {
     const { form } = this.state;
-    this.setState({
-      ...secondObj,
+    this.setState({ ...secondObj,
       form: { ...form, ...object },
     });
   }
@@ -109,8 +102,7 @@ class Wallet extends React.Component {
       addExpense(expense);
     }
     this.setState({
-      form: {
-        ...form,
+      form: { ...form,
         content: {
           value: 0,
           currency: '',
@@ -137,12 +129,8 @@ class Wallet extends React.Component {
     const { form } = this.state;
     this.setState({
       saved: false,
-      form: {
-        ...form,
-        content: {
-          ...form.content,
-          [name]: value,
-        },
+      form: { ...form,
+        content: { ...form.content, [name]: value },
       },
     });
   }
