@@ -1,12 +1,10 @@
-
 .form-login {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   flex-grow: 1;
-  min-height: 100vh;
-  background-color: green;
+  min-height: 100vh;  
 }
 
 .botao-submit {
@@ -15,16 +13,16 @@
 }
 
 button {
-  flex-grow: 1;
+  flex-grow: 0;
 }
 
-.input-password, .input-email {
+.input-password , .input-email {
   display: flex;
   width: 100%;
 }
 
-#input-password, #input-email {
-  flex-grow: 1;
+#input-password , #input-email {
+  flex-grow: 0,5;
 }
 
 img {
