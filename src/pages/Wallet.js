@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addExpense as addExpenseAction } from '../actions';
 import Header from '../components/Header';
 import getCurrencyRate from '../services/currencyAPI';
+import InputText from '../components/InputText';
 
 const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -75,17 +76,27 @@ class Wallet extends React.Component {
       <div>
         <Header />
         <form>
-          <label htmlFor="value">
-            Valor:
-            <input id="value" type="text" name="value" value={ value } onChange={ handleChange } />
-          </label>
-          <label htmlFor="description">
-            Descrição:
-            <input id="description" type="text" name="description" value={ description } onChange={ handleChange } />
-          </label>
+          <InputText
+            label="Valor:"
+            name="value"
+            value={ value }
+            handleChange={ handleChange }
+          />
+          <InputText
+            label="Descrição:"
+            name="description"
+            value={ description }
+            handleChange={ handleChange }
+          />
           <label htmlFor="currency">
             Moeda:
-            <select id="currency" type="select" name="currency" value={ currency } onChange={ handleChange }>
+            <select
+              id="currency"
+              type="select"
+              name="currency"
+              value={ currency }
+              onChange={ handleChange }
+            >
               {this.renderCurrencyCodes()}
             </select>
           </label>
