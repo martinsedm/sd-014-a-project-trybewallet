@@ -80,6 +80,11 @@ export const getIntCurrenciesThunk = () => (dispatch) => {
         .filter((currency) => currency.length === NUM_CHARS);
       dispatch(addCurrenciesAction(currencies));
       dispatch(isFetchingAction());
+    })
+    .catch((error) => {
+      dispatch(notifiyErrorAction(error.message));
+      dispatch(addCurrenciesAction(['erro']));
+      dispatch(isFetchingAction());
     });
 };
 
@@ -90,6 +95,11 @@ export const addExpenseThunk = (expense) => (dispatch) => {
     .then((currencies) => {
       const result = { ...expense, exchangeRates: { ...currencies } };
       dispatch(addExpenseAction(result));
+      dispatch(isFetchingAction());
+    })
+    .catch((error) => {
+      dispatch(notifiyErrorAction(error.message));
+      dispatch(addExpenseAction({}));
       dispatch(isFetchingAction());
     });
 };

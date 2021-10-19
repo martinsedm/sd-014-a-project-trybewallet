@@ -21,9 +21,9 @@ const wallet = (state = INITIAL_STATE, action) => {
     const { expenses } = state;
     let id = expenses.length;
     if (expenses.find(({ id: idNumber }) => idNumber === id)) {
-      const expensesFiltered = expenses
+      const expensesSorted = expenses
         .map((x) => x).sort((a, b) => (a.id > b.id ? 1 : NEG_UM));
-      id = expensesFiltered[id - 1] + 1;
+      id = expensesSorted[id - 1] + 1;
     }
     return { ...state, expenses: [...expenses, { ...action.payload, id }],
     };

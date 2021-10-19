@@ -151,9 +151,11 @@ class Wallet extends React.Component {
       expenses,
       removeExpense,
       currencyToExchange,
-      editor } = this.props;
+      editor,
+      currencies,
+      error: { status, message },
+    } = this.props;
     const { total, saved, form } = this.state;
-    const { currencies } = this.props;
     const textButton = editor ? 'Editar Despesa' : 'Adicionar Despesa';
     return (
       <main>
@@ -187,6 +189,7 @@ class Wallet extends React.Component {
         </section>
         { saved && <p>Lista salva</p> }
         { email.length === 0 && <MakeLogin />}
+        { status && <h3>{`Erro na aplicação: '${message}'`}</h3>}
       </main>
     );
   }
@@ -208,6 +211,7 @@ Wallet.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   currencyToExchange: PropTypes.string,
+  error: PropTypes.objectOf(PropTypes.any).isRequired,
   getIntCurrencies: PropTypes.func.isRequired,
   addExpense: PropTypes.func.isRequired,
   removeExpense: PropTypes.func.isRequired,
@@ -224,6 +228,7 @@ const mapStateToProps = (state) => ({
   idToEdit: state.wallet.idToEdit,
   currencies: state.wallet.currencies,
   currencyToExchange: state.control.currencyToExchange,
+  error: state.control.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({
