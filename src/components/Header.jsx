@@ -14,7 +14,7 @@ class Header extends Component {
     }, 0);
     return (
       <div>
-        <h2>TrybeWallet</h2>
+        <h2>TrybeWallet </h2>
         <header>
           <h4 data-testid="email-field">{ emailUser }</h4>
           <h4>
