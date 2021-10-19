@@ -33,7 +33,7 @@ class Login extends React.Component {
 
   handleClick() {
     const { history } = this.props;
-    history.push('/wallet');
+    history.push('/carteira');
   }
 
   render() {
