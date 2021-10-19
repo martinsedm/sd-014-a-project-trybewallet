@@ -14,7 +14,6 @@ class Select extends React.Component {
       <label htmlFor={ id }>
         { label }
         <select name={ name } onChange={ onChange } id={ id }>
-          <option value="default">Escolha uma opção...</option>
           { options.map((option, index) => (
             <option key={ index } value={ option }>{ option }</option>
           ))}
