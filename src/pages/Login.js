@@ -1,8 +1,5 @@
-import React from 'react'; // refazendo tudo sem desespero pra aprender
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import InputLogin from '../components/InputLogin';
-import Button from '../components/Button';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -14,52 +11,58 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
+  handleChange({ target }) {
     this.setState({
-      [event.target.name]: event.target.value,
+      [target.name]: target.value,
     });
-  }
-
-  handleClick() {
-    const { email } = this.state;
-    const { changeInput, history } = this.props;
-    changeInput(email);
-    history.push('./carteira');
   }
 
   render() {
     const { email, password } = this.state;
+    const { handleChange } = this;
+
+    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+    const validateEmail = () => {
+      const reg = /\S+@\S+\.\S+/;
+      return reg.test(email);
+    };
+
+    const MIN_CHARACTERS = 6;
+    const validatePass = password.length >= MIN_CHARACTERS;
+
     return (
       <div>
-        <InputLogin
-          label="E-mail"
-          name="email"
-          data-testid="email-input"
-          value={ email }
-          onChange={ this.handleChange }
-          placeholder="Digite seu e-mail"
-        />
-        <InputLogin
-          label="Password"
-          name="password"
-          data-testid="password-input"
-          value={ password }
-          onChange={ this.handleChange }
-          placeholder="Digite sua senha"
-        />
-        <Button onClick={ this.handleClick } />
+        <label htmlFor="input-email">
+          Email:
+          <input
+            id="input-email"
+            name="email"
+            type="email"
+            value={ email }
+            data-testid="email-input"
+            onChange={ handleChange }
+          />
+        </label>
+        <label htmlFor="input-password">
+          Password:
+          <input
+            id="input-password"
+            name="password"
+            type="password"
+            value={ password }
+            data-testid="password-input"
+            onChange={ handleChange }
+          />
+        </label>
+        <button
+          type="button"
+          disabled={ !(validateEmail() && validatePass) }
+        >
+          <Link to="/carteira">Entrar</Link>
+        </button>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  changeInput: (state) => dispatch(SAVE_EMAIL(state)),
-});
-
-Login.propTypes = {
-  changeInput: PropTypes.func.isRequired,
-  history: PropTypes.shape().isRequired,
-};
-
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
