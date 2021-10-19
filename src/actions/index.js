@@ -23,10 +23,13 @@ export const fetchCoins = () => async (dispatch) => {
   dispatch(setCoins(Object.keys(coins)));
 };
 
-export const setExpenditure = (expenditure) => ({
-  type: SET_EXPENDITURE,
-  payload: expenditure,
-});
+export const setExpenditure = (expenditure) => async (dispatch) => {
+  const exchangeRates = await coinApi();
+  dispatch({
+    type: SET_EXPENDITURE,
+    payload: { ...expenditure, exchangeRates },
+  });
+};
 
 export const deleteExpenditure = (id) => ({
   type: DELETE_EXPENDITURE,

@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
-import coinApi from '../services/coinApi';
 import {
   setExpenditure as setExpenditureAction,
   editExpenditure as editExpenditureAction } from '../actions';
@@ -54,8 +53,7 @@ class ExpenditureForm extends React.Component {
     const { setExpenditure, editExpenditure } = this.props;
     const { forms, isEditing } = this.state;
     if (isEditing) return editExpenditure(forms);
-    const coins = await coinApi();
-    setExpenditure({ ...forms, exchangeRates: coins });
+    setExpenditure(forms);
     this.setState({ forms: INITIAL_FORM });
   }
 
