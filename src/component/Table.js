@@ -37,7 +37,7 @@ class Table extends Component {
               <td>Real</td>
               <td>
                 <button type="button">Editar</button>
-                <button type="button">x</button>
+                <button type="button" data-testid="delete-btn">x</button>
               </td>
             </tr>))}
         </tbody>
