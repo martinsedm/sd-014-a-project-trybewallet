@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export class SelecMoeda extends Component {
+class SelecMoeda extends Component {
   render() {
     const { filtrarMoedas, moeda, handleChange } = this.props;
     const moedasFiltradas = filtrarMoedas();
