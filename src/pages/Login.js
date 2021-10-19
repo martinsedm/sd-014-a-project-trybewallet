@@ -36,6 +36,8 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const MAX_LEN = 6;
+    const regexEmail = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+    const emailValidation = regexEmail.test(email);
     return (
       <div>
         <input
@@ -53,10 +55,8 @@ class Login extends React.Component {
         <button
           type="submit"
           disabled={
-            !email
-            || !password
-            || email.split('.').includes('com') === false
-            || (password.length >= MAX_LEN) === false
+            !(emailValidation
+            && password.length >= MAX_LEN)
           }
           onClick={ this.routeChange }
         >
@@ -83,3 +83,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+// https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
