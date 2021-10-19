@@ -4,6 +4,8 @@ export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const SET_COINS = 'SET_COINS';
 export const SET_EXPENDITURE = 'SET_EXPENDITURE';
 export const DELETE_EXPENDITURE = 'DELETE_EXPENDITURE';
+export const SET_CUR_EXPENDITURE = 'SET_CUR_EXPENDITURE';
+export const EDIT_EXPENDITURE = 'EDIT_EXPENDITURE';
 
 export const setUserEmail = (email) => ({
   type: SET_USER_EMAIL,
@@ -29,4 +31,14 @@ export const setExpenditure = (expenditure) => ({
 export const deleteExpenditure = (id) => ({
   type: DELETE_EXPENDITURE,
   payload: id,
+});
+
+export const setCurExpenditure = (id) => ({
+  type: SET_CUR_EXPENDITURE,
+  payload: id,
+});
+
+export const editExpenditure = (expenditure) => ({
+  type: EDIT_EXPENDITURE,
+  payload: expenditure,
 });
