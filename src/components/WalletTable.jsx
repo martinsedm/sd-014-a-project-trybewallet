@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { removeExpenses } from '../actions';
+import WalletTableItems from './WalletTableItems';
 
-class WalletTable extends Component {
+export default class WalletTable extends Component {
   render() {
-    const { expenses, setRemoveExpenses } = this.props;
     return (
       <table>
         <thead>
@@ -21,50 +18,10 @@ class WalletTable extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>
-          { expenses
-            .map(({ id, value, description, currency, method, tag, exchangeRates }) => (
-              <tr key={ id }>
-                <td>{ description }</td>
-                <td>{ tag }</td>
-                <td>{ method }</td>
-                <td>{ value }</td>
-                <td>{ exchangeRates[currency].name }</td>
-                <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
-                <td>
-                  { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    type="button"
-                    data-testid="delete-btn"
-                    onClick={ () => setRemoveExpenses(id) }
-                  >
-                    Deletar
-                  </button>
-                </td>
-              </tr>
-            )) }
-        </tbody>
+        <WalletTableItems />
       </table>
     );
   }
 }
-
-WalletTable.propTypes = {
-  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  setRemoveExpenses: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  expenses: state.wallet.expenses,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  setRemoveExpenses: (id) => dispatch(removeExpenses(id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
 
 // https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/
