@@ -10,9 +10,10 @@ class Table extends Component {
   }
 
   deleteExpense({ target: { value } }) {
-    const { deleteExpense, expenses } = this.props;
+    const { deleteExpense, expenses, handleTotal } = this.props;
     const ArrayExpenseDeleted = expenses.filter((item) => item.id !== Number(value));
     deleteExpense(ArrayExpenseDeleted);
+    handleTotal(ArrayExpenseDeleted);
   }
 
   render() {
@@ -68,6 +69,7 @@ class Table extends Component {
 
 Table.propTypes = {
   deleteExpense: PropTypes.func.isRequired,
+  handleTotal: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
@@ -76,7 +78,7 @@ const mapStateToProps = ({ wallet: { expenses } }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteExpense: (id) => dispatch(deleteExpenseAction(id)),
+  deleteExpense: (payload) => dispatch(deleteExpenseAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);

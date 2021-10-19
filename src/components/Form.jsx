@@ -44,15 +44,14 @@ class Form extends Component {
       Object.assign(exchangeRates, object);
       return coin;
     }, {});
-    const obj = { id: expenses.length,
+    setExpenses({ id: expenses.length,
       value,
       description,
       currency,
       method,
       tag,
       exchangeRates,
-    };
-    setExpenses(obj);
+    });
     handleTotal();
   }
 

@@ -15,9 +15,9 @@ class Wallet extends React.Component {
     this.handleTotal();
   }
 
-  handleTotal() {
+  handleTotal(newArray) {
     const { store: { wallet: { expenses } } } = this.props;
-    const totals = expenses.reduce((total, expense) => (
+    const totals = (newArray || expenses).reduce((total, expense) => (
       (expense.value * expense.exchangeRates[expense.currency].ask) + total),
     0);
     this.setState({ totalValue: totals.toFixed(2) });
@@ -41,7 +41,7 @@ class Wallet extends React.Component {
           </div>
         </header>
         <Form handleTotal={ this.handleTotal } />
-        <Table />
+        <Table handleTotal={ this.handleTotal } />
       </main>
     );
   }
