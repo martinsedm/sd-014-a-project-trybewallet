@@ -5,6 +5,7 @@ import { addExpense as addExpenseAction } from '../actions';
 import Header from '../components/Header';
 import getCurrencyRate from '../services/currencyAPI';
 import InputText from '../components/InputText';
+import Table from '../components/Table';
 
 const payments = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -114,6 +115,7 @@ class Wallet extends React.Component {
           </label>
           <button type="button" onClick={ handleClick }> Adicionar despesa</button>
         </form>
+        <Table />
       </div>
     );
   }
