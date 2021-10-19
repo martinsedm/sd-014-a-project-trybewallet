@@ -17,7 +17,7 @@ class Formulario extends React.Component {
       tag: 'Alimentação',
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
