@@ -1,20 +1,23 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import InputForm from './InputForm';
 import SelectForm from './SelectForm';
+import { setCurrencies } from '../actions';
 
 class WalletForm extends React.Component {
   constructor() {
     super();
-    // this.state = {
-    //   id: 0,
-    //   value: 0,
-    //   currency: 'USD',
-    //   method: 'Dinheiro',
-    //   tag: '',
-    //   description: '',
-    // };
+    this.state = {
+      currencies: [],
+    };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
@@ -30,7 +33,7 @@ class WalletForm extends React.Component {
       'Cartão de crédito',
       'Cartão de débito',
     ];
-
+    const { currencies } = this.props;
     return (
       <div>
         <form>
@@ -46,12 +49,12 @@ class WalletForm extends React.Component {
             label="Descrição:"
             onChange={ this.handleChange }
           />
-          {/* <SelectForm
+          <SelectForm
             label="Moeda"
             name="currency"
-            options={ }
+            options={ currencies }
             onChange={ this.handleChange }
-          /> */}
+          />
           <SelectForm
             label="Método de pagamento"
             name="method"
@@ -69,5 +72,17 @@ class WalletForm extends React.Component {
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(setCurrencies()),
+});
 
-export default WalletForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+WalletForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
