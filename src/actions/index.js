@@ -1,6 +1,6 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const SET_CURRENCY = 'SET_CURRENCY';
-export const SET_TOTAL = 'SET TOTAL';
+export const SET_TOTAL = 'SET_TOTAL';
 
 export const emailSave = (email) => ({ type: 'SET_EMAIL', email });
 

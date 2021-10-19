@@ -10,7 +10,7 @@ function userWallet(state = INITIAL_WALLET, action) {
   case SET_CURRENCY:
     return { ...state, currencies: action.data };
   case SET_TOTAL:
-    return { ...state, expenses: { ...action.expenses } };
+    return { ...state, expenses: [...state.expenses, action.total] };
   default:
     return state;
   }
