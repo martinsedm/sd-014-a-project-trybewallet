@@ -15,7 +15,6 @@ class Wallet extends React.Component {
     super();
     this.state = {
       moedas: [],
-      expenses: [],
       value: '',
       description: '',
       currency: 'USD',
@@ -25,7 +24,6 @@ class Wallet extends React.Component {
     this.salvarMoedas = this.salvarMoedas.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.adicionarDespesas = this.adicionarDespesas.bind(this);
-    this.enviar = this.enviar.bind(this);
   }
 
   componentDidMount() {
@@ -37,36 +35,31 @@ class Wallet extends React.Component {
     this.setState({ [name]: value }, callback);
   }
 
-  async adicionarDespesas(callback) {
-    const { value, description, currency, method, tag, expenses } = this.state;
+  async adicionarDespesas() {
+    const { value, description, currency, method, tag } = this.state;
+    const { expenses, sendExpenses, sendDespesas, despesa } = this.props;
     const mo = await pegarMoedas();
-    this.setState((anterior) => ({
-      expenses: [...anterior.expenses, {
-        id: expenses.length,
-        value,
-        description,
-        currency,
-        method,
-        tag,
-        exchangeRates: mo,
-      }],
-    }));
+    const expense = [...expenses, {
+      id: expenses.length,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: mo,
+    }];
     this.setState({
       description: '',
       value: '',
-    }, callback);
-  }
-
-  enviar() {
-    this.adicionarDespesas(() => {
-      const { expenses } = this.state;
-      const { sendExpenses, sendDespesas, despesa } = this.props;
-      const ultimo = expenses[expenses.length - 1];
-      const cambio = ultimo.exchangeRates[ultimo.currency].ask;
-      const total = ((Number(ultimo.value) * cambio) + Number(despesa)).toFixed(2);
-      sendExpenses(expenses);
-      sendDespesas(total);
     });
+    const ultimo = expense[expense.length - 1];
+    const cambio = ultimo.exchangeRates[ultimo.currency].ask;
+    const numberDespesa = Number(despesa);
+    console.log(`despesa ${despesa}`);
+    const total = Number(((Number(ultimo.value) * cambio) + (numberDespesa))).toFixed(2);
+    sendExpenses(expense);
+    sendDespesas(total.toString());
+    console.log(expense);
   }
 
   async salvarMoedas() {
@@ -98,7 +91,7 @@ class Wallet extends React.Component {
           <Moeda change={ this.handleChange } moedas={ moedas } value={ currency } />
           <Pagamento change={ this.handleChange } value={ method } />
           <Tag change={ this.handleChange } value={ tag } />
-          <button onClick={ this.enviar } type="button">
+          <button onClick={ this.adicionarDespesas } type="button">
             Adicionar despesas
           </button>
         </form>
@@ -120,6 +113,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
-const mapStateToProps = (state) => ({ despesa: state.wallet.despesa });
+const mapStateToProps = (state) => ({
+  despesa: state.wallet.despesa,
+  expenses: state.wallet.expenses,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

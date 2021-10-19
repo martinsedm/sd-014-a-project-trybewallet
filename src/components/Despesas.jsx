@@ -1,13 +1,20 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { changeDespesa, changeExpenses } from '../actions';
 
 class Despesas extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.moeda = this.moeda.bind(this);
     this.cambio = this.cambio.bind(this);
     this.valorConvertido = this.valorConvertido.bind(this);
+    this.apagarItem = this.apagarItem.bind(this);
+  }
+
+  componentDidMount() {
+    const {total} = this.props;
+    console.log(total);
   }
 
   moeda(despesa) {
@@ -31,11 +38,23 @@ class Despesas extends Component {
     return (Number(despesa.exchangeRates[despesa.currency].ask)).toFixed(2);
   }
 
+  apagarItem(e) {
+    const { despesas, sendDespesas, sendExpenses, total } = this.props;
+    console.log(`apagando ${total}`);
+    const newDespesas = despesas.filter((despesa) => despesa.id !== Number(e.target.id));
+    const apagado = despesas.filter((despesa) => despesa.id === Number(e.target.id));
+    const cambio = apagado[0].exchangeRates[apagado[0].currency].ask;
+    const newTotal = Number((Number(total)
+      - (Number(apagado[0].value) * cambio)).toFixed(2));
+    sendDespesas(newTotal.toString());
+    sendExpenses(newDespesas);
+  }
+
   render() {
     const { despesas } = this.props;
     return (
       <div>
-        <table>
+        <table border="1">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -60,7 +79,16 @@ class Despesas extends Component {
                 <td>{`${this.cambio(despesa)}`}</td>
                 <td>{`${this.valorConvertido(despesa)}`}</td>
                 <td>Real</td>
-                <td>{despesa.currency}</td>
+                <td>
+                  <button
+                    type="button"
+                    id={ despesa.id }
+                    onClick={ this.apagarItem }
+                    data-testid="delete-btn"
+                  >
+                    Apagar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -72,12 +100,29 @@ class Despesas extends Component {
 
 Despesas.propTypes = {
   despesas: PropTypes.shape({
+    filter: PropTypes.func,
+    map: PropTypes.func,
+  }),
+  sendDespesas: PropTypes.func,
+  sendExpenses: PropTypes.func,
+  total: PropTypes.any,
+}.isRequired;
+
+Despesas.propTypes = {
+  despesas: PropTypes.shape({
     map: PropTypes.func,
   }),
 }.isRequired;
 
 const mapStateToProps = (state) => ({
+  total: state.wallet.despesa,
   despesas: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps, null)(Despesas);
+const mapDispatchToProps = (dispatch) => ({
+  sendExpenses: (expenses) => dispatch(changeExpenses(expenses)),
+  sendDespesas: (despesas) => dispatch(changeDespesa(despesas)),
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Despesas);
