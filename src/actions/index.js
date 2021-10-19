@@ -6,7 +6,8 @@ const {
   GET_WALLET_API_FAILED,
   GET_EXPENSES,
   LOGIN_INFO,
-  WALLET_INFO } = types;
+  WALLET_INFO,
+  DELETE_EXPENSE } = types;
 
 export const sendLoginInfo = (payload) => ({
   type: LOGIN_INFO,
@@ -34,5 +35,10 @@ export const ERROR = (payload) => ({
 
 export const sendExpensesInfo = (payload) => ({
   type: GET_EXPENSES,
+  payload,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });

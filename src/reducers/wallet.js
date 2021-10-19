@@ -4,7 +4,8 @@ const {
   LOADING_API,
   GET_WALLET_API_SUCCESS,
   GET_WALLET_API_FAILED,
-  GET_EXPENSES } = types;
+  GET_EXPENSES,
+  DELETE_EXPENSE } = types;
 
 const INITIAL_STATE = {
   currencies: [],
@@ -34,6 +35,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     action.payload = { id: state.expenses.length, ...action.payload };
     state.expenses = [...state.expenses, action.payload];
     return { ...state };
+  case DELETE_EXPENSE:
+    console.log(action.payload);
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload),
+    };
   default:
     return state;
   }
