@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { Route, Switch } from 'react-router';
 import { Provider } from 'react-redux';
 import store from './store';
 import './index.css';
@@ -11,9 +10,7 @@ import * as serviceWorker from './serviceWorker';
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={ store }>
-      <Switch>
-        <Route exact path="/" component={ App } />
-      </Switch>
+      <App />
     </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
