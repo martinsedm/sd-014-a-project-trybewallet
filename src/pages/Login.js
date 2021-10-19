@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Login extends React.Component {
   constructor() {
@@ -7,6 +8,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       senha: '',
+      redirect: false,
     };
     this.handleChance = this.handleChance.bind(this);
     this.buttonClick = this.buttonClick.bind(this);
@@ -18,16 +20,27 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     });
+    const { email, senha } = this.state;
+    const caracteres = 5;
+    if (email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
+      && senha.length >= caracteres) {
+      document.getElementById('submit').disabled = false;
+    }
   }
 
   buttonClick() {
-    console.log('login');
+    this.setState({
+      redirect: true,
+    });
   }
 
   render() {
-    const { email, senha } = this.state;
+    const { email, senha, redirect } = this.state;
+    if (redirect === true) {
+      return <Redirect to="/Wallet" />;
+    }
     return (
-      <form onSubmit={ this.buttonClick }>
+      <form htmlFor="form" onSubmit={ this.buttonClick }>
         <label htmlFor="email">
           <input
             data-testid="email-input"
@@ -35,8 +48,6 @@ class Login extends React.Component {
             value={ email }
             name="email"
           />
-          { !email.match(/^\S+@\S+$/i)
-            ? ' -e-mail inválido- ' : ' -ok- ' }
         </label>
         <label htmlFor="senha">
           <input
@@ -45,10 +56,13 @@ class Login extends React.Component {
             value={ senha }
             name="senha"
             type="password"
-            minLength="6"
           />
         </label>
-        <button type="submit">
+        <button
+          id="submit"
+          disabled
+          type="submit"
+        >
           Entrar
         </button>
       </form>
