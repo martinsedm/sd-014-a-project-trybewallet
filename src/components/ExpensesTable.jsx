@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
-// import LineTable from './LineTable';
+import PropTypes from 'prop-types';
+import LineTable from './LineTable';
 
-export default class ExpenseTable extends Component {
+class ExpenseTable extends Component {
   render() {
     const headerTableTexts = ['Descrição',
       'Tag',
@@ -10,29 +10,26 @@ export default class ExpenseTable extends Component {
       'Valor', 'Moeda',
       'Câmbio utilizado',
       'Valor convertido',
-      'Moeda de conversão'];
-    // const { expenses } = this.props;
+      'Moeda de conversão',
+      'Editar/Excluir',
+    ];
+    const { getExpenses } = this.props;
     return (
       <table>
         <tbody>
           <tr>
             {headerTableTexts.map((item) => <th key={ item }>{item}</th>)}
           </tr>
+          {getExpenses.map((expense) => (
+            <LineTable expense={ expense } key={ expense.id } />))}
         </tbody>
-        {// expenses.map((expense) => <LineTable expense={ expense } key={ expense.id } />)
-        }
       </table>
     );
   }
 }
 
-// ExpenseTable.propTypes = {
-//  expenses: PropTypes.arrayOf(PropTypes.shape({
-//    price: PropTypes.string,
-//    currency: PropTypes.string,
-//    paymentForm: PropTypes.string,
-//    method: PropTypes.string,
-//    description: PropTypes.string,
-//    id: PropTypes.number,
-//  })).isRequired,
-// };
+ExpenseTable.propTypes = {
+  getExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default ExpenseTable;

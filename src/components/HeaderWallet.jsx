@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addCurrenciesThunk, addExpense as addExpenseAction } from '../actions/index';
 
 import FormsAddexpense from './FormsAddExpense';
 
@@ -45,17 +43,6 @@ class HeaderWallet extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  getEmail: state.user.email,
-  getExpenses: state.wallet.expenses,
-  getCurrencies: state.wallet.currencies,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  addCurrenciesApi: () => dispatch(addCurrenciesThunk()),
-  addExpense: (payload) => dispatch(addExpenseAction(payload)),
-});
-
 HeaderWallet.propTypes = {
   getEmail: PropTypes.string.isRequired,
   addCurrenciesApi: PropTypes.func.isRequired,
@@ -64,4 +51,4 @@ HeaderWallet.propTypes = {
   addExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderWallet);
+export default HeaderWallet;

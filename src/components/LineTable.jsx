@@ -3,18 +3,30 @@ import PropTypes from 'prop-types';
 import { Button } from './Button';
 
 export default class LineTable extends Component {
+  exchangeValue(value, ask) {
+    return Number(value) * Number(ask);
+  }
+
+  formatValur(ask) {
+    const askNumber = Number(ask);
+    return askNumber.toFixed(2);
+  }
+
   render() {
-    const { expense } = this.props;
+    const { expense:
+      { description, tag, method, value, exchangeRates, currency },
+    } = this.props;
+    const exchangeUsed = exchangeRates[currency];
     return (
       <tr>
-        <td>{expense.description}</td>
-        <td>{expense.tag}</td>
-        <td>{expense.method}</td>
-        <td>{expense.currency}</td>
-        <td>{expense.currency}</td>
-        <td>cambio utilozadp (use js pra verificar iss)</td>
-        <td>valor convertido (use js pra verificar iss)</td>
-        <td>moeda de conversao (nocaso real brl)</td>
+        <td>{description}</td>
+        <td>{tag}</td>
+        <td>{method}</td>
+        <td>{value}</td>
+        <td>{exchangeUsed.name}</td>
+        <td>{this.formatValur(exchangeUsed.ask)}</td>
+        <td>{this.exchangeValue(value, exchangeUsed.ask)}</td>
+        <td>Real</td>
         <td>
           <Button
             text="editar"
@@ -40,5 +52,10 @@ LineTable.propTypes = {
     tag: PropTypes.string,
     description: PropTypes.string,
     id: PropTypes.number,
+    value: PropTypes.string,
+    exchangeRates: PropTypes.shape({
+      ask: PropTypes.string,
+      name: PropTypes.string,
+    }),
   }).isRequired,
 };
