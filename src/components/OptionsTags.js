@@ -7,7 +7,9 @@ export default class OptionsTags extends Component {
     return (
       <>
         { tags.map((tag) => (
-          <option key={ tag } name={ tag } value={ tag }>
+          <option
+            key={ tag }
+          >
             { tag }
           </option>
         )) }

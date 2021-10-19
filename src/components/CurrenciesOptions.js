@@ -14,7 +14,11 @@ class CurrenciesOptions extends Component {
     return (
       <>
         { currencies.map((currencie) => (
-          <option key={ currencie } value={ currencie }>{ currencie }</option>))}
+          <option
+            key={ currencie }
+          >
+            { currencie }
+          </option>))}
       </>
     );
   }

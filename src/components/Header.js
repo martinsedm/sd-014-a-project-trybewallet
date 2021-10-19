@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import SumExpensesValue from './SumExpensesValue';
 
 class Header extends Component {
   render() {
@@ -11,7 +12,7 @@ class Header extends Component {
           { getUserFromStore }
         </p>
 
-        <p data-testid="total-field">0</p>
+        <SumExpensesValue />
 
         <p data-testid="header-currency-field">
           BRL

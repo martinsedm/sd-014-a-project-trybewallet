@@ -7,7 +7,9 @@ export default class PayOptions extends Component {
     return (
       <>
         { payMethods.map((payMethod) => (
-          <option key={ payMethod } name={ payMethod } value={ payMethod }>
+          <option
+            key={ payMethod }
+          >
             { payMethod }
           </option>
         )) }

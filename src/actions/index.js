@@ -1,25 +1,38 @@
 import types from '../types';
 
+const {
+  LOADING_API,
+  GET_WALLET_API_SUCCESS,
+  GET_WALLET_API_FAILED,
+  GET_EXPENSES,
+  LOGIN_INFO,
+  WALLET_INFO } = types;
+
 export const sendLoginInfo = (payload) => ({
-  type: types.LOGIN_INFO,
+  type: LOGIN_INFO,
   payload,
 });
 
 export const sendWalletInfo = (payload) => ({
-  type: types.WALLET_INFO,
+  type: WALLET_INFO,
   payload,
 });
 
 export const walletAPISuccess = (payload) => ({
-  type: types.GET_WALLET_API_SUCCESS,
+  type: GET_WALLET_API_SUCCESS,
   payload,
 });
 
 export const loadingAPI = () => ({
-  type: types.LOADING_API,
+  type: LOADING_API,
 });
 
 export const ERROR = (payload) => ({
-  type: types.GET_WALLET_API_FAILED,
+  type: GET_WALLET_API_FAILED,
+  payload,
+});
+
+export const sendExpensesInfo = (payload) => ({
+  type: GET_EXPENSES,
   payload,
 });

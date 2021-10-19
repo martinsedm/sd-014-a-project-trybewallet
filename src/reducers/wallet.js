@@ -1,6 +1,10 @@
 import types from '../types';
 
-const { LOADING_API, GET_WALLET_API_SUCCESS, GET_WALLET_API_FAILED } = types;
+const {
+  LOADING_API,
+  GET_WALLET_API_SUCCESS,
+  GET_WALLET_API_FAILED,
+  GET_EXPENSES } = types;
 
 const INITIAL_STATE = {
   currencies: [],
@@ -26,6 +30,10 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       error: 'xableu',
     };
+  case GET_EXPENSES:
+    action.payload = { id: state.expenses.length, ...action.payload };
+    state.expenses = [...state.expenses, action.payload];
+    return { ...state };
   default:
     return state;
   }

@@ -11,7 +11,7 @@ const loginReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       email: action.payload.email,
-      senha: action.payload.senha,
+      password: action.payload.senha,
     };
   default:
     return state;

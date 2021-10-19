@@ -16,8 +16,7 @@ class Login extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
+  handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
