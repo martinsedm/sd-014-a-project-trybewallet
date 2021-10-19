@@ -37,7 +37,7 @@ class Wallet extends React.Component {
 
   async adicionarDespesas() {
     const { value, description, currency, method, tag } = this.state;
-    const { expenses, sendExpenses, sendDespesas, despesa } = this.props;
+    const { expenses, sendExpenses, sendDespesas } = this.props;
     const mo = await pegarMoedas();
     const expense = [...expenses, {
       id: expenses.length,
@@ -52,14 +52,18 @@ class Wallet extends React.Component {
       description: '',
       value: '',
     });
-    const ultimo = expense[expense.length - 1];
-    const cambio = ultimo.exchangeRates[ultimo.currency].ask;
-    const numberDespesa = Number(despesa);
-    console.log(`despesa ${despesa}`);
-    const total = Number(((Number(ultimo.value) * cambio) + (numberDespesa))).toFixed(2);
+    let total = 0.00;
+    expense.forEach((valor) => {
+      const cambio = valor.exchangeRates[valor.currency].ask;
+      const numberValue = Number(valor.value);
+      total += (numberValue * cambio);
+    });
+    // const ultimo = expense[expense.length - 1];
+    // const cambio = ultimo.exchangeRates[ultimo.currency].ask;
+    // const numberDespesa = Number(despesa);
+    // const total = Number(((Number(ultimo.value) * cambio) + (numberDespesa))).toFixed(2);
     sendExpenses(expense);
-    sendDespesas(total.toString());
-    console.log(expense);
+    sendDespesas((total.toFixed(2)).toString());
   }
 
   async salvarMoedas() {

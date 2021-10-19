@@ -35,4 +35,4 @@ const mapStateToProps = (state) => ({
   cambio: state.wallet.cambio,
 });
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps)(Header);

@@ -4,17 +4,12 @@ import { connect } from 'react-redux';
 import { changeDespesa, changeExpenses } from '../actions';
 
 class Despesas extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.moeda = this.moeda.bind(this);
     this.cambio = this.cambio.bind(this);
     this.valorConvertido = this.valorConvertido.bind(this);
     this.apagarItem = this.apagarItem.bind(this);
-  }
-
-  componentDidMount() {
-    const {total} = this.props;
-    console.log(total);
   }
 
   moeda(despesa) {
@@ -39,14 +34,20 @@ class Despesas extends Component {
   }
 
   apagarItem(e) {
-    const { despesas, sendDespesas, sendExpenses, total } = this.props;
-    console.log(`apagando ${total}`);
+    const { despesas, sendDespesas, sendExpenses } = this.props;
     const newDespesas = despesas.filter((despesa) => despesa.id !== Number(e.target.id));
-    const apagado = despesas.filter((despesa) => despesa.id === Number(e.target.id));
-    const cambio = apagado[0].exchangeRates[apagado[0].currency].ask;
-    const newTotal = Number((Number(total)
-      - (Number(apagado[0].value) * cambio)).toFixed(2));
-    sendDespesas(newTotal.toString());
+    let total = 0.00;
+    newDespesas.forEach((valor) => {
+      const cambio = valor.exchangeRates[valor.currency].ask;
+      const numberValue = Number(valor.value);
+      total += (numberValue * cambio);
+      console.log(total);
+    });
+    // const apagado = despesas.filter((despesa) => despesa.id === Number(e.target.id));
+    // const cambio = apagado[0].exchangeRates[apagado[0].currency].ask;
+    // const newTotal = Number((Number(total)
+    //   - (Number(apagado[0].value) * cambio)).toFixed(2));
+    sendDespesas((total.toFixed(2)).toString());
     sendExpenses(newDespesas);
   }
 
@@ -105,7 +106,6 @@ Despesas.propTypes = {
   }),
   sendDespesas: PropTypes.func,
   sendExpenses: PropTypes.func,
-  total: PropTypes.any,
 }.isRequired;
 
 Despesas.propTypes = {
