@@ -1,33 +1,31 @@
 // Coloque suas actions
-import currenciesApi from '../services/currenciesAPI';
+import getCurrencyApi from '../services/currencyAPI';
 
 export const LOGIN_EMAIL = 'LOGIN_EMAIL';
-export const SUBMIT_WALLET = 'SUBIMIT_WALLET';
-export const SUBMIT_WALLET_CURRENCIES = 'SUBMIT_WALLET_CURRENCIES';
+export const API_SUCCESS = 'API_SUCCESS';
+export const API_ERROR = 'API_ERROR';
 
 export const actionLoginEmail = (payload) => ({
   type: LOGIN_EMAIL,
   payload,
 });
 
-export const actionSetExpenses = (payload) => ({
-  type: SUBMIT_WALLET,
+export const getCurrencyApiSuccess = (payload) => ({
+  type: API_SUCCESS,
   payload,
 });
 
-export const actionSetCurrencies = (currencies) => ({
-  type: SUBMIT_WALLET_CURRENCIES,
-  currencies,
+export const getCurrencyApiError = (payload) => ({
+  type: API_ERROR,
+  payload,
 });
 
-export function setCurrencies() {
-  return async (dispatch) => {
-    try {
-      const result = await currenciesApi();
-      const filteredCurrencies = Object.keys(result).filter((key) => key !== 'USDT');
-      dispatch(actionSetCurrencies(filteredCurrencies));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-}
+export const getCurrencyApiThunk = () => async (dispatch) => {
+  try {
+    const response = await getCurrencyApi();
+    const payload = Object.keys(response);
+    dispatch(getCurrencyApiSuccess(payload));
+  } catch (error) {
+    dispatch(getCurrencyApiError(error));
+  }
+};

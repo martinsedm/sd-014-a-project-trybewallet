@@ -1,18 +1,22 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { SUBMIT_WALLET } from '../actions';
+import { API_SUCCESS, API_ERROR } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expenses: [],
+  error: null,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SUBMIT_WALLET:
+  case API_SUCCESS:
     return {
       ...state,
-      currencies: action.payload.currencies,
-      expenses: action.payload.expenses,
+      currencies: action.payload,
+    };
+  case API_ERROR:
+    return {
+      ...state,
+      error: action.payload.error,
     };
   default:
     return state;

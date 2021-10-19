@@ -1,23 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import InputForm from './InputForm';
-import SelectForm from './SelectForm';
-import { setCurrencies } from '../actions';
+import SelectCurrency from './SelectCurrency';
 
 class WalletForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      currencies: [],
+      value: 0,
+      description: '',
+      payment: '',
+      tag: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    const { setCurrencies } = this.props;
-    setCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
@@ -27,62 +21,52 @@ class WalletForm extends React.Component {
   }
 
   render() {
-    const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const paymentMethods = [
-      'Dinheiro',
-      'Cartão de crédito',
-      'Cartão de débito',
-    ];
-    const { currencies } = this.props;
+    const { value, description, payment, tag } = this.state;
     return (
-      <div>
-        <form>
-          <InputForm
-            type="number"
-            name="value"
-            label="Valor"
-            onChange={ this.handleChange }
-          />
-          <InputForm
+      <form>
+
+        <label htmlFor="value">
+          Valor
+          <input
             type="text"
+            id="value"
+            name="value"
+            value={ value }
+            onChange={ this.handleChange }
+          />
+        </label>
+        <label htmlFor="description">
+          Descrição
+          <input
+            type="text"
+            id="description"
             name="description"
-            label="Descrição:"
+            value={ description }
             onChange={ this.handleChange }
           />
-          <SelectForm
-            label="Moeda"
-            name="currency"
-            options={ currencies }
-            onChange={ this.handleChange }
-          />
-          <SelectForm
-            label="Método de pagamento"
-            name="method"
-            options={ paymentMethods }
-            onChange={ this.handleChange }
-          />
-          <SelectForm
-            label="Tag"
-            name="tag"
-            options={ tagOptions }
-            onChange={ this.handleChange }
-          />
-        </form>
-      </div>
+        </label>
+        <SelectCurrency handleChange={ this.handleChange } />
+        <label htmlFor="payment">
+          Método de pagamento
+          <select name="payment" id="payment" value={ payment }>
+            <option value="dinheiro">Dinheiro</option>
+            <option value="credito">Cartão de crédito</option>
+            <option value="debido">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag
+          <select name="tag" id="tag" value={ tag }>
+            <option value="alimentacao">Alimentação</option>
+            <option value="lazer">Lazer</option>
+            <option value="trabalho">Trabalho</option>
+            <option value="transporte">Transporte</option>
+            <option value="saude">Saúde</option>
+          </select>
+        </label>
+      </form>
+
     );
   }
 }
-const mapDispatchToProps = (dispatch) => ({
-  setCurrencies: () => dispatch(setCurrencies()),
-});
-
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
-
-WalletForm.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setCurrencies: PropTypes.func.isRequired,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
+export default WalletForm;
