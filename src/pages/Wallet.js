@@ -16,7 +16,7 @@ class Wallet extends Component {
   render() {
     const { isEditing } = this.props;
     return (
-      <main>
+      <main className="main-sec">
         <Header />
         { isEditing ? <ExpenseEdit /> : <ExpenseAdd />}
         <ExpenseTable />

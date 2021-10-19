@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getCurrenciesFromAPI from '../services';
-import { fetchCurrencies as getAllCurrencies, saveExpense as addExpense } from '../actions';
+import {
+  fetchCurrencies as getAllCurrencies,
+  saveExpense as addExpense,
+} from '../actions';
 import { EXPENSES_INITIAL_STATE } from '../services/noMagicStuff';
 
 class ExpenseAdd extends React.Component {
@@ -57,6 +60,7 @@ class ExpenseAdd extends React.Component {
           data-testid={ `${name}-input` }
           onChange={ this.handleChange }
           value={ value }
+          className="form-control"
         />
       </label>
     );
@@ -71,6 +75,7 @@ class ExpenseAdd extends React.Component {
         data-testid="currency-input"
         onChange={ handleChange }
         value={ value }
+        className="form-select"
       >
         {currencies.map((currency) => {
           if (currency === 'USDT') return '';
@@ -94,6 +99,7 @@ class ExpenseAdd extends React.Component {
           data-testid={ `${name}-input` }
           onChange={ this.handleChange }
           value={ value }
+          className="form-select"
         >
           {options.map((option) => (
             <option key={ option }>{option}</option>
@@ -108,21 +114,24 @@ class ExpenseAdd extends React.Component {
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
-      <form>
-        <label htmlFor="currency-input">
-          {'Moeda: '}
-          {this.renderSelectCurrencies(currency, this.handleChange)}
-        </label>
-        {this.renderInput('Valor', 'number', 'value', value)}
-        {this.renderInput('Descrição', 'text', 'description', description)}
-        {this.renderSelect('Tag', 'tag', tag, tags)}
-        {this.renderSelect('Método de pagamento', 'method', method, methods)}
-        <button
-          type="submit"
-          onClick={ this.handleClick }
-        >
-          Adicionar despesa
-        </button>
+      <form className="my-4">
+        <div className="d-flex justify-content-evenly">
+          <label htmlFor="currency-input">
+            {'Moeda: '}
+            {this.renderSelectCurrencies(currency, this.handleChange)}
+          </label>
+          {this.renderInput('Valor', 'number', 'value', value)}
+          {this.renderInput('Descrição', 'text', 'description', description)}
+          {this.renderSelect('Tag', 'tag', tag, tags)}
+          {this.renderSelect('Método de pagamento', 'method', method, methods)}
+          <button
+            type="submit"
+            onClick={ this.handleClick }
+            className="btn btn-dark"
+          >
+            Adicionar despesa
+          </button>
+        </div>
       </form>
     );
   }

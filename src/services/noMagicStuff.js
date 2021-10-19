@@ -1,6 +1,6 @@
-export const REGEX_EMAIL_VALIDATION =  /\S+@\S+\.\S+/;
+export const RGX_EMAIL = /\S+@\S+\.\S+/;
 
-export const MIN_PASSWORD_LENGTH = 6; 
+export const MIN_PASS_LEN = 6;
 
 export const INPUT_EMAIL = 'INPUT_EMAIL';
 
@@ -29,10 +29,3 @@ export const EXPENSES_INITIAL_STATE = {
   tag: 'Alimentação',
   id: 0,
 };
-
-export const getCurrenciesFromAPI = () => (
-  fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((response) => (response.json()
-      .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)))
-    ))
-);

@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap');
+
+* {
+  font-family: Cairo, sans-serif;
+}
+
+.ah-header {
+  background-color: rgb(243, 243, 243);
+  padding: 20px;
+}
+
+.main-sec {
+  margin: auto;
+  width: 80%;
+}
+
+.login-sec {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+}
+
+.div-login {
+  align-items: center;
+  border: 3px solid rgb(0, 66, 141);
+  border-radius: 4px;
+  box-shadow: 5px 8px #6d88ff52;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 55px 25px;
+  width: 500px;
+}
+
+.table-wallet{
+  padding: 20px 5px;
+  margin-top: 20px;
+  justify-items: center;
+  align-items: center;
+  text-align: center;
+}
+
+th, td {
+  padding: 5px 15px;
+}

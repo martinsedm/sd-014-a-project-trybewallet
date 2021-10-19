@@ -3,14 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { emailChange } from '../actions';
-import { REGEX_EMAIL_VALIDATION, MIN_PASSWORD_LENGTH } from '../services/noMagicStuff';
+import { RGX_EMAIL, MIN_PASS_LEN } from '../services/noMagicStuff';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '', 
-      password: '', 
+      email: '',
+      password: '',
       disabled: true,
       login: false,
     };
@@ -36,45 +36,55 @@ class Login extends Component {
   loginValidation() {
     const { email, password } = this.state;
     let setDisabled = false;
-    setDisabled = !(REGEX_EMAIL_VALIDATION.test(email) && password.length >= MIN_PASSWORD_LENGTH);
+    setDisabled = !(RGX_EMAIL.test(email) && password.length >= MIN_PASS_LEN);
     this.setState({ disabled: setDisabled });
   }
+
   render() {
     const { email, password, disabled, login } = this.state;
     return (
-      <main>
-        <header>
-          <h1>TrybeWallet by Anna Hamann</h1>
-          <h3>
-            Login
-          </h3>
-        </header>
-        <form>
-          <input
-            type="text"
-            name="email"
-            id="email"
-            value={ email }
-            onChange={ this.handleChange }
-            data-testid="email-input"
-          />
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={ password }
-            onChange={ this.handleChange }
-            data-testid="password-input"
-          />
+      <main className="login-sec">
+        <form className="div-login">
+          <h2 className="my-3">TrybeWallet by Anna Hamann</h2>
+          <div className="mb-3">
+            <label htmlFor="email">
+              Type in your best e-mail
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                id="email"
+                value={ email }
+                onChange={ this.handleChange }
+                data-testid="email-input"
+                placeholder="name@example.com"
+              />
+            </label>
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password">
+              Choose a nice password
+              <input
+                type="password"
+                className="form-control"
+                name="password"
+                id="password"
+                value={ password }
+                onChange={ this.handleChange }
+                data-testid="password-input"
+              />
+            </label>
+          </div>
           <button
             type="submit"
             disabled={ disabled }
             onClick={ this.handleClick }
+            className="btn btn-dark"
           >
             Entrar
           </button>
         </form>
-        { login ? <Redirect to="/carteira" /> : ''} 
+        { login ? <Redirect to="/carteira" /> : '' }
       </main>
     );
   }

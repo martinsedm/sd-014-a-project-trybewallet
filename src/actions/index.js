@@ -1,4 +1,4 @@
-import { 
+import {
   INPUT_EMAIL,
   REQUEST_FAIL,
   REQUEST_START,
@@ -7,8 +7,8 @@ import {
   DELETE_EXPENSE,
   EDIT_EXPENSE_END,
   EDIT_EXPENSE_START,
-  getCurrenciesFromAPI
-} from "../services/noMagicStuff";
+} from '../services/noMagicStuff';
+import getCurrenciesFromAPI from '../services';
 
 export const emailChange = (payload) => ({
   type: INPUT_EMAIL,
@@ -44,7 +44,7 @@ export const editExpense = (expense) => ({
   expense,
 });
 
-export const endExpenseEdit = (expense) => ({
+export const endOfExpenseEdit = (expense) => ({
   type: EDIT_EXPENSE_END,
   expense,
 });

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { RiDeleteBinLine, RiEditLine } from 'react-icons/ri';
 import {
   deleteExpense as delExpense,
   editExpense as edExpense,
 } from '../actions';
-import { RiDeleteBinLine, RiEditLine } from 'react-icons/ri';
 
 class ExpenseTable extends React.Component {
   renderButton(name, expense, callback) {
@@ -24,7 +24,7 @@ class ExpenseTable extends React.Component {
   render() {
     const { expenses, deleteExpense, editExpense } = this.props;
     return (
-      <table>
+      <table className="table-wallet">
         <thead>
           <tr>
             <th>Moeda</th>

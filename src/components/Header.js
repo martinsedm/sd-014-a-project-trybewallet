@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import '../services/style.css';
 
 class Header extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Header extends React.Component {
   render() {
     const { email } = this.props;
     return (
-      <header>
+      <header className="ah-header">
         <h1>TrybeWallet by Anna Hamann</h1>
         <p data-testid="email-field">{`E-mail: ${email}`}</p>
         <div>
@@ -39,7 +40,6 @@ const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
 });
-
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,

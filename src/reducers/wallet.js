@@ -1,4 +1,4 @@
-import { 
+import {
   REQUEST_FAIL,
   REQUEST_START,
   REQUEST_SUCCESS,
@@ -6,9 +6,8 @@ import {
   DELETE_EXPENSE,
   EDIT_EXPENSE_END,
   EDIT_EXPENSE_START,
-  WALLET_INITIAL_STATE
-} from "../services/noMagicStuff";
-
+  WALLET_INITIAL_STATE,
+} from '../services/noMagicStuff';
 
 export default function wallet(state = WALLET_INITIAL_STATE, action) {
   switch (action.type) {
