@@ -1,3 +1,5 @@
+import requisicaoAPI from '../Services';
+
 // Coloque aqui suas actions
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_DESPESA = 'ADD_DESPESA';
@@ -17,3 +19,8 @@ export const addMoeda = (payload) => ({
   type: ADD_MOEDAS,
   payload,
 });
+
+thunk = () => async (dispatch) => {
+  const response = await requisicaoAPI();
+  console.log(response);
+};
