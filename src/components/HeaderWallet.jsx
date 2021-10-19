@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const HeaderWallet = (props) => {
-  const { user } = props;
+  const { user, expenses } = props;
+  // const moedaUSD = Object.values(response)/* .reduce((a, e) => a.concat(...Object.values(e)), []) */;
+  // const cotacao = Object.values(response).find((g) => g.code === payload.code).bid;
+  const totalPrice = Math.round((expenses.reduce((a, e) => a + Math.round((e
+    .value * (Object.values(e.exchangeRates).find((g) => g.code === e
+    .currency).bid)) * 100) / 100, 0)) * 100) / 100;
+  // (Object.values(e.exchangeRates).find((g) => g.code === e.currency).bid)
   return (
     <header>
       <p>
@@ -12,18 +18,23 @@ const HeaderWallet = (props) => {
         <span data-testid="email-field">{user.email}</span>
       </p>
       <p>
-        Despesa Total:
+        {/* { console.log(expenses.reduce((a, e) => a + (e.value * (Object.values(e.exchangeRates)
+          .find((g) => g.code === e.currency).bid)), 0), 'aaaa')} */}
+        Despesa Total: R$
         {' '}
-        <span data-testid="total-field">{0}</span>
+        <span data-testid="total-field">
+          {totalPrice}
+        </span>
         {' '}
         <span data-testid="header-currency-field">BRL</span>
       </p>
     </header>
   );
 };
-
 const mapStateToProps = (state) => ({
-  user: state.user });
+  user: state.user,
+  expenses: state.wallet.expenses,
+});
 
 HeaderWallet.propTypes = {
   email: PropTypes.string,

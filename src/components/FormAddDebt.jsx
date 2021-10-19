@@ -1,53 +1,102 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getApiEconomiaThunk } from '../actions';
+import { getApiEconomiaThunk, getApiDebtThunk } from '../actions';
+import SelectForm from './SelectForm';
+
+const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+const pays = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
 class FormAddDebt extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      id: 0,
+      value: 0,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+      exchangeRates: [],
+    };
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
   componentDidMount() {
     const { getApiSuccess } = this.props;
     getApiSuccess();
   }
 
+  handleClick(e) {
+    e.preventDefault();
+    const { id, value, description, currency, method, tag, exchangeRates } = this.state;
+    const { addDebt } = this.props;
+    addDebt({ id, value, description, currency, method, tag, exchangeRates });
+    this.setState({ id: id + 1 });
+  }
+
+  handleChange({ target: { value, name } }) {
+    // const { currencies } = this.props;
+    // const moedaUSD = currencies.reduce((a, e) => a.concat(...Object.values(e)), [])[0];
+    // const bidUSD = moedaUSD.bid;
+    this.setState({ [name]: value/* , bid: +bidUSD  */ });
+    // if (name === 'moeda') {
+    //   const moedaCurret = currencies.reduce((a, e) => a
+    //     .concat(...Object.values(e)), []).find((a) => a.code === value);
+    //   this.setState({ bid: +moedaCurret.bid });
+    // }
+  }
+
   render() {
-    const { wallet: { currencies } } = this.props;
+    const { currencies } = this.props;
+    const codes = currencies.reduce((a, e) => Object.keys(e), []);
     return (
       <form>
-        {/* { console.log((currencies), 'currencies') }
-        { console.log((currencies).map((e) => e[0]), 'currencies[0]') } */}
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
-          <input type="text" name="valor" id="valor" />
+          <input
+            type="number"
+            name="value"
+            id="value"
+            onChange={ this.handleChange }
+            required
+          />
         </label>
-        <label htmlFor="descricao">
+        {/* { console.log(this.state, 'this.state') } */}
+        {/* { console.log(this.props, 'this.props') } */}
+        <SelectForm
+          label="Moeda"
+          name="currency"
+          event={ this.handleChange }
+          options={ codes }
+        />
+        <SelectForm
+          label="Método de pagamento"
+          name="method"
+          event={ this.handleChange }
+          options={ pays }
+        />
+        <SelectForm
+          label="Tag"
+          name="tag"
+          event={ this.handleChange }
+          options={ tags }
+        />
+        <label htmlFor="description">
           Descrição
-          <input type="text" name="descricao" id="descricao" />
+          <input
+            type="text"
+            name="description"
+            id="description"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select id="moeda">
-            {currencies.map((e) => (
-              <option key={ e[0] } value={ e[0] }>{ e[0] }</option>)) }
-          </select>
-        </label>
-        <label htmlFor="pagamendo">
-          Método de pagamento
-          <select id="pagamendo">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select id="tag">
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
-          </select>
-        </label>
+        <button type="submit" onClick={ this.handleClick }>
+          Adicionar despesa
+        </button>
       </form>
     );
   }
@@ -55,10 +104,14 @@ class FormAddDebt extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getApiSuccess: () => dispatch(getApiEconomiaThunk()),
+  addDebt: (payload) => {
+    const action = getApiDebtThunk(payload);
+    dispatch(action);
+  },
 });
 
 const mapStateToProps = (state) => ({
-  wallet: state.wallet,
+  currencies: state.wallet.currencies,
 });
 
 FormAddDebt.propTypes = {
