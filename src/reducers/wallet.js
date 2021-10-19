@@ -16,7 +16,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       currencies: Object.keys(action.payload)
-        .filter((currency) => currency !== 'USDT'),
+        .filter((currency) => currency !== 'USDT'), // logica tirada e entendia a partir do estudo do https://pt.stackoverflow.com/questions/241823/como-remover-um-item-de-um-array-sem-conhecer-o-%C3%ADndice-apenas-o-valor
     };
   default:
     return state;
