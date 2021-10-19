@@ -3,6 +3,7 @@ export const CURRENCIES = 'CURRENCIES';
 export const EXPENSES = 'EXPENSES';
 export const GET_CURRENCY = 'GET_CURRENCY';
 export const COINS = 'COINS';
+export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 
 export const userAction = (email) => ({
   type: USER,
@@ -20,6 +21,13 @@ export const currenciesAction = (currencies) => ({
 
 export const expensesAction = (expenses) => ({
   type: EXPENSES,
+  payload: {
+    expenses,
+  },
+});
+
+export const expensesRemoveAction = (expenses) => ({
+  type: REMOVE_EXPENSES,
   payload: {
     expenses,
   },

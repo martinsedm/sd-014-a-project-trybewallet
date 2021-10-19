@@ -11,7 +11,6 @@ class Header extends Component {
   expensesFunction() {
     const NUMBER_AMOUNT = 2;
     const { expenses } = this.props;
-
     if (expenses[0] === undefined || expenses[0].id === undefined) return '0.00';
 
     const convertedValue = expenses.map((item) => {
