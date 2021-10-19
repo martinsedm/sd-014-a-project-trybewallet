@@ -1,7 +1,45 @@
-.div-login {
+
+.form-login {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 600px;
+  min-height: 100vh;
   justify-content: center;
+  flex-grow: 1;
+}
+
+.botao-submit {
+  width: 100%;
+  display: flex;
+}
+
+button {
+  flex-grow: 1;
+}
+
+.input-password,
+.input-email {
+  width: 100%;
+  display: flex;
+}
+
+#input-password,
+#input-email {
+  flex-grow: 1;
+}
+
+img {
+  height: 200px;
+  width: 300px;
+}
+.div-separa {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+}
+
+.form-login {
+  background-color: green;
 }

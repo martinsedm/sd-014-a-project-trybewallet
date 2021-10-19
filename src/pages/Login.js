@@ -46,36 +46,43 @@ class Login extends React.Component {
   render() {
     const { disabled } = this.state;
     return (
-      <form className="div-login">
-        <label htmlFor="input-email">
-          <input
-            type="email"
-            name="email"
-            id="input-email"
-            placeholder="user@email.com"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="input-password">
-          <input
-            type="password"
-            name="password"
-            id="input-password"
-            placeholder="password123"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="submit"
-          id="botao-submit"
-          disabled={ disabled }
-          onClick={ this.handleClick }
-        >
-          Entrar
+      <form className="form-login">
+        <div className="div-login">
+          <img src="http://tecnoinforme.com.br/wp-content/uploads/2020/09/trybe.png" alt="trybe logo" />
+          <div className="div-separa">
+            <label htmlFor="input-email" className="input-email">
+              <input
+                type="email"
+                name="email"
+                id="input-email"
+                placeholder="user@email.com"
+                data-testid="email-input"
+                onChange={ this.handleChange }
+              />
+            </label>
+            <label htmlFor="input-password" className="input-password">
+              <input
+                type="password"
+                name="password"
+                id="input-password"
+                placeholder="password123"
+                data-testid="password-input"
+                onChange={ this.handleChange }
+              />
+            </label>
+            <div className="botao-submit">
+              <button
+                type="submit"
+                id="botao-submit"
+                disabled={ disabled }
+                onClick={ this.handleClick }
+              >
+                Entrar
 
-        </button>
+              </button>
+            </div>
+          </div>
+        </div>
       </form>
 
     );

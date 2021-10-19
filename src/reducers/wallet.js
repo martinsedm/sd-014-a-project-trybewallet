@@ -1,9 +1,11 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { REQUEST_CUR, GET_CUR } from '../actions';
+import { REQUEST_CUR, GET_CUR, EXCHANGE_RATES, REQUEST_COTA } from '../actions';
 
 const INICIAL_STATE = {
   currencies: [],
+  expenses: [],
   isFetching: false,
+  isFetchingCota: false,
 };
 
 const wallet = (state = INICIAL_STATE, action) => {
@@ -12,6 +14,13 @@ const wallet = (state = INICIAL_STATE, action) => {
     return { ...state, isFetching: true };
   case GET_CUR:
     return { ...state, currencies: action.moedas, isFetching: false };
+  case REQUEST_COTA:
+    return { ...state, isFetchingCota: true };
+  case EXCHANGE_RATES:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.allCurrencies],
+      isFetchingCota: false };
   default:
     return state;
   }

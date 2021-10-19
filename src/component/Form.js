@@ -1,57 +1,58 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCota } from '../actions';
+import Input from './Input';
+import Select from './Select';
 
 class Form extends Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 0,
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+  }
+
+  handleClick() {
+    const { getExpense } = this.props;
+    const {
+      id, value, description, currency, method, tag } = this.state;
+    getExpense({ id, value, description, currency, method, tag });
+    this.setState({
+      id: id + 1,
+    });
+  }
+
   render() {
-    const { currency } = this.props;
-    console.log(currency);
     return (
       <form>
-        <label htmlFor="input-valor">
-          Valor
-          <input id="input-valor" type="number" name="valor" />
-        </label>
-        <label htmlFor="input-descricao">
-          Descrição
-          <input id="input-descricao" type="text" name="descricao" />
-        </label>
-        <label htmlFor="input-moeda">
-          Moeda
-          <select name="input-moeda" id="input-moeda">
-            {/* {currency.map((moeda, index) =>
-              <option key={ index }>{moeda}</option>)} */}
-          </select>
-        </label>
-        <label htmlFor="input-payment">
-          Método de pagamento
-          <select name="input-payment" id="input-payment">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="input-tag">
-          Tag
-          <select name="input-tag" id="input-tag">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        <Input handleChange={ this.handleChange } />
+        <Select handleChange={ this.handleChange } />
+        <button type="button" onClick={ this.handleClick }>Adicionar Despesas</button>
       </form>
     );
   }
 }
 
 Form.propTypes = {
-  currency: PropTypes.func.isRequired,
+  getExpense: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
+const mapDispatchToProps = (dispatch) => ({
+  getExpense: (values) => dispatch(fetchCota(values)),
 });
 
-export default connect(mapStateToProps, null)(Form);
+export default connect(null, mapDispatchToProps)(Form);
