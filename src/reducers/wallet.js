@@ -15,7 +15,7 @@ function wallet(state = ESTADO_INICIAL, action) {
       currencies: action.payload,
     };
   case ADD_DESPESA:
-    state.expenses.length
+    // state.expenses.length
     return {
       ...state,
       expenses: [...state.expenses, action.payload],

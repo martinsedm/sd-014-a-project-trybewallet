@@ -5,7 +5,6 @@ import { getAPIThunk, addDespesa } from '../actions';
 
 import Inputs from './Inputs';
 import Select from './Select';
-import Buttons from './Buttons';
 
 class Formulario extends React.Component {
   constructor() {
@@ -34,13 +33,13 @@ class Formulario extends React.Component {
     });
   }
 
-  handleClick(event) {
-    event.preventDefault();
-    const { despesa, despesaRegistrada.length } = this.props;
-    const id = despesaRegistrada;
-    console.log(despesaRegistrada);
-    console.log('njfdhsiuofhdsuio');
-  }
+  // handleClick(event) {
+  //   event.preventDefault();
+  //   const { despesa, despesaRegistrada } = this.props;
+  //   const id = despesaRegistrada;
+  //   console.log(despesaRegistrada);
+  //   console.log('njfdhsiuofhdsuio');
+  // }
 
   render() {
     const { moedas } = this.props;
@@ -104,7 +103,7 @@ const mapDispatchToProps = (dispatch) => ({
 Formulario.propTypes = {
   moedasAPI: PropTypes.func.isRequired,
   moedas: PropTypes.objectOf(PropTypes.string).isRequired,
-  despesa: PropTypes.objectOf(PropTypes.string).isRequired,
+  // despesa: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Formulario);
