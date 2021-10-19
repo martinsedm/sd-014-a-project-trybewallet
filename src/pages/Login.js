@@ -40,11 +40,7 @@ class Login extends Component {
 
   handleClick() {
     const { setLoginToStore } = this.props;
-    const { email, senha } = this.state;
-    setLoginToStore(({
-      email,
-      senha,
-    }));
+    setLoginToStore(this.state);
     this.setState({
       redirect: true,
     });

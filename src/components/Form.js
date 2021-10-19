@@ -14,8 +14,8 @@ class Form extends Component {
       value: '0',
       description: '',
       currency: 'USD',
-      method: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);

@@ -11,9 +11,7 @@ class Header extends Component {
         <p data-testid="email-field">
           { getUserFromStore }
         </p>
-
         <SumExpensesValue />
-
         <p data-testid="header-currency-field">
           BRL
         </p>
