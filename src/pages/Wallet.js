@@ -16,12 +16,12 @@ class Wallet extends React.Component {
 
     this.state = {
       id: 0,
-      valor: '',
-      descricao: '',
+      value: '',
+      description: '',
       currency: 'USD',
-      metodoPagamento: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
-      exchangeRates: { },
+      exchangeRates: { USD: { ask: 5 } },
     };
   }
 
@@ -31,14 +31,9 @@ class Wallet extends React.Component {
 
   onChange(event) {
     const { name, value } = event.target;
-    if (name === 'Descrição') {
-      return this.setState({
-        descricao: value,
-      });
-    }
     if (name === 'Método de Pagamento') {
       return this.setState({
-        metodoPagamento: value,
+        method: value,
       });
     }
     this.setState({
@@ -53,24 +48,32 @@ class Wallet extends React.Component {
 
   async saveDataWallet() {
     const { dispatchToProps } = this.props;
-    const { id } = this.state;
+    const { id, currency, value: valor } = this.state;
     const exchangeRates = await getCoins();
     this.setState({ exchangeRates });
-    dispatchToProps(this.state);
+    const total = (exchangeRates[currency].ask * valor);
+    dispatchToProps(this.state, total);
     this.setState({ id: id + 1 });
   }
 
   render() {
-    const { valor, descricao, currency,
+    const { value: valor, descricao, currency,
       metodoPagamento, categoria, exchangeRates } = this.state;
     const listCoins = Object.keys(exchangeRates);
     return (
       <div>
         <Header moeda={ currency } valor={ valor } exchangeRates={ exchangeRates } />
         <form>
-          <Input nome="valor" tipo="tel" value={ valor } onChange={ this.onChange } />
           <Input
-            nome="Descrição"
+            nome="value"
+            label="valor"
+            tipo="tel"
+            value={ valor }
+            onChange={ this.onChange }
+          />
+          <Input
+            label="Descrição"
+            nome="description"
             tipo="text"
             role="textbox"
             value={ descricao }
@@ -78,7 +81,6 @@ class Wallet extends React.Component {
           />
           <label htmlFor="moeda">
             Moeda:
-            { }
             <select name="currency" id="moeda" onChange={ this.onChange }>
               {(listCoins.map((coin) => (
                 (coin !== 'USDT') && (
@@ -111,7 +113,7 @@ Wallet.propTypes = {
 }.isRequired;
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchToProps: (state) => dispatch(updateWallet(state)),
+  dispatchToProps: (state, total) => dispatch(updateWallet(state, total)),
 });
 
 export default connect(null, mapDispatchToProps)(Wallet);

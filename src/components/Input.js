@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 
 class Input extends Component {
   render() {
-    const { nome, tipo, role, onChange, value } = this.props;
+    const { nome, tipo, label, role, onChange, value } = this.props;
     return (
       <div>
         <label htmlFor={ nome }>
-          { nome }
+          { label }
           :
           <input
             type={ tipo }
