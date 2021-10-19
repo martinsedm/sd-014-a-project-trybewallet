@@ -2,13 +2,7 @@
 import { GET_USER_EMAIL } from '../actions';
 
 const INICIAL_STATE = {
-  user: {
-    email: '',
-  },
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  email: '',
 };
 
 function user(state = INICIAL_STATE, action) {
