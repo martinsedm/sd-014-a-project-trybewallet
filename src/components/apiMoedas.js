@@ -11,4 +11,5 @@ class apiMoedas extends React.Component {
     this.setState = ({ resultado: [responseJson] });
   }
 }
+
 export default apiMoedas;
