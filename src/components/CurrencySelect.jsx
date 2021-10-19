@@ -14,10 +14,7 @@ class CurrencySelect extends React.Component {
           onChange={ onChange }
         >
           {currencies.map((currency) => (
-            <option key={ currency }>
-              { currency }
-            </option>
-          ))}
+            <option key={ currency } value={ currency }>{ currency }</option>))}
         </select>
       </label>
     );

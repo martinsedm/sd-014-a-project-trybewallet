@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 class MethodSelect extends React.Component {
   render() {
+    const options = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const { onChange } = this.props;
     return (
       <label htmlFor="method">
@@ -12,9 +13,8 @@ class MethodSelect extends React.Component {
           id="method"
           onChange={ onChange }
         >
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
+          { options.map((option, index) => (
+            <option key={ index } value={ option }>{ option }</option>))}
         </select>
       </label>
     );

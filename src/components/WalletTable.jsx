@@ -29,8 +29,8 @@ class WalletTable extends Component {
                 <td>{ tag }</td>
                 <td>{ method }</td>
                 <td>{ value }</td>
-                <td>{ exchangeRates[currency].name.split('/')[0] }</td>
-                <td>{ (Number(exchangeRates[currency].ask)).toFixed(2) }</td>
+                <td>{ exchangeRates[currency].name }</td>
+                <td>{ Number(exchangeRates[currency].ask).toFixed(2) }</td>
                 <td>
                   { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
                 </td>
@@ -66,3 +66,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
+
+// https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/
