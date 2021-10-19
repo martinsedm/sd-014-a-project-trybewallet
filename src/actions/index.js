@@ -1,6 +1,7 @@
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_CURRENCIES = 'ADD_CURRENCIES';
 export const ADD_EXPENDITURE = 'ADD_EXPENDITURE';
+export const DELETE_EXPENDITURE = 'DELETE_EXPENDITURE';
 
 export const addEmailAC = (email) => ({
   type: ADD_EMAIL,
@@ -30,3 +31,8 @@ export const addExpenditureThunk = (details) => async (dispatch) => {
   const exchangeRates = await res.json();
   dispatch(addExpenditure({ ...details, exchangeRates }));
 };
+
+export const deleteExpediture = (id) => ({
+  type: DELETE_EXPENDITURE,
+  id,
+});
