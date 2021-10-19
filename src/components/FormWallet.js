@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import fetchApiThunk from '../actions/fetchApiAction';
+import FormCurrencies from './FormCurrencies';
 
-export default class FormWallet extends Component {
+class FormWallet extends Component {
+  componentDidMount() {
+    const { setFetchApi } = this.props;
+    setFetchApi();
+  }
+
   render() {
     return (
       <form>
@@ -13,14 +22,12 @@ export default class FormWallet extends Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input type="text" id="description" />
+          <input
+            type="text"
+            id="description"
+          />
         </label>
-        <label htmlFor="coin">
-          Moeda:
-          <select id="coin">
-            <option>Selecione</option>
-          </select>
-        </label>
+        <FormCurrencies />
         <label htmlFor="payment">
           Método de pagamento:
           <select id="payment">
@@ -43,3 +50,17 @@ export default class FormWallet extends Component {
     );
   }
 }
+
+const mapStateToprops = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setFetchApi: () => dispatch(fetchApiThunk()),
+});
+
+FormWallet.propTypes = ({
+  setFetchApi: PropTypes.func.isRequired,
+});
+
+export default connect(mapStateToprops, mapDispatchToProps)(FormWallet);
