@@ -62,13 +62,13 @@ class Login extends React.Component {
           } }
           name="password-input"
         />
-          <Link to="/carteira">
-        <button
-          type="button"
-          disabled={ !(emailIsValid && passwordIsValid) }
-        >
-          Entrar
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !(emailIsValid && passwordIsValid) }
+          >
+            Entrar
+          </button>
         </Link>
       </>
     );
