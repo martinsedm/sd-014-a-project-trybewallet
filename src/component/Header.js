@@ -34,7 +34,6 @@ const mapStateToProps = (state) => ({
     (gastototal, { value, currency, exchangeRates }) => gastototal
     + value * exchangeRates[currency].ask, 0,
   ),
-  qualquer: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);
