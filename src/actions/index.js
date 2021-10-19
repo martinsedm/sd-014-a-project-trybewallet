@@ -1,5 +1,7 @@
 export const SET_EMAIL = 'SET_EMAIL';
-export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const LOADING = 'LOADING';
+export const SUCCESS = 'SUCCESS';
+export const FAIL = 'FAIL';
 
 export function setEmail(payload) {
   return {

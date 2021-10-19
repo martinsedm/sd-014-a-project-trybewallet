@@ -1,15 +1,20 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { ADD_EXPENSE } from '../actions';
+import { LOADING, SUCCESS, FAIL } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  loading: false,
+  error: '',
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case ADD_EXPENSE:
-    return { ...state };
+  case LOADING:
+    return { ...state, loading: !state.loading };
+  case FAIL:
+    return { ...state, error: action.payload };
+  case SUCCESS:
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }
