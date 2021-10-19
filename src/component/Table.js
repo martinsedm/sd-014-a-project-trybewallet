@@ -34,8 +34,11 @@ class Table extends Component {
                 * expense.exchangeRates[expense.currency].ask).toFixed(2)}
 
               </td>
-              <td>{expense.currency}</td>
               <td>Real</td>
+              <td>
+                <button type="button">Editar</button>
+                <button type="button">x</button>
+              </td>
             </tr>))}
         </tbody>
       </table>
