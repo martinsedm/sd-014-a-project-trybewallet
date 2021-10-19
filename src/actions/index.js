@@ -4,6 +4,12 @@ export const USER_LOGIN = 'USER_LOGIN';
 
 export const GET_ALL_COINS_SUCCESS = 'GET_ALL_COINS_SUCCESS';
 export const GET_ALL_COINS_FAIL = 'GET_ALL_COINS_FAIL';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+
+export const addExpense = (payload) => ({
+  type: ADD_EXPENSE,
+  payload,
+});
 
 export const userLogin = (user) => ({
   type: USER_LOGIN,
@@ -28,3 +34,13 @@ export const getAllCoinsThunk = () => async (dispatch) => {
     dispatch(getAllCoinsFail());
   }
 };
+
+// const getCurExchangeRateThunk = () => async (dispatch) => {
+//   try {
+//     const response = await getAllCoins();
+//     const payload = Object.keys(response).filter((moeda) => moeda !== 'USDT');
+//     dispatch(getAllCoinsSuccess(payload));
+//   } catch (error) {
+//     dispatch(getAllCoinsFail());
+//   }
+// };

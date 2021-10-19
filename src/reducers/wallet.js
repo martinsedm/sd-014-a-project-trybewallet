@@ -1,4 +1,4 @@
-import { GET_ALL_COINS_SUCCESS, GET_ALL_COINS_FAIL } from '../actions/index';
+import { GET_ALL_COINS_SUCCESS, GET_ALL_COINS_FAIL, ADD_EXPENSE } from '../actions/index';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -16,6 +16,11 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       error: true,
+    };
+  case ADD_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
     };
   default:
     return state;
