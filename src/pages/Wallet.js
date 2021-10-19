@@ -24,11 +24,13 @@ class Wallet extends React.Component {
       total: 0,
       saved: false,
       form: {
-        value: 0,
-        currency: '',
-        method: '',
-        tag: '',
-        description: '',
+        content: {
+          value: 0,
+          currency: '',
+          method: '',
+          tag: '',
+          description: '',
+        },
         currencies,
         categories,
         payment,
@@ -62,8 +64,8 @@ class Wallet extends React.Component {
     }
     if (editor && editor !== prevProps.editor) {
       const { idToEdit: { value, currency, method, tag, description } } = this.props;
-      const formEdit = { value, currency, method, tag, description };
-      this.updateStateForm(formEdit, { saved: false });
+      const formContent = { content: { value, currency, method, tag, description } };
+      this.updateStateForm(formContent, { saved: false });
     }
   }
 
@@ -96,24 +98,26 @@ class Wallet extends React.Component {
   handleExpense() {
     const { addExpense, saveExpense, editExpenseMode, editor, idToEdit } = this.props;
     const { form } = this.state;
-    const { value, currency, method, tag, description } = form;
+    const { content } = form;
     if (editor) {
       const { id, exchangeRates } = idToEdit;
-      const expense = { id, value, currency, method, tag, description, exchangeRates };
+      const expense = { ...content, id, exchangeRates };
       saveExpense(expense);
       editExpenseMode('');
     } else {
-      const expense = { value, currency, method, tag, description };
+      const expense = { ...content };
       addExpense(expense);
     }
     this.setState({
       form: {
         ...form,
-        value: 0,
-        currency: '',
-        method: '',
-        tag: '',
-        description: '',
+        content: {
+          value: 0,
+          currency: '',
+          method: '',
+          tag: '',
+          description: '',
+        },
       },
     });
   }
@@ -135,7 +139,10 @@ class Wallet extends React.Component {
       saved: false,
       form: {
         ...form,
-        [name]: value,
+        content: {
+          ...form.content,
+          [name]: value,
+        },
       },
     });
   }

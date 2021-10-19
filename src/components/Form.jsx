@@ -6,11 +6,7 @@ import SelectForm from './SelectForm';
 class Form extends Component {
   render() {
     const {
-      value,
-      description,
-      currency,
-      method,
-      tag,
+      content,
       currencies,
       categories,
       payment,
@@ -18,6 +14,7 @@ class Form extends Component {
       onChange,
       onClick,
     } = this.props;
+    const { value, description, currency, method, tag } = content;
     return (
       <form
         name="expenseForm"
@@ -56,14 +53,16 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]).isRequired,
-  description: PropTypes.string.isRequired,
-  currency: PropTypes.string.isRequired,
-  method: PropTypes.string.isRequired,
-  tag: PropTypes.string.isRequired,
+  content: PropTypes.shape({
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
+    description: PropTypes.string,
+    currency: PropTypes.string,
+    method: PropTypes.string,
+    tag: PropTypes.string,
+  }).isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   payment: PropTypes.arrayOf(PropTypes.string).isRequired,
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
