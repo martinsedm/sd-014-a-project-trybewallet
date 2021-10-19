@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import WalletTableItems from './WalletTableItems';
 
-export default class WalletTable extends Component {
+class WalletTable extends Component {
   render() {
+    const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -18,10 +21,24 @@ export default class WalletTable extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <WalletTableItems />
+        <tbody>
+          {expenses.map((expense) => (
+            <WalletTableItems key={ expense.id } expense={ expense } />
+          ))}
+        </tbody>
       </table>
     );
   }
 }
+
+WalletTable.propTypes = {
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
+export default connect(mapStateToProps)(WalletTable);
 
 // https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/
