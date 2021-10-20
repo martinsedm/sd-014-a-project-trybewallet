@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import fetchApi from '../services/api';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrencies as fetchCurrenciesAction } from '../actions';
 
 class AddExpenseForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currencies: [],
-    };
-  }
-
   componentDidMount() {
-    fetchApi().then((response) => {
-      const currencies = Object.keys(response).filter(
-        (currency) => currency !== 'USDT',
-      );
-      this.setState({ currencies });
-    });
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
   render() {
-    const { currencies } = this.state;
+    const { currencies } = this.props;
     return (
       <div>
         <h1>Cadastro de despesas</h1>
@@ -67,4 +58,17 @@ class AddExpenseForm extends Component {
   }
 }
 
-export default AddExpenseForm;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
+});
+
+AddExpenseForm.propTypes = {
+  fetchCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseForm);
