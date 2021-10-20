@@ -1,6 +1,8 @@
 export const LOGIN = 'LOGIN';
 
-export const emailSenha = () => ({
+export const emailSenha = (email) => ({
   type: LOGIN,
-  payload,
+  payload: {
+    email,
+  },
 });
