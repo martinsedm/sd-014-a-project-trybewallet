@@ -13,9 +13,9 @@ const requestMoedas = () => ({
   type: REQUEST_MOEDAS,
 });
 
-const receiveMoedas = (moedas) => ({
+const receiveMoedas = (payload) => ({
   type: RECEIVE_MOEDAS,
-  moedas,
+  payload,
 });
 
 export function fetchMoedas() {
