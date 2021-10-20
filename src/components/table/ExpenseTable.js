@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { editExpensesAction, expensesRemoveAction } from '../../actions';
+import Btn from './btns/Btn';
 
 class ExpenseTable extends Component {
   constructor() {
@@ -50,20 +51,10 @@ class ExpenseTable extends Component {
               </td>
               <td>Real</td>
               <td>
-                <button
-                  type="submit"
-                  onClick={ this.handleClickRemove }
-                  data-testid="delete-btn"
-                >
-                  exluir
-                </button>
-                <button
-                  type="submit"
-                  onClick={ this.handleClickEdit }
-                  data-testid="edit-btn"
-                >
-                  editar
-                </button>
+                <Btn
+                  handleClickRemove={ this.handleClickRemove }
+                  handleClickEdit={ this.handleClickEdit }
+                />
               </td>
             </tr>
           ))
@@ -73,18 +64,18 @@ class ExpenseTable extends Component {
 
   render() {
     return (
-      <table>
+      <table className="table table-striped">
         <thead>
           <tr>
-            <th>Descrição</th>
-            <th>Tag</th>
-            <th>Método de pagamento</th>
-            <th>Valor</th>
-            <th>Moeda</th>
-            <th>Câmbio utilizado</th>
-            <th>Valor convertido</th>
-            <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Tag</th>
+            <th scope="col">Método de pagamento</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Moeda</th>
+            <th scope="col">Câmbio utilizado</th>
+            <th scope="col">Valor convertido</th>
+            <th scope="col">Moeda de conversão</th>
+            <th scope="col">Editar/Excluir</th>
           </tr>
         </thead>
         <tbody>

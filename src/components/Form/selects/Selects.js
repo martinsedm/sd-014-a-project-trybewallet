@@ -10,12 +10,15 @@ class Selects extends Component {
   }
 
   render() {
+    const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const spendings = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { currency, method, tag, handleChange, currencies } = this.props;
     return (
-      <div>
-        <label htmlFor="currency">
+      <div className="row row-cols-lg-auto g-3 align-items-center">
+        <label className="col-12" htmlFor="currency">
           Moeda:
           <select
+            className="form-select"
             name="currency"
             id="currency"
             value={ currency }
@@ -25,32 +28,30 @@ class Selects extends Component {
               .map((coin) => <option key={ coin } value={ coin }>{coin}</option>)}
           </select>
         </label>
-        <label htmlFor="method">
+        <label className="col-12" htmlFor="method">
           Método de pagamento:
           <select
+            className="form-select"
             name="method"
             id="method"
             value={ method }
             onChange={ handleChange }
           >
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
+            {paymentMethod.map((methodPay) => (
+              <option key={ methodPay } value={ methodPay }>{methodPay}</option>))}
           </select>
         </label>
-        <label htmlFor="tag">
+        <label className="col-12" htmlFor="tag">
           Tag:
           <select
+            className="form-select"
             name="tag"
             id="tag"
             value={ tag }
             onChange={ handleChange }
           >
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
+            {spendings.map((spending) => (
+              <option key={ spending } value={ spending }>{spending}</option>))}
           </select>
         </label>
       </div>

@@ -27,11 +27,24 @@ class Header extends Component {
   render() {
     const { email } = this.props;
     return (
-      <div>
-        <h5 data-testid="email-field">{email}</h5>
-        <h5 data-testid="total-field">{this.expensesFunction()}</h5>
-        <h5 data-testid="header-currency-field">BRL</h5>
-      </div>
+      <header className="p-0 bg-dark text-white">
+        <div className="container">
+          <div
+            className="d-flex flex-wrap
+          align-items-center
+          justify-content-center
+          justify-content-lg-start"
+          >
+            <p className="col" data-testid="email-field">{email}</p>
+            <p className="col" data-testid="total-field">
+              {this.expensesFunction()}
+              {' '}
+              <span data-testid="header-currency-field">BRL</span>
+            </p>
+          </div>
+        </div>
+      </header>
+
     );
   }
 }

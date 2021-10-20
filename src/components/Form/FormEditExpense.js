@@ -60,7 +60,7 @@ class FormEditExpense extends Component {
   render() {
     const { value, description, currency, method, tag } = this.state;
     return (
-      <form>
+      <form className="row row-cols-lg-auto g-3 align-items-center">
         <Imputs
           value={ value }
           description={ description }
@@ -73,6 +73,8 @@ class FormEditExpense extends Component {
           handleChange={ this.handleChange }
         />
         <button
+          style={ { marginTop: '56px' } }
+          className="btn btn-success"
           type="button"
           onClick={ this.handleClick }
         >

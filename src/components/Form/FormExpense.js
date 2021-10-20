@@ -59,7 +59,7 @@ class FormExpense extends Component {
     const { edit } = this.props;
     if (edit === true) return <FormEditExpense />;
     return (
-      <form>
+      <form className="row row-cols-lg-auto g-3 align-items-center">
         <Imputs
           value={ value }
           description={ description }
@@ -72,6 +72,8 @@ class FormExpense extends Component {
           handleChange={ this.handleChange }
         />
         <button
+          style={ { marginTop: '56px' } }
+          className="btn btn-primary"
           type="button"
           onClick={ this.handleClick }
         >
