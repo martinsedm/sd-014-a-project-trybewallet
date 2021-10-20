@@ -3,30 +3,22 @@ import React from 'react';
 import FormAddDespesa from '../components/FormAddDespesa';
 // import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import chamarAPI from '../api/api';
+// import chamarAPI from '../api/api';
 
 class Wallet extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      moedas: {},
-    };
-  }
-
-  componentDidMount() {
-    chamarAPI().then((moedas) => {
-      this.setState({
-        moedas,
-      });
-    });
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     moedas: {},
+  //   };
+  // }
 
   render() {
-    const { moedas } = this.state;
+    // const { moedas } = this.state;
     return (
       <main>
         <Header />
-        <FormAddDespesa moedas={ moedas } />
+        <FormAddDespesa />
       </main>
     );
   }

@@ -8,7 +8,7 @@ class SelecMoeda extends Component {
     return (
       <label htmlFor="moeda">
         Moeda
-        <select name="moeda" value={ moeda } onChange={ handleChange }>
+        <select id="moeda" name="moeda" value={ moeda } onChange={ handleChange }>
           {moedasFiltradas.map((siglaMoeda) => (
             <option
               value={ siglaMoeda }
@@ -24,7 +24,7 @@ class SelecMoeda extends Component {
 }
 
 SelecMoeda.propTypes = {
-  filtrarMoedas: PropTypes.objectOf(PropTypes.string).isRequired,
+  filtrarMoedas: PropTypes.func.isRequired,
   moeda: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
