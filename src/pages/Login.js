@@ -31,13 +31,11 @@ class Login extends React.Component {
     }
   }
 
-  dispachEmail() {
-    const { saveLogin } = this.props;
+  buttonClick(event) {
+    event.preventDefault();
     const { email } = this.state;
+    const { saveLogin } = this.props;
     saveLogin(email);
-  }
-
-  buttonClick() {
     this.setState({
       redirect: true,
     });
@@ -66,7 +64,6 @@ class Login extends React.Component {
           />
         </label>
         <button
-          onClick={ this.dispachEmail }
           id="submit"
           disabled
           type="submit"
@@ -86,4 +83,4 @@ const mapDispatchToProps = (dispach) => ({
   saveLogin: (email) => dispach(saveLoginAction(email)),
 });
 
-export default connect(mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
