@@ -25,7 +25,7 @@ class Form extends Component {
   render() {
     const { valor, descricao, moeda, formaPagamento, tag } = this.state;
     const { estadoMoeda } = this.props;
-    const arrayMoeda = Object.keys(estadoMoeda); console.log('moeda', arrayMoeda[1]);
+    const arrayMoeda = Object.keys(estadoMoeda);
     return (
       <form>
         <label htmlFor="valor">
