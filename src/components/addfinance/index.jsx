@@ -14,9 +14,7 @@ class Addfinance extends React.Component {
   async componentDidMount() {
     const response = await apiMoeda();
     const arrOptions = Object.keys(response);
-    console.log(response);
-    console.log('*******************************************');
-    console.log(arrOptions);
+    arrOptions.splice(1, 1);
     this.reloadStateMoedas(arrOptions);
   }
 

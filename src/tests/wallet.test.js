@@ -131,7 +131,7 @@ describe('7 - Implemente a lógica para preencher as opções do campo "Moedas",
     const coinOptionsValues = coinOptions.map((coinOption) => coinOption.value);
 
     const expectedCoinOptions = [
-      'USD', 'USDT', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
+      'USD', 'CAD', 'EUR', 'GBP', 'ARS', 'BTC', 'LTC',
       'JPY', 'CHF', 'AUD', 'CNY', 'ILS', 'ETH', 'XRP',
     ];
 
