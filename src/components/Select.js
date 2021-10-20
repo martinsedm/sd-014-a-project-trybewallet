@@ -18,7 +18,6 @@ class Select extends Component {
             <option value="Cartão de Crédito">Dinheiro</option>
             <option value="Cartão de Crédito">Cartão de Crédito</option>
             <option value="Cartão de Débito">Cartão de Débito</option>
-
           </select>
         </label>
         <label htmlFor="tag">
@@ -35,7 +34,6 @@ class Select extends Component {
             <option value="Trabalho">Trabalho</option>
             <option value="Transporte">Transporte</option>
             <option value="Saúde">Saúde</option>
-
           </select>
         </label>
       </div>
