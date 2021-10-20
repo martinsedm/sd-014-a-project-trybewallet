@@ -27,20 +27,26 @@ class Login extends React.Component {
     const buttonTrue = !(verifyEmail(email) && verifyPassword(password));
     return (
       <div>
-        <input
-          name="email"
-          type="text"
-          data-testid="email-input"
-          onChange={ this.handleChange }
-          value={ email }
-        />
-        <input
-          name="password"
-          type="password"
-          data-testid="password-input"
-          onChange={ this.handleChange }
-          value={ password }
-        />
+        <label htmlFor="email-login">
+          E-mail
+          <input
+            name="email"
+            type="text"
+            data-testid="email-input"
+            onChange={ this.handleChange }
+            value={ email }
+          />
+        </label>
+        <label htmlFor="password-input">
+          Senha
+          <input
+            name="password"
+            type="password"
+            data-testid="password-input"
+            onChange={ this.handleChange }
+            value={ password }
+          />
+        </label>
         <button
           type="button"
           disabled={ buttonTrue }
