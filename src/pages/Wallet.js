@@ -19,18 +19,16 @@ class Wallet extends React.Component {
             } }
           >
             <div className="container">
-              <div className="row ">
-                <div className="col-xl" data-testid="email-field">
-                  Email:
-                  {usedEmail || 'Usuário não logado'}
-                </div>
-                <div className="col-xl" data-testid="total-field">
-                  Despesa total: 0
-                </div>
-                <div className="col-xl" data-testid="header-currency-field">
-                  BRL
-                </div>
+              <div className="col mt-auto p-2" id="option1" data-testid="email-field">
+                Email:
+                {usedEmail || 'Usuário não logado'}
               </div>
+              <p className="col mt-auto p-2" id="option2" data-testid="total-field">
+                Despesa total: 0
+                <span className="col mt-auto p-2" data-testid="header-currency-field">
+                  BRL
+                </span>
+              </p>
             </div>
           </nav>
           <NavLink to="/" className="float-right mr-3 mb-5">

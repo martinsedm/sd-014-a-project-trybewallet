@@ -48,7 +48,7 @@ class Login extends React.Component {
       <div className="login-field">
         <form
           style={ {
-            margin: '60px',
+            margin: '80px',
             width: '90%',
           } }
         >
@@ -62,7 +62,7 @@ class Login extends React.Component {
               type="email"
               value={ email }
               name="email"
-              className="form-control"
+              className="form-control mb-0"
             />
           </label>
           <label htmlFor="password" className="form-group">
