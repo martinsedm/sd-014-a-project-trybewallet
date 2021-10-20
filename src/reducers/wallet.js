@@ -1,4 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
+import { ADD_CURRENCIES } from '../actions';
 
 const INITIAL_STATE = {
   wallet: {
@@ -9,23 +10,21 @@ const INITIAL_STATE = {
   },
 };
 
-const WALLET_CURRENCIES = 'WALLET_CURRENCIES';
+// const WALLET_EXPENSES = 'WALLET_EXPENSES';
 
-const WALLET_EXPENSES = 'WALLET_EXPENSES';
-
-function wallet(state = INITIAL_STATE, { type, payload, rate }) {
-  switch (type) {
-  case WALLET_CURRENCIES:
+function wallet(state = INITIAL_STATE, action) {
+  switch (action.type) {
+  case ADD_CURRENCIES:
     return {
       ...state,
-      currencies: payload.currencies,
+      currencies: action.payload,
     };
-  case WALLET_EXPENSES:
-    return {
-      ...state,
-      expenses: [...state.expenses, { id: state.expenses.length, ...payload }],
-      total: state.total + 1 * (payload.value * rate),
-    };
+  // case WALLET_EXPENSES:
+    // return {
+    //   ...state,
+    //   expenses: [...state.expenses, { id: state.expenses.length, ...payload }],
+    //   total: state.total + 1 * (payload.value * rate),
+    // };
   default:
     return state;
   }

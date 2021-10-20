@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addExpense } from '../actions';
-import ExpenseMap from './ExpenseMap';
-import fetchApi from './FetchApi';
+import SelectForm from './SelectForm';
+
 import MethodMapForm from './methodMapForm';
 import ButtonAdd from './ButtonAdd';
 
@@ -23,10 +23,6 @@ class FormInputs extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    fetchApi().then((extrangeRates) => this.setState({ extrangeRates }));
-  }
-
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
@@ -38,42 +34,47 @@ class FormInputs extends Component {
   }
 
   render() {
-    const spendings = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { value, currency, method, tag, description, exchangeRates } = this.state;
+    const { value, currency, method, tag, description } = this.state;
+    const { stateMoeda } = this.props;
+    const arrayMoeda = Object.keys(stateMoeda);
     return (
       <form>
-        <label htmlFor="value">
-          Valor:
-          <input type="number" name="value" id="value" value={ value } />
-        </label>
-        <ExpenseMap
-          currency={ currency }
-          exchangeRates={ exchangeRates }
-          handleChange={ this.handleChange }
-        />
-        <label htmlFor="description">
-          Descrição:
+        <label htmlFor="valor">
+          Valor
           <input
-            type="text"
-            name="description"
-            value={ description }
-            id="description"
+            value={ value }
+            type="number"
+            name="valor"
             onChange={ this.handleChange }
+            id="valor"
           />
         </label>
-        <MethodMapForm value={ method } onChange={ this.handleChange } />
-        <label htmlFor="tag">
-          Tag:
+        <label htmlFor="currency">
+          Moeda
           <select
-            id="tag"
-            name="tag"
-            value={ tag }
+            type="text"
+            name="currency"
+            value={ currency }
             onChange={ this.handleChange }
+            id="currency"
           >
-            {spendings.map((spending) => (
-              <option key={ spending } value={ spending }>{spending}</option>))}
+            {arrayMoeda.map((state) => (
+              <option key={ state }>
+                { stateMoeda }
+              </option>
+            ))}
           </select>
         </label>
+        <SelectForm
+          tag={ tag }
+          onChange={ this.handleChange }
+          value={ description }
+        />
+        <MethodMapForm value={ method } onChange={ this.handleChange } />
+        <SelectForm
+          value={ tag }
+          onChange={ this.handleChange }
+        />
         <ButtonAdd onChage={ this.handleClick } />
       </form>
     );
@@ -81,11 +82,15 @@ class FormInputs extends Component {
 }
 
 FormInputs.propTypes = {
+  stateMoeda: PropTypes.arrayOf.isRequired,
   addExpenses: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  stateMoeda: state.wallet.currencies,
+});
 const mapDispatchToProps = (dispatch) => ({
   addExpenses: (expense) => dispatch(addExpense(expense)),
 });
 
-export default connect(null, mapDispatchToProps)(FormInputs);
+export default connect(mapStateToProps, mapDispatchToProps)(FormInputs);

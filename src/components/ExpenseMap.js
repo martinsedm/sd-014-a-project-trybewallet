@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 
 class ExpenseMap extends Component {
   render() {
-    const { currency, handleChange, exchangeRates } = this.props;
-    const currencies = Object.values(exchangeRates).reduce((acc, crr) => {
-      if (!crr.name.includes('Turismo')) acc.push(crr.code);
-      return acc;
-    }, []);
+    const { currency, handleChange, stateMoeda } = this.props;
+    // const currencies = Object.values(exchangeRates).reduce((acc, crr) => {
+    //   if (!crr.name.includes('Turismo')) acc.push(crr.code);
+    //   return acc;
+    // }, []);
+    console.log(stateMoeda);
+    const arrayArray = Object.keys(stateMoeda);
     return (
       <label htmlFor="currency">
         Moeda
@@ -18,9 +20,8 @@ class ExpenseMap extends Component {
           value={ currency }
           onChange={ handleChange }
         >
-          <option value="" disabled hidden>Moeda</option>
-          { currencies.map((currencyCode, i) => (
-            <option key={ i } value={ currencyCode }>{currencyCode}</option>
+          { arrayArray.map((array) => (
+            <option key={ array }>{array}</option>
           )) }
         </select>
       </label>
@@ -31,11 +32,12 @@ class ExpenseMap extends Component {
 ExpenseMap.propTypes = {
   handleChange: PropTypes.func.isRequired,
   currency: PropTypes.string.isRequired,
-  exchangeRates: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
+  stateMoeda: PropTypes.arrayOf.isRequired,
+  // exchangeRates: PropTypes.objectOf(PropTypes.object.isRequired).isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(addExpenseAction(expense)),
+const mapStateToProps = (state) => ({
+  stateMoeda: state.wallet.currencies,
 });
 
-export default connect(null, mapDispatchToProps)(ExpenseMap);
+export default connect(mapStateToProps, null)(ExpenseMap);

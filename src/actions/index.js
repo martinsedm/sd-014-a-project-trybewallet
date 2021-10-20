@@ -2,6 +2,8 @@
 
 export const LOGIN = 'LOGIN';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const ADD_CURRENCIES = 'ADD_CURRENCIES';
+export const ERROR_API = 'ERROR_API';
 
 export const saveStateLogin = (email, password) => ({
   type: LOGIN,
@@ -10,15 +12,33 @@ export const saveStateLogin = (email, password) => ({
     password,
   },
 });
-// export const saveStateLogin = (payload) => ({
-//   type: LOGIN,
-//   payload,
-// });
 
 export const addExpense = (payload) => ({
   type: ADD_EXPENSE,
   payload,
 });
+
+export const addCurrencies = (payload) => ({
+  type: ADD_CURRENCIES,
+  payload,
+});
+
+export const errorApi = (payload) => ({
+  type: ERROR_API,
+  payload,
+});
+
+const URL_API = 'https://economia.awesomeapi.com.br/json/all';
+
+export const fetchApi = async (dispatch) => {
+  try {
+    const response = await fetch(URL_API);
+    const data = await response.json();
+    return dispatch(addCurrencies(data));
+  } catch (error) {
+    return dispatch(errorApi);
+  }
+};
 
 // export const addExpenseAction = (formData) => async (dispatch) => {
 //   const { value, currency, method, tag, description } = formData;

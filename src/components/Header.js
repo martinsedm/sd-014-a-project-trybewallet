@@ -35,7 +35,7 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({
   emailUser: state.user.email,
-  totWalletUpdate: state.wallet.total,
+  // totWalletUpdate: state.wallet.total,
 });
 // const mapDispatchToProps = () => ({});
 // const mapDispatchToProps = (dispatch) => ({
