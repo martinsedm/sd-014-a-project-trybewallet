@@ -1,74 +1,132 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import PaymentMethod from './PaymentMethod';
+import Tag from './Tag';
+import Input from './Input';
+import { fetchCurrency, expenseAction } from '../actions/index';
 
 class FormWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currencies: [],
+      id: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
-    this.fetchCurrency = this.fetchCurrency.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    this.fetchCurrency();
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
-  async fetchCurrency() {
-    const request = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const requestJson = await request.json();
-    console.log(requestJson);
-    const currencyArray = Object.keys(requestJson);
-    const currencyArrayWithoutUSDT = currencyArray
-      .filter((currency) => currency !== 'USDT' && currency !== 'DOGE');
+  async handleClick(event) {
+    event.preventDefault();
+    const { expAction } = this.props;
+    const {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+    } = this.state;
 
-    console.log(currencyArrayWithoutUSDT);
-    this.setState({
-      currencies: currencyArrayWithoutUSDT,
-    });
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const responseJson = await response.json();
+
+    const expenses = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: responseJson,
+    };
+
+    expAction(expenses);
+
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+    }));
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   render() {
-    const { currencies } = this.state;
+    const { value, description, currency, method, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
-        <label htmlFor="valor">
-          Valor:
-          <input type="number" id="valor" />
-        </label>
-        <label htmlFor="descricao">
-          Descrição:
-          <input type="text" id="descricao" />
-        </label>
-        <label htmlFor="moeda">
+        <Input
+          label="Valor:"
+          id="value"
+          name="value"
+          value={ value }
+          onChange={ this.handleChange }
+        />
+        <Input
+          label="Descrição:"
+          id="description"
+          name="description"
+          value={ description }
+          onChange={ this.handleChange }
+        />
+        <label htmlFor="currency">
           Moeda:
-          <select id="moeda">
-            { currencies.map((option, i) => (
-              <option key={ i }>{ option }</option>
-            )) }
+          <select
+            id="currency"
+            name="currency"
+            value={ currency }
+            onChange={ this.handleChange }
+          >
+            { currencies.map((option, i) => <option key={ i }>{ option }</option>)}
           </select>
         </label>
-        <label htmlFor="pagamento">
-          Método de pagamento:
-          <select id="pagamento">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select id="tag">
-            <option value="Alimentação">Alimentação</option>
-            <option value="Lazer">Lazer</option>
-            <option value="Trabalho">Trabalho</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Saúde">Saúde</option>
-          </select>
-        </label>
+        <PaymentMethod
+          label="Método de pagamento:"
+          id="method"
+          name="method"
+          value={ method }
+          onChange={ this.handleChange }
+        />
+        <Tag
+          label="Tag:"
+          id="tag"
+          name="tag"
+          value={ tag }
+          onChange={ this.handleChange }
+        />
+        <button type="button" onClick={ this.handleClick }>
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default FormWallet;
+FormWallet.propTypes = {
+  expAction: PropTypes.func.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencies: () => dispatch(fetchCurrency()),
+  expAction: (payload) => dispatch(expenseAction(payload)),
+});
+
+const mapStateToProps = (state) => ({ currencies: state.wallet.currencies });
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);
