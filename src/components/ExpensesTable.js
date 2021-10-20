@@ -30,7 +30,7 @@ class ExpensesTable extends Component {
 
   handleClick({ target: { id } }) {
     const { deleteExpenseFromStore } = this.props;
-    deleteExpenseFromStore(id);
+    deleteExpenseFromStore(Number(id));
   }
 
   render() {
