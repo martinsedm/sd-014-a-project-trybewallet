@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Form extends React.Component {
   render() {
+    const { moedas } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -15,7 +17,9 @@ class Form extends React.Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda" name="moeda">
-            <option>Default</option>
+            <option>
+              { moedas }
+            </option>
           </select>
         </label>
         <label htmlFor="metodo">
@@ -37,9 +41,12 @@ class Form extends React.Component {
           </select>
         </label>
       </form>
-
     );
   }
 }
+
+Form.propTypes = {
+  moedas: PropTypes.string.isRequired,
+};
 
 export default Form;
