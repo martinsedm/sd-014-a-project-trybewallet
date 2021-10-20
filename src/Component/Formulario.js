@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getAPIThunk, addDespesa } from '../actions';
 
+import Buttons from './Buttons';
 import Inputs from './Inputs';
 import Select from './Select';
 
@@ -10,14 +11,16 @@ class Formulario extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      exchangeRates: {},
     };
     this.handleOnChancge = this.handleOnChancge.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -33,13 +36,18 @@ class Formulario extends React.Component {
     });
   }
 
-  // handleClick(event) {
-  //   event.preventDefault();
-  //   const { despesa, despesaRegistrada } = this.props;
-  //   const id = despesaRegistrada;
-  //   console.log(despesaRegistrada);
-  //   console.log('njfdhsiuofhdsuio');
-  // }
+  async handleClick(event) {
+    event.preventDefault();
+    const { despesa, despesaRegistrada, moedasAPI, moedas } = this.props;
+    await moedasAPI();
+    await this.setState({
+      id: despesaRegistrada.length,
+      exchangeRates: moedas,
+    });
+    despesa(
+      this.state,
+    );
+  }
 
   render() {
     const { moedas } = this.props;
@@ -84,7 +92,7 @@ class Formulario extends React.Component {
           value={ tag }
           onChange={ this.handleOnChancge }
         />
-        <button type="submit" onClick={ this.handleClick }>enviar</button>
+        <Buttons type="submit" onClick={ this.handleClick } msg="Adicionar despesa" />
       </form>
     );
   }
@@ -102,8 +110,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 Formulario.propTypes = {
   moedasAPI: PropTypes.func.isRequired,
-  moedas: PropTypes.objectOf(PropTypes.string).isRequired,
-  // despesa: PropTypes.objectOf(PropTypes.string).isRequired,
+  moedas: PropTypes.objectOf(PropTypes.object).isRequired,
+  despesa: PropTypes.func.isRequired,
+  despesaRegistrada: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Formulario);

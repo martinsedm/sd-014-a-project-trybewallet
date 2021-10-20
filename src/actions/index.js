@@ -1,6 +1,5 @@
 import requisicaoAPI from '../Services/economiaAPI';
 
-// Coloque aqui suas actions
 export const ADD_EMAIL = 'ADD_EMAIL';
 export const ADD_DESPESA = 'ADD_DESPESA';
 export const ADD_MOEDAS = 'ADD_MOEDAS';
