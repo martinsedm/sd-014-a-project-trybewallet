@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchCurrencies } from '../actions';
 
 class FormWallet extends React.Component {
   constructor() {
@@ -14,6 +17,11 @@ class FormWallet extends React.Component {
     this.renderPaymentMethods = this.renderPaymentMethods.bind(this);
     this.renderTagCategories = this.renderTagCategories.bind(this);
     this.renderCurrencies = this.renderCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   handleChange({ target }) {
@@ -36,12 +44,12 @@ class FormWallet extends React.Component {
     ));
   }
 
-  // renderCurrencies() {
-  //   const { currencies } = this.props;
-  //   return currencies.map((currency, index) => (
-  //     <option value={ currency } key={ index }>{currency}</option>
-  //   ));
-  // }
+  renderCurrencies() {
+    const { currencies } = this.props;
+    return currencies.map((currency, index) => (
+      <option value={ currency } key={ index }>{currency}</option>
+    ));
+  }
 
   render() {
     // const { value, description, currency, paymentMethod, tagType } = this.state;
@@ -59,7 +67,7 @@ class FormWallet extends React.Component {
         <label htmlFor="moeda">
           Moeda
           <select id="moeda" name="currency">
-            {/* { this.listCurrencies() } */}
+            { this.renderCurrencies() }
           </select>
         </label>
         <label htmlFor="pagamento">
@@ -82,4 +90,17 @@ class FormWallet extends React.Component {
   }
 }
 
-export default FormWallet;
+FormWallet.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(fetchCurrencies()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);

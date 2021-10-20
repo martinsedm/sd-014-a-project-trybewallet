@@ -24,7 +24,7 @@ describe('4 - Crie uma página para sua carteira com as seguintes característic
     expect(email).toBeNull();
   });
 
-  test.skip('O componente deve se chamar Wallet e estar localizado na pasta "src/pages"', () => {
+  test('O componente deve se chamar Wallet e estar localizado na pasta "src/pages"', () => {
     const { container } = renderWithRouterAndStore(<Wallet />, '/carteira', {});
     expect(container).toBeDefined();
   });
@@ -120,7 +120,7 @@ describe('6 - Desenvolva um formulário para adicionar uma despesa contendo as s
   });
 });
 
-describe.skip('7 - Implemente a lógica para preencher as opções do campo "Moedas", buscando as siglas das moedas da API', () => {
+describe('7 - Implemente a lógica para preencher as opções do campo "Moedas", buscando as siglas das moedas da API', () => {
   test('Um campo para selecionar em qual moeda será registrada a despesa', async () => {
     renderWithRouterAndStore(<Wallet />, '/carteira');
     const currencyInput = await screen.findByRole('combobox', {
@@ -143,7 +143,7 @@ describe.skip('7 - Implemente a lógica para preencher as opções do campo "Moe
   });
 });
 
-describe.skip('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
+describe('8 - Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos', () => {
   test('Crie um botão com o texto \'Adicionar despesa\' que salva as informações da despesa no estado global e atualiza a soma de despesas no header', async () => {
     const { store } = renderWithRouterAndStore(<Wallet />, '/carteira');
 
