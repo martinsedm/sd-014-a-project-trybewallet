@@ -1,0 +1,81 @@
+.label-Valor > input {
+  width: 115px;
+  padding: 7px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.label-Valor > input:focus {
+  outline: none ! important;
+  border-color: rgb(37, 95, 255);
+}
+
+.label-moeda > select {
+  width: 115px;
+  padding: 7px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.label-moeda > select:focus {
+  outline: none ! important;
+  border-color: rgb(37, 95, 255);
+}
+
+.label-pay > select {
+  width: 115px;
+  padding: 7px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.label-pay > select:focus {
+  outline: none ! important;
+  border-color: rgb(37, 95, 255);
+}
+
+.label-category > select {
+  width: 115px;
+  padding: 7px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.label-category > select:focus {
+  outline: none ! important;
+  border-color: rgb(37, 95, 255);
+}
+
+.label-descricao > input {
+  width: 115px;
+  padding: 7px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.label-descricao > input:focus {
+  outline: none ! important;
+  border-color: rgb(37, 95, 255);
+}
+
+.btn {
+  background-color:	#1E90FF;
+  color: aliceblue;
+  width: 200px;
+  padding: 7px;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color:	#176edf;
+  cursor: pointer;
+}
+
+.containner-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: black;
+  color: aliceblue;
+  height: 80px;
+}

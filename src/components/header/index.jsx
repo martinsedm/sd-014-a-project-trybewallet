@@ -20,7 +20,7 @@ class Header extends React.Component {
         <div className="containner_user-infor">
           <p data-testid="email-field" className="email">{email}</p>
           <div className="conteinner-balance">
-            <p data-testid="total-field">{`Despeza Total R$ ${balance}`}</p>
+            <p data-testid="total-field">{`Despesa Total R$ ${balance}`}</p>
             <p className="BRL" data-testid="header-currency-field">BRL</p>
           </div>
         </div>
