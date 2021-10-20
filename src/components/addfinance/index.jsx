@@ -1,7 +1,29 @@
 import React from 'react';
 import '../../styles/addfinance.css';
+import apiMoeda from '../../services/apiMoedas';
 
 class Addfinance extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      moedas: [],
+    };
+    this.reloadStateMoedas = this.reloadStateMoedas.bind(this);
+  }
+
+  async componentDidMount() {
+    const response = await apiMoeda();
+    const arrOptions = Object.keys(response);
+    console.log(response);
+    console.log('*******************************************');
+    console.log(arrOptions);
+    this.reloadStateMoedas(arrOptions);
+  }
+
+  reloadStateMoedas(moedas) {
+    this.setState({ moedas });
+  }
+
   inputGenerato({ tag, typeInput, clas }) {
     return (
       <label className={ clas } htmlFor={ tag }>
@@ -25,7 +47,7 @@ class Addfinance extends React.Component {
   render() {
     const optionpay = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const category = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const api = ['xablau', 'xaASDblau', 'xablsadau'];
+    const { moedas } = this.state;
     return (
       <form className="containner-form">
 
@@ -34,7 +56,7 @@ class Addfinance extends React.Component {
         ) }
 
         { this.selectGenerat(
-          { opt: api, id: 'moeda', textLabel: 'Moeda', clas: 'label-moeda' },
+          { opt: moedas, id: 'moeda', textLabel: 'Moeda', clas: 'label-moeda' },
         ) }
 
         { this.selectGenerat(
