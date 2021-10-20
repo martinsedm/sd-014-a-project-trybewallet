@@ -2,7 +2,6 @@ import { USER } from '../actions';
 
 const INICIAL_STATE = {
   email: '',
-  password: '',
 };
 
 function userReducer(state = INICIAL_STATE, action) {
@@ -10,8 +9,7 @@ function userReducer(state = INICIAL_STATE, action) {
   case USER:
     return {
       ...state,
-      email: action.email.email,
-      password: action.email.password,
+      email: action.email,
     };
   default:
     return state;
