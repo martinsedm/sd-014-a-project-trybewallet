@@ -1,6 +1,13 @@
-export default function newAction(state) {
+export function emailAction(newEmail) {
   return {
-    type: 'NEW_ACTION',
-    state,
+    type: 'NEW_EMAIL',
+    newEmail,
+  };
+}
+
+export function lalalaTemporario(texto) {
+  return {
+    type: 'TEMP',
+    texto,
   };
 }
