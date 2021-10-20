@@ -4,7 +4,7 @@ const ESTADO_INICIAL = {
   email: '',
 };
 
-function SalvarUsuario(state = ESTADO_INICIAL, action) {
+function salvarUsuario(state = ESTADO_INICIAL, action) {
   switch (action.type) {
   case SALVAR_EMAIL:
     return { ...state, email: action.emailValue };
@@ -13,4 +13,4 @@ function SalvarUsuario(state = ESTADO_INICIAL, action) {
   }
 }
 
-export default SalvarUsuario;
+export default salvarUsuario;
