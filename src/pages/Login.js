@@ -1,9 +1,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { saveLogin as saveLoginAction } from '../actions';
 
 class Login extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -28,6 +31,12 @@ class Login extends React.Component {
     }
   }
 
+  dispachEmail() {
+    const { saveLogin } = this.props;
+    const { email } = this.state;
+    saveLogin(email);
+  }
+
   buttonClick() {
     this.setState({
       redirect: true,
@@ -36,9 +45,7 @@ class Login extends React.Component {
 
   render() {
     const { email, senha, redirect } = this.state;
-    if (redirect === true) {
-      return <Redirect to="/Wallet" />;
-    }
+    if (redirect === true) return (<Redirect to="/carteira" />);
     return (
       <form htmlFor="form" onSubmit={ this.buttonClick }>
         <label htmlFor="email">
@@ -59,6 +66,7 @@ class Login extends React.Component {
           />
         </label>
         <button
+          onClick={ this.dispachEmail }
           id="submit"
           disabled
           type="submit"
@@ -70,4 +78,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  saveLogin: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispach) => ({
+  saveLogin: (email) => dispach(saveLoginAction(email)),
+});
+
+export default connect(mapDispatchToProps)(Login);

@@ -1,8 +1,8 @@
-export const USER_LOGIN = 'USER_LOGIN';
+export const VALID_EMAIL = 'VALID_EMAIL';
 
 export const saveLogin = (email) => (
   {
-    type: USER_LOGIN,
-    payload: { email },
+    type: VALID_EMAIL,
+    email,
   }
 );
