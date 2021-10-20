@@ -9,12 +9,15 @@ export const REQUEST_MOEDAS = 'REQUEST_MOEDAS';
 
 export const RECEIVE_MOEDAS = 'RECEIVE_MOEDAS';
 
-// const requestMoedas = () => ({
-//   type: REQUEST_MOEDAS,
-// });
+export const ADD_EXPENSES = 'ADD_EXPENSE';
 
 const receiveMoedas = (payload) => ({
   type: RECEIVE_MOEDAS,
+  payload,
+});
+
+const addExpense = (payload) => ({
+  type: ADD_EXPENSES,
   payload,
 });
 
