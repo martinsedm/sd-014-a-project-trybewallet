@@ -20,13 +20,12 @@ class Header extends Component {
 
   render() {
     const { expenses } = this.state;
-    const { globalState } = this.props;
-    const { user } = globalState;
+    const { email } = this.props;
     return (
       <div>
         <h2>Header</h2>
         {/* { this.expensesMath() } */}
-        <p data-testid="email-field">{user.email}</p>
+        <p data-testid="email-field">{email}</p>
         <p data-testid="total-field">{expenses}</p>
         <p data-testid="header-currency-field">BRL</p>
 
@@ -36,14 +35,15 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  globalState: PropTypes.shape({
-    user: PropTypes.shape({
-      email: PropTypes.string.isRequired,
-    }),
-    wallet: PropTypes.shape({}),
-  }).isRequired,
+  email: PropTypes.string,
 };
 
-// como aprendi a ler somente o estado da store para pegar o user.email
-// https://www.youtube.com/watch?v=u99tNt3TZf8&t=1803s
-export default connect((state) => ({ globalState: state }))(Header);
+Header.defaultProps = {
+  email: 'xablau@trybe.com',
+};
+
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+});
+
+export default connect(mapStateToProps)(Header);
