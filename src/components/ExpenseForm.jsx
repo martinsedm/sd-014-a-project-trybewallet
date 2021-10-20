@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CurrencyOptions from './CurrencyOptions';
 
 export default class ExpenseForm extends Component {
   render() {
@@ -18,7 +19,7 @@ export default class ExpenseForm extends Component {
         <label htmlFor="currency">
           Moeda
           <select id="currency">
-            <option value="valor1">Valor 1</option>
+            <CurrencyOptions />
           </select>
         </label>
         <br />
