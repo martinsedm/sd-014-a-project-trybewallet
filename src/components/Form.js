@@ -3,22 +3,27 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
-import { tagOptions, paymentOptions } from '../data';
-import { getCurrencies as getCurrenciesAction } from '../actions';
+import { tagOptions, methodOptions } from '../data';
+import {
+  getCurrencies as getCurrenciesAction,
+  saveExpenseThunk,
+} from '../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      currency: '',
-      payment: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
-      value: 0.00,
+      value: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.submitButton = this.submitButton.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -31,8 +36,25 @@ class Form extends React.Component {
     this.setState({ [name]: value });
   }
 
+  handleClick(e) {
+    e.preventDefault();
+    const { saveExpense } = this.props;
+    saveExpense(this.state);
+  }
+
+  submitButton() {
+    return (
+      <button
+        type="button"
+        onClick={ this.handleClick }
+      >
+        Adicionar despesa
+      </button>
+    );
+  }
+
   render() {
-    const { value, description, currency, payment, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <form>
@@ -63,10 +85,10 @@ class Form extends React.Component {
           Moeda:
         </Select>
         <Select
-          name="payment"
-          options={ paymentOptions }
+          name="method"
+          options={ methodOptions }
           onChange={ this.handleChange }
-          value={ payment }
+          value={ method }
         >
           Método de pagamento:
         </Select>
@@ -78,8 +100,8 @@ class Form extends React.Component {
         >
           Tag:
         </Select>
-      </form>
-    );
+        { this.submitButton() }
+      </form>);
   }
 }
 
@@ -89,10 +111,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(getCurrenciesAction()),
+  saveExpense: (state) => dispatch(saveExpenseThunk(state)),
 });
 
 Form.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
+  saveExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

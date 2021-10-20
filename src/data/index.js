@@ -1,2 +1,2 @@
-export const paymentOptions = ['Dinheiro', 'Cartão de Débito', 'Cartão de Crédito'];
+export const methodOptions = ['Dinheiro', 'Cartão de débito', 'Cartão de crédito'];
 export const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];

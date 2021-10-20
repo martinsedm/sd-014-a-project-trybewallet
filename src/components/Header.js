@@ -11,7 +11,11 @@ class Header extends React.Component {
 
   countExpenses() {
     const { expenses } = this.props;
-    return expenses.length === 0 ? 0 : 'teste';
+    if (expenses.length === 0) return 0;
+
+    const sumExpenses = expenses.reduce((acc, { value, exchangeRates, currency }) => (
+      acc + Number(value) * exchangeRates[currency].ask), 0);
+    return sumExpenses;
   }
 
   render() {
