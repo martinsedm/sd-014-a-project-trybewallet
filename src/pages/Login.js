@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { actionRegisterUser } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -8,12 +11,20 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { value, name } }) {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { history, registerUser } = this.props;
+    registerUser(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -46,18 +57,29 @@ class Login extends React.Component {
             required
           />
         </label>
-        <label htmlFor="login-btn-submit">
-          <input
-            type="submit"
-            id="login-btn-submit"
-            value="Entrar"
-            // REFERENCIA DE VALIDAÇÃO REGEX = https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-            disabled={ !EMAIL_REGEX.test(email) || password.length < MIN_CHARACTHERS }
-          />
-        </label>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+          id="login-btn-submit"
+          // REFERENCIA DE VALIDAÇÃO REGEX = https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+          disabled={ !EMAIL_REGEX.test(email) || password.length < MIN_CHARACTHERS }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  registerUser: (payload) => dispatch(actionRegisterUser(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  registerUser: PropTypes.func.isRequired,
+};
