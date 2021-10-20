@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Select from './Select';
 
 class Form extends Component {
@@ -6,7 +7,7 @@ class Form extends Component {
     super();
     this.state = {
       valor: '',
-      moeda: '',
+      moeda: [],
       formaPagamento: '',
       tag: '',
       descricao: '',
@@ -22,6 +23,7 @@ class Form extends Component {
 
   render() {
     const { valor, descricao, moeda, formaPagamento, tag } = this.state;
+    const { estadoMoeda } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -44,7 +46,7 @@ class Form extends Component {
             id="moeda"
           >
             <option>
-              NADA
+              {estadoMoeda.map((siglaMoeda) => siglaMoeda)}
             </option>
           </select>
         </label>
@@ -68,4 +70,8 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = (state) => ({
+  estadoMoeda: state.wallet,
+});
+
+export default connect(mapStateToProps, null)(Form);
