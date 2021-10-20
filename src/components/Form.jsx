@@ -10,21 +10,30 @@ class Form extends React.Component {
     fetchCurrencies();
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
     const { currencies } = this.props;
+    const { valor, descricao, moeda, metodo, tag } = this.state;
     return (
       <form>
         <label htmlFor="valor">
           Valor:
-          <input type="text" id="valor" name="valor" />
+          <input type="text" id="valor" name="valor" value={ valor } />
         </label>
         <label htmlFor="descricao">
           Descrição:
-          <input type="text" id="descricao" name="descricao" />
+          <input type="text" id="descricao" name="descricao" value={ descricao } />
         </label>
         <label htmlFor="moeda">
           Moeda:
-          <select id="moeda" name="moeda">
+          <select id="moeda" name="moeda" value={ moeda }>
             { currencies
               .map((currency) => (
                 <option
@@ -37,7 +46,7 @@ class Form extends React.Component {
         </label>
         <label htmlFor="metodo">
           Método de pagamento:
-          <select id="metodo" name="metodo">
+          <select id="metodo" name="metodo" value={ metodo }>
             <option>Dinheiro</option>
             <option>Cartão de crédito</option>
             <option>Cartão de débito</option>
@@ -45,7 +54,7 @@ class Form extends React.Component {
         </label>
         <label htmlFor="tag">
           Tag:
-          <select id="tag" name="tag">
+          <select id="tag" name="tag" value={ tag }>
             <option>Alimentação</option>
             <option>Lazer</option>
             <option>Trabalho</option>
