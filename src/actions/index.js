@@ -3,7 +3,9 @@ export const FETCH_CURRENCIES_SUCCESS = 'FETCH_CURRENCIES_SUCCESS';
 export const FETCH_CURRENCIES_ERROR = 'FETCH_CURRENCIES_ERROR';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
+export const UPDATE_EXPENSE = 'UPDATE_EXPENSE';
 export const UPDATE_EXPENSES_TOTAL = 'UPDATE_EXPENSES_TOTAL';
+export const TOGGLE_EDIT_MODE = 'TOGGLE_EDIT_MODE';
 
 export const logUser = (payload) => ({
   type: LOG_USER,
@@ -53,4 +55,11 @@ export const addExpense = (payload) => async (dispatch) => {
 export const removeExpense = (id) => (dispatch) => {
   dispatch({ type: REMOVE_EXPENSE, id });
   dispatch(updateExpensesTotal());
+};
+
+export const toggleEditMode = (id) => ({ type: TOGGLE_EDIT_MODE, id });
+
+export const updateExpense = (payload) => (dispatch) => {
+  dispatch(toggleEditMode(null)); // desliga edit mode
+  dispatch({ type: UPDATE_EXPENSE, payload });
 };

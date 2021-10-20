@@ -6,6 +6,8 @@ import {
   FETCH_CURRENCIES_ERROR,
   FETCH_CURRENCIES_SUCCESS,
   REMOVE_EXPENSE,
+  TOGGLE_EDIT_MODE,
+  UPDATE_EXPENSE,
   UPDATE_EXPENSES_TOTAL,
 } from '../actions';
 
@@ -15,6 +17,7 @@ const INITIAL_STATE = {
   nextExpenseId: 0,
   totalExpenses: 0,
   error: null,
+  editingExpenseId: null,
 };
 
 const calculateTotal = (expenses) => expenses.reduce(
@@ -41,7 +44,7 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: state.nextExpenseId, ...action.payload },
+        { ...action.payload, id: state.nextExpenseId },
       ],
       nextExpenseId: state.nextExpenseId + 1,
     };
@@ -50,10 +53,22 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: state.expenses.filter(({ id }) => id !== action.id),
     };
+  case UPDATE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.map((expense) => (
+        expense.id === action.payload.id ? action.payload : expense
+      )),
+    };
   case UPDATE_EXPENSES_TOTAL:
     return {
       ...state,
       totalExpenses: calculateTotal(state.expenses),
+    };
+  case TOGGLE_EDIT_MODE:
+    return {
+      ...state,
+      editingExpenseId: action.id,
     };
   default:
     return state;

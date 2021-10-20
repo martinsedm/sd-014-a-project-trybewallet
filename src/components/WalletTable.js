@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions';
+import { removeExpense, toggleEditMode } from '../actions';
 
 class WalletTable extends React.Component {
   formatMonetaryValue(strOrNumber) {
@@ -16,7 +16,7 @@ class WalletTable extends React.Component {
   renderExpenseRow(
     { id, description, tag, method, value, currency, exchangeRates },
   ) {
-    const { setRemoveExpense } = this.props;
+    const { setRemoveExpense, setEditMode } = this.props;
     return (
       <tr key={ id }>
         <td>{ description }</td>
@@ -32,6 +32,13 @@ class WalletTable extends React.Component {
         </td>
         <td>Real</td>
         <td>
+          <button
+            type="button"
+            data-testid="edit-btn"
+            onClick={ () => setEditMode(id) }
+          >
+            Editar
+          </button>
           <button
             type="button"
             data-testid="delete-btn"
@@ -75,11 +82,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   setRemoveExpense: (id) => dispatch(removeExpense(id)),
+  setEditMode: (id) => dispatch(toggleEditMode(id)),
 });
 
 WalletTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   setRemoveExpense: PropTypes.func.isRequired,
+  setEditMode: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WalletTable);
