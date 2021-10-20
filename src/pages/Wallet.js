@@ -1,8 +1,19 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { currencyAPIThunk } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { fetchCurrencyAPI } = this.props;
+    fetchCurrencyAPI();
+  }
+
   render() {
+    const { payload } = this.props;
+    const { wallet } = payload;
+    const { currencies, isFetching } = wallet;
     return (
       <div>
         <Header />
@@ -19,7 +30,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda
             <select id="currency">
-              {/* <option value="currency">API</option> */}
+              {!isFetching
+            && currencies
+              .map((currency) => <option key={ currency.code }>{currency.code}</option>)}
             </select>
           </label>
           <label htmlFor="payment">
@@ -47,4 +60,25 @@ class Wallet extends React.Component {
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  fetchCurrencyAPI: PropTypes.func,
+  payload: PropTypes.shape({
+    wallet: PropTypes.shape({
+      currencies: PropTypes.shape({
+        map: PropTypes.func,
+      }).isRequired,
+      isFetching: PropTypes.bool,
+    }).isRequired,
+  }).isRequired,
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  payload: state.wallet,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchCurrencyAPI: () => dispatch(currencyAPIThunk()),
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
