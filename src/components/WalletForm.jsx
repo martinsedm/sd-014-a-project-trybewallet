@@ -52,7 +52,12 @@ class WalletForm extends React.Component {
     return (
       <label htmlFor="currency">
         Moeda
-        <select name="currency" onChange={ this.formHandler } id="currency" value={ expenses.currency }>
+        <select
+          name="currency"
+          onChange={ this.formHandler }
+          id="currency"
+          value={ expenses.currency }
+        >
           {currToOptions}
         </select>
       </label>
@@ -61,14 +66,15 @@ class WalletForm extends React.Component {
 
   async expenseSubmit(event) {
     event.preventDefault();
-    const { expenses } = this.state;
+    let { expenses } = this.state;
     const { addExpenseDispatch } = this.props;
     const exchangeRates = await fetchCurrency(false);
 
     this.setState({
       expenses: { ...expenses, exchangeRates: { ...exchangeRates } },
     }, () => {
-      addExpenseDispatch(this.state.expenses);
+      expenses = this.state; // Vital, or it will send the state before it had exchangeRates
+      addExpenseDispatch(expenses);
       this.setState({
         expenses: {
           value: 0,
@@ -83,7 +89,8 @@ class WalletForm extends React.Component {
   }
 
   render() {
-    const { value, description } = this.state.expenses;
+    const { expenses } = this.state;
+    const { value, description } = expenses;
     return (
       <form onSubmit={ this.expenseSubmit }>
         <label htmlFor="value">
