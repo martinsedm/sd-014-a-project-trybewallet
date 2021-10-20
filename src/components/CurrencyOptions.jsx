@@ -41,10 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 CurrencyOptions.propTypes = {
-  currencies: PropTypes.shape({
-    filter: PropTypes.func,
-    map: PropTypes.func.isRequired,
-  }).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.array).isRequired,
   getCurrencies: PropTypes.func.isRequired,
 };
 
