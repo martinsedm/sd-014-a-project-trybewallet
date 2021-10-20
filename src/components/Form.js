@@ -45,9 +45,11 @@ class Form extends Component {
             onChange={ this.handleChange }
             id="moeda"
           >
-            <option>
-              {estadoMoeda.map((siglaMoeda) => siglaMoeda)}
-            </option>
+            {Object.keys(estadoMoeda).map((siglaMoeda) => (
+              <option key={ siglaMoeda }>
+                {siglaMoeda}
+              </option>
+            ))}
           </select>
         </label>
         <Select
@@ -71,7 +73,7 @@ class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  estadoMoeda: state.wallet,
+  estadoMoeda: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, null)(Form);

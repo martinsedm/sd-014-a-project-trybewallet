@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { salvarEmail as salvarEmailAction, fetchApiMoedas as fetchApiMoedasThunk } from '../actions';
+import { salvarEmail as salvarEmailAction } from '../actions';
+
 
 class Login extends React.Component {
   constructor() {
@@ -12,11 +13,6 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  componentDidMount() {
-    const { fetchApiMoedas } = console.log( this.props);
-    fetchApiMoedas();
   }
 
   handleChange(event) {
@@ -74,7 +70,6 @@ class Login extends React.Component {
 
 Login.propTypes = {
   dispatchSalvarEmail: PropTypes.func.isRequired,
-  fetchApiMoedas: PropTypes.arrayOf.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
@@ -82,7 +77,6 @@ Login.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchSalvarEmail: (email) => dispatch(salvarEmailAction(email)),
-  fetchApiMoedas: (moeda) => dispatch(fetchApiMoedasThunk(moeda)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
