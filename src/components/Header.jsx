@@ -16,6 +16,7 @@ class Header extends React.Component {
           <div className="flex space-x-1">
             <span data-testid="total-field">
               Total:
+              {' '}
               { (expenses.length > 0) ? total.toFixed(2) : 0 }
             </span>
             <span data-testid="header-currency-field">
@@ -30,6 +31,8 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(Object).isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
