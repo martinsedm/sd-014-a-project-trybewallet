@@ -1,8 +1,6 @@
 const emailAction = (email) => ({
   type: 'USER_EMAIL',
-  payload: {
-    email,
-  },
+  payload: email,
 });
 
 export default emailAction;
