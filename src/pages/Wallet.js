@@ -1,10 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import getCoins from '../services/api';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      coins: {},
+    };
+    this.handleCoins = this.handleCoins.bind(this);
+  }
+
+  componentDidMount() {
+    this.handleCoins();
+  }
+
+  handleCoins() {
+    getCoins().then((response) => {
+      this.setState({ coins: response });
+    });
+  }
+
   render() {
     const { userEmail } = this.props;
+    const { coins } = this.state;
     return (
       <div>
         <h1 data-testid="email-field">{ userEmail }</h1>
@@ -20,7 +40,7 @@ class Wallet extends React.Component {
           <label htmlFor="moeda">
             Moeda
             <select id="moeda" name="moeda">
-              .
+              { Object.keys(coins).map((coin) => <option key={ coin }>{ coin }</option>) }
             </select>
           </label>
           <label htmlFor="pagamento">
