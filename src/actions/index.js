@@ -2,6 +2,7 @@
 
 export const USER_REG = 'USER_REG';
 export const QUERY_CURRENCY = 'QUERY_CURRENCY';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const regUser = (payload) => ({
   type: USER_REG,
@@ -12,3 +13,10 @@ export const currQuery = (payload) => ({
   type: QUERY_CURRENCY,
   payload,
 });
+
+export const addExpense = (payload) => (
+  {
+    type: ADD_EXPENSE,
+    payload,
+  }
+);

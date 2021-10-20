@@ -37,14 +37,12 @@ class Login extends React.Component {
   }
 
   submitForm() {
-    // event.preventDefault();
     const { dispatchRegUser } = this.props;
     const { email } = this.state;
     dispatchRegUser(email);
   }
 
   render() {
-    // const { email } = this.state;
     const submitReady = this.formChecker();
     return (
       <div>
@@ -89,7 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchRegUser: (payload) => dispatch(regUser(payload)),
 });
 
-// export default Login;
 export default connect(null, mapDispatchToProps)(Login);
 
 // https://www.w3schools.com/jsref/jsref_regexp_test.asp --- JS  test()  syntax

@@ -3,7 +3,6 @@ import userReducer from './user';
 import walletReducer from './wallet';
 
 const reducer = combineReducers({ user: userReducer, wallet: walletReducer });
-// console.log(userReducer.email);
 
 export default reducer;
 
