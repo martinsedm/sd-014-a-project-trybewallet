@@ -13,7 +13,6 @@ class ExpensesTable extends React.Component {
   }
 
   tableBodyMaker() {
-
     return (
       <table>
         <thead>
