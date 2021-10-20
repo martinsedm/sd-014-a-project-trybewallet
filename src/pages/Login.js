@@ -13,6 +13,7 @@ class Login extends React.Component {
     this.handleEmailChange = this.handleEmailChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.emailSubmit = this.emailSubmit.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   handleEmailChange(event) {
@@ -27,6 +28,13 @@ class Login extends React.Component {
     }
   }
 
+  // regex de validação de email
+  // https://www.w3resource.com/javascript/form/email-validation.php
+  validateEmail(email) {
+    const validMail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    return validMail.test(String(email).toLowerCase());
+  }
+
   emailSubmit() {
     const { email } = this.state;
     const { history, emailDispatch } = this.props;
@@ -37,8 +45,8 @@ class Login extends React.Component {
   render() {
     const { password, email } = this.state;
     const validPassword = 6;
-    const validEmail = 'alguem@email.com';
-    const enabled = password.length >= validPassword && email === validEmail;
+    const validEmail = this.validateEmail(email);
+    const enabled = password.length >= validPassword && validEmail;
     return (
       <div>
         Login
