@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Select from './Select';
 
 class Form extends Component {
   constructor() {
@@ -20,7 +21,7 @@ class Form extends Component {
   }
 
   render() {
-    const { valor, descricao, moeda } = this.state;
+    const { valor, descricao, moeda, formaPagamento, tag } = this.state;
     return (
       <form>
         <label htmlFor="valor">
@@ -47,6 +48,11 @@ class Form extends Component {
             </option>
           </select>
         </label>
+        <Select
+          formaPagamento={ formaPagamento }
+          tag={ tag }
+          onChange={ this.handleChange }
+        />
         <label htmlFor="descricao">
           Descrição
           <input
