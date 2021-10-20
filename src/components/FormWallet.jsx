@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchCurrencies } from '../actions';
+import { fetchCurrencies, sendExpense } from '../actions';
+import Input from './Input';
+import Select from './Select';
 
 class FormWallet extends React.Component {
   constructor() {
     super();
-    // this.state = {
-    //   value: '',
-    //   description: '',
-    //   currency: '',
-    //   paymentMethod: '',
-    //   tagType: '',
-    // };
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
     this.handleChange = this.handleChange.bind(this);
-    this.renderPaymentMethods = this.renderPaymentMethods.bind(this);
-    this.renderTagCategories = this.renderTagCategories.bind(this);
-    this.renderCurrencies = this.renderCurrencies.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -30,61 +30,63 @@ class FormWallet extends React.Component {
     this.setState({ [name]: value });
   }
 
-  renderPaymentMethods() {
-    const paymentMethods = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
-    return paymentMethods.map((payment, index) => (
-      <option value={ payment } key={ index }>{ payment }</option>
-    ));
-  }
-
-  renderTagCategories() {
-    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    return tags.map((payment, index) => (
-      <option value={ payment } key={ index }>{ payment }</option>
-    ));
-  }
-
-  renderCurrencies() {
-    const { currencies } = this.props;
-    return currencies.map((currency, index) => (
-      <option value={ currency } key={ index }>{currency}</option>
-    ));
+  async handleClick() {
+    const { sendNewExpense } = this.props;
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const currencies = await response.json();
+    await delete currencies.USDT;
+    this.setState({ exchangeRates: currencies }, () => {
+      const { value, description, currency, method, tag, exchangeRates } = this.state;
+      sendNewExpense({ value, description, currency, method, tag, exchangeRates });
+    });
   }
 
   render() {
-    // const { value, description, currency, paymentMethod, tagType } = this.state;
-    // console.log(value, description, currency, paymentMethod, tagType);
+    const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { currencies } = this.props;
     return (
-      <form>
-        <label htmlFor="valor">
-          Valor:
-          <input type="number" name="valor" id="valor" />
-        </label>
-        <label htmlFor="descrição">
-          Descrição
-          <input type="text" name="descrição" id="descrição" />
-        </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select id="moeda" name="currency">
-            { this.renderCurrencies() }
-          </select>
-        </label>
-        <label htmlFor="pagamento">
-          Método de pagamento
-          <select
-            id="pagamento"
-            name="paymentMethod"
-          >
-            { this.renderPaymentMethods() }
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select id="tag" name="tag">
-            { this.renderTagCategories() }
-          </select>
-        </label>
+      <form className="flex justify-center space-x-4">
+        <Input
+          id="valor"
+          name="value"
+          labelText="Valor: "
+          handleChange={ this.handleChange }
+        />
+        <Input
+          id="descrição"
+          name="description"
+          labelText="Descrição: "
+          handleChange={ this.handleChange }
+        />
+        <Select
+          id="moeda"
+          name="currency"
+          labelText="Moeda: "
+          handleChange={ this.handleChange }
+          array={ currencies }
+        />
+        <Select
+          id="pagamento"
+          name="method"
+          labelText="Método de pagamento: "
+          handleChange={ this.handleChange }
+          array={ paymentMethods }
+        />
+        <Select
+          id="tag"
+          name="tag"
+          labelText="Tag: "
+          handleChange={ this.handleChange }
+          array={ tags }
+        />
+        <button
+          type="button"
+          className="mx-5 px-5 py-1.5 bg-green-300 rounded opacity-50 hover:opacity-100"
+          onClick={ () => this.handleClick() }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
@@ -92,6 +94,7 @@ class FormWallet extends React.Component {
 
 FormWallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
+  sendNewExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
@@ -101,6 +104,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchCurrencies()),
+  sendNewExpense: (payload) => dispatch(sendExpense(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormWallet);

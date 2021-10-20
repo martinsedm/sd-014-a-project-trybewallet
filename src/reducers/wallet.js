@@ -11,6 +11,11 @@ const wallet = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       currencies: payload,
     };
+  case 'ADD_NEW_EXPENSE':
+    return {
+      ...state,
+      expenses: [...state.expenses, { id: state.expenses.length, ...payload }],
+    };
   default:
     return state;
   }

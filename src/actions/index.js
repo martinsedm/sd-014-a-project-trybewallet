@@ -24,3 +24,8 @@ export const fetchCurrencies = () => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const sendExpense = (payload) => ({
+  type: 'ADD_NEW_EXPENSE',
+  payload,
+});
