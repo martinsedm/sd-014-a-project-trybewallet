@@ -3,6 +3,7 @@ import getCurrencyApi from '../services/currencyAPI';
 export const LOGIN_INFO = 'LOGIN_INFO';
 export const API_SUCCESS = 'API_SUCCESS';
 export const API_ERROR = 'API_ERROR';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 
 export const loginInfo = (payload) => ({
   type: LOGIN_INFO,
@@ -16,6 +17,11 @@ export const getCurrencyApiSuccess = (payload) => ({
 
 export const getCurrencyApiError = (payload) => ({
   type: API_ERROR,
+  payload,
+});
+
+export const getExpenses = (payload) => ({
+  type: ADD_EXPENSES,
   payload,
 });
 

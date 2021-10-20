@@ -1,18 +1,25 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
 import SelectCurrency from './SelectCurrency';
+import getCurrencyApi from '../services/currencyAPI';
+import { getExpenses as getExpensesAction } from '../actions';
 
 class ExpensesForm extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      expenseValue: 0,
+      value: 0,
       description: '',
-      payment: '',
-      tag: '',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.selectFields = this.selectFields.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -21,19 +28,64 @@ class ExpensesForm extends React.Component {
     });
   }
 
+  async handleClick() {
+    const { getExpenses } = this.props;
+    const exchangeRates = await getCurrencyApi();
+    this.setState({
+      exchangeRates,
+    });
+    getExpenses(this.state);
+  }
+
+  selectFields() {
+    const { method, tag } = this.state;
+    return (
+      <div>
+        <label htmlFor="method">
+          Método de pagamento
+          <select
+            name="method"
+            id="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
+          </select>
+        </label>
+        <label htmlFor="tag">
+          Tag
+          <select
+            name="tag"
+            id="tag"
+            value={ tag }
+            onChange={ this.handleChange }
+          >
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
+          </select>
+        </label>
+      </div>
+    );
+  }
+
   render() {
-    const { expenseValue, description, payment, tag } = this.state;
+    const { value, description } = this.state;
     return (
       <form>
         <fieldset>
           <legend>Despesas</legend>
-          <label htmlFor="expenseValue">
+          <label htmlFor="value">
             Valor
             <input
               type="text"
-              id="expenseValue"
-              name="expenseValue"
-              value={ expenseValue }
+              id="value"
+              name="value"
+              value={ value }
               onChange={ this.handleChange }
             />
           </label>
@@ -48,28 +100,20 @@ class ExpensesForm extends React.Component {
             />
           </label>
           <SelectCurrency handleChange={ this.handleChange } />
-          <label htmlFor="payment">
-            Método de pagamento
-            <select name="payment" id="payment" value={ payment }>
-              <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de crédito</option>
-              <option value="debido">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag
-            <select name="tag" id="tag" value={ tag }>
-              <option value="alimentacao">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
-            </select>
-          </label>
+          <p>{ this.selectFields() }</p>
+          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
         </fieldset>
       </form>
     );
   }
 }
 
-export default ExpensesForm;
+ExpensesForm.propTypes = {
+  getExpenses: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getExpenses: (expenses) => dispatch(getExpensesAction(expenses)),
+});
+
+export default connect(null, mapDispatchToProps)(ExpensesForm);
