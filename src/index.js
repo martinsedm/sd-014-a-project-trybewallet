@@ -2,12 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <Provider store={ store }>
+      {' src: https://gist.github.com/maite-marques/706c806d8051915437437d0a86e6e123'}
+      <App />
+    </Provider>
   </BrowserRouter>,
   document.getElementById('root'),
 );
