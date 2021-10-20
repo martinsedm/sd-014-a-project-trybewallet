@@ -22,6 +22,7 @@ class WalletForm extends React.Component {
     this.currencyToState = this.currencyToState.bind(this);
     this.formHandler = this.formHandler.bind(this);
     this.expenseSubmit = this.expenseSubmit.bind(this);
+    this.dispatcher = this.dispatcher.bind(this);
   }
 
   componentDidMount() {
@@ -64,28 +65,35 @@ class WalletForm extends React.Component {
     );
   }
 
+  dispatcher() {
+    const { addExpenseDispatch } = this.props;
+    const { expenses } = this.state;
+    console.log(expenses);
+    addExpenseDispatch(expenses);
+  }
+  // an entire new function had to be written down because lint refuses to let me use this.state.expenses despite needing a new instance of such.
+
   async expenseSubmit(event) {
     event.preventDefault();
-    let { expenses } = this.state;
-    const { addExpenseDispatch } = this.props;
+    const { expenses } = this.state;
     const exchangeRates = await fetchCurrency(false);
 
     this.setState({
       expenses: { ...expenses, exchangeRates: { ...exchangeRates } },
-    }, () => {
-      expenses = this.state; // Vital, or it will send the state before it had exchangeRates
-      addExpenseDispatch(expenses);
-      this.setState({
-        expenses: {
-          value: 0,
-          description: '',
-          currency: 'USD',
-          method: 'Dinheiro',
-          tag: 'Alimentação',
-          exchangeRates: [],
-        },
-      });
     });
+    this.dispatcher();
+
+    this.setState({
+      expenses: {
+        value: 0,
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: [],
+      },
+    });
+    // console.log(expenses);
   }
 
   render() {

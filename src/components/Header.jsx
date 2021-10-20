@@ -10,18 +10,16 @@ class Header extends React.Component {
 
   expenseCalculator() {
     const { expenses } = this.props;
-
     if (expenses.length > 0) {
       const total = expenses.reduce((acc, cur) => {
-        const xchange = Number.parseFloat(cur.value) // .toFixed(2)
-        * Number.parseFloat(((cur.exchangeRates[cur.currency].ask) * 100) / 100); // .toFixed(2);
+        const xchange = Number.parseFloat(cur.value)
+        * Number.parseFloat(cur.exchangeRates[cur.currency].ask);
         acc += xchange;
-        // return Number.parseFloat(acc).toFixed(2);
         return acc;
       }, 0);
-      console.log(total);
       return total;
-    } return 0;
+    }
+    return 0;
   }
 
   render() {
