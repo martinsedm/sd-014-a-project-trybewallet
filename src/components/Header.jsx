@@ -17,7 +17,7 @@ class Header extends React.Component {
         acc += xchange;
         return acc;
       }, 0);
-      return total;
+      return Number.parseFloat(total).toFixed(2);
     }
     return 0;
   }
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
-  expenses: PropTypes.shape(PropTypes.any).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 
 };
 

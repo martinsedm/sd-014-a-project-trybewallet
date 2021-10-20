@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import fetchCurrency from './CurrencyQuery';
 import { addExpense } from '../actions';
+import ExpensesTable from './ExpensesTable';
 
 class WalletForm extends React.Component {
   constructor(props) {
@@ -68,7 +69,6 @@ class WalletForm extends React.Component {
   dispatcher() {
     const { addExpenseDispatch } = this.props;
     const { expenses } = this.state;
-    console.log(expenses);
     addExpenseDispatch(expenses);
   }
   // an entire new function had to be written down because lint refuses to let me use this.state.expenses despite needing a new instance of such.
@@ -93,7 +93,6 @@ class WalletForm extends React.Component {
         exchangeRates: [],
       },
     });
-    // console.log(expenses);
   }
 
   render() {
@@ -107,7 +106,6 @@ class WalletForm extends React.Component {
             type="number"
             name="value"
             id="value"
-            isRequired
             value={ value }
             onChange={ this.formHandler }
           />
@@ -143,6 +141,7 @@ class WalletForm extends React.Component {
           </select>
         </label>
         <button type="submit">Adicionar despesa</button>
+        <ExpensesTable />
       </form>
     );
   }
