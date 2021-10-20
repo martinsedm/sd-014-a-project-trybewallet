@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Select from './Select';
 
@@ -24,6 +25,7 @@ class Form extends Component {
   render() {
     const { valor, descricao, moeda, formaPagamento, tag } = this.state;
     const { estadoMoeda } = this.props;
+    const arrayMoeda = Object.keys(estadoMoeda); console.log('moeda', arrayMoeda[1]);
     return (
       <form>
         <label htmlFor="valor">
@@ -45,7 +47,7 @@ class Form extends Component {
             onChange={ this.handleChange }
             id="moeda"
           >
-            {Object.keys(estadoMoeda).map((siglaMoeda) => (
+            {arrayMoeda.map((siglaMoeda) => (
               <option key={ siglaMoeda }>
                 {siglaMoeda}
               </option>
@@ -71,6 +73,10 @@ class Form extends Component {
     );
   }
 }
+
+Form.propTypes = {
+  estadoMoeda: PropTypes.arrayOf.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   estadoMoeda: state.wallet.currencies,

@@ -5,7 +5,7 @@ export const salvarEmail = (emailValue) => ({
   emailValue,
 });
 
-const URL = ' https://economia.awesomeapi.com.br/json/all';
+const URL = 'https://economia.awesomeapi.com.br/json/all';
 export const REQUISITAR_MOEDAS = 'REQUISITAR_MOEDAS';
 export const FALHA_RESPOSTA_API = 'FALHA_RESPOSTA_API';
 
@@ -27,6 +27,7 @@ export function fetchApiMoedas() {
     try {
       const resposta = await fetch(URL);
       const data = await resposta.json();
+      delete data.USDT;
       return dispatch(requisitarMoedas(data));
     } catch (error) {
       return dispatch(falhaResposta);

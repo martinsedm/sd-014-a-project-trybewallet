@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { salvarEmail as salvarEmailAction } from '../actions';
 
-
 class Login extends React.Component {
   constructor() {
     super();
