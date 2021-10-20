@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import fetchApi from '../services/api';
 
 class AddExpenseForm extends Component {
   constructor(props) {
@@ -8,17 +9,13 @@ class AddExpenseForm extends Component {
     };
   }
 
-  async componentDidMount() {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const data = await response.json();
-    const currencies = Object.keys(data).filter(
-      (currency) => currency !== 'USDT',
-    );
-    this.updateState({ currencies });
-  }
-
-  updateState(state) {
-    this.setState(state);
+  componentDidMount() {
+    fetchApi().then((response) => {
+      const currencies = Object.keys(response).filter(
+        (currency) => currency !== 'USDT',
+      );
+      this.setState({ currencies });
+    });
   }
 
   render() {
