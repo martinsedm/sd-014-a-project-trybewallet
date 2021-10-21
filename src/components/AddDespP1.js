@@ -1,49 +1,49 @@
-import React from 'react';
+// import React from 'react';
 
-class AddDespP1 extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      value: '',
-      description: '',
-    };
-    this.handleCh = this.handleCh.bind(this);
-  }
+// class AddDespP1 extends React.Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       value: '',
+//       description: '',
+//     };
+//     this.handleCh = this.handleCh.bind(this);
+//   }
 
-  //   const responseJsonl26 = [Object.values(responseJson)];
+//   //   const responseJsonl26 = [Object.values(responseJson)];
 
-  handleCh({ target: { name, value } }) {
-    this.setState({ [name]: value });
-  }
+//    criarI = (tipo, nome, id, valor) => {(
+//       <input
+//         type={ tipo }
+//         name={ nome }
+//         id={ id }
+//         value={ valor }
+//         onChange={ this.handleCh }
+//       />
+//     );}
 
-  render() {
-    const { value, description } = this.state;
-    console.log(this.state);
-    return (
-      <div>
-        <label htmlFor="value">
-          Valor:
-          <input
-            type="text"
-            name="value"
-            id="value"
-            value={ value }
-            onChange={ this.handleCh }
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input
-            type="text"
-            name="description"
-            id="description"
-            value={ description }
-            onChange={ this.handleCh }
-          />
-        </label>
-      </div>
-    );
-  }
-}
+//   handleCh({ target: { name, value } }) {
+//     this.setState({ [name]: value });
+//   }
 
-export default AddDespP1;
+//   render() {
+//     const { value, description } = this.state;
+//     console.log(this.state);
+//     return (
+//       <div>
+//         <form>
+//           <label htmlFor="value">
+//             Valor:
+//             {this.criarI('text', 'value', 'value', value)}
+//           </label>
+//           <label htmlFor="description">
+//             Descrição:
+//             {this.criarI('text', 'description', 'description', description)}
+//           </label>
+//         </form>
+//       </div>
+//     );
+//   }
+// }
+
+// export default AddDespP1;

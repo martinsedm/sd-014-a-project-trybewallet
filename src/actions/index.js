@@ -4,6 +4,7 @@
 export const LOG_USER = 'LOG_USER';
 export const WALLET_USER = 'WALLET_USER';
 export const GET_API_MONEY_SUCCESS = 'GET_API_MONEY_SUCCESS';
+export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
 
 export const logUser = (user) => (
   {
@@ -26,14 +27,13 @@ export const getApiMoneySuccess = (currencies) => (
   }
 );
 
-// export const getApiMoneyThunk = () => async (dispatch) => {
-//   const response = await getApiMoney();
-//   const responseVali = Object.values(response);
-//   const payload = {
-//     currencies: Object.values(responseVali),
-//   };
-//   dispatch(getApiMoneySuccess(payload));
-// };
+export const addNewExpense = (payload) => (
+  {
+    type: ADD_NEW_EXPENSE,
+    payload: {
+      ...payload,
+    },
+  });
 
 export function getApiMoneyThunk() {
   return async (dispatch) => {

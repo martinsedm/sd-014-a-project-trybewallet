@@ -2,20 +2,23 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
 import Loading from './loading';
-import AddDespP1 from './AddDespP1';
 
-import { getApiMoneyThunk } from '../actions';
+import { getApiMoneyThunk, addNewExpense } from '../actions';
+import CIP from './CriarInputPadrao';
 
 class AddDesp extends React.Component {
   constructor() {
     super();
     this.state = {
+      value: '',
+      description: '',
       loading: true,
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
-    this.handleC = this.handleC.bind(this);
+    this.hC = this.hC.bind(this);
+    this.btnSubmit = this.btnSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -23,27 +26,36 @@ class AddDesp extends React.Component {
     getApiMoney();
   }
 
-  //   const responseJsonl26 = [Object.values(responseJson)];
+  hC({ target }) {
+    const { value, name } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
 
-  handleC({ target: { name, value } }) {
-    this.setState({ [name]: value });
+  async btnSubmit(e) {
+    e.preventDefault();
+    const { dispatchSetValueExpense } = this.props;
+    // const { value, description, loading, currency, method, tag } = this.state;
+    dispatchSetValueExpense(this.state);
   }
 
   render() {
-    const { loading, currency, method, tag } = this.state;
-    const { currencies } = this.props;
-    const arrayOptTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const arrayOptPag = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    console.log(loading, currency, method, tag);
-    console.log(this.state);
+    const { value, description, loading, currency, method, tag } = this.state;
+    const { hC } = this;
+    const { currencies, expenses } = this.props;
+    console.log(expenses);
+    const arrayOpt = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const arrayOpP = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
       <div>
         {loading ? (
           <form>
-            <AddDespP1 />
+            <CIP t="text" n="value" v={ value } a="Valor" o={ hC } />
+            <CIP t="text" n="description" v={ description } a="Descrição" o={ hC } />
             <label htmlFor="currency">
               Moeda:
-              <select name="currency" id="currency">
+              <select name="currency" id="currency" value={ currency } onChange={ hC }>
                 {currencies.map((item, index) => (
                   <option key={ index } value={ item }>{item}</option>
                 ))}
@@ -51,17 +63,23 @@ class AddDesp extends React.Component {
             </label>
             <label htmlFor="method">
               Método de pagamento:
-              <select id="method" name="method">
-                {arrayOptPag.map((i) => (<option key={ i } value={ i }>{i}</option>))}
+              <select id="method" name="method" value={ method } onChange={ hC }>
+                {arrayOpt.map((i) => (<option key={ i } value={ i }>{i}</option>))}
               </select>
             </label>
             <label htmlFor="tag">
               Tag:
-              <select name="tag" id="tag">
-                {arrayOptTag.map((i) => (<option key={ i } value={ i }>{i}</option>))}
+              <select name="tag" id="tag" value={ tag } onChange={ hC }>
+                {arrayOpP.map((i) => (<option key={ i } value={ i }>{i}</option>))}
               </select>
             </label>
-            <button type="button" id="button" name="button">Adicionar despesa</button>
+            <button
+              type="button"
+              id="button"
+              onClick={ this.btnSubmit }
+            >
+              Adicionar despesa
+            </button>
           </form>
         ) : <Loading />}
       </div>
@@ -71,14 +89,18 @@ class AddDesp extends React.Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getApiMoney: () => dispatch(getApiMoneyThunk()),
+  dispatchSetValueExpense: (valueExpense) => dispatch(addNewExpense(valueExpense)),
 });
 
 AddDesp.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.array).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.string).isRequired,
+  dispatchSetValueExpense: PropTypes.func.isRequired,
   getApiMoney: PropTypes.objectOf(PropTypes.func).isRequired,
 };
 

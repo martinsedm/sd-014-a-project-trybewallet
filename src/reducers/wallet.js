@@ -1,24 +1,10 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { WALLET_USER, GET_API_MONEY_SUCCESS } from '../actions';
+import { WALLET_USER, GET_API_MONEY_SUCCESS, ADD_NEW_EXPENSE } from '../actions';
 
 const initialState = {
   currencies: [],
-  expenses: [{
-    id: 0,
-    value: '3',
-    description: 'Hot Dog',
-    currency: 'USD',
-    method: 'Dinheiro',
-    tag: 'Alimentação',
-  },
-  {
-    id: 1,
-    value: '3',
-    description: 'Hot Dog',
-    currency: 'USD',
-    method: 'Dinheiro',
-    tag: 'Alimentação',
-  }],
+  expenses: [],
+  proximoId: 0,
 };
 
 const wallet = (state = initialState, action) => {
@@ -28,6 +14,15 @@ const wallet = (state = initialState, action) => {
   case GET_API_MONEY_SUCCESS:
     return { ...state,
       currencies: action.payload.currencies,
+    };
+  case ADD_NEW_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { ...action.payload, id: state.proximoId },
+      ],
+      proximoId: state.proximoId + 1,
     };
   default:
     return state;
