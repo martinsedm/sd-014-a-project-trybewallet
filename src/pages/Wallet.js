@@ -60,7 +60,6 @@ class Wallet extends React.Component {
       <label htmlFor="currency">
         Moeda
         <select id="currency" name="currency" onChange={ this.handleInputChange }>
-          <option>Selecionar</option>
           {!isFetching
             && currencies
               .map((currency) => <option key={ currency.code }>{currency.code}</option>)}
@@ -73,7 +72,6 @@ class Wallet extends React.Component {
     return (
       <div>
         <Header />
-        TrybeWallet
         <form>
           <label htmlFor="expenses">
             Valor
@@ -97,7 +95,6 @@ class Wallet extends React.Component {
           <label htmlFor="payment">
             Método de pagamento
             <select name="method" id="payment" onChange={ this.handleInputChange }>
-              <option name="cash">Selecionar</option>
               <option name="cash">Dinheiro</option>
               <option name="credit">Cartão de crédito</option>
               <option name="debit">Cartão de débito</option>
@@ -106,7 +103,6 @@ class Wallet extends React.Component {
           <label htmlFor="tag">
             Tag
             <select id="tag" name="tag" onChange={ this.handleInputChange }>
-              <option>Selecionar</option>
               <option name="food-expenses">Alimentação</option>
               <option name="recreation-expenses">Lazer</option>
               <option name="job-expenses">Trabalho</option>
@@ -114,7 +110,7 @@ class Wallet extends React.Component {
               <option name="healthcare-expenses">Saúde</option>
             </select>
           </label>
-          <button onClick={ this.onSubmitForm } type="button">Enviar</button>
+          <button onClick={ this.onSubmitForm } type="button">Adicionar despesa</button>
         </form>
       </div>
     );
