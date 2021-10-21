@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExpense } from '../actions';
+// import { addExpense } from '../actions';
 import SelectForm from './SelectForm';
 
 import MethodMapForm from './methodMapForm';
-import ButtonAdd from './ButtonAdd';
+// import ButtonAdd from './ButtonAdd';
 
 class FormInputs extends Component {
   constructor() {
@@ -13,25 +13,25 @@ class FormInputs extends Component {
     this.state = {
       value: '',
       tag: '',
-      currency: '',
+      currency: [],
       method: '',
       description: '',
-      exchangeRates: '',
+      // exchangeRates: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
-  handleClick(event) {
-    event.preventDefault();
-    const { addExpenses } = this.props;
-    addExpenses(this.state);
-  }
+  // handleClick(event) {
+  //   event.preventDefault();
+  //   const { addExpenses } = this.props;
+  //   addExpenses(this.state);
+  // }
 
   render() {
     const { value, currency, method, tag, description } = this.state;
@@ -58,9 +58,9 @@ class FormInputs extends Component {
             onChange={ this.handleChange }
             id="currency"
           >
-            {arrayMoeda.map((state) => (
-              <option key={ state }>
-                { stateMoeda }
+            {arrayMoeda.map((moeda) => (
+              <option key={ moeda }>
+                { moeda }
               </option>
             ))}
           </select>
@@ -75,7 +75,7 @@ class FormInputs extends Component {
           value={ tag }
           onChange={ this.handleChange }
         />
-        <ButtonAdd onChage={ this.handleClick } />
+        {/* <ButtonAdd onChage={ this.handleClick } /> */}
       </form>
     );
   }
@@ -83,14 +83,10 @@ class FormInputs extends Component {
 
 FormInputs.propTypes = {
   stateMoeda: PropTypes.arrayOf.isRequired,
-  addExpenses: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   stateMoeda: state.wallet.currencies,
 });
-const mapDispatchToProps = (dispatch) => ({
-  addExpenses: (expense) => dispatch(addExpense(expense)),
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(FormInputs);
+export default connect(mapStateToProps, null)(FormInputs);

@@ -38,11 +38,12 @@ class SelectForm extends Component {
 SelectForm.propTypes = {
   onChange: PropTypes.func,
   tag: PropTypes.string,
-  value: PropTypes.number.isRequired,
+  value: PropTypes.string,
 };
 
 SelectForm.defaultProps = {
   tag: '',
+  value: '',
   onChange: null,
 };
 

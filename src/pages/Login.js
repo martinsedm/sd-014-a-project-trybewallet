@@ -11,7 +11,7 @@ class Login extends Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.loginSubmit = this.loginSubmit.bind(this);
   }
 
@@ -19,13 +19,14 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  handleClick() {
-    const { history, saveStateEmail } = this.props;
-    const { email } = this.state;
+  // handleClick(event) {
+  //   event.preventDefault();
+  //   const { history, saveStateEmail } = this.props;
+  //   const { email } = this.state;
 
-    saveStateEmail(email);
-    history.push('/carteira');
-  }
+  //   saveStateEmail(email);
+  //   history.push('/carteira');
+  // }
 
   loginValid() {
     // const VALID_EMAIL = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i.test(email);
@@ -67,13 +68,13 @@ class Login extends Component {
             />
           </label>
           <div>
-            <label htmlFor="pass">
+            <label htmlFor="password">
               Digite sua senha:
               {' '}
               <input
                 data-testid="password-input"
                 type="password"
-                id="pass"
+                id="password"
                 name="password"
                 placeholder="password"
                 value={ password }
@@ -86,7 +87,7 @@ class Login extends Component {
             type="button"
             value="Entrar"
             disabled={ !this.loginValid() }
-            onClick={ this.handleClick }
+            onClick={ this.loginSubmit }
           >
             Entrar
             {' '}
