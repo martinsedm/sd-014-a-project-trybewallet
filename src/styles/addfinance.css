@@ -1,81 +1,81 @@
 .label-Valor > input {
-  width: 115px;
-  padding: 7px;
   border-radius: 5px;
   margin-left: 10px;
-}
-
-.label-Valor > input:focus {
-  outline: none ! important;
-  border-color: rgb(37, 95, 255);
-}
-
-.label-moeda > select {
-  width: 115px;
   padding: 7px;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-
-.label-moeda > select:focus {
-  outline: none ! important;
-  border-color: rgb(37, 95, 255);
-}
-
-.label-pay > select {
   width: 115px;
-  padding: 7px;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-
-.label-pay > select:focus {
-  outline: none ! important;
-  border-color: rgb(37, 95, 255);
-}
-
-.label-category > select {
-  width: 115px;
-  padding: 7px;
-  border-radius: 5px;
-  margin-left: 10px;
-}
-
-.label-category > select:focus {
-  outline: none ! important;
-  border-color: rgb(37, 95, 255);
 }
 
 .label-descricao > input {
-  width: 115px;
-  padding: 7px;
   border-radius: 5px;
   margin-left: 10px;
+  padding: 7px;
+  width: 115px;
+}
+
+.label-Valor > input:focus {
+  border-color: rgb(37, 95, 255);
+  outline: none;
+}
+
+.label-moeda > select {
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 7px;
+  width: 115px;
+}
+
+.label-pay > select {
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 7px;
+  width: 115px;
+}
+
+.label-category > select {
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 7px;
+  width: 115px;
+}
+
+.label-moeda > select:focus {
+  border-color: rgb(37, 95, 255);
+  outline: none;
+}
+
+.label-pay > select:focus {
+  border-color: rgb(37, 95, 255);
+  outline: none;
+}
+
+.label-category > select:focus {
+  border-color: rgb(37, 95, 255);
+  outline: none;
 }
 
 .label-descricao > input:focus {
-  outline: none ! important;
   border-color: rgb(37, 95, 255);
+  outline: none;
 }
 
 .btn {
-  background-color:	#1E90FF;
-  color: aliceblue;
-  width: 200px;
-  padding: 7px;
+  background-color: dodgerblue;
   border-radius: 5px;
+  color: aliceblue;
+  padding: 7px;
+  width: 200px;
 }
 
 .btn:hover {
-  background-color:	#176edf;
+  background-color: #176edf;
   cursor: pointer;
 }
 
 .containner-form {
-  display: flex;
   align-items: center;
-  justify-content: space-around;
   background-color: black;
   color: aliceblue;
+  display: flex;
   height: 80px;
+  justify-content: space-around;
 }

@@ -1,80 +1,126 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../../styles/addfinance.css';
+import { connect } from 'react-redux';
 import apiMoeda from '../../services/apiMoedas';
+import { addDispenses } from '../../actions';
+import {
+  inputGenerato,
+  selectGenerat,
+  optionpay,
+  category,
+} from '../../services/tagGenerato';
 
 class Addfinance extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       moedas: [],
+      value: 0,
+      typeCurrency: 'USD',
+      payment: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
     };
     this.reloadStateMoedas = this.reloadStateMoedas.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submmitForm = this.submmitForm.bind(this);
   }
 
   async componentDidMount() {
     const response = await apiMoeda();
     const arrOptions = Object.keys(response);
     arrOptions.splice(1, 1);
-    this.reloadStateMoedas(arrOptions);
+    this.reloadStateMoedas(arrOptions, response);
   }
 
-  reloadStateMoedas(moedas) {
-    this.setState({ moedas });
-  }
+  handleChange({ target: { value, name } }) { this.setState({ [name]: value }); }
 
-  inputGenerato({ tag, typeInput, clas }) {
-    return (
-      <label className={ clas } htmlFor={ tag }>
-        {`${tag}:`}
-        <input id={ tag } type={ `${typeInput}` } />
-      </label>
-    );
-  }
+  reloadStateMoedas(moedas) { this.setState({ moedas }); }
 
-  selectGenerat({ opt, id, textLabel, clas }) {
-    return (
-      <label className={ clas } htmlFor={ id }>
-        {`${textLabel}:`}
-        <select id={ id }>
-          {opt.map((select) => <option key={ select }>{ select }</option>)}
-        </select>
-      </label>
-    );
+  async submmitForm() {
+    const { dispensesCurrent, addStateDispenses } = this.props;
+    const { value, typeCurrency, payment, tag, description } = this.state;
+    const moedas = await apiMoeda();
+    const payload = [
+      {
+        id: dispensesCurrent.length,
+        value,
+        description,
+        currency: typeCurrency,
+        method: payment,
+        tag,
+        exchangeRates: moedas,
+      },
+    ];
+    addStateDispenses(payload);
   }
 
   render() {
-    const optionpay = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const category = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { moedas } = this.state;
+    const tagValor = { tag: 'Valor',
+      typeInput: 'number',
+      clas: 'label-Valor',
+      name: 'value',
+      handleChange: this.handleChange };
+
     return (
       <form className="containner-form">
+        { inputGenerato(tagValor) }
 
-        { this.inputGenerato(
-          { tag: 'Valor', typeInput: 'number', clas: 'label-Valor' },
-        ) }
+        { selectGenerat({ opt: moedas,
+          id: 'moeda',
+          textLabel: 'Moeda',
+          clas: 'label-moeda',
+          name: 'typeCurrency',
+          handleChange: this.handleChange }) }
 
-        { this.selectGenerat(
-          { opt: moedas, id: 'moeda', textLabel: 'Moeda', clas: 'label-moeda' },
-        ) }
+        { selectGenerat({ opt: optionpay,
+          id: 'pagamento',
+          textLabel: 'Método de pagamento',
+          clas: 'label-pay',
+          name: 'payment',
+          handleChange: this.handleChange }) }
 
-        { this.selectGenerat(
-          { opt: optionpay,
-            id: 'pagamento',
-            textLabel: 'Método de pagamento',
-            clas: 'label-pay' },
-        ) }
+        { selectGenerat({ opt: category,
+          id: 'categoria',
+          textLabel: 'Tag',
+          clas: 'label-category',
+          name: 'tag',
+          handleChange: this.handleChange }) }
 
-        { this.selectGenerat(
-          { opt: category, id: 'categoria', textLabel: 'Tag', clas: 'label-category' },
-        ) }
+        { inputGenerato({ tag: 'Descrição',
+          typeInput: 'text',
+          clas: 'label-descricao',
+          name: 'description',
+          handleChange: this.handleChange }) }
 
-        { this.inputGenerato(
-          { tag: 'Descrição', typeInput: 'text', clas: 'label-descricao' },
-        ) }
-        <button className="btn" type="button">Adicionar</button>
+        <button
+          onClick={ this.submmitForm }
+          className="btn"
+          type="button"
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default Addfinance;
+// pega valor do state global
+const mapStateToProps = (state) => ({
+  dispensesCurrent: state.wallet.expenses,
+});
+
+// dispara function para adicionar no state global
+
+const mapDispacthToProps = (dispacth) => ({
+  addStateDispenses: (dispenses) => dispacth(addDispenses(dispenses)),
+});
+
+Addfinance.propTypes = {
+  addStateDispenses: PropTypes.func.isRequired,
+  dispensesCurrent: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispacthToProps)(Addfinance);
