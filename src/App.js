@@ -10,7 +10,7 @@ export default function App() {
       <div>Hello, TrybeWallet!</div>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route exact path="/carteira" component={ Wallet } />
+        <Route path="/carteira" component={ Wallet } />
       </Switch>
     </>
   );

@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-export default class Login extends Component {
+import PropTypes from 'prop-types';
+
+import { saveEmail as saveEmailAction } from '../actions';
+
+class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -9,6 +13,7 @@ export default class Login extends Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.validateInput = this.validateInput.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
@@ -17,6 +22,13 @@ export default class Login extends Component {
 
   handleChange({ target: { name, value } }) {
     return this.setState({ [name]: value });
+  }
+
+  handleClick() {
+    const { history, saveEmail } = this.props;
+    const { email } = this.state;
+    saveEmail(email);
+    history.push('/carteira');
   }
 
   validateEmail(email) {
@@ -37,16 +49,15 @@ export default class Login extends Component {
     return true;
   }
 
-  createInput(type, value, testId) {
+  createInput(type, testId, placeholder) {
     return (
       <label htmlFor={ type }>
         <input
           type={ type }
-          id={ type }
           name={ type }
-          value={ value }
           data-testid={ testId }
           onChange={ this.handleChange }
+          placeholder={ placeholder }
         />
       </label>
     );
@@ -56,18 +67,30 @@ export default class Login extends Component {
     const { email, password } = this.state;
     return (
       <form>
-        { this.createInput('email', email, 'email-input')}
-        { this.createInput('password', password, 'password-input')}
-        <Link to="/carteira">
-          <button
-            type="button"
-            // onClick={  }
-            disabled={ this.validateInput(email, password) }
-          >
-            Entrar
-          </button>
-        </Link>
+        { this.createInput('email', 'email-input', 'E-mail') }
+        { this.createInput('password', 'password-input', 'Senha') }
+        <button
+          type="button"
+          onClick={ this.handleClick }
+          disabled={ this.validateInput(email, password) }
+        >
+          Entrar
+        </button>
       </form>
     );
   }
 }
+// https://stackoverflow.com/questions/49642561/how-to-pass-internal-state-to-global-state-using-redux/49642697
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  saveEmail: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  saveEmail: (email) => dispatch(saveEmailAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
