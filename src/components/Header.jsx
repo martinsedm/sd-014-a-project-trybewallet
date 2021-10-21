@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import currencyXchanger from './CurrencyExchange';
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -12,9 +14,9 @@ class Header extends React.Component {
     const { expenses } = this.props;
     if (expenses.length > 0) {
       const total = expenses.reduce((acc, cur) => {
-        const xchange = Number.parseFloat(cur.value)
-        * Number.parseFloat(cur.exchangeRates[cur.currency].ask);
-        acc += xchange;
+        acc += parseFloat(currencyXchanger(
+          cur.value, cur.exchangeRates[cur.currency].ask,
+        ));
         return acc;
       }, 0);
       return Number.parseFloat(total).toFixed(2);
@@ -23,6 +25,7 @@ class Header extends React.Component {
   }
 
   render() {
+    // console.log(this.props.expenses)
     const { email } = this.props;
     return (
       <header>
