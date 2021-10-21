@@ -48,8 +48,8 @@ class ExpensesTable extends React.Component {
           <button
             type="button"
             data-testid="delete-btn"
-            name={id}
-            onClick={this.handleClick}
+            name={ id }
+            onClick={ this.handleClick }
           >
             Excluir
           </button>
@@ -96,10 +96,10 @@ class ExpensesTable extends React.Component {
 const mapStateToProps = (state) => ({ expenses: state.wallet.expenses });
 
 const mapDispatchToProps = (dispatch) => ({
-  newDispatch: (payload) => dispatch(overwriteXpenses(payload))
+  newDispatch: (payload) => dispatch(overwriteXpenses(payload)),
 });
 
-ExpensesTable.propTypes = { 
+ExpensesTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
   newDispatch: PropTypes.func.isRequired,
 };

@@ -21,8 +21,7 @@ const walletReducer = (state = initialState, action) => {
   case OVERWRITE_EXPENSES: {
     const { payload } = action;
     console.log(payload);
-    return { ...state, expenses: payload }
-
+    return { ...state, expenses: payload };
   }
   default:
     return state;
