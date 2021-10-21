@@ -9,6 +9,10 @@ class Header extends React.Component {
     this.expenseCalculator = this.expenseCalculator.bind(this);
   }
 
+  componentDidUpdate() {
+    this.expenseCalculator();
+  }
+
   expenseCalculator() {
     const { expenses } = this.props;
     if (expenses.length > 0) {

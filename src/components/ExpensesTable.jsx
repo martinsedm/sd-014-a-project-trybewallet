@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import currencyXchanger from './CurrencyExchange';
 import './ExpensesTable.css';
+import filterXpenses from './ExpenseManager';
+import { overwriteXpenses } from '../actions';
 
 class ExpensesTable extends React.Component {
   constructor(props) {
@@ -10,6 +12,13 @@ class ExpensesTable extends React.Component {
     this.tableBodyMaker = this.tableBodyMaker.bind(this);
     this.expenseRowMaker = this.expenseRowMaker.bind(this);
     this.expenseToRow = this.expenseToRow.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick({ target }) {
+    const { expenses, newDispatch } = this.props;
+    const filterMyExpenses = filterXpenses(expenses, target.name);
+    newDispatch(filterMyExpenses);
   }
 
   expenseToRow() {
@@ -18,24 +27,6 @@ class ExpensesTable extends React.Component {
       this.expenseRowMaker(xpense)
     ));
   }
-  // expenseRowMaker(contentObj) {
-  //   const mapContent = Object.values(contentObj).map((info) => {
-  //     if (typeof info === 'object') {
-  //       return (
-  //         <td>EXCHANGE RATES</td>
-  //       );
-  //     }
-  //     return (
-  //       <td key={ Object.values(info) }>{ Object.values(info) }</td>
-  //     );
-  //   });
-  //   return (
-  //     <tr id={ contentObj.id }>
-  //       {mapContent}
-  //     </tr>
-  //   );
-  // }
-  // WHAT A SHAME, AUTOMATION DOESN'T WORK BECAUSE THE ORDER OF KEYS IN OBJS IS CHAOS T-T
 
   expenseRowMaker(contentObj) {
     const { id, description, tag, method, value, currency, exchangeRates } = contentObj;
@@ -48,19 +39,26 @@ class ExpensesTable extends React.Component {
         <td>{ description}</td>
         <td>{tag}</td>
         <td>{method}</td>
-        {/* <td>{Number.parseFloat(value).toFixed(2)}</td> */}
         <td>{value}</td>
         <td>{currencyName}</td>
         <td>{Number.parseFloat(xchangeRate).toFixed(2)}</td>
         <td>{currencyXchanger(value, xchangeRate)}</td>
         <td>Real</td>
-        <td><button type="button">Editar/Excluir</button></td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            name={id}
+            onClick={this.handleClick}
+          >
+            Excluir
+          </button>
+        </td>
       </tr>
     );
   }
 
   tableBodyMaker() {
-    // const { expenses } = this.props;
     return (
       <table>
         <thead>
@@ -97,6 +95,13 @@ class ExpensesTable extends React.Component {
 
 const mapStateToProps = (state) => ({ expenses: state.wallet.expenses });
 
-ExpensesTable.propTypes = { expenses: PropTypes.arrayOf(PropTypes.any).isRequired };
+const mapDispatchToProps = (dispatch) => ({
+  newDispatch: (payload) => dispatch(overwriteXpenses(payload))
+});
 
-export default connect(mapStateToProps, null)(ExpensesTable);
+ExpensesTable.propTypes = { 
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  newDispatch: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesTable);
