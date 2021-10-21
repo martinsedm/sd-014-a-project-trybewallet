@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { emailSenha } from '../actions';
+import { salvarLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -21,9 +21,9 @@ class Login extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const { dispatchSalvarEmail, history } = this.props;
+    const { dispatchLogin, history } = this.props;
     const { email } = this.state;
-    dispatchSalvarEmail(email);
+    dispatchLogin(email);
     history.push('/carteira');
   }
 
@@ -33,19 +33,21 @@ class Login extends React.Component {
     const validaSenha = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i; // ajuda de Matheus Souza e Dayane Barbosa
     return (
       <form>
-        <label htmlFor="email-input">
+        <label htmlFor="email">
           Email
           <input
-            type="email"
+            id="email"
+            type="text"
             data-testid="email-input"
             name="email"
             value={ email }
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="passwor-input">
+        <label htmlFor="password">
           Senha
           <input
+            id="password"
             type="password"
             data-testid="password-input"
             name="password"
@@ -54,9 +56,9 @@ class Login extends React.Component {
           />
         </label>
         <button
-          Type="button"
+          type="submit"
           onClick={ this.handleClick }
-          disabled={ password.length < CARACTERMIN || email.search(validaSenha) }
+          disabled={ password.length < CARACTERMIN || email.search(validaSenha) !== 0 }
         >
           Entrar
         </button>
@@ -66,11 +68,14 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-  dispatchEmailSenha: PropTypes.func,
-}.isRequired;
+  dispatchLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchEmailSenha: (email) => dispatch(emailSenha(email)),
+  dispatchLogin: (email) => dispatch(salvarLogin(email)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);

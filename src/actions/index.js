@@ -1,7 +1,7 @@
-export const LOGIN = 'LOGIN';
+export const SALVAR_LOGIN = 'SALVAR_LOGIN';
 
-export const emailSenha = (email) => ({
-  type: LOGIN,
+export const salvarLogin = (email) => ({
+  type: SALVAR_LOGIN,
   payload: {
     email,
   },
