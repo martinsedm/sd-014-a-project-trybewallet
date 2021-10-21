@@ -12,8 +12,8 @@ function wallet(state = INITIAL_STATE, action) {
   case RECEIVE_MOEDAS:
     return { ...state, currencies: action.payload };
   case ADD_EXPENSES:
-    return { expenses:
-      [...state.expenses, { ...action.payload, id: state.expenses.length }] };
+    action.payload.id = state.expenses.length;
+    return { ...state, expenses: [...state.expenses, action.payload] };
   default:
     return state;
   }

@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
-    const { user } = this.props;
-    const { email } = user;
+    const { user: { email }, expenses } = this.props;
+    const totalExpenses = expenses.reduce((total, expense) => {
+      const valueBRL = Math.round(Number(expense.value)
+        * Number(expense.exchangeRates[expense.currency].ask) * 100) / 100;
+
+      total += valueBRL;
+      return total;
+    }, 0);
+    console.log(expenses);
     return (
       <header>
         <p
@@ -16,7 +23,7 @@ class Header extends React.Component {
         <p
           data-testid="total-field"
         >
-          0
+          { totalExpenses }
         </p>
         <p
           data-testid="header-currency-field"
@@ -32,10 +39,12 @@ Header.propTypes = {
   user: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Header);

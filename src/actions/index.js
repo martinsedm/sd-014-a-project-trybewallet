@@ -1,5 +1,9 @@
 // Coloque aqui suas actions
 
+const URL = 'https://economia.awesomeapi.com.br/json/all';
+
+export const fetchCurrency = async () => ((await fetch(URL)).json());
+
 export const guardaEmail = (payload) => ({
   type: 'EMAIL',
   payload,
@@ -16,22 +20,17 @@ const receiveMoedas = (payload) => ({
   payload,
 });
 
-const addExpense = (payload) => ({
+export const addExpenses = (payload) => ({
   type: ADD_EXPENSES,
   payload,
 });
 
 export function fetchMoedas() {
-  const URL = 'https://economia.awesomeapi.com.br/json/all';
-
   return async (dispatch) => {
-    const response = await fetch(URL);
-    const data = await response.json();
+    const currencies = await fetchCurrency();
 
-    console.log('action', response);
+    const payload = Object.keys(currencies).filter((currency) => currency !== 'USDT');
 
-    const currencies = Object.keys(data).filter((currency) => currency !== 'USDT');
-
-    dispatch(receiveMoedas(currencies));
+    dispatch(receiveMoedas(payload));
   };
 }
