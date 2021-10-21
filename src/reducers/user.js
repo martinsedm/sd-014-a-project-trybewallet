@@ -2,9 +2,7 @@
 import { USER_MAIL_SUCCESS } from '../actions';
 
 const INITIAL_USER_STATE = {
-  user: {
-    email: '',
-  },
+  email: '',
 };
 
 const userReducer = (
