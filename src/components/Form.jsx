@@ -50,7 +50,7 @@ class Form extends React.Component {
         </label>
         <label htmlFor="description">
           Descrição:
-          <input type="text" id="description" name="description" onChange={ this.handleChange } />
+          <input type="text" name="description" onChange={ this.handleChange } />
         </label>
         <label htmlFor="currency">
           Moeda:
