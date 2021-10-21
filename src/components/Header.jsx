@@ -46,3 +46,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Header);
+
+// https://github.com/tryber/sd-014-a-project-trybewallet/pull/2/commits/ded6d06fbbdc86fc7fdd36fef2b5b3cf15df0dff
