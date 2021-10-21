@@ -11,7 +11,7 @@ class ExpensesTable extends React.Component {
     this.expenseRowMaker = this.expenseRowMaker.bind(this);
     this.expenseToRow = this.expenseToRow.bind(this);
   }
-      
+
   expenseToRow() {
     const { expenses } = this.props;
     return expenses.map((xpense) => (
