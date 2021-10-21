@@ -15,14 +15,18 @@ export const saveStateLogin = (email) => ({
 //   payload,
 // });
 
-export const addCurrencies = (payload) => ({
+export const addCurrencies = (currencies) => ({
   type: ADD_CURRENCIES,
-  payload,
+  payload: {
+    currencies,
+  },
 });
 
-export const errorApi = (payload) => ({
+export const errorApi = (error) => ({
   type: ERROR_API,
-  payload,
+  payload: {
+    error,
+  },
 });
 
 const URL_API = 'https://economia.awesomeapi.com.br/json/all';

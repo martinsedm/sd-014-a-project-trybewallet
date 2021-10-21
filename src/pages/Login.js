@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { saveStateLogin } from '../actions';
+import { fetchApi, saveStateLogin } from '../actions';
 
 class Login extends Component {
   constructor() {
@@ -39,10 +39,11 @@ class Login extends Component {
 
   loginSubmit(event) {
     event.preventDefault();
-    const { history, saveStateEmail } = this.props;
+    const { history, saveStateEmail, fetchApiAction } = this.props;
     const { email } = this.state;
 
     saveStateEmail(email);
+    fetchApiAction();
     history.push('/carteira');
   }
 
@@ -99,14 +100,16 @@ class Login extends Component {
 }
 
 Login.propTypes = {
+  fetchApiAction: PropTypes.func.isRequired,
   saveStateEmail: PropTypes.func.isRequired,
   history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
+    push: PropTypes.func,
   }).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   saveStateEmail: (email) => dispatch(saveStateLogin(email)),
+  fetchApiAction: () => dispatch(fetchApi()),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
