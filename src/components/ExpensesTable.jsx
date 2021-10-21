@@ -48,7 +48,7 @@ class ExpensesTable extends React.Component {
         <td>{ description}</td>
         <td>{tag}</td>
         <td>{method}</td>
-        <td>{Number.parseFloat(value).toFixed(2)}</td>
+        {/* <td>{Number.parseFloat(value).toFixed(2)}</td> */}
         <td>{value}</td>
         <td>{currencyName}</td>
         <td>{Number.parseFloat(xchangeRate).toFixed(2)}</td>

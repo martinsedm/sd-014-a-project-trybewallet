@@ -106,6 +106,7 @@ class WalletForm extends React.Component {
             type="number"
             name="value"
             id="value"
+            step="0.01"
             value={ value }
             onChange={ this.formHandler }
           />
