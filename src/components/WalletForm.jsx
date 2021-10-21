@@ -97,7 +97,6 @@ class WalletForm extends React.Component {
 
   render() {
     const { expenses } = this.state;
-    const { value, description } = expenses;
     return (
       <form onSubmit={ this.expenseSubmit }>
         <label htmlFor="value">
@@ -107,7 +106,7 @@ class WalletForm extends React.Component {
             name="value"
             id="value"
             step="0.01"
-            value={ value }
+            value={ expenses.value }
             onChange={ this.formHandler }
           />
         </label>
@@ -118,7 +117,7 @@ class WalletForm extends React.Component {
             placeholder="Descrição de Despesas"
             id="description"
             onChange={ this.formHandler }
-            value={ description }
+            value={ expenses.description }
           />
         </label>
         <br />
