@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import Input from './Input';
+import Select from './Select';
 import { addExpenses, fetchCurrency } from '../actions';
 
 class Form extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       value: 0,
@@ -20,12 +23,8 @@ class Form extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-
-    this.setState({
-      [name]: value,
-    });
+  handleChange({ target: { name, value } }) {
+    this.setState({ [name]: value });
   }
 
   async handleSubmit(event) {
@@ -33,57 +32,52 @@ class Form extends React.Component {
 
     const { addExpense } = this.props;
     const exchangeRates = await fetchCurrency();
-
     this.setState({ exchangeRates });
-
     addExpense(this.state);
   }
 
   render() {
     const { currencies } = this.props;
-
     return (
       <form onSubmit={ this.handleSubmit }>
-        <label htmlFor="value">
-          Valor:
-          <input type="number" id="value" name="value" onChange={ this.handleChange } />
-        </label>
-        <label htmlFor="description">
-          Descrição:
-          <input type="text" name="description" onChange={ this.handleChange } />
-        </label>
-        <label htmlFor="currency">
-          Moeda:
-          <select id="currency" name="currency" onChange={ this.handleChange }>
-            { currencies
-              .map((currency) => (
-                <option
-                  key={ currency }
-                  value={ currency }
-                >
-                  { currency }
-                </option>)) }
-          </select>
-        </label>
-        <label htmlFor="method">
-          Método de pagamento:
-          <select id="method" name="method" onChange={ this.handleChange }>
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag:
-          <select id="tag" name="tag" onChange={ this.handleChange }>
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
-        <button type="submit">Adicionar despesa</button>
+        <fieldset>
+          <Input
+            htmlFor="value"
+            label="Valor:"
+            testid="value-input"
+            type="number"
+            onChange={ this.handleChange }
+          />
+          <Input
+            htmlFor="description"
+            label="Descrição:"
+            testid="description-input"
+            type="text"
+            onChange={ this.handleChange }
+          />
+          <Select
+            htmlFor="currency"
+            label="Moeda:"
+            testid="currency-select"
+            onChange={ this.handleChange }
+            options={ currencies }
+          />
+          <Select
+            htmlFor="method"
+            label="Método de pagamento:"
+            testid="payment-select"
+            onChange={ this.handleChange }
+            options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+          />
+          <Select
+            htmlFor="tag"
+            label="Tag:"
+            testid="tag-select"
+            onChange={ this.handleChange }
+            options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+          />
+          <button type="submit">Adicionar despesa</button>
+        </fieldset>
       </form>
     );
   }
