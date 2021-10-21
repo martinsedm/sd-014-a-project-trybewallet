@@ -71,10 +71,6 @@ class FormInputs extends Component {
           value={ description }
         />
         <MethodMapForm value={ method } onChange={ this.handleChange } />
-        <SelectForm
-          value={ tag }
-          onChange={ this.handleChange }
-        />
         {/* <ButtonAdd onChage={ this.handleClick } /> */}
       </form>
     );
