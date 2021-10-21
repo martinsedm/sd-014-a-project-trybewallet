@@ -10,12 +10,12 @@ class FormAddDespesa extends React.Component {
     super();
     this.state = {
       id: 0,
-      valor: 0,
-      descricao: '',
-      moeda: 'USD',
-      pagamento: 'Dinheiro',
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: 'Alimentação',
-      moedas: {},
+      exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.filtrarMoedas = this.filtrarMoedas.bind(this);
@@ -23,16 +23,16 @@ class FormAddDespesa extends React.Component {
   }
 
   componentDidMount() {
-    chamarAPI().then((moedas) => {
+    chamarAPI().then((exchangeRates) => {
       this.setState({
-        moedas,
+        exchangeRates,
       });
     });
   }
 
   filtrarMoedas() {
-    const { moedas } = this.state;
-    const keysMoedas = Object.keys(moedas);
+    const { exchangeRates } = this.state;
+    const keysMoedas = Object.keys(exchangeRates);
     const moedasValidas = keysMoedas
       .filter((moeda) => moeda !== 'USDT');
     return moedasValidas;
@@ -44,15 +44,15 @@ class FormAddDespesa extends React.Component {
   }
 
   clickBut() {
-    const { valor, descricao, moeda, pagamento, tag, id } = this.state;
+    const { value, description, currency, method, tag, id } = this.state;
     const { valorMoedas } = this.props;
     chamarAPI().then((exchangeRates) => {
       const tudo = {
         id,
-        valor,
-        descricao,
-        moeda,
-        pagamento,
+        value,
+        description,
+        currency,
+        method,
         tag,
         exchangeRates,
       };
@@ -64,34 +64,34 @@ class FormAddDespesa extends React.Component {
   }
 
   render() {
-    const { valor, descricao, moeda, pagamento, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { handleChange, filtrarMoedas, clickBut } = this;
     return (
       <form>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
-          <input id="valor" name="valor" value={ valor } onChange={ handleChange } />
+          <input id="value" name="value" value={ value } onChange={ handleChange } />
         </label>
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição
           <input
-            id="descricao"
-            name="descricao"
-            value={ descricao }
+            id="description"
+            name="description"
+            value={ description }
             onChange={ handleChange }
           />
         </label>
         <SelecMoeda
-          moeda={ moeda }
+          moeda={ currency }
           handleChange={ handleChange }
           filtrarMoedas={ filtrarMoedas }
         />
-        <label htmlFor="pagamento">
+        <label htmlFor="method">
           Método de pagamento
           <select
-            id="pagamento"
-            name="pagamento"
-            value={ pagamento }
+            id="method"
+            name="method"
+            value={ method }
             onChange={ handleChange }
           >
             <option value="Dinheiro">Dinheiro</option>
