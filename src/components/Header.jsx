@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import currencyXchanger from './CurrencyExchange';
 
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
