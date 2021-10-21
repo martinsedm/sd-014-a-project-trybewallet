@@ -1,4 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
+import { sendLoginInformation } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -6,16 +10,15 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      redirect: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  handleChange({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+  handleChange({ target: { value, name } }) {
+    this.setState({ [name]: value });
   }
 
   enableButton() {
@@ -33,7 +36,21 @@ class Login extends React.Component {
     return emailValidation.test(email);
   }
 
+  handleClick(event) {
+    const { loginInfoStore } = this.props;
+    const { email } = this.state;
+    event.preventDefault();
+    loginInfoStore(email);
+    this.setState({ redirect: '/carteira' });
+  }
+
   render() {
+    const { redirect } = this.state;
+
+    if (redirect) {
+      return <Redirect to={ redirect } />;
+    }
+
     return (
       <div>
         <input
@@ -52,6 +69,7 @@ class Login extends React.Component {
         />
         <button
           type="button"
+          onClick={ this.handleClick }
           disabled={ this.enableButton() }
         >
           Entrar
@@ -61,4 +79,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+  loginInfoStore: PropTypes.func,
+}.isRequired;
+
+const mapDispatchToProps = (dispatch) => ({
+  loginInfoStore: (email) => dispatch(sendLoginInformation(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
