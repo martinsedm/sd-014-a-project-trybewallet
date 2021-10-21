@@ -31,7 +31,7 @@ Wallet.propTypes = {
 //   wallet: { expenses } }) => ({ expenses });
 
 const mapDispatchToProps = (dispatch) => ({
-  currencyApi: (moeda) => dispatch(fetchApi(moeda)),
+  currencyApi: (currency) => dispatch(fetchApi(currency)),
 });
 
 export default connect(null, mapDispatchToProps)(Wallet);

@@ -32,7 +32,9 @@ export function fetchApi() {
     try {
       const response = await fetch(URL_API);
       const data = await response.json();
-      return dispatch(addCurrencies(data));
+      const arrayData = Object.keys(data);
+      const arrayCurrencies = arrayData.filter((curren) => curren !== 'USDT');
+      return dispatch(addCurrencies(arrayCurrencies));
     } catch (error) {
       return dispatch(errorApi);
     }

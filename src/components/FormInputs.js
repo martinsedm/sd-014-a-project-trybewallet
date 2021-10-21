@@ -35,8 +35,8 @@ class FormInputs extends Component {
 
   render() {
     const { value, currency, method, tag, description } = this.state;
-    const { stateMoeda } = this.props;
-    const arrayMoeda = Object.keys(stateMoeda);
+    const { currencies } = this.props;
+
     return (
       <form>
         <label htmlFor="valor">
@@ -58,9 +58,9 @@ class FormInputs extends Component {
             onChange={ this.handleChange }
             id="currency"
           >
-            {arrayMoeda.map((moeda) => (
-              <option key={ moeda }>
-                { moeda }
+            {currencies.map((curr) => (
+              <option key={ curr }>
+                { curr }
               </option>
             ))}
           </select>
@@ -82,11 +82,15 @@ class FormInputs extends Component {
 }
 
 FormInputs.propTypes = {
-  stateMoeda: PropTypes.arrayOf.isRequired,
+  currencies: PropTypes.arrayOf,
+};
+
+FormInputs.defaultProps = {
+  currencies: [],
 };
 
 const mapStateToProps = (state) => ({
-  stateMoeda: state.wallet.currencies,
+  currencies: state.wallet.currencies,
 });
 
 export default connect(mapStateToProps, null)(FormInputs);

@@ -2,12 +2,10 @@
 import { ADD_CURRENCIES, ERROR_API } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-    total: 0,
-    error: null,
-  },
+  currencies: [],
+  expenses: [],
+  total: 0,
+  error: null,
 };
 
 // const WALLET_EXPENSES = 'WALLET_EXPENSES';
@@ -17,12 +15,12 @@ function wallet(state = INITIAL_STATE, action) {
   case ADD_CURRENCIES:
     return {
       ...state,
-      currencies: action.payload,
+      currencies: action.payload.currencies,
     };
   case ERROR_API:
     return {
       ...state,
-      error: action.payload,
+      error: action.payload.error,
     };
   default:
     return state;
