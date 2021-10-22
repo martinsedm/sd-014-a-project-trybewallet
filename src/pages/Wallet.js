@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { fetchCurrencyAPI as fetchApi } from '../services/currencyAPI';
 import Header from '../components/Header';
 import { currencyAPIThunk, walletAction } from '../actions';
 
@@ -8,12 +9,12 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
+      id: -1,
       value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       exchangeRates: {},
     };
     this.currencySelectFetch = this.currencySelectFetch.bind(this);
@@ -28,33 +29,24 @@ class Wallet extends React.Component {
 
   // como aprendi a incrementar o state
   // https://dirask.com/posts/React-increment-state-value-class-component-DLoa61
-  onSubmitForm() {
+  async onSubmitForm(event) {
+    event.preventDefault();
     const { formValues } = this.props;
     const { id } = this.state;
     this.setState({ id: id + 1 });
+    const exchangeRates = await fetchApi();
+    this.setState({ exchangeRates });
     formValues(this.state);
   }
 
   handleInputChange(event) {
     const { value } = event.target;
     this.setState({ [event.target.name]: value });
-    const { payload } = this.props;
-    const { wallet } = payload;
-    const { currencies } = wallet;
-    currencies
-      .filter((exchange) => exchange.code === value)
-      .map(({ code, name, ask }) => (
-        this.setState({ exchangeRates: { [code]: {
-          [code]: code,
-          name,
-          ask,
-        } } })
-      ));
   }
 
   currencySelectFetch() {
-    const { payload } = this.props;
-    const { wallet } = payload;
+    const { globalState } = this.props;
+    const { wallet } = globalState;
     const { currencies, isFetching } = wallet;
     return (
       <label htmlFor="currency">
@@ -118,8 +110,8 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
-  fetchCurrencyAPI: PropTypes.func,
-  payload: PropTypes.shape({
+  fetchAPI: PropTypes.func,
+  globalState: PropTypes.shape({
     wallet: PropTypes.shape({
       currencies: PropTypes.shape({
         map: PropTypes.func,
@@ -130,7 +122,7 @@ Wallet.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  payload: state,
+  globalState: state,
 });
 
 const mapDispatchToProps = (dispatch) => ({

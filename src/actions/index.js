@@ -33,8 +33,5 @@ export const currencyAPIThunk = () => async (dispatch) => {
     JPY, CHF, AUD, CNY, ILS, ETH, XRP } = response;
 
   const payload = [USD, CAD, EUR, GBP, ARS, BTC, LTC, JPY, CHF, AUD, CNY, ILS, ETH, XRP];
-  // const payload = {
-  //   currencies: [USD, CAD, EUR, GBP, ARS, BTC, LTC, JPY, CHF, AUD, CNY, ILS, ETH, XRP],
-  // };
   dispatch(receiveCurrencyAPI(payload));
 };
