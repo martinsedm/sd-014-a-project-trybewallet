@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Form from '../components/Form';
+import { getApiCurrenciesThunk } from '../actions';
 
 class Wallet extends React.Component {
+  componentDidMount() {
+    const { addCurrencies } = this.props;
+    addCurrencies();
+  }
+
   render() {
     const { email } = this.props;
     return (
@@ -22,10 +28,15 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  addCurrencies: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
 });
 
-export default connect(mapStateToProps)(Wallet);
+const mapDispatchToProps = (dispatch) => ({
+  addCurrencies: () => dispatch(getApiCurrenciesThunk()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
