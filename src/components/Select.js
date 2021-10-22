@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 
 class Select extends Component {
   render() {
-    const { formaPagamento, tag, onChange } = this.props;
+    const { pagamento, tag, onChange } = this.props;
     return (
       <div>
         <label htmlFor="formaPagamento">
           Método de Pagamento
           <select
-            value={ formaPagamento }
+            value={ pagamento }
             type="text"
             name="formaPagamento"
             id="formaPagamento"
@@ -42,7 +42,7 @@ class Select extends Component {
 }
 
 Select.propTypes = {
-  formaPagamento: PropTypes.string,
+  pagamento: PropTypes.string,
   onChange: PropTypes.func,
   tag: PropTypes.string,
 
@@ -50,7 +50,7 @@ Select.propTypes = {
 
 Select.defaultProps = {
   tag: '',
-  formaPagamento: '',
+  pagamento: '',
   onChange: null,
 };
 

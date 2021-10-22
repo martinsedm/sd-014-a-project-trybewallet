@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Select from './Select';
+import Input from './Input';
 
 class Form extends Component {
   constructor() {
@@ -9,7 +10,7 @@ class Form extends Component {
     this.state = {
       valor: '',
       moeda: [],
-      formaPagamento: '',
+      pagamento: '',
       tag: '',
       descricao: '',
 
@@ -23,21 +24,12 @@ class Form extends Component {
   }
 
   render() {
-    const { valor, descricao, moeda, formaPagamento, tag } = this.state;
+    const { valor, descricao, moeda, pagamento, tag } = this.state;
     const { estadoMoeda } = this.props;
     const arrayMoeda = Object.keys(estadoMoeda);
     return (
       <form>
-        <label htmlFor="valor">
-          Valor
-          <input
-            value={ valor }
-            type="number"
-            name="valor"
-            onChange={ this.handleChange }
-            id="valor"
-          />
-        </label>
+        <Input valor={ valor } descricao={ descricao } onChange={ this.handleChange } />
         <label htmlFor="moeda">
           Moeda
           <select
@@ -54,21 +46,7 @@ class Form extends Component {
             ))}
           </select>
         </label>
-        <Select
-          formaPagamento={ formaPagamento }
-          tag={ tag }
-          onChange={ this.handleChange }
-        />
-        <label htmlFor="descricao">
-          Descrição
-          <input
-            value={ descricao }
-            type="text"
-            name="descricao"
-            onChange={ this.handleChange }
-            id="descricao"
-          />
-        </label>
+        <Select pagamento={ pagamento } tag={ tag } onChange={ this.handleChange } />
       </form>
     );
   }
