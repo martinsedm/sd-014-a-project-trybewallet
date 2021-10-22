@@ -1,24 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class Login extends React.Component {
+import Input from '../components/Input';
+
+class Login extends Component {
   render() {
-    function inputGenerator(type, name) {
-      return (
-        <label htmlFor={ type }>
-          {`${name}: `}
-          <input
-            id={ type }
-            name={ type }
-            type={ type }
-            data-testid={ `${type}-input` }
-          />
-        </label>
-      );
-    }
     return (
       <fieldset>
-        { inputGenerator('email', 'Email') }
-        { inputGenerator('password', 'Senha') }
+        <Input id="email" label="Email" />
+        <Input id="password" label="Senha" />
         <button type="submit">Entrar</button>
       </fieldset>
     );
