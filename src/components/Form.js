@@ -47,6 +47,7 @@ class Form extends Component {
           </select>
         </label>
         <Select pagamento={ pagamento } tag={ tag } onChange={ this.handleChange } />
+        <button type="submit">Adicionar despesa</button>
       </form>
     );
   }
