@@ -1,69 +1,108 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router';
+import React from 'react';
+import propTypes from 'prop-types';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import { addUser } from '../actions';
 
-import { setEmail } from '../actions';
-import Input from '../components/Input';
-
-class Login extends Component {
+class Login extends React.Component {
   constructor() {
     super();
+
     this.state = {
       email: '',
       password: '',
-      loged: false,
+      loginDisabled: true,
     };
+
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.emailValidation = this.emailValidation.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
+    this.saveAndChange = this.saveAndChange.bind(this);
   }
 
-  handleChange({ target: { value, name } }) {
-    this.setState({ [name]: value });
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+    this.isDisabled();
   }
 
-  handleSubmit(event) {
+  // CÓDIGO FEITO PARA VALIDAÇÃO DO EMAIL
+  // Referência ao StackOverFlow
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  validateEmail(email) {
+    const re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  }
+
+  // TROCA O ESTADO DE ACORDO COM O IF, VALIDA O EMAIL E SENHA
+  isDisabled() {
+    const NUMBER_MAXCHAR = 5;
+    const { email, password } = this.state;
+    const checkChar = password.length >= NUMBER_MAXCHAR;
+    const booleanEmail = this.validateEmail(email);
+    if (booleanEmail && checkChar) {
+      this.setState({
+        loginDisabled: false,
+      });
+    } else {
+      this.setState({
+        loginDisabled: true,
+      });
+    }
+  }
+
+  saveAndChange() {
+    const { loginUser, history } = this.props;
     const { email } = this.state;
-    const { emailDispatch } = this.props;
-
-    event.preventDefault();
-    emailDispatch(email);
-    this.setState({ loged: true });
-  }
-
-  // Codigo foi pego do Stackoverflow
-  emailValidation(email) {
-    const i = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-    return i.test(String(email).toLowerCase());
+    loginUser(email);
+    history.push('/carteira');
   }
 
   render() {
-    const { email, password, loged } = this.state;
-    const { handleChange, handleSubmit, emailValidation } = this;
-    const SIX = 6;
-    if (loged) return <Redirect to="/carteira" />;
+    const { email, password, loginDisabled } = this.state;
     return (
-      <form onSubmit={ handleSubmit }>
-        <fieldset>
-          <Input id="email" tag="Email" value={ email } func={ handleChange } />
-          <Input id="password" tag="Senha" value={ password } func={ handleChange } />
+      <div className="Login">
+        <section className="login-inputs">
+          <input
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ this.handleChange }
+            placeholder="Email"
+            data-testid="email-input"
+          />
+          <input
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ this.handleChange }
+            placeholder="Senha"
+            data-testid="password-input"
+          />
+        </section>
+        <div>
           <button
-            type="submit"
-            disabled={ !emailValidation(email) || password.length < SIX }
+            type="button"
+            disabled={ loginDisabled }
+            onClick={ this.saveAndChange }
           >
             Entrar
           </button>
-        </fieldset>
-      </form>
+        </div>
+      </div>
     );
   }
 }
 
-Login.propTypes = { emailDispatch: PropTypes.func.isRequired };
+Login.propTypes = {
+  loginUser: propTypes.func.isRequired,
+  history: propTypes.shape({
+    push: propTypes.func.isRequired,
+  }).isRequired,
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  emailDispatch: (payload) => dispatch(setEmail(payload)),
+  loginUser: (data) => dispatch(addUser(data)),
 });
 
 export default connect(null, mapDispatchToProps)(Login);
