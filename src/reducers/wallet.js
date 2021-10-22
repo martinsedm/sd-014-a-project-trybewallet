@@ -1,4 +1,6 @@
-const INITIAL = { none: '' };
+const INITIAL = {
+  expenses: [],
+};
 
 const wallet = (state = INITIAL, action) => {
   switch (action.type) {
