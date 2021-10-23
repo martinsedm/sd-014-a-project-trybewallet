@@ -34,3 +34,9 @@ export function fetchApiMoedas() {
     }
   };
 }
+
+export const SALVAR_ESTADO_INPUT = 'SALVAR_ESTADO_INPUT';
+export const salvarEstadoInput = (inputValue) => ({
+  type: SALVAR_ESTADO_INPUT,
+  inputValue,
+});

@@ -1,9 +1,9 @@
-import { REQUISITAR_MOEDAS, FALHA_RESPOSTA_API } from '../actions';
+import { REQUISITAR_MOEDAS, FALHA_RESPOSTA_API, SALVAR_ESTADO_INPUT } from '../actions';
 
 const ESTADO_INICIAL = {
   currencies: [],
   expenses: [],
-  error: null,
+  // error: null,
 };
 
 function requisitarApi(state = ESTADO_INICIAL, action) {
@@ -22,3 +22,12 @@ function requisitarApi(state = ESTADO_INICIAL, action) {
 }
 
 export default requisitarApi;
+
+export function salvarDespesas(state = ESTADO_INICIAL, action) {
+  switch (action.type) {
+  case SALVAR_ESTADO_INPUT:
+    return { ...state, expenses: action.inputValue };
+  default:
+    return state;
+  }
+}
