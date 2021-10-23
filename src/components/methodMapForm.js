@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 class MethodMapForm extends Component {
   render() {
     const { value, onChange } = this.props;
-    const paymentOptions = ['Dinheiro:', 'Cartão de crédito:', 'Cartão de débito:'];
+    const paymentOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
       <div>
-        <label htmlFor="pagamento">
+        <label htmlFor="method">
           Método de pagamento
           <select
-            id="pagamento"
-            name="pagamento"
+            id="method"
+            name="method"
             value={ value }
             onChange={ onChange }
           >

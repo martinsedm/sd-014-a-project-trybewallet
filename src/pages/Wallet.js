@@ -12,6 +12,12 @@ class Wallet extends React.Component {
   }
 
   render() {
+    // const { walletExpenses } = this.props;
+    // const arrayExpenses = walletExpenses;
+    // const resultMap = arrayExpenses.map((expense) => {
+    //   (expense + (1 * value));
+    //   return resultMap;
+    // });
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -24,14 +30,15 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   currencyApi: PropTypes.func.isRequired,
-  // expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
+  // walletExpenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
-// const mapStateToProps = ({
-//   wallet: { expenses } }) => ({ expenses });
+// const mapStateToProps = (state) => ({
+//   walletExpenses: state.wallet.expenses,
+// });
 
 const mapDispatchToProps = (dispatch) => ({
-  currencyApi: (currency) => dispatch(fetchApi(currency)),
+  currencyApi: () => dispatch(fetchApi()),
 });
 
 export default connect(null, mapDispatchToProps)(Wallet);

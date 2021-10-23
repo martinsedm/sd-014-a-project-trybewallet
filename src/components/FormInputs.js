@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { addExpense } from '../actions';
+import { addExpenses as addExpensesAction, newExpense } from '../actions';
 import SelectForm from './SelectForm';
 
 import MethodMapForm from './methodMapForm';
-// import ButtonAdd from './ButtonAdd';
+import ButtonAdd from './ButtonAdd';
 
 class FormInputs extends Component {
   constructor() {
@@ -16,21 +16,31 @@ class FormInputs extends Component {
       currency: [],
       method: '',
       description: '',
-      // exchangeRates: '',
+      exchangeRates: {},
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
-  // handleClick(event) {
-  //   event.preventDefault();
-  //   const { addExpenses } = this.props;
-  //   addExpenses(this.state);
+  async handleClick(event) {
+    event.preventDefault();
+    const { walletExpenses, addExpenses } = this.props;
+    await walletExpenses();
+    const { coins } = this.props;
+
+    this.setState({
+      exchangeRates: coins,
+    });
+    await addExpenses(this.state);
+  }
+
+  // handleInput({ target: { id, value } }) {
+  //   this.setState({ [id]: value });
   // }
 
   render() {
@@ -44,7 +54,7 @@ class FormInputs extends Component {
           <input
             value={ value }
             type="number"
-            name="valor"
+            name="value"
             onChange={ this.handleChange }
             id="valor"
           />
@@ -71,7 +81,7 @@ class FormInputs extends Component {
           value={ description }
         />
         <MethodMapForm value={ method } onChange={ this.handleChange } />
-        {/* <ButtonAdd onChage={ this.handleClick } /> */}
+        <ButtonAdd onChange={ this.handleClick } />
       </form>
     );
   }
@@ -79,6 +89,9 @@ class FormInputs extends Component {
 
 FormInputs.propTypes = {
   currencies: PropTypes.arrayOf,
+  addExpenses: PropTypes.func.isRequired,
+  walletExpenses: PropTypes.func.isRequired,
+  coins: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 FormInputs.defaultProps = {
@@ -87,6 +100,12 @@ FormInputs.defaultProps = {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  coins: state.wallet.coins,
 });
 
-export default connect(mapStateToProps, null)(FormInputs);
+const mapDispatchToProps = (dispatch) => ({
+  addExpenses: (expenses) => dispatch(addExpensesAction(expenses)),
+  walletExpenses: () => dispatch(newExpense()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormInputs);

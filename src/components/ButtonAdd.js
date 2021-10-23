@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 class ButtonAdd extends Component {
   render() {
-    const { onClick } = this.props;
+    const { onChange } = this.props;
     return (
       <div>
-        <button type="submit" onClick={ onClick }>
+        <button type="submit" onClick={ onChange }>
           Adicionar despesas
         </button>
       </div>
@@ -15,7 +15,7 @@ class ButtonAdd extends Component {
 }
 
 ButtonAdd.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default ButtonAdd;
