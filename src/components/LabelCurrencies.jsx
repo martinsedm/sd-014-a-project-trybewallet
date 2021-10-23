@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getCurrencies } from '../actions';
+import { getCurrenciesThunk } from '../actions';
 
 class LabelCurrencies extends Component {
   componentDidMount() {
-    // eslint-disable-next-line no-shadow
     const { getCurrencies } = this.props;
     getCurrencies();
   }
@@ -37,7 +36,7 @@ class LabelCurrencies extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(getCurrencies()),
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
 });
 
 const mapStateToProps = (state) => ({

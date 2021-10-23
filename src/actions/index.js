@@ -10,7 +10,7 @@ export const receiveCurrencies = (currencies) => ({
   },
 });
 
-export const getCurrencies = () => async (dispatch) => {
+export const getCurrenciesThunk = () => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
   console.log(data);
