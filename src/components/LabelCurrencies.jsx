@@ -5,6 +5,7 @@ import { getCurrencies } from '../actions';
 
 class LabelCurrencies extends Component {
   componentDidMount() {
+    // eslint-disable-next-line no-shadow
     const { getCurrencies } = this.props;
     getCurrencies();
   }
