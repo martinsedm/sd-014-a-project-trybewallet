@@ -1,7 +1,10 @@
 // Coloque aqui suas actions
-const actionUser = (email) => ({
+export const actionUser = (payload) => ({
   type: 'EMAIL_USER',
-  email,
+  payload,
 });
 
-export default actionUser;
+export const actionWallet = (payload) => ({
+  type: 'WALLET_USER',
+  payload,
+});
