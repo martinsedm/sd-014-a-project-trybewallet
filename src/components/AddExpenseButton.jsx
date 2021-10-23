@@ -44,9 +44,13 @@ class AddExpenseButton extends Component {
 AddExpenseButton.propTypes = {
   currency: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
+  expenses: PropTypes.shape({
+    length: PropTypes.number,
+  }).isRequired,
   method: PropTypes.string.isRequired,
   newExpense: PropTypes.func.isRequired,
   tag: PropTypes.string.isRequired,
+  totalCost: PropTypes.func.isRequired,
   value: PropTypes.number.isRequired,
 };
 
