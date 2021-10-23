@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Select from './Select';
 import Input from './Input';
-import { salvarEstadoInput } from '../actions';
+import { fetchApiMoedas, salvarEstadoInput } from '../actions';
 
 class Form extends Component {
   constructor() {
     super();
     this.state = {
-      valor: '',
-      moeda: [],
-      pagamento: '',
-      tag: '',
-      descricao: '',
+      value: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      description: '',
+      exchangeRates: {},
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -25,27 +26,31 @@ class Form extends Component {
   }
 
   handleClick() {
-    const { estadoInput } = this.props;
+    const { estadoInput, apiCambio } = this.props;
+    apiCambio();
+    // this.setState({ exchangeRates: estadoGlobalInput });
     estadoInput(this.state);
-    console.log(estadoInput);
-    console.log('cliquei');
   }
 
   render() {
-    const { valor, descricao, moeda, pagamento, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { estadoMoeda } = this.props;
     const arrayMoeda = Object.keys(estadoMoeda);
     return (
       <form>
-        <Input valor={ valor } descricao={ descricao } onChange={ this.handleChange } />
-        <label htmlFor="moeda">
+        <Input
+          value={ value }
+          description={ description }
+          onChange={ this.handleChange }
+        />
+        <label htmlFor="currency">
           Moeda
           <select
-            value={ moeda }
+            value={ currency }
             type="text"
-            name="moeda"
+            name="currency"
             onChange={ this.handleChange }
-            id="moeda"
+            id="currency"
           >
             {arrayMoeda.map((siglaMoeda) => (
               <option key={ siglaMoeda }>
@@ -54,7 +59,7 @@ class Form extends Component {
             ))}
           </select>
         </label>
-        <Select pagamento={ pagamento } tag={ tag } onChange={ this.handleChange } />
+        <Select method={ method } tag={ tag } onChange={ this.handleChange } />
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );
@@ -64,14 +69,18 @@ class Form extends Component {
 Form.propTypes = {
   estadoMoeda: PropTypes.arrayOf.isRequired,
   estadoInput: PropTypes.func.isRequired,
+  apiCambio: PropTypes.func.isRequired,
+  // estadoGlobalInput: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   estadoMoeda: state.wallet.currencies,
+  // estadoGlobalInput: state.wallet.exchangeRates,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   estadoInput: (inputValue) => dispatch(salvarEstadoInput(inputValue)),
+  apiCambio: () => dispatch(fetchApiMoedas()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

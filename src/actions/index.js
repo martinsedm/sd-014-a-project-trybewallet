@@ -34,9 +34,18 @@ export function fetchApiMoedas() {
     }
   };
 }
+// export function fecthApiCambio(dispatch) {
+// return async
+// }
 
 export const SALVAR_ESTADO_INPUT = 'SALVAR_ESTADO_INPUT';
 export const salvarEstadoInput = (inputValue) => ({
   type: SALVAR_ESTADO_INPUT,
   inputValue,
+});
+
+export const TOTAL_GASTOS = 'TOTAL_GASTOS';
+export const totalGastos = (total) => ({
+  type: TOTAL_GASTOS,
+  total,
 });

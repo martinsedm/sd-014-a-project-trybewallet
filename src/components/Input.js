@@ -3,26 +3,26 @@ import PropTypes from 'prop-types';
 
 class Input extends Component {
   render() {
-    const { valor, onChange, descricao } = this.props;
+    const { value, onChange, description } = this.props;
     return (
       <div>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
           <input
-            value={ valor }
+            value={ value }
             type="number"
-            name="valor"
-            id="valor"
+            name="value"
+            id="value"
             onChange={ onChange }
           />
         </label>
-        <label htmlFor="descricao">
+        <label htmlFor="description">
           Descrição
           <input
-            value={ descricao }
+            value={ description }
             type="text"
-            name="descricao"
-            id="descricao"
+            name="description"
+            id="description"
             onChange={ onChange }
           />
         </label>
@@ -31,14 +31,14 @@ class Input extends Component {
   }
 }
 Input.propTypes = {
-  valor: PropTypes.string,
-  descricao: PropTypes.string,
+  value: PropTypes.string,
+  description: PropTypes.string,
   onChange: PropTypes.func,
 };
 
 Input.defaultProps = {
-  valor: '',
-  descricao: '',
+  value: '',
+  description: '',
   onChange: null,
 };
 
