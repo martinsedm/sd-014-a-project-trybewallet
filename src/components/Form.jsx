@@ -1,44 +1,53 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Input from './subComponents/Input';
+import { getCurrenciesActionThunk } from '../actions';
+import SelectCurrency from './subComponents/SelectCurrency';
+import SelectMethod from './subComponents/SelectMethod';
+import SelectTag from './subComponents/SelectTag';
 
 class Form extends Component {
+  constructor(props) {
+    super(props);
+    // const { currencies } = this.props;
+    this.state = {
+      // currencies,
+      value: 0,
+      description: '',
+      // selectedCurrency: 'USD',
+    };
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
+  }
+
   render() {
+    const { value, description } = this.state;
     return (
       <form>
-        <label htmlFor="valor">
-          Valor
-          <input type="number" name="value" id="valor" />
-        </label>
-        <label htmlFor="descrição">
-          Descrição
-          <input type="text" name="descrição" id="descrição" />
-        </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select id="moeda" name="moeda">
-            <option>Selecione</option>
-          </select>
-        </label>
-        <label htmlFor="método de pagamento">
-          Método de pagamento
-          <select name="método de pagamento" id="método de pagamento">
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão de crédito">Cartão de crédito</option>
-            <option value="Cartão de débito">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select id="tag" name="tag">
-            <option name="lazer" value="lazer">Lazer</option>
-            <option name="transporte" value="transporte">Transporte</option>
-            <option name="trabalho" value="trabalho">Trabalho</option>
-            <option name="saúde" value="saúde">Saúde</option>
-            <option name="alimentação" value="alimentação">Alimentação</option>
-          </select>
-        </label>
+        <Input text="Valor" name="valor" type="number" value={ value } />
+        <Input text="Descrição" name="descrição" type="text" value={ description } />
+        <SelectCurrency text="Moeda" name="moeda" />
+        <SelectMethod text="Método de pagamento" name="method" />
+        <SelectTag text="Tag" name="tag" />
       </form>
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getCurrenciesActionThunk()),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
