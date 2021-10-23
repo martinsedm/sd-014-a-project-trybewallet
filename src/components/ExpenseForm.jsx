@@ -1,47 +1,71 @@
 import React, { Component } from 'react';
 import CurrencyOptions from './CurrencyOptions';
+import AddExpenseButton from './AddExpenseButton';
 
 export default class ExpenseForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target: { value, id } }) {
+    this.setState({
+      [id]: value,
+    });
+  }
+
   render() {
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <h2>Formulário para adicionar nova despesa</h2>
-        <label htmlFor="expense-value">
+        <label htmlFor="value">
           Valor
-          <input type="number" name="expense-value" id="expense-value" />
+          <input type="number" id="value" onChange={ this.handleChange } />
         </label>
-        <br />
         <label htmlFor="description">
           Descrição
-          <input type="text" name="description" id="description" />
+          <input type="text" id="description" onChange={ this.handleChange } />
         </label>
-        <br />
         <label htmlFor="currency">
           Moeda
-          <select id="currency">
+          <select id="currency" onChange={ this.handleChange }>
             <CurrencyOptions />
           </select>
         </label>
-        <br />
-        <label htmlFor="payment-method">
+        <label htmlFor="method">
           Método de pagamento
-          <select id="payment-method">
-            <option value="dinheiro">Dinheiro</option>
-            <option value="cartao">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+          <select id="method" onChange={ this.handleChange }>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <br />
         <label htmlFor="tag">
           Tag
-          <select id="tag">
-            <option value="alimentacao">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
+          <select id="tag" onChange={ this.handleChange }>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Lazer">Lazer</option>
+            <option value="Trabalho">Trabalho</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <AddExpenseButton
+          value={ value }
+          description={ description }
+          currency={ currency }
+          method={ method }
+          tag={ tag }
+        />
       </form>
     );
   }
