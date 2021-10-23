@@ -5,6 +5,12 @@ const initialState = {
 
 const user = (state = initialState, action) => {
   switch (action.type) {
+  case 'EMAIL_USER':
+    return {
+      ...state,
+      email: action.email,
+    };
+
   default:
     return state;
   }
