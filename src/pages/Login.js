@@ -24,7 +24,6 @@ class Login extends React.Component {
 
   handleChange({ target }) {
     const { value, name } = target;
-    // console.log(this.state.email);
     this.setState({
       [name]: value,
     });
@@ -39,9 +38,12 @@ class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const MIN = 6;
+
     return (
       <div>
         Login:
+
+        <div />
         <Input
           id="email"
           nomeLabel="Email:"

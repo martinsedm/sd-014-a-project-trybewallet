@@ -8,3 +8,13 @@ export const actionWallet = (payload) => ({
   type: 'WALLET_USER',
   payload,
 });
+
+export const getCoin = (json) => ({
+  type: 'GET_COIN',
+  payload: json.code,
+});
+
+export const requestAPI = () => ({
+  type: 'REQUEST_API',
+
+});

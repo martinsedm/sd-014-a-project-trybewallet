@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Select extends Component {
+  // https://github.com/frontendbr/forum/discussions/859
   render() {
     const { id, options, nomeLabel } = this.props;
     return (
@@ -9,7 +10,7 @@ class Select extends Component {
         <label htmlFor={ id }>
           {nomeLabel}
           <select name={ id } id={ id }>
-            <option value=""> </option>
+            {/* <option value=""> </option> */}
             {options.map((option, index) => (
               <option
                 value={ option }
