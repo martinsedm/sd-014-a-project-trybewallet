@@ -5,11 +5,12 @@ import './index.css';
 import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import store from './store';
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={ store }>
-      {' src: https://gist.github.com/maite-marques/706c806d8051915437437d0a86e6e123'}
+      {/* ' src: https://gist.github.com/maite-marques/706c806d8051915437437d0a86e6e123' */}
       <App />
     </Provider>
   </BrowserRouter>,
