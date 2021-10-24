@@ -45,34 +45,36 @@ class Login extends React.Component {
     const { emailValue, passwordValue } = this.state;
     return (
       <div>
-        <fieldset>
-          <legend>TrybeWallet</legend>
-          <input
-            type="email"
-            placeholder="E-mail"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-            name="emailValue"
-            value={ emailValue }
-          />
-          <input
-            type="password"
-            placeholder="Senha"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-            name="passwordValue"
-            value={ passwordValue }
-          />
-          <Link to="/carteira">
-            <button
-              onClick={ this.saveEmailOnClick }
-              disabled={ this.disabledBtn() }
-              type="submit"
-            >
-              Entrar
-            </button>
-          </Link>
-        </fieldset>
+        <form>
+          <fieldset>
+            <legend>TrybeWallet</legend>
+            <input
+              type="email"
+              placeholder="E-mail"
+              data-testid="email-input"
+              onChange={ this.handleChange }
+              name="emailValue"
+              value={ emailValue }
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+              name="passwordValue"
+              value={ passwordValue }
+            />
+            <Link to="/carteira">
+              <button
+                onClick={ this.saveEmailOnClick }
+                disabled={ this.disabledBtn() }
+                type="submit"
+              >
+                Entrar
+              </button>
+            </Link>
+          </fieldset>
+        </form>
       </div>
     );
   }
