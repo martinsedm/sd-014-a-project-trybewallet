@@ -3,6 +3,11 @@ export const emailAction = (email) => ({
   payload: email,
 });
 
+export const expensesAction = (expenses) => ({
+  type: 'RECEIVE_EXPENSES',
+  payload: expenses,
+});
+
 export const receiveCurrencies = (currencies) => ({
   type: 'RECEIVE_CURRENCIES',
   payload: {
@@ -13,7 +18,6 @@ export const receiveCurrencies = (currencies) => ({
 export const getCurrenciesThunk = () => async (dispatch) => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
-  console.log(data);
   const currencies = {
     data,
   };
