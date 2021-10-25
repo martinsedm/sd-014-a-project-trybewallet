@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { deleteItem } from '../actions';
 
-class AddTabelaGastos extends React.Component {
+class TabelaGastos extends React.Component {
   format(n) {
     return `${Number(n).toFixed(2)}`;
   }
 
   convertido(exchangeRates, currency, value) {
     return (exchangeRates[currency].ask * value);
+  }
+
+  btnDelete(index) {
+    const { deleteItemNow } = this.props;
+    deleteItemNow(index);
+    // Recebe o index do item a ser deletado
   }
 
   render() {
@@ -29,9 +36,9 @@ class AddTabelaGastos extends React.Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
-          { expenses.map((i) => (
-            <tbody key={ i.id }>
-              <tr>
+          <tbody>
+            { expenses.map((i) => (
+              <tr key={ i.id }>
                 <td>{i.description}</td>
                 <td>{i.tag}</td>
                 <td>{i.method}</td>
@@ -46,11 +53,17 @@ class AddTabelaGastos extends React.Component {
                 </td>
                 <td>Real</td>
                 <td>
-                  <button type="button" data-testid="delete-btn">Editar/Excluir</button>
+                  <button
+                    type="button"
+                    data-testid="delete-btn"
+                    onClick={ () => (this.btnDelete(i)) }
+                  >
+                    Editar/Excluir
+                  </button>
                 </td>
               </tr>
-            </tbody>
-          ))}
+            ))}
+          </tbody>
         </table>
       </div>
     );
@@ -61,8 +74,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-AddTabelaGastos.propTypes = {
+const mapDispatchToProps = (dispatch) => ({
+  deleteItemNow: (itemDelete) => dispatch(deleteItem(itemDelete)),
+});
+
+TabelaGastos.propTypes = {
+  deleteItemNow: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.array).isRequired,
 };
 
-export default connect(mapStateToProps)(AddTabelaGastos);
+export default connect(mapStateToProps, mapDispatchToProps)(TabelaGastos);

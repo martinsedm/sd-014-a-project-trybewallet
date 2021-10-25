@@ -20,11 +20,11 @@ class CIP extends React.Component {
 }
 
 CIP.propTypes = {
-  n: PropTypes.arrayOf(PropTypes.string).isRequired,
-  t: PropTypes.arrayOf(PropTypes.string).isRequired,
-  v: PropTypes.arrayOf(PropTypes.string).isRequired,
-  a: PropTypes.arrayOf(PropTypes.string).isRequired,
-  o: PropTypes.arrayOf(PropTypes.string).isRequired,
+  n: PropTypes.string.isRequired,
+  t: PropTypes.string.isRequired,
+  v: PropTypes.string.isRequired,
+  a: PropTypes.string.isRequired,
+  o: PropTypes.func.isRequired,
 };
 
 export default CIP;

@@ -56,8 +56,8 @@ class AddDesp extends React.Component {
     const { valor, descricao, moeda, pag, tagf } = this.state;
     const { hC } = this;
     const { currencies } = this.props;
-    const arrayOpt = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const arrayOpP = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const arrayTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const arrayMP = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     return (
       <div>
         <form>
@@ -74,13 +74,13 @@ class AddDesp extends React.Component {
           <label htmlFor="method">
             Método de pagamento:
             <select id="method" name="pag" value={ pag } onChange={ hC }>
-              {arrayOpt.map((i) => (<option key={ i } value={ i }>{i}</option>))}
+              {arrayMP.map((i) => (<option key={ i } value={ i }>{i}</option>))}
             </select>
           </label>
           <label htmlFor="tag">
             Tag:
             <select name="tagf" id="tag" value={ tagf } onChange={ hC }>
-              {arrayOpP.map((i) => (<option key={ i } value={ i }>{i}</option>))}
+              {arrayTag.map((i) => (<option key={ i } value={ i }>{i}</option>))}
             </select>
           </label>
           <button

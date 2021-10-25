@@ -1,11 +1,12 @@
 import { getApiMoney } from '../services/getApiMoney';
-
+// https://stackoverflow.com/questions/57519905/how-delete-item-from-redux-state
 // Coloque aqui suas actions
 export const LOG_USER = 'LOG_USER';
 export const WALLET_USER = 'WALLET_USER';
 export const GET_API_MONEY_SUCCESS = 'GET_API_MONEY_SUCCESS';
 export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
 export const GET_API_MONEY_FAIL = 'GET_API_MONEY_FAIL';
+export const DELETE_ITEM = 'DELETE_ITEM';
 
 export const logUser = (user) => (
   {
@@ -22,6 +23,14 @@ export const walletUser = (payload) => (
 export const addNewExpense = (payload) => (
   {
     type: ADD_NEW_EXPENSE,
+    payload: {
+      ...payload,
+    },
+  });
+
+export const deleteItem = (payload) => (
+  {
+    type: DELETE_ITEM,
     payload: {
       ...payload,
     },
