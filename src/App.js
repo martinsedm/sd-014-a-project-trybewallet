@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Wallet from './pages/Wallet';
-
-// import store from './store';
+import Header from './pages/Header';
 
 class App extends Component {
   render() {
@@ -13,6 +12,8 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={ Login } />
           <Route path="/carteira" component={ Wallet } />
+          <Route path="/header" component={ Header } />
+
         </Switch>
       </div>
     );

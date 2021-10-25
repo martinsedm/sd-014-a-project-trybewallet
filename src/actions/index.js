@@ -1,7 +1,7 @@
 export const USER = 'USER';
 export const WALLET = 'WALLET';
 
-export const userLogin = (action) => ({
+export const loginAction = (data) => ({
   type: USER,
-  email: action,
+  payload: data,
 });

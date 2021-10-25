@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { userLogin } from '../actions';
+import { connect } from 'react-redux';
+import { loginAction } from '../actions';
 
 const six = 6;
 
@@ -15,6 +15,7 @@ class Login extends Component {
       logged: false,
     };
     this.eventHandler = this.eventHandler.bind(this);
+    this.verifyLogin = this.verifyLogin.bind(this);
   }
 
   eventHandler({ target }) {
@@ -79,7 +80,7 @@ class Login extends Component {
             disabled={ this.verifyLogin() }
             onClick={ () => {
               login({ email });
-              this.setState({ logged: true });
+              this.setState({ email, logged: true });
             } }
             type="button"
           >
@@ -96,12 +97,10 @@ Login.propTypes = {
   login: PropTypes.func.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  login: (email) => dispatch(userLogin(email)),
-});
-
-// const mapStateToProps = (state) => ({
-//   userReducer: state.userReducer,
-// });
+function mapDispatchToProps(dispatch) {
+  return {
+    login: (data) => dispatch(loginAction(data)),
+  };
+}
 
 export default connect(null, mapDispatchToProps)(Login);
