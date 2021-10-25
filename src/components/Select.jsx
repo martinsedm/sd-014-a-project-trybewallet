@@ -4,14 +4,12 @@ import PropTypes from 'prop-types';
 class Select extends React.Component {
   renderOptions(options) {
     return options.map((option) => (
-      <label htmlFor={ option } key={ option }>
-        <option
-          key={ option }
-          value={ option }
-        >
-          { option }
-        </option>
-      </label>
+      <option
+        key={ option }
+        value={ option }
+      >
+        { option }
+      </option>
     ));
   }
 
