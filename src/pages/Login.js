@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { submitLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -7,28 +10,70 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
+      emailValid: false,
+      passwordValid: false,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handlePassoword = this.handlePassoword.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
+    const { name, value } = target;
     this.setState({
-      [target.name]: target.value,
+      [name]: value,
+    }, () => {
+      if (this.validateEmail(value)) {
+        this.setState({
+          emailValid: true,
+        });
+      } else {
+        this.setState({
+          emailValid: false,
+        });
+      }
     });
   }
 
+  // handleClick(event) {
+  //   event.prevent.default();
+  //   const { onSubmit, history } = this.props;
+  //   const { email } = this.state;
+  //   onSubmit(email);
+  //   history.push('/carteira');
+  // }
+
+  handlePassoword({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => {
+      const MIN_CHARACTERS = 6;
+      if (value.length >= MIN_CHARACTERS) {
+        this.setState({
+          passwordValid: true,
+        });
+      } else {
+        this.setState({
+          passwordValid: false,
+        });
+      }
+    });
+  }
+
+  // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+  validateEmail(email) {
+    const reg = /\S+@\S+\.\S+/;
+    return reg.test(email);
+  }
+
   render() {
-    const { email, password } = this.state;
-    const { handleChange } = this;
-
-    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
-    const validateEmail = () => {
-      const reg = /\S+@\S+\.\S+/;
-      return reg.test(email);
-    };
-
-    const MIN_CHARACTERS = 6;
-    const validatePass = password.length >= MIN_CHARACTERS;
+    const { email, password, emailValid, passwordValid } = this.state;
+    const { onSubmit } = this.props;
+    let disabled = false;
+    if (!emailValid || !passwordValid) {
+      disabled = true;
+    }
 
     return (
       <div>
@@ -40,7 +85,7 @@ class Login extends React.Component {
             type="email"
             value={ email }
             data-testid="email-input"
-            onChange={ handleChange }
+            onChange={ this.handleChange }
           />
         </label>
         <label htmlFor="input-password">
@@ -51,18 +96,29 @@ class Login extends React.Component {
             type="password"
             value={ password }
             data-testid="password-input"
-            onChange={ handleChange }
+            onChange={ this.handlePassoword }
           />
         </label>
         <button
           type="button"
-          disabled={ !(validateEmail() && validatePass) }
+          disabled={ disabled }
+          onClick={ () => onSubmit(email) }
         >
-          <Link to="/carteira">Entrar</Link>
+          <Link to="/carteira">
+            Entrar
+          </Link>
         </button>
       </div>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (state) => dispatch(submitLogin(state)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
