@@ -56,7 +56,12 @@ class Form extends React.Component {
         </label>
         <label htmlFor="describe">
           Descrição:
-          <input type="text" name="description" id="describe" onChange={ this.handleChange } />
+          <input
+            type="text"
+            name="description"
+            id="describe"
+            onChange={ this.handleChange }
+          />
         </label>
         <label htmlFor="currency">
           Moeda:
@@ -66,14 +71,12 @@ class Form extends React.Component {
             ;
           </select>
         </label>
-
         <label htmlFor="pag">
           Método de pagamento:
           <select name="method" id="pag" onChange={ this.handleChange }>
             {methods.map((method, index) => (
               <option value={ method } key={ index }>{method}</option>
             ))}
-
           </select>
         </label>
 
@@ -101,6 +104,7 @@ const mapDispatchToProps = (dispatch) => ({
 Form.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   getCurrencies: PropTypes.func.isRequired,
+  addExpense: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
