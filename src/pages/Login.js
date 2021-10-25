@@ -31,13 +31,13 @@ class Login extends React.Component {
         >
           <Input
             htmlFor="email"
-            text="Email"
+            placeholder="Insert Email"
             value={ email }
             handleChange={ this.handleChange }
           />
           <Input
             htmlFor="password"
-            text="Password"
+            placeholder="Insert Password"
             value={ password }
             handleChange={ this.handleChange }
             type="password"
