@@ -6,7 +6,7 @@ export const getApiMoney = () => (
       response
         .json()
         .then((json) => (response.ok
-          ? Promise.resolve(Object.values(json))
+          ? Promise.resolve(json)
           : Promise.reject(json)))
     ))
 );

@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class AddTabelaGastos extends React.Component {
+  format(n) {
+    return `${Number(n).toFixed(2)}`;
+  }
+
+  convertido(exchangeRates, currency, value) {
+    return (exchangeRates[currency].ask * value);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -26,15 +34,20 @@ class AddTabelaGastos extends React.Component {
               <tr>
                 <td>{i.description}</td>
                 <td>{i.tag}</td>
-                <td>{i.value}</td>
                 <td>{i.method}</td>
+                <td>{i.value}</td>
                 <td>{i.currency}</td>
-                <th>{i.tag}</th>
-                <th>{i.tag}</th>
-                <th>{i.tag}</th>
-                <th>
+                <td>{ i.exchangeRates[i.currency].name.split('/')[0] }</td>
+                <td>{ this.format(i.exchangeRates[i.currency].ask) }</td>
+                <td>
+                  { this.format(
+                    this.convertido(i.exchangeRates, i.currency, i.value),
+                  ) }
+                </td>
+                <td>Real</td>
+                <td>
                   <button type="button" data-testid="delete-btn">Editar/Excluir</button>
-                </th>
+                </td>
               </tr>
             </tbody>
           ))}

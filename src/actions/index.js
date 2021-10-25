@@ -1,10 +1,11 @@
-// import { getApiMoney } from '../services/getApiMoney';
+import { getApiMoney } from '../services/getApiMoney';
 
 // Coloque aqui suas actions
 export const LOG_USER = 'LOG_USER';
 export const WALLET_USER = 'WALLET_USER';
 export const GET_API_MONEY_SUCCESS = 'GET_API_MONEY_SUCCESS';
 export const ADD_NEW_EXPENSE = 'ADD_NEW_EXPENSE';
+export const GET_API_MONEY_FAIL = 'GET_API_MONEY_FAIL';
 
 export const logUser = (user) => (
   {
@@ -18,15 +19,6 @@ export const walletUser = (payload) => (
   }
 );
 
-export const getApiMoneySuccess = (currencies) => (
-  {
-    type: GET_API_MONEY_SUCCESS,
-    payload: {
-      currencies,
-    },
-  }
-);
-
 export const addNewExpense = (payload) => (
   {
     type: ADD_NEW_EXPENSE,
@@ -35,11 +27,25 @@ export const addNewExpense = (payload) => (
     },
   });
 
+export const getApiMoneySuccess = (payload) => (
+  {
+    type: GET_API_MONEY_SUCCESS,
+    payload,
+  }
+);
+
+export const getApiMoneyFail = () => ({
+  type: GET_API_MONEY_FAIL,
+});
+
 export function getApiMoneyThunk() {
   return async (dispatch) => {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const jsonResponse = await response.json();
-    delete jsonResponse.USDT;
-    dispatch(getApiMoneySuccess(Object.keys(jsonResponse)));
+    try {
+      const response = await getApiMoney();
+      const jsonResponse = Object.keys(response).filter((moeda) => moeda !== 'USDT');
+      dispatch(getApiMoneySuccess(jsonResponse));
+    } catch (error) {
+      dispatch(getApiMoneyFail());
+    }
   };
 }
