@@ -14,13 +14,15 @@ class Select extends React.Component {
   }
 
   render() {
-    const { htmlFor, text, options } = this.props;
+    const { htmlFor, text, options, handleChange, value } = this.props;
     return (
       <label htmlFor={ htmlFor }>
         { text }
         <select
           name={ htmlFor }
           id={ htmlFor }
+          onChange={ handleChange }
+          value={ value }
         >
           { this.renderOptions(options) }
         </select>
@@ -33,6 +35,8 @@ Select.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string),
+  handleChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 Select.defaultProps = {

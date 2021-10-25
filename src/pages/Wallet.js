@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
 import { categories, methods } from '../data';
+import { fetchCurrency, URL } from '../services/awesomeAPI';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -11,9 +12,17 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
+      currency: '',
+      payment: '',
+      category: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    fetchCurrency(URL)
+      .then((response) => console.log(response));
   }
 
   handleChange({ target: { name, value } }) {
@@ -23,7 +32,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { value, description } = this.state;
+    const { value, description, currency, payment, category } = this.state;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -49,16 +58,22 @@ class Wallet extends React.Component {
           <Select
             htmlFor="currency"
             text="Moeda"
+            value={ currency }
+            handleChange={ this.handleChange }
           />
           <Select
             htmlFor="payment"
             text="Método de pagamento"
             options={ methods }
+            value={ payment }
+            handleChange={ this.handleChange }
           />
           <Select
             htmlFor="category"
             text="Tag"
             options={ categories }
+            value={ category }
+            handleChange={ this.handleChange }
           />
         </form>
       </div>
