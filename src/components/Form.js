@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import OptionsTags from './OptionsTags';
 import PayOptions from './PayOptions';
 import CurrenciesOptions from './CurrenciesOptions';
-import { sendExpensesInfo } from '../actions';
+import { sendExpensesInfo, setNewExpense } from '../actions';
 
 class Form extends Component {
   constructor() {
@@ -20,6 +20,7 @@ class Form extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleEditExpenseButton = this.handleEditExpenseButton.bind(this);
   }
 
   async handleClick() {
@@ -32,15 +33,41 @@ class Form extends Component {
     sendExpensesToStore(this.state);
   }
 
+  handleEditExpenseButton() {
+    const { sendEditedExpenseToStore, expenses, selectedId } = this.props;
+    sendEditedExpenseToStore(this.state);
+    sendEditedExpenseToStore({
+      ...this.state,
+      exchangeRates: expenses[selectedId].exchangeRates,
+    });
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
   }
 
+  addExpenseButton() {
+    return (
+      <button type="button" onClick={ this.handleClick }>
+        Adicionar despesa
+      </button>
+    );
+  }
+
+  editExpenseButton() {
+    return (
+      <button type="button" onClick={ this.handleEditExpenseButton }>
+        Editar despesa
+      </button>
+    );
+  }
+
   render() {
     const payMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+    const { editing } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -73,20 +100,30 @@ class Form extends Component {
             <OptionsTags tags={ tags } />
           </select>
         </label>
-        <button type="button" onClick={ this.handleClick }>
-          Adicionar despesa
-        </button>
+        { editing ? this.editExpenseButton() : this.addExpenseButton() }
+
       </form>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  sendExpensesToStore: (value) => dispatch(sendExpensesInfo(value)),
+const mapStateToProps = (state) => ({
+  editing: state.wallet.editing,
+  expenses: state.wallet.expenses,
+  selectedId: state.wallet.selectedId,
 });
 
-export default connect(null, mapDispatchToProps)(Form);
+const mapDispatchToProps = (dispatch) => ({
+  sendExpensesToStore: (value) => dispatch(sendExpensesInfo(value)),
+  sendEditedExpenseToStore: (value) => dispatch(setNewExpense(value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
 
 Form.propTypes = {
   sendExpensesToStore: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  sendEditedExpenseToStore: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  selectedId: PropTypes.number.isRequired,
 };
