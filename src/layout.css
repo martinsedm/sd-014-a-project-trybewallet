@@ -1,18 +1,18 @@
 body {
   font-family: fantasy;
-  font-size: 25px;
   background-color: #e9e6e6;
+  font-size: 25px;
   text-align: center;
 }
 
 table {
-  border-collapse: collapse;
   background-color: rgb(39, 27, 202);
+  border-collapse: collapse;
   width: 100%;
 }
 
-h1,h2 {
+h1 , h2 {
   font-family: fantasy;
-  font-size: 50px;
   color: #242020;
+  font-size: 50px;
 }
