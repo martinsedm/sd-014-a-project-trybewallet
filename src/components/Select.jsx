@@ -2,8 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Select extends React.Component {
+  renderOptions(options) {
+    return options.map((option) => (
+      <label htmlFor={ option } key={ option }>
+        <option
+          key={ option }
+          value={ option }
+        >
+          { option }
+        </option>
+      </label>
+    ));
+  }
+
   render() {
-    const { htmlFor, text } = this.props;
+    const { htmlFor, text, options } = this.props;
     return (
       <label htmlFor={ htmlFor }>
         { text }
@@ -11,7 +24,7 @@ class Select extends React.Component {
           name={ htmlFor }
           id={ htmlFor }
         >
-          { text }
+          { this.renderOptions(options) }
         </select>
       </label>
     );
@@ -21,6 +34,11 @@ class Select extends React.Component {
 Select.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.string),
+};
+
+Select.defaultProps = {
+  options: [],
 };
 
 export default Select;
