@@ -1,4 +1,5 @@
 export const SEND_DATA = 'SEND_DATA';
+export const SAVE_EMAIL = 'SAVE_EMAIL';
 
 export const submitLogin = (state) => ({ type: 'SEND_DATA', state });
 
