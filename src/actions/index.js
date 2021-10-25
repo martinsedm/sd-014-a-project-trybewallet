@@ -9,9 +9,12 @@ export const userLoginAction = (payload) => ({
   payload,
 });
 
-export const addExpenciesAction = (payload) => ({
+export const addExpensesAction = (payload, exchangeRates) => ({
   type: ADD_EXPENCIES,
-  payload,
+  payload: {
+    ...payload,
+    exchangeRates,
+  },
 });
 
 export const setCurrencyAction = (payload) => ({
@@ -25,3 +28,8 @@ export function fetchCurrencyApi() {
     dispatch(setCurrencyAction(data));
   };
 }
+
+export const addExpenses = (payload) => async (dispatch) => {
+  const data = await getCurrencyApi();
+  dispatch(addExpensesAction(payload, data));
+};

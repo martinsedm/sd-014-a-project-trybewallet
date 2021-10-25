@@ -12,7 +12,11 @@ const walletReducer = (state = INITIAL_STATE, action) => {
       ...state,
       expenses: [
         ...state.expenses,
-        action.payload,
+        {
+          // esse trecho do código consegui entender e implementar usando o código do Ilan Aragão como refere
+          id: state.expenses.length,
+          ...action.payload,
+        },
       ],
     };
   case SET_CURRENCY:

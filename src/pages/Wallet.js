@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   fetchCurrencyApi,
-  addExpenciesAction,
+  addExpenses,
 } from '../actions';
 import Header from '../components/Header';
 import { payments, tags } from '../services/Data';
@@ -14,8 +14,7 @@ class Wallet extends React.Component {
   constructor() {
     super();
     this.state = {
-      id: 0,
-      expenseValue: '',
+      value: 0,
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -41,8 +40,8 @@ class Wallet extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const { addExpense, setApi } = this.props;
-    setApi();
+    const { addExpense } = this.props;
+    // setApi();
     addExpense(this.state);
   }
 
@@ -56,8 +55,8 @@ class Wallet extends React.Component {
           <Input
             id="valor:"
             label="Valor"
-            type="text"
-            name="expenseValue"
+            type="number"
+            name="value"
             value={ expenseValue }
             onChange={ this.handleChange }
           />
@@ -105,7 +104,7 @@ Wallet.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   setApi: () => dispatch(fetchCurrencyApi()),
-  addExpense: (payload) => dispatch(addExpenciesAction(payload)),
+  addExpense: (payload) => dispatch(addExpenses(payload)),
 });
 
 const mapStateToProps = ({ wallet }) => ({
