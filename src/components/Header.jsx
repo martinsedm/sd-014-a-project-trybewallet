@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-export class Header extends Component {
+class Header extends Component {
   render() {
     const { email } = this.props;
     return (
@@ -21,4 +21,4 @@ Header.propTypes = {
 
 const mapStateToProps = (state) => ({ email: state.user.email });
 
-export default connect(mapStateToProps, null)(Header);
+export default connect(mapStateToProps)(Header);
