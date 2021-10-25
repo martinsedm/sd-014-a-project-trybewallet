@@ -7,6 +7,7 @@ class Login extends React.Component {
       email: '',
       password: '',
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange({ target }) {
