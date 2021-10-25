@@ -41,7 +41,7 @@ MoedaApi.propTypes = {
 
 MoedaApi.defaultProps = {
   moeda: '',
-  handle: null,
+  handle: PropTypes.func,
 };
 
 export default MoedaApi;

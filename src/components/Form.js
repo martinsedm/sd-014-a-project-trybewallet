@@ -20,7 +20,7 @@ class Form extends React.Component {
   }
 
   render() {
-    const { valor, descrição: desc, moeda, metodo, tag } = this.state;
+    const { valor, descrição, moeda, metodo, tag } = this.state;
     return (
       <form>
         <label htmlFor="valor">
@@ -30,23 +30,30 @@ class Form extends React.Component {
         <label htmlFor="descrição">
           Descrição
           <input
-            id="desc"
+            type="text"
+            id="descrição"
             name="descrição"
             onChange={ this.handle }
-            value={ desc }
+            value={ descrição }
           />
         </label>
 
         <MoedaApi handle={ this.handle } value={ moeda } />
 
-        <label htmlFor="pagamento">
+        <label htmlFor="metodo">
           Método de pagamento
-          <select id="metodo" name="metodo" onChange={ this.handle } value={ metodo }>
+          <select
+            id="metodo"
+            name="metodo"
+            onChange={ this.handle }
+            value={ metodo }
+          >
             <option value="dinheiro">Dinheiro</option>
             <option value="credito">Cartão de crédito</option>
             <option value="debito">Cartão de débito</option>
           </select>
         </label>
+
         <label htmlFor="tag">
           Tag
           <select id="tag" name="tag" onChange={ this.handle } value={ tag }>
