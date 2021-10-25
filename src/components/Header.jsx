@@ -29,7 +29,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email, } = this.props;
+    const { email } = this.props;
     return (
       <header>
         <h1 data-testid="email-field">
