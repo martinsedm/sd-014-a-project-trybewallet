@@ -14,6 +14,7 @@ class Input extends React.Component {
           onChange={ handleChange }
           type={ type }
           placeholder={ placeholder }
+          id={ htmlFor }
         />
       </label>
     );
@@ -23,7 +24,7 @@ class Input extends React.Component {
 Input.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   text: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   handleChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   placeholder: PropTypes.string,
