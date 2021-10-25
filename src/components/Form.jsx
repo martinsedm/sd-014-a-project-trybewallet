@@ -68,7 +68,6 @@ class Form extends React.Component {
           <select name="currency" id="currency" onChange={ this.handleChange }>
             {currencies.map((currency) => (
               <option key={ currency } value={ currency }>{ currency }</option>))}
-            ;
           </select>
         </label>
         <label htmlFor="pag">
@@ -79,7 +78,6 @@ class Form extends React.Component {
             ))}
           </select>
         </label>
-
         <label htmlFor="tag">
           Tag:
           <select name="tag" id="tag" onChange={ this.handleChange }>
@@ -90,7 +88,6 @@ class Form extends React.Component {
         </label>
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
-
     );
   }
 }

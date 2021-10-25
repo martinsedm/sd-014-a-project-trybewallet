@@ -27,8 +27,7 @@ class Header extends React.Component {
           <span>Currency:</span>
           {currency}
         </div>
-
-      </section>
+     </section>
     );
   }
 }
