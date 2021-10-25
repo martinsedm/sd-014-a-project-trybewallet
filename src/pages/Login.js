@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import { setUserData as setUserAction } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,12 +29,18 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
+    const { setUserData, history } = this.props;
     return (
       <div>
         <h1>Login</h1>
         <form
           onSubmit={ (e) => {
             e.preventDefault();
+            setUserData(email);
+            this.setState({
+              email: '',
+              password: '',
+            }, history.push('/carteira'));
           } }
         >
           <Input
@@ -58,4 +67,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  setUserData: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  setUserData: (payload) => dispatch(setUserAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
