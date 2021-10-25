@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getThunk } from '../actions';
 
 class Form extends Component {
   constructor() {
@@ -7,6 +9,11 @@ class Form extends Component {
     this.state = {};
     this.paymentMethods = this.paymentMethods.bind(this);
     this.categoryTypes = this.categoryTypes.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   paymentMethods() {
@@ -24,6 +31,7 @@ class Form extends Component {
   }
 
   render() {
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -45,7 +53,9 @@ class Form extends Component {
           <select
             id="moeda"
           >
-            requisita API
+            { currencies.map((currency, index) => (
+              <option key={ index } value={ currency }>{ currency }</option>
+            ))}
           </select>
         </label>
         <label htmlFor="payment-methods">
@@ -71,4 +81,14 @@ class Form extends Component {
   }
 }
 
-export default connect()(Form);
+const mapStateToProps = (state) => ({ currencies: state.wallet.currencies });
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(getThunk()),
+});
+
+Form.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
