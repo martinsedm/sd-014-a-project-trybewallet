@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import { categories, methods } from '../data';
+import { categories, inputs, methods } from '../data';
 import { fetchCurrency, URL } from '../services/awesomeAPI';
 
 class Wallet extends React.Component {
@@ -15,14 +15,22 @@ class Wallet extends React.Component {
       currency: '',
       payment: '',
       category: '',
+      currencies: null,
+      loading: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.renderInputs = this.renderInputs.bind(this);
   }
 
   componentDidMount() {
     fetchCurrency(URL)
-      .then((response) => console.log(response));
+      .then((response) => {
+        this.setState({
+          currencies: Object.keys(response),
+          loading: false,
+        });
+      });
   }
 
   handleChange({ target: { name, value } }) {
@@ -31,8 +39,28 @@ class Wallet extends React.Component {
     });
   }
 
+  renderInputs() {
+    const { value, description } = this.state;
+    return Object.values(inputs).map(({ htmlFor, text, type }) => (
+      <Input
+        key={ htmlFor }
+        htmlFor={ htmlFor }
+        text={ text }
+        value={ htmlFor === 'value' ? value : description }
+        type={ type || '' }
+        handleChange={ this.handleChange }
+      />
+    ));
+  }
+
   render() {
-    const { value, description, currency, payment, category } = this.state;
+    const {
+      currency,
+      payment,
+      category,
+      currencies,
+      loading,
+    } = this.state;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -42,22 +70,11 @@ class Wallet extends React.Component {
             e.preventDefault();
           } }
         >
-          <Input
-            htmlFor="value"
-            text="Valor"
-            value={ value }
-            handleChange={ this.handleChange }
-            type="number"
-          />
-          <Input
-            htmlFor="description"
-            text="Descrição"
-            value={ description }
-            handleChange={ this.handleChange }
-          />
+          { this.renderInputs() }
           <Select
             htmlFor="currency"
             text="Moeda"
+            options={ loading ? ['loading'] : currencies }
             value={ currency }
             handleChange={ this.handleChange }
           />

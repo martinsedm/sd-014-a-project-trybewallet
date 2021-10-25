@@ -34,13 +34,9 @@ class Select extends React.Component {
 Select.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  options: PropTypes.arrayOf(PropTypes.string),
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
-};
-
-Select.defaultProps = {
-  options: [],
 };
 
 export default Select;
