@@ -1,76 +1,77 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchApiRedux } from '../actions';
 import Header from '../components/Header';
+
+import Form from '../components/Form';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responseApi: [],
+      coins: [],
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
     };
     this.fetchApi = this.fetchApi.bind(this);
+    this.saveUserInfo = this.saveUserInfo.bind(this);
+    this.saveFomrIfo = this.saveFomrIfo.bind(this);
   }
 
   componentDidMount() {
     this.fetchApi();
   }
 
+  saveUserInfo({ target }) {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [name]: value,
+    });
+  }
+
   async fetchApi() {
     const url = 'https://economia.awesomeapi.com.br/json/all';
     const requestApi = await fetch(url);
     const response = await requestApi.json();
-    const cent = Object.values(response).splice(1);
+    const coins = Object.values(response).splice(1);
     this.setState({
-      responseApi: cent,
+      coins,
     });
   }
 
+  saveFomrIfo() {
+    const {
+      value, description, currency, method, tag } = this.state;
+    const { fomrInfo } = this.props;
+    fomrInfo({ value, description, currency, tag, method });
+  }
+
   render() {
-    const { responseApi } = this.state;
-    console.log(responseApi);
+    const { coins } = this.state;
+    console.log(coins);
     return (
       <>
         <Header />
-        <form>
-          <label htmlFor="value-debt">
-            Valor
-            <input type="text" name="valor" id="value-debt" />
-          </label>
-          <label htmlFor="value-desc">
-            Descrição
-            <input type="text" name="valor" id="value-desc" />
-          </label>
-          <label htmlFor="value-moeda">
-            Moeda
-            <select id="value-moeda">
-              { responseApi.map((value) => (
-                <option key={ value.code }>
-                  { value.code }
-                </option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="value-metodo">
-            Método de pagamento
-            <select id="value-metodo">
-              <option> Dinheiro </option>
-              <option> Cartão de crédito </option>
-              <option> Cartão de débito </option>
-            </select>
-          </label>
-          <label htmlFor="value-type">
-            Tag
-            <select id="value-type">
-              <option> Alimentação </option>
-              <option> Lazer </option>
-              <option> Trabalho </option>
-              <option> Transporte </option>
-              <option> Saúde </option>
-            </select>
-          </label>
-        </form>
+        <Form
+          info={ this.state }
+          saveUserInfo={ this.saveUserInfo }
+          saveFomrIfo={ this.saveFomrIfo }
+        />
       </>
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  fomrInfo: (payload) => dispatch(fetchApiRedux(payload)),
+});
 
-export default Wallet;
+Wallet.propTypes = {
+  fomrInfo: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Wallet);
