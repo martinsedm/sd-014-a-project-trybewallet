@@ -13,6 +13,11 @@ class Login extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  validate(email, password) {
+    const MIN_PASS_LENGTH = 5;
+    return (/\S+@\S+\.\S+/).test(email) && password.length > MIN_PASS_LENGTH;
+  }
+
   handleChange({ target: { value, name } }) {
     this.setState({
       [name]: value,
@@ -45,6 +50,7 @@ class Login extends React.Component {
           <Button
             type="submit"
             text="Entrar"
+            disabled={ !this.validate(email, password) }
           />
         </form>
       </div>
