@@ -3,12 +3,13 @@
 
 import { combineReducers } from 'redux';
 
-import user from './user';
+import userReducer from './user';
 import wallet from './wallet';
 
-const rootReducer = combineReducers(
-  user,
+// src: https://github.com/tryber/sd-14a-live-lectures/tree/lecture/15.2Redux
+const rootReducer = combineReducers({
+  user: userReducer,
   wallet,
-);
+});
 
 export default rootReducer;

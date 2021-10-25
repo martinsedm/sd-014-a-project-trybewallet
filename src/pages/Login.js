@@ -1,4 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { userEmail } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -6,12 +11,18 @@ class Login extends React.Component {
     this.state = {
       validEmail: false,
       validPassword: false,
+      email: '',
     };
 
     this.handleVerification = this.handleVerification.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleVerification({ target }) {
+    this.setState({
+      [target.name]: target.value,
+    });
+
     if (target.name === 'email') {
       // src: https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
       const regex = /\S+@\S+\.\S+/;
@@ -28,6 +39,13 @@ class Login extends React.Component {
         validPassword,
       });
     }
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { dispatchEmail } = this.props;
+
+    dispatchEmail(email);
   }
 
   render() {
@@ -56,16 +74,28 @@ class Login extends React.Component {
             />
           </label>
 
-          <button
-            type="button"
-            disabled={ !(validEmail && validPassword) }
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              type="button"
+              disabled={ !(validEmail && validPassword) }
+              onClick={ this.handleClick }
+            >
+              Entrar
+            </button>
+          </Link>
+
         </form>
       </>
     );
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchEmail: (email) => dispatch(userEmail(email)),
+});
+
+Login.propTypes = {
+  dispatchEmail: PropTypes.func,
+}.isRequired;
+
+export default connect(null, mapDispatchToProps)(Login);
