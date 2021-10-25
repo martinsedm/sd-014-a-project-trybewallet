@@ -1,0 +1,26 @@
+import { actionTypes } from '../actions';
+
+const INITIAL_STATE = {
+  currencies: [],
+  expenses: [],
+  total: 0,
+};
+
+function wallet(state = INITIAL_STATE, { type, payload, rate }) {
+  switch (type) {
+  case actionTypes.SAVE_EXPENSES:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses, {
+          id: state.expenses.length,
+          ...payload,
+        }],
+      total: state.total + 1 * (payload.value * rate),
+    };
+  default:
+    return state;
+  }
+}
+
+export default wallet;

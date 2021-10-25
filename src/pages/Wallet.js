@@ -6,7 +6,7 @@ import FormsComp from '../components/FormsComp';
 
 class Wallet extends React.Component {
   render() {
-    const { usedEmail } = this.props;
+    const { usedEmail, totalPrice } = this.props;
     return (
       <section>
         <header>
@@ -24,9 +24,10 @@ class Wallet extends React.Component {
                   Email:
                   {usedEmail || 'Usuário não logado'}
                 </div>
-                <div className="col-xl" data-testid="total-field">
-                  Despesa total: 0
-                </div>
+                <span>
+                  Despesas:
+                  <strong data-testid="total-field">{ totalPrice || 0 }</strong>
+                </span>
                 <div className="col-xl" data-testid="header-currency-field">
                   BRL
                 </div>
@@ -37,17 +38,20 @@ class Wallet extends React.Component {
             Logout
           </NavLink>
         </header>
-        <FormsComp />
+        <FormsComp handleChange={ this.handleChange } />
       </section>
     );
   }
 }
-const mapStateToProps = (state) => ({
-  usedEmail: state.user.email,
-});
-
-export default connect(mapStateToProps, null)(Wallet);
 
 Wallet.propTypes = {
   usedEmail: PropTypes.string,
+  totalPrice: PropTypes.number,
 }.isRequired;
+
+const mapStateToProps = (state) => ({
+  usedEmail: state.user.email,
+  totalPrice: state.wallet.total,
+});
+
+export default connect(mapStateToProps, null)(Wallet);

@@ -1,76 +1,98 @@
 import React, { Component } from 'react';
-import { createOptions } from '../utils/getRatesAPI';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import fetchAPI from '../utils/getRatesAPI';
+import { saveExpensesAtState as saveExpensesAction } from '../redux/actions';
 
-export default class FormsComp extends Component {
+class FormsComp extends Component {
   constructor() {
     super();
     this.state = {
-      value: 0,
+      value: '',
+      currency: '',
       method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
-      moedas: [],
+      exchangeRates: {},
     };
 
-    this.createCurrencies = this.createCurrencies.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.hdlChange = this.hdlChange.bind(this);
   }
 
   componentDidMount() {
-    this.createCurrencies();
+    fetchAPI().then((exchangeRates) => this.setState({ exchangeRates }));
   }
 
-  async createCurrencies() {
-    const moedas = await createOptions();
-    this.setState({ moedas });
+  hdlChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { saveExpense } = this.props;
+    saveExpense(this.state);
   }
 
   render() {
-    const { value, method, tag, description, moedas } = this.state;
+    const { value, currency, method, tag, description, exchangeRates } = this.state;
+    const metodos = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <forms>
-        <label htmlFor="valor" className="form-group mr-3 ml-3">
+        <label htmlFor="value" className="form-group mr-3 ml-3">
           Valor
-          <input type="text" id="valor" value={ value } className="form-control" />
+          <input name="value" id="value" value={ value } onChange={ this.hdlChange } />
         </label>
-        <label htmlFor="coin" className="form-group mr-md-3">
+        <label htmlFor="currency" className="form-group mr-md-3">
           Moeda
-          <select id="coin" className="form-control">
-            {moedas.map((rate) => (
-              <option value={ rate } key={ rate }>
-                {rate}
-              </option>
-            ))}
-            ;
+          <select
+            name="currency"
+            id="currency"
+            value={ currency }
+            onChange={ this.hdlChange }
+          >
+            {Object.values(exchangeRates).map((coin, i) => {
+              if (coin.codein !== 'BRLT' && coin.code !== 'DOGE') {
+                return (<option key={ i }>{coin.code}</option>);
+              }
+            })}
           </select>
         </label>
-        <label htmlFor="payment" className="form-group mr-md-3">
+        <label htmlFor="method" className="form-group mr-md-3">
           Método de pagamento
-          <select id="payment" value={ method } className="form-control">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
+          <select name="method" id="method" onChange={ this.hdlChange } value={ method }>
+            {metodos.map((met, i) => <option key={ i }>{met}</option>)}
           </select>
         </label>
         <label htmlFor="tag" className="form-group mr-md-3">
           Tag
-          <select id="tag" value={ tag } className="form-control">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
+          <select name="tag" id="tag" value={ tag } onChange={ this.hdlChange }>
+            {tags.map((met, i) => <option key={ i }>{met}</option>)}
           </select>
         </label>
-        <label htmlFor="desc" className="form-group mr-3">
+        <label htmlFor="description" className="form-group mr-3">
           Descrição
           <input
-            type="text"
-            id="desc"
+            name="description"
+            id="description"
             value={ description }
-            className="form-control mr-md-3"
+            onChange={ this.hdlChange }
           />
         </label>
+        <button type="submit" onClick={ this.handleClick }>Adicionar despesa</button>
       </forms>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  saveExpense: (expense) => dispatch(saveExpensesAction(expense)),
+});
+
+export default connect(null, mapDispatchToProps)(FormsComp);
+
+FormsComp.propTypes = {
+  saveExpense: PropTypes.func.isRequired,
+};
