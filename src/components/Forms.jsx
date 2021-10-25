@@ -114,7 +114,7 @@ const mapDispatchToProps = (dispatch) => ({
   saveExpense: (state) => dispatch(saveExpenseThunk(state)),
 });
 
-Form.propTypes = {
+Forms.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   saveExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
