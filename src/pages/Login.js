@@ -9,17 +9,18 @@ class Login extends React.Component {
     };
   }
 
-  handleChange = ({ target }) => {
+  handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     });
-  };
+  }
 
   render() {
     const { email, password } = this.state;
     // https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
     const verifyEmail = /\S+@\S+\.\S+/;
+    const MIN_LENGTH = 6;
 
     return (
       <div>
@@ -40,8 +41,9 @@ class Login extends React.Component {
         <button
           type="submit"
           onClick={ this.handleChange }
-          disabled={ !verifyEmail.test(email) || password.length < 6 }>
-            Entrar
+          disabled={ !verifyEmail.test(email) || password.length < MIN_LENGTH }
+        >
+          Entrar
         </button>
       </div>
     );
