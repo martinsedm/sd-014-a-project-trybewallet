@@ -12,8 +12,8 @@ class Header extends React.Component {
   }
 
   render() {
-    const { email } = this.props;
-    const { total, currency } = this.state;
+    const { email, total } = this.props;
+    const { currency } = this.state;
     return (
       <section>
         <div data-testid="email-field">
@@ -36,11 +36,13 @@ class Header extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-
+  total: state.wallet.expenses.reduce((total, { value, currency, exchangeRates }) => total
+  + value * exchangeRates[currency].ask, 0),
 });
-
+// obtive ajuda do Filipe Brochier s2 - na questao 8 - me salvando da recuperação <3
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps, null)(Header);

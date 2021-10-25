@@ -4,6 +4,7 @@
 export const SET_EMAIL = 'SET_EMAIL';
 export const GET_VALUE = 'GET_VALUE';
 export const GET_ERROR = 'GET_ERROR';
+export const GET_EXPENSE = 'GET_EXPENSE';
 
 export const setEmailValue = (payload) => (
   {
@@ -19,6 +20,12 @@ export const getError = (payload) => (
   {
     type: GET_ERROR, payload,
   });
+
+export const expense = (payload) => (
+  {
+    type: GET_EXPENSE, payload,
+  });
+
 // thunk
 export const getValueThunk = () => async (dispacth) => {
   try {
