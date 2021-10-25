@@ -1,67 +1,78 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import Input from '../components/Input';
-import Select from '../components/Select';
+import Form from './Form';
 import requestFetch from '../services/requestAPI';
+import { walletAddExpenses } from '../actions';
+import Header from './Header';
 
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      coins: [],
+      value: '',
+      description: '',
+      currency: '',
+      method: '',
+      tag: '',
+      exchangeRates: {},
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
   }
 
   componentDidMount() {
     this.fetchCoins();
   }
 
+  onSubmitForm() {
+    const { dispatchSetValue } = this.props;
+
+    dispatchSetValue(this.state);
+  }
+
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
   async fetchCoins() {
     const callApi = await requestFetch();
-    const removeUSDT = callApi.filter((coins) => coins !== 'USDT');
-    this.setState({ coins: removeUSDT });
+    this.setState({
+      exchangeRates: callApi,
+
+    });
   }
 
   render() {
-    const { email } = this.props;
-    const { coins } = this.state;
+    const { value, description, currency, method, tag, exchangeRates } = this.state;
     return (
       <div>
-        <header>
-          TrybeWallet
-          <h2 data-testid="email-field">{email}</h2>
-          <h3 data-testid="total-field">0</h3>
-          <h3 data-testid="header-currency-field">BRL</h3>
-        </header>
-        <form>
-          <Input nomeLabel="Valor" />
-          <Input nomeLabel="Descrição" />
-          <Select id="moeda" nomeLabel="Moeda" options={ coins } />
-          <Select
-            id="metodoPag"
-            nomeLabel="Método de pagamento"
-            options={ ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'] }
-          />
-          <Select
-            id="tag"
-            nomeLabel="Tag"
-            options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
-          />
-        </form>
+        <Header />
+        <Form
+          coins={ Object.keys(exchangeRates).filter((coins) => coins !== 'USDT') }
+          value={ value }
+          description={ description }
+          currency={ currency }
+          method={ method }
+          tag={ tag }
+          handleChange={ this.handleChange }
+        />
+        <button type="button" onClick={ this.onSubmitForm }>Adicionar Despesa</button>
 
       </div>);
   }
 }
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
-  // wallet: state.wallet.empty,
+const mapDispachToProps = (dispatch) => ({
+  dispatchSetValue: (values) => dispatch(walletAddExpenses(values)),
+
 });
 
 Wallet.propTypes = {
-  email: PropTypes.string.isRequired,
-  // wallet: PropTypes.string.isRequired,
+  dispatchSetValue: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+export default connect(null, mapDispachToProps)(Wallet);

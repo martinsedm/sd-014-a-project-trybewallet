@@ -48,11 +48,13 @@ class Login extends React.Component {
           id="email"
           nomeLabel="Email:"
           valueId={ email }
+          name="email"
           onChangeInput={ this.handleChange }
         />
         <Input
           id="password"
           nomeLabel="Password:"
+          name="password"
           valueId={ password }
           onChangeInput={ this.handleChange }
         />
