@@ -59,7 +59,7 @@ class FormExpenditure extends Component {
             onChange={ this.handleChange }
           />
           <Select
-            htmlFor="currency"-
+            htmlFor="currency"
             label="Moeda:"
             testid="currency"
             options={ currencies }
