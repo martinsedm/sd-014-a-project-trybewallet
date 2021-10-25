@@ -1,65 +1,102 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import SelectCoin from './Expenditure_components/SelectCoin';
+import { connect } from 'react-redux';
+import { getExpenses as getExpensesAction } from '../actions';
+import { fetchCurrencies } from '../services/api';
+import Input from './Expenditure_components/Input';
+import Select from './Expenditure_components/Select';
 
 class FormExpenditure extends Component {
   constructor() {
     super();
     this.state = {
-      value: '',
+      id: -1,
+      value: 0,
       description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
     };
-    this.handle = this.handle.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitExpensive = this.submitExpensive.bind(this);
   }
 
-  handle({ target }) {
-    const { name, value } = target;
+  handleChange({ target: { name, value } }) {
     this.setState({ [name]: value });
   }
 
+  async submitExpensive(event) {
+    event.preventDefault();
+    const { getExpensives } = this.props;
+    const exchangeRates = await fetchCurrencies();
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+      exchangeRates,
+    }));
+    getExpensives(this.state);
+  }
+
   render() {
-    const { value, currency, description: desc, method, tag } = this.state;
+    const { currencies } = this.props;
+    const { currency, method, tag } = this.state;
     return (
       <section>
-        <form>
-          <label htmlFor="value">
-            Valor
-            <input id="value" name="value" onChange={ this.handle } value={ value } />
-          </label>
+        <form onSubmit={ this.submitExpensive }>
+          <Input
+            htmlFor="value"
+            label="Valor:"
+            testid="value-input"
+            type="number"
+            onChange={ this.handleChange }
+          />
 
-          <label htmlFor="desc">
-            Descrição
-            <input id="desc" name="description" onChange={ this.handle } value={ desc } />
-          </label>
-
-          <SelectCoin handle={ this.handle } value={ currency } />
-
-          <label htmlFor="method">
-            Método de pagamento
-            <select id="method" name="method" onChange={ this.handle } value={ method }>
-              <option value="money">Dinheiro</option>
-              <option value="creditCard">Cartão de crédito</option>
-              <option value="debitCard">Cartão de débito</option>
-            </select>
-          </label>
-
-          <label htmlFor="tag">
-            Tag
-            <select id="tag" name="tag" onChange={ this.handle } value={ tag }>
-              <option value="alimentation">Alimentação</option>
-              <option value="leisure">Lazer</option>
-              <option value="work">Trabalho</option>
-              <option value="transport">Transporte</option>
-              <option value="cheers">Saúde</option>
-            </select>
-          </label>
-
+          <Input
+            htmlFor="description"
+            label="Descrição:"
+            testid="description-input"
+            type="text"
+            onChange={ this.handleChange }
+          />
+          <Select
+            htmlFor="currency"-
+            label="Moeda:"
+            testid="currency"
+            options={ currencies }
+            onChange={ this.handleChange }
+            value={ currency }
+          />
+          <Select
+            htmlFor="method"
+            label="Método de pagamento:"
+            testid="payment"
+            options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+            onChange={ this.handleChange }
+            value={ method }
+          />
+          <Select
+            htmlFor="tag"
+            label="Tag:"
+            testid="tag"
+            options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+            onChange={ this.handleChange }
+            value={ tag }
+          />
+          <button type="submit">Adicionar despesa</button>
         </form>
       </section>
     );
   }
 }
 
-export default FormExpenditure;
+FormExpenditure.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  getExpensives: PropTypes.func.isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  getExpensives: (expenses) => dispatch(getExpensesAction(expenses)),
+});
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+export default connect(mapStateToProps, mapDispatchToProps)(FormExpenditure);

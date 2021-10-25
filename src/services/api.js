@@ -1,4 +1,4 @@
-export async function getAPI() {
+export async function fetchCurrencies() {
   const fetchAPI = await fetch('https://economia.awesomeapi.com.br/json/all');
   const jsonFetchAPI = await fetchAPI.json();
   return jsonFetchAPI;
