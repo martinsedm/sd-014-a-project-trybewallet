@@ -1,15 +1,19 @@
+import { SET_CURRENCIES } from '../actions';
+
 const initialWalletValue = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
-export default function wallet(state = initialWalletValue, { type, payload }) {
-  switch (type) {
-  case wallet:
-    return { ...state, wallet: payload };
+function wallet(state = initialWalletValue, action) {
+  switch (action.type) {
+  case SET_CURRENCIES:
+    return {
+      ...state,
+      currencies: Object.entries(action.payload.currencies.data),
+    };
   default:
     return state;
   }
 }
+export default wallet;
