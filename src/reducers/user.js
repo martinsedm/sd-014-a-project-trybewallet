@@ -12,8 +12,7 @@ const user = (state = INITIAL_STATE, action) => {
   case SAVE_EMAIL:
     return {
       ...state,
-      email: action.payload.email,
-      password: action.payload.password,
+      email: action.email,
     };
   default:
     return state;
