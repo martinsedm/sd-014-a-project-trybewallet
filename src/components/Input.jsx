@@ -13,7 +13,7 @@ class Input extends React.Component {
           value={ value }
           onChange={ handleChange }
           type={ type }
-          placeHolder={ placeholder }
+          placeholder={ placeholder }
         />
       </label>
     );
