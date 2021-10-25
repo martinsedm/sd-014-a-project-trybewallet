@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
-import { methods } from '../data';
+import { categories, methods } from '../data';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -54,6 +54,11 @@ class Wallet extends React.Component {
             htmlFor="payment"
             text="Método de pagamento"
             options={ methods }
+          />
+          <Select
+            htmlFor="category"
+            text="Tag"
+            options={ categories }
           />
         </form>
       </div>
