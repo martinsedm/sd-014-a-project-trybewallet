@@ -1,17 +1,43 @@
+import {
+  FETCH_CURRENCIES_ERROR,
+  FETCH_CURRENCIES_SUCCESS,
+  NEW_EXPENSE,
+} from '../actions';
+
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  error: null,
 };
-
-function wallet(state = INITIAL_STATE, action) {
+const wallet = (
+  state = INITIAL_STATE,
+  action,
+) => {
   switch (action.type) {
-  case 'NEW_ACTION':
-    return { state: action.state };
+  case FETCH_CURRENCIES_SUCCESS:
+    return {
+      ...state,
+      currencies: action.payload,
+    };
+  case FETCH_CURRENCIES_ERROR:
+    return {
+      ...state,
+      error: action.payload.error,
+    };
+  case NEW_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, {
+        id: state.expenses.length,
+        ...action.payload,
+      }],
+    };
+
   default:
     return state;
   }
-}
+};
 
 export default wallet;

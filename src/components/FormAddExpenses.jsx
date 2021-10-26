@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import FetchApi from './FetchApi';
+import { fetchCurrencies } from '../utils/currencyAPI';
+import { expensesAction as expensesForm } from '../actions';
+import Currencies from './Currencies';
+import Tag from './Tag';
 
 class FormAddExpenses extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      expense: 0,
+      value: 0,
       description: 'Adicione uma descrição',
-      payment: '',
+      method: '',
+      exchangeRates: {},
       tag: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -21,17 +27,24 @@ class FormAddExpenses extends Component {
     });
   }
 
+  async handleClick() {
+    const { expensesAction } = this.props;
+    const exchangeRates = await fetchCurrencies();
+    this.setState({ exchangeRates });
+    expensesAction(this.state);
+  }
+
   render() {
-    const { expense, description, payment, tag } = this.state;
+    const { value, description, method, tag } = this.state;
     return (
       <form>
-        <label htmlFor="expense">
+        <label htmlFor="value">
           Valor
           <input
             type="text"
-            name="expense"
-            id="expense"
-            value={ expense }
+            name="value"
+            id="value"
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
@@ -44,34 +57,33 @@ class FormAddExpenses extends Component {
             onChange={ this.handleChange }
           />
         </label>
-        <label htmlFor="payment">
+        <label htmlFor="method">
           Método de Pagamento
-          <select name="payment" id="payment" value={ payment }>
-            <option selected value="cash">Dinheiro</option>
-            <option value="credit-card">Cartão de Crédito</option>
-            <option value="debit-card">Cartão de Débito</option>
+          <select
+            name="method"
+            id="method"
+            value={ method }
+            onChange={ this.handleChange }
+          >
+            <option value="cash">Dinheiro</option>
+            <option value="credit-card">Cartão de crédito</option>
+            <option value="debit-card">Cartão de débito</option>
           </select>
         </label>
-        <FetchApi />
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" value={ tag } id="tag">
-            <option selected value="food">Alimentação</option>
-            <option value="leisure">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transportation">Transporte</option>
-            <option value="healthCare">Saúde</option>
-          </select>
-        </label>
+        <Currencies value={ method } handleChange={ this.handleChange } />
+        <Tag value={ tag } handleChange={ this.handleChange } />
+        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
     );
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
+const mapDispatchToProps = (dispatch) => ({
+  expensesAction: (expenses) => dispatch(expensesForm(expenses)),
+});
 
-//   };
-// }
+FormAddExpenses.propTypes = {
+  expensesAction: PropTypes.func.isRequired,
+};
 
-export default FormAddExpenses;
+export default connect(null, mapDispatchToProps)(FormAddExpenses);

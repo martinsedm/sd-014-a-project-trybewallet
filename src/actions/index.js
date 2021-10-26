@@ -1,3 +1,9 @@
+import { fetchCurrencies } from '../utils/currencyAPI';
+
+export const FETCH_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
+export const FETCH_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
+
 export function emailAction(newEmail) {
   return {
     type: 'NEW_EMAIL',
@@ -5,13 +11,28 @@ export function emailAction(newEmail) {
   };
 }
 
-export function fetchCurrencies() {
-  return (dispatch) => { // thunk declarado
-    dispatch(fetchCurrencies());
-    return fetch('https://economia.awesomeapi.com.br/json/all')
-      .then((response) => response.json())
-      .then((currencies) => currencies.filter((currency) => currency.code !== 'USDT'))
-      .then((currencies) => dispatch(receiveCurrencies(currencies)))
-      .catch((error) => dispatch(receiveError(error)));
-  };
-}
+export const fetchCurrenciesSuccess = (payload) => ({
+  type: FETCH_CURRENCIES_SUCCESS,
+  payload,
+});
+
+export const fetchCurrenciesError = (payload) => ({
+  type: FETCH_CURRENCIES_ERROR,
+  payload,
+});
+
+export const expensesAction = (payload) => ({
+  type: NEW_EXPENSE,
+  payload,
+});
+
+// referencia código live lecture 15.4
+export const fetchCurrenciesThunk = () => async (dispatch) => {
+  try {
+    const response = await fetchCurrencies();
+    const payload = Object.keys(response);
+    dispatch(fetchCurrenciesSuccess(payload));
+  } catch (error) {
+    dispatch(fetchCurrenciesError(error));
+  }
+};
