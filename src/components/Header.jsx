@@ -5,13 +5,13 @@ import propTypes from 'prop-types';
 class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
-    const total = expenses.reduce((accumulator, { value, currency, exchangeRates }) => {
-      const exchangeRate = parseFloat(exchangeRates[currency]);
-      accumulator += value * exchangeRate;
-      return accumulator;
+    const total = expenses.reduce((acc, { value, currency, exchangeRates }) => {
+      const exchangeRate = parseFloat(exchangeRates[currency].ask);
+      acc += value * exchangeRate;
+      return acc;
     }, 0);
 
-    const roundedTotal = (Math.round(total * 100) / 100).toFixed();
+    const roundedTotal = (Math.round(total * 100) / 100).toFixed(2);
 
     return (
       <header>
@@ -40,7 +40,9 @@ Header.propTypes = {
     value: propTypes.oneOfType([propTypes.number, propTypes.string]).isRequired,
     currency: propTypes.string.isRequired,
     exchangeRates: propTypes.shape({
-      USD: propTypes.shape.isRequired,
+      USD: propTypes.shape({
+        ask: propTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
   })).isRequired,
 };

@@ -50,7 +50,7 @@ class AddExpense extends React.Component {
   }
 
   render() {
-    const paidOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value, description } = this.state;
     const { currencyOptions, loading } = this.props;
@@ -74,21 +74,21 @@ class AddExpense extends React.Component {
           onChange={ this.handleChange }
         />
         <Select
-          text="Moeda:"
+          text="Moeda"
           name="currency"
           dataTestId="currency-input"
           onChange={ this.handleChange }
           options={ currencyOptions }
         />
         <Select
-          text="Método de pagamento:"
+          text="Método de pagamento"
           name="method"
           dataTestId="method-input"
           onChange={ this.handleChange }
-          options={ paidOptions }
+          options={ methodOptions }
         />
         <Select
-          text="Tag:"
+          text="Tag"
           name="tag"
           dataTestId="tag-input"
           onChange={ this.handleChange }

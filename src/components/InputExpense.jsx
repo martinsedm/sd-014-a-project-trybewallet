@@ -4,9 +4,9 @@ import propTypes from 'prop-types';
 class InputExpense extends React.Component {
   render() {
     const {
-      name,
       text,
       type,
+      name,
       value,
       onChange,
       dataTestId,
