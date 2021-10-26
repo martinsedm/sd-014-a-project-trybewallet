@@ -1,44 +1,89 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Select from './Select';
 
-class Form extends React.Component {
+class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: '',
+      description: '',
+      currency: '',
+      payment: '',
+      tag: '',
+      currencyList: [],
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencyAPI();
+  }
+
+  async fetchCurrencyAPI() {
+    const currencyFetch = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const currencyJSON = await currencyFetch.json();
+    const currencyKeys = Object.keys(currencyJSON); // retornar o array
+    const currencyList = currencyKeys.filter((currency) => currency !== 'USDT'); // remove a informação do dolar de turismo da API
+    this.setState({
+      currencyList,
+    });
+  }
+
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    });
+  }
+
   render() {
+    const { value, description, currency, payment, tag, currencyList } = this.state;
+    const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
-        <label htmlFor>
-          Valor:
-          <input type="number" name="valor" />
+        <label htmlFor="value">
+          Valor
+          <input
+            type="number"
+            id="value"
+            value={ value }
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor>
-          Moeda:
-          <select>
-            <option>1</option>
-          </select>
+        <label htmlFor="description">
+          Descrição
+          <input
+            type="text"
+            name="description"
+            id="description"
+            value={ description }
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor>
-          Método de pagamento:
-          <select>
-            <option value="credito">Cartão de Crédito</option>
-            <option value="debito">Cartão de Débito</option>
-            <option value="dinheiro">Dinheiro</option>
-          </select>
-        </label>
-        <label htmlFor>
-          Tag:
-          <select>
-            <option value="alimentação">Alimentação</option>
-            <option value="lazer">Lazer</option>
-            <option value="trabalho">Trabalho</option>
-            <option value="transporte">Transporte</option>
-            <option value="saude">Saúde</option>
-          </select>
-        </label>
-        <label htmlFor>
-          Descrição:
-          <textarea name="textbox" />
-        </label>
+        <Select
+          name="currency"
+          option={ currencyList }
+          onChange={ this.handleChange }
+          value={ currency }
+          label="Moeda"
+        />
+        <Select
+          name="payment"
+          option={ paymentMethods }
+          onChange={ this.handleChange }
+          value={ payment }
+          label="Método de pagamento"
+        />
+        <Select
+          name="tag"
+          option={ TAGS }
+          onChange={ this.handleChange }
+          value={ tag }
+          label="Tag"
+        />
       </form>
-
     );
   }
 }
+
 export default Form;
