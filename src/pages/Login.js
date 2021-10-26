@@ -3,6 +3,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loginInfo as loginInfoAction } from '../actions';
+import './login.css';
+import logoTrybewallet from '../logo-trybeWallet.png';
 
 class Login extends React.Component {
   constructor() {
@@ -52,10 +54,10 @@ class Login extends React.Component {
     const { email, password, validData } = this.state;
     return (
       <form id="form-login">
-        <fieldset>
+        <fieldset className="form-login">
+          <img src={ logoTrybewallet } alt="Logo Trybe Wallet" className="img-login" />
           <legend>Faça seu login</legend>
           <label htmlFor="email">
-            E-mail
             <input
               type="email"
               id="email"
@@ -63,11 +65,11 @@ class Login extends React.Component {
               value={ email }
               placeholder="Digite seu e-mail"
               data-testid="email-input"
+              className="field-login"
               onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="password">
-            Senha
             <input
               type="password"
               id="password"
@@ -75,6 +77,7 @@ class Login extends React.Component {
               value={ password }
               placeholder="Digite sua senha"
               data-testid="password-input"
+              className="field-login"
               onChange={ this.handleChange }
             />
           </label>
@@ -83,6 +86,7 @@ class Login extends React.Component {
           <button
             type="button"
             disabled={ !validData }
+            className="btn-config btn btn-success"
             onClick={ this.handleClick }
           >
             Entrar

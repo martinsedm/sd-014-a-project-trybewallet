@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import SelectCurrency from './SelectCurrency';
 import getCurrencyApi from '../services/currencyAPI';
 import { getExpenses as getExpensesAction } from '../actions';
+import './expensesForm.css';
 
 class ExpensesForm extends React.Component {
   constructor() {
@@ -47,6 +48,7 @@ class ExpensesForm extends React.Component {
             name="method"
             id="method"
             value={ method }
+            className="field-form"
             onChange={ this.handleChange }
           >
             <option value="Dinheiro">Dinheiro</option>
@@ -60,6 +62,7 @@ class ExpensesForm extends React.Component {
             name="tag"
             id="tag"
             value={ tag }
+            className="field-form"
             onChange={ this.handleChange }
           >
             <option value="Alimentação">Alimentação</option>
@@ -77,7 +80,7 @@ class ExpensesForm extends React.Component {
     const { value, description } = this.state;
     return (
       <form>
-        <fieldset>
+        <fieldset className="form-expenses">
           <legend>Despesas</legend>
           <label htmlFor="value">
             Valor
@@ -86,6 +89,7 @@ class ExpensesForm extends React.Component {
               id="value"
               name="value"
               value={ value }
+              className="field-form"
               onChange={ this.handleChange }
             />
           </label>
@@ -96,12 +100,19 @@ class ExpensesForm extends React.Component {
               id="description"
               name="description"
               value={ description }
+              className="field-form"
               onChange={ this.handleChange }
             />
           </label>
           <SelectCurrency handleChange={ this.handleChange } />
           <p>{ this.selectFields() }</p>
-          <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+          <button
+            type="button"
+            className="btn-config btn btn-secondary"
+            onClick={ this.handleClick }
+          >
+            Adicionar despesa
+          </button>
         </fieldset>
       </form>
     );
