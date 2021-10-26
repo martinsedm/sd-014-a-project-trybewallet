@@ -53,10 +53,10 @@ class FormsComp extends Component {
             value={ currency }
             onChange={ this.hdlChange }
           >
-            { Object.values(exchangeRates).map((coins, i) => {
-              if (coins.codein !== 'BRLT' && coins.code !== 'DOGE') {
-                return (<option key={ i }>{coins.code}</option>);
-              } return (<option key={ i }>{coins.code}</option>);
+            {Object.values(exchangeRates).map((coin, i) => {
+              if (coin.codein !== 'BRLT' && coin.code !== 'DOGE') {
+                return (<option key={ i }>{coin.code}</option>);
+              } return (<option key={ i }>{coin.code}</option>);
             })}
           </select>
         </label>
