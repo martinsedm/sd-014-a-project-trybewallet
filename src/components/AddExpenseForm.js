@@ -5,10 +5,12 @@ import {
   addExpense as addExpenseAction,
   fetchCurrencies as fetchCurrenciesAction,
 } from '../actions';
+import fetchApi from '../services/api';
 
 const INITIAL_STATE = {
   currency: '',
   description: '',
+  exchangeRates: {},
   method: '',
   tag: '',
   value: '',
@@ -32,8 +34,10 @@ class AddExpenseForm extends Component {
     this.setState({ [name]: value });
   }
 
-  handleClick() {
+  async handleClick() {
     const { addExpense } = this.props;
+    const exchangeRates = await fetchApi();
+    this.setState({ exchangeRates });
     addExpense(this.state);
     this.setState(INITIAL_STATE);
   }
