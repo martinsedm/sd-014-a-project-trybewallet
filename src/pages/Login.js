@@ -79,13 +79,15 @@ class Login extends React.Component {
             />
           </label>
         </fieldset>
-        <button
-          type="button"
-          disabled={ !validData }
-          onClick={ this.handleClick }
-        >
-          <Link to="/carteira">Entrar</Link>
-        </button>
+        <Link to="/carteira">
+          <button
+            type="button"
+            disabled={ !validData }
+            onClick={ this.handleClick }
+          >
+            Entrar
+          </button>
+        </Link>
       </form>
     );
   }
