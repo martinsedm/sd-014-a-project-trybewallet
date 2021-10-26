@@ -1,9 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
+import Button from '../components/Button';
 import { categories, inputs, methods } from '../data';
 import { fetchCurrency, URL } from '../services/awesomeAPI';
+import {
+  setCurrencies as currencyAction,
+  saveExpense as expenseAction,
+} from '../actions';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -15,7 +22,6 @@ class Wallet extends React.Component {
       currency: '',
       payment: '',
       category: '',
-      currencies: null,
       loading: true,
     };
 
@@ -24,11 +30,14 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
+    const { setCurrencies } = this.props;
     fetchCurrency(URL)
       .then((response) => {
-        this.setState({
-          currencies: Object.keys(response),
-          loading: false,
+        this.setState(() => {
+          setCurrencies(response);
+          return {
+            loading: false,
+          };
         });
       });
   }
@@ -58,9 +67,9 @@ class Wallet extends React.Component {
       currency,
       payment,
       category,
-      currencies,
       loading,
     } = this.state;
+    const { saveExpense, currencies } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -68,13 +77,14 @@ class Wallet extends React.Component {
         <form
           onSubmit={ (e) => {
             e.preventDefault();
+            saveExpense(this.state);
           } }
         >
           { this.renderInputs() }
           <Select
             htmlFor="currency"
             text="Moeda"
-            options={ loading ? ['loading'] : currencies }
+            options={ loading ? ['loading'] : Object.keys(currencies) }
             value={ currency }
             handleChange={ this.handleChange }
           />
@@ -92,10 +102,29 @@ class Wallet extends React.Component {
             value={ category }
             handleChange={ this.handleChange }
           />
+          <Button
+            type="submit"
+            text="Adicionar despesa"
+          />
         </form>
       </div>
     );
   }
 }
 
-export default Wallet;
+Wallet.propTypes = {
+  saveExpense: PropTypes.func.isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  saveExpense: (payload) => dispatch(expenseAction(payload)),
+  setCurrencies: (payload) => dispatch(currencyAction(payload)),
+});
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

@@ -1,4 +1,4 @@
-import { SET_WALLET_DATA } from '../actions';
+import { SET_CURRENCIES, SAVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -6,11 +6,17 @@ const INITIAL_STATE = {
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
-  switch (action.type) {
-  case SET_WALLET_DATA:
+  const { payload, type } = action;
+  switch (type) {
+  case SET_CURRENCIES:
     return {
       ...state,
-      wallet: action.payload,
+      currencies: payload,
+    };
+  case SAVE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...state.expenses, payload],
     };
   default:
     return state;
