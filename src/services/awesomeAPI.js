@@ -6,3 +6,10 @@ export const fetchCurrency = async (endpoint) => {
   delete currencies.USDT;
   return currencies;
 };
+
+export const convertToBRL = (expense) => {
+  const { value, currency, exchangeRates } = expense;
+  const { ask } = exchangeRates[currency];
+  const valueInBRL = Number(value * ask).toFixed(2);
+  return +valueInBRL;
+};
