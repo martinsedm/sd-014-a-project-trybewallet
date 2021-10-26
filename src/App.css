@@ -39,3 +39,47 @@
     transform: rotate(360deg);
   }
 }
+
+.header {
+  align-items: center;
+  background: linear-gradient(to bottom, black, #2d2d2d);
+  border-bottom: 10px solid #ffbf00;
+  display: flex;
+  height: 100px;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.page-title {
+  color: #ffbf00;
+  font-style: oblique;
+  font-weight: 500;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.form-body {
+  background-color: white;
+  border: 2px solid rgba(0, 0, 0, 0.125);
+  border-bottom: 2px solid #2d2d2d;
+  border-radius: 10px;
+  border-right: 2px solid #2d2d2d;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  margin: 5px;
+  overflow: hidden;
+  padding: 20px;
+  width: 300px;
+}
+
+.title-form {
+  background-color: #ffbf00;
+  border: 2px solid #ffbf00;
+  border-bottom: 2px solid #2d2d2d;
+  border-radius: 5px;
+  border-right: 2px solid #2d2d2d;
+  font-size: 24px;
+  font-weight: 500;
+  justify-content: center;
+}

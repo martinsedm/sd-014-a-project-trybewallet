@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { actionRegisterUser } from '../actions';
 
@@ -32,31 +32,38 @@ class Login extends React.Component {
     const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const MIN_CHARACTHERS = 6;
     return (
-      <form>
-        <label htmlFor="login-email">
-          <input
-            type="email"
-            name="email"
-            data-testid="email-input"
-            id="login-email"
-            onChange={ this.handleChange }
-            value={ email }
-            placeholder="Insira seu email aqui..."
-            required
-          />
-        </label>
-        <label htmlFor="login-password">
-          <input
-            type="text"
-            data-testid="password-input"
-            id="login-password"
-            name="password"
-            onChange={ this.handleChange }
-            value={ password }
-            placeholder="Insira sua senha"
-            required
-          />
-        </label>
+      <form className="form-body">
+        <h1>TRYBE WALLET</h1>
+        <div>
+          <h4>Email</h4>
+          <label htmlFor="login-email">
+            <input
+              type="email"
+              name="email"
+              data-testid="email-input"
+              id="login-email"
+              onChange={ this.handleChange }
+              value={ email }
+              placeholder="Insira seu email aqui..."
+              required
+            />
+          </label>
+        </div>
+        <div>
+          <h4>Senha</h4>
+          <label htmlFor="login-password">
+            <input
+              type="text"
+              data-testid="password-input"
+              id="login-password"
+              name="password"
+              onChange={ this.handleChange }
+              value={ password }
+              placeholder="Insira sua senha"
+              required
+            />
+          </label>
+        </div>
         <button
           type="button"
           onClick={ this.handleClick }

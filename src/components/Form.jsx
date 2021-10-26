@@ -1,4 +1,8 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { fetchCurrencyAPI, fetchExpense } from '../actions';
+import Input from './Input';
 import Select from './Select';
 
 class Form extends Component {
@@ -7,26 +11,17 @@ class Form extends Component {
     this.state = {
       value: '',
       description: '',
-      currency: '',
-      payment: '',
-      tag: '',
-      currencyList: [],
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
-    this.fetchCurrencyAPI();
-  }
-
-  async fetchCurrencyAPI() {
-    const currencyFetch = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const currencyJSON = await currencyFetch.json();
-    const currencyKeys = Object.keys(currencyJSON);
-    const currencyList = currencyKeys.filter((currency) => currency !== 'USDT');
-    this.setState({
-      currencyList,
-    });
+    const { fetchCurrency } = this.props;
+    fetchCurrency();
   }
 
   handleChange({ target: { name, value } }) {
@@ -35,31 +30,34 @@ class Form extends Component {
     });
   }
 
+  handleClick() {
+    const { addExpenses } = this.props;
+    addExpenses(this.state);
+  }
+
   render() {
-    const { value, description, currency, payment, tag, currencyList } = this.state;
+    const { value, description, currency, method, tag } = this.state;
+    const { currencyList } = this.props;
     const paymentMethods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const TAGS = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
-        <label htmlFor="value">
-          Valor
-          <input
-            type="number"
-            id="value"
-            value={ value }
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="description">
-          Descrição
-          <input
-            type="text"
-            name="description"
-            id="description"
-            value={ description }
-            onChange={ this.handleChange }
-          />
-        </label>
+        <Input
+          type="number"
+          name="value"
+          id="value"
+          value={ value }
+          onChange={ this.handleChange }
+          label="Valor"
+        />
+        <Input
+          type="text"
+          name="description"
+          id="description"
+          value={ description }
+          onChange={ this.handleChange }
+          label="Descrição"
+        />
         <Select
           name="currency"
           option={ currencyList }
@@ -68,10 +66,10 @@ class Form extends Component {
           label="Moeda"
         />
         <Select
-          name="payment"
+          name="method"
           option={ paymentMethods }
           onChange={ this.handleChange }
-          value={ payment }
+          value={ method }
           label="Método de pagamento"
         />
         <Select
@@ -81,9 +79,27 @@ class Form extends Component {
           value={ tag }
           label="Tag"
         />
+        <button type="button" onClick={ this.handleClick }>
+          Adicionar despesa
+        </button>
       </form>
     );
   }
 }
 
-export default Form;
+Form.propTypes = {
+  addExpenses: PropTypes.func.isRequired,
+  currencyList: PropTypes.arrayOf(PropTypes.any).isRequired,
+  fetchCurrency: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  addExpenses: (state) => dispatch(fetchExpense(state)),
+  fetchCurrency: () => dispatch(fetchCurrencyAPI()),
+});
+
+const mapStateToProps = (state) => ({
+  currencyList: state.wallet.currencies,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
