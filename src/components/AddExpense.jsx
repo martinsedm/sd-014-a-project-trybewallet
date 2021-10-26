@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { fetchExpense, fetchCurrency } from '../services/fetchAPI';
+import { fetchExpense, fetchCurrency } from '../actions';
 import Input from './InputExpense';
 import Select from './SelectExpense';
 

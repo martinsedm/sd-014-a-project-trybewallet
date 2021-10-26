@@ -35,7 +35,7 @@ export const editExpense = (expense) => ({
   payload: expense,
 });
 
-/* export const fetchExpense = (state) => (dispatch) => (
+export const fetchExpense = (state) => (dispatch) => (
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((response) => dispatch(updateExpense({ ...state, exchangeRates: response })))
@@ -50,4 +50,4 @@ export const fetchCurrency = () => (dispatch) => {
       const USDTdeleted = allCurrencies.filter((currency) => currency !== 'USDT');
       dispatch(updateCurrency(USDTdeleted));
     });
-}; */
+};
