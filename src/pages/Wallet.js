@@ -82,7 +82,8 @@ class Wallet extends React.Component {
         <form
           onSubmit={ (e) => {
             e.preventDefault();
-            saveExpense({ ...this.state, exhangeCurrency: currencies });
+            this.saveCurrency();
+            saveExpense({ ...this.state, exchangeCurrency: currencies });
           } }
         >
           { this.renderInputs() }
@@ -119,7 +120,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
   setCurrencies: PropTypes.func.isRequired,
 };
 
