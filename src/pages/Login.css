@@ -9,10 +9,10 @@ main {
 .login__container {
   align-items: center;
   background-image: url('https://image.freepik.com/fotos-gratis/close-up-em-objetos-de-educacao-e-economia_23-2149113542.jpg');
-  background-size: cover;
   background-position: center;
+  background-size: cover;
   border-radius: 8px;
-  box-shadow: rgba(17, 12, 46, 0.2) 0px 40px 150px 0px;
+  box-shadow: rgba(17, 12, 46, 0.2) 0 40px 150px 0;
   color: white;
   display: flex;
   flex-flow: column nowrap;
@@ -25,9 +25,9 @@ main {
 .login__input {
   align-items: center;
   display: flex;
-  justify-content: center;
   flex-flow: column wrap;
   gap: 20px;
+  justify-content: center;
   width: 60%;
 }
 
@@ -44,7 +44,7 @@ main {
 }
 
 .btn__login {
-  background-color: rgba(20, 20, 20,0.8);
+  background-color: rgba(20, 20, 20, 0.8);
   border: none;
   border-radius: 4px;
   color: white;
