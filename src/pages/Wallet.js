@@ -1,34 +1,60 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Header from '../components/Header';
+import PropTypes from 'prop-types';
 import WalletForm from '../components/WalletForm';
-import { fetchAPI } from '../actions';
 
 class Wallet extends React.Component {
-  componentDidMount() {
-    const { fetchCurrencies } = this.props;
-    fetchCurrencies();
+  constructor() {
+    super();
+    this.state = {
+      total: 0,
+    };
+    this.handleTotal = this.handleTotal.bind(this);
+  }
+
+  handleTotal() {
+    const { walletState: { expenses } } = this.props;
+
+    const newTotal = expenses.reduce((acc, item) => {
+      const convertion = Number(item.value)
+      * Number(item.exchangeRates[item.currency].ask);
+      return acc + convertion;
+    }, 0);
+
+    this.setState({ total: newTotal });
   }
 
   render() {
+    const { total } = this.state;
+    const { loginEmail } = this.props;
     return (
-      <>
-        <Header />
-        <h1>TrybeWallet</h1>
-        <WalletForm />
-      </>
+      <main>
+        <section>
+          <header data-testid="email-field">
+            {!loginEmail ? 'Usuário não logado' : loginEmail}
+          </header>
+          <div data-testid="total-field">
+            {total}
+          </div>
+          <div data-testid="header-currency-field">
+            BRL
+          </div>
+        </section>
+
+        <WalletForm handleTotal={ this.handleTotal } />
+      </main>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  loginEmail: state.user.email,
+  walletState: state.wallet,
+});
+
 Wallet.propTypes = {
-  fetchCurrencies: PropTypes.func.isRequired,
+  loginEmail: PropTypes.string.isRequired,
+  walletState: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => (
-  {
-    fetchCurrencies: () => dispatch(fetchAPI()),
-  });
-
-export default connect(null, mapDispatchToProps)(Wallet);
+export default connect(mapStateToProps, null)(Wallet);

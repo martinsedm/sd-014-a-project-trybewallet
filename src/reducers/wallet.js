@@ -1,21 +1,21 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import {
-  API_FETCH,
-  API_FETCH_ERROR,
-} from '../actions';
+import { EXPENSE_ADD } from '../actions';
 
-const initialWalletState = {
+const INITIAL_STATE = {
   currencies: [],
+  expenses: [],
+
 };
 
-const wallet = (state = initialWalletState, { type, payload }) => {
+const walletReducer = (state = INITIAL_STATE, { type, payload }) => {
   switch (type) {
-  case API_FETCH:
-    return { ...state, currencies: payload, loading: false };
-  case API_FETCH_ERROR:
-    return { ...state, error: payload };
+  case EXPENSE_ADD:
+    return {
+      ...state, expenses: [...state.expenses, payload],
+    };
   default:
     return state;
   }
 };
-export default wallet;
+
+export default walletReducer;
