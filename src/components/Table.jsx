@@ -52,7 +52,7 @@ class Table extends React.Component {
                     data-testid="edit-btn"
                     onClick={ () => onClick(id) }
                   >
-                    Editar
+                    Editar despesa
                   </button>
                 </td>
               </tr>

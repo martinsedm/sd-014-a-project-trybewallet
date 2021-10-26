@@ -11,7 +11,7 @@ class Login extends React.Component {
     this.state = {
       email: '',
       password: '',
-      blockSubmit: true, // Bloqueio da submissão para o botão.
+      blockSubmit: true,
       redirect: false,
     };
 
@@ -22,16 +22,14 @@ class Login extends React.Component {
 
   validateInputs() {
     const { email, password } = this.state;
-    const validEmail = /\S+@\S+\.\S+/; // Validação do e-mail com Regex.
+    const validEmail = /\S+@\S+\.\S+/;
     const validPassword = 6;
-    if (validEmail.test(email) && password.length >= validPassword) { // .test para saber se é correspondente e retorna um bool.
+    if (validEmail.test(email) && password.length >= validPassword) {
       this.setState({ blockSubmit: false });
     } else {
       this.setState({ blockSubmit: true });
     }
   }
-
-  // Controlled Components
 
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => this.validateInputs());
