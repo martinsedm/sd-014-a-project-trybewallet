@@ -51,6 +51,7 @@ class Expenses extends React.Component {
   }
 
   render() {
+    // src: https://github.com/tryber/sd-014-a-project-trybewallet/pull/66/commits/ee7f913468860a47e08059e7a6ea5cd04caec409
     const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     const metodoDePagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -60,34 +61,34 @@ class Expenses extends React.Component {
         <Inputs
           label="Valor:"
           type="number"
-          id="valor"
+          id="value"
           value={ value }
           onChange={ this.handleChange }
         />
         <Inputs
           label="Descrição:"
           type="text"
-          id="descricao"
+          id="description"
           value={ description }
           onChange={ this.handleChange }
         />
         <Selects
           label="Moeda:"
-          id="moeda"
+          id="currency"
           value={ currency }
           array={ currencies }
           onChange={ this.handleChange }
         />
         <Selects
           label="Método de pagamento:"
-          id="pagamento"
+          id="method"
           value={ method }
           array={ metodoDePagamento }
           onChange={ this.handleChange }
         />
         <Selects
           label="Tag:"
-          id="categoria"
+          id="tag"
           value={ tag }
           array={ categorias }
           onChange={ this.handleChange }
