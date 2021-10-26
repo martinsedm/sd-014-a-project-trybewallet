@@ -17,7 +17,7 @@ class Header extends Component {
         </div>
         <div className="user-info">
           <ul>
-            <li data-testid="email-field">{ email }e@e.com</li>
+            <li data-testid="email-field">{ email }</li>
             <li data-testid="total-field">{ (totalExpenses).toFixed(2) }</li>
             <li data-testid="header-currency-field">BRL</li>
           </ul>

@@ -1,37 +1,37 @@
 header {
   display: flex;
   justify-content: space-between;
-  padding: 1rem 1rem 0;
   background-color: #f1f1f1;
+  padding: 1rem 1rem 0;
 }
 
 ul {
   list-style: none;
-  padding: 0;
   display: flex;
-  justify-content: space-between;
+  padding: 0;
   align-items: center;
+  justify-content: space-between;
 }
 
 .logo {
-  flex: 0 1 100%
+  flex: 0 1 100%;
 }
 
 .user-info {
-  flex: 0 1 30%
+  flex: 0 1 30%;
 }
 
 .login-form {
-  width: 100%;
   max-width: 330px;
-  padding: 15px;
-  margin: auto;
+  width: 100%;
   height: 100%;
+  margin: auto;
+  padding: 15px;
 }
 
 .login-form .loginBtn {
-  width: 100%;
   margin-top: 10px;
+  width: 100%;
 }
 
 .expenses-form {
@@ -40,12 +40,12 @@ ul {
 
 .expensesInput {
   display: flex;
+  align-items: center;
   justify-content: space-around;
   padding: 25px;
-  align-items: center;
 }
 
-.expensesInput input, select {
+.expensesInput input , select {
   max-width: 530px;
 }
 
