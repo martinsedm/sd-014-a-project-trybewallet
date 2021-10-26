@@ -21,6 +21,7 @@ class Header extends React.Component {
           Cambio:
           { coin }
         </h1>
+
       </div>
     );
   }
