@@ -1,15 +1,15 @@
 header {
-  display: flex;
   background-color: #f1f1f1;
+  display: flex;
   justify-content: space-between;
   padding: 1rem 1rem 0;
 }
 
 ul {
-  display: flex;
-  list-style: none;
   align-items: center;
+  display: flex;
   justify-content: space-between;
+  list-style: none;
   padding: 0;
 }
 
@@ -22,11 +22,11 @@ ul {
 }
 
 .login-form {
-  max-width: 330px;
   height: 100%;
-  width: 100%;
   margin: auto;
+  max-width: 330px;
   padding: 15px;
+  width: 100%;
 }
 
 .login-form .loginBtn {
