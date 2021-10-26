@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { fetchExpense, fetchCurrency } from '../actions';
-import Input from './InputExpense';
-import Select from './SelectExpense';
+import InputExpense from './InputExpense';
+import SelectExpense from './SelectExpense';
+import { methodOptions, tagOptions } from '../helpers/optionsPayment';
 
 class AddExpense extends React.Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class AddExpense extends React.Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: 'Comida',
-      Select,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -39,33 +39,34 @@ class AddExpense extends React.Component {
   }
 
   handleClick() {
-    const { saveExpense } = this.props;
-    const teste = { ...this.state };
-    saveExpense(teste);
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-      value: 0,
-      description: '',
-    }));
+    const { value, description } = this.state;
+    if (value && description) {
+      const { saveExpense } = this.props;
+      const teste = { ...this.state };
+      saveExpense(teste);
+      this.setState((prevState) => ({
+        id: prevState.id + 1,
+        value: 0,
+        description: '',
+      }));
+    }
   }
 
   render() {
-    const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     const { value, description } = this.state;
-    const { currencyOptions, loading } = this.props;
-    if (loading) { return <div>Carregando moedas</div>; }
+    const { currencyOptions } = this.props;
     return (
-      <section>
-        <Input
+      <section className="add-expense">
+        <InputExpense
           text="Valor: "
           type="number"
           name="value"
+          min="0"
           dataTestId="value-input"
           value={ value }
           onChange={ this.handleChange }
         />
-        <Input
+        <InputExpense
           text="Descrição: "
           type="text"
           name="description"
@@ -73,22 +74,22 @@ class AddExpense extends React.Component {
           value={ description }
           onChange={ this.handleChange }
         />
-        <Select
-          text="Moeda"
+        <SelectExpense
+          text="Moeda: "
           name="currency"
           dataTestId="currency-input"
           onChange={ this.handleChange }
           options={ currencyOptions }
         />
-        <Select
-          text="Método de pagamento"
+        <SelectExpense
+          text="Método de pagamento: "
           name="method"
           dataTestId="method-input"
           onChange={ this.handleChange }
           options={ methodOptions }
         />
-        <Select
-          text="Tag"
+        <SelectExpense
+          text="Tag: "
           name="tag"
           dataTestId="tag-input"
           onChange={ this.handleChange }
@@ -118,11 +119,6 @@ AddExpense.propTypes = {
   expenses: propTypes.arrayOf(propTypes.shape({
     id: propTypes.number,
   })).isRequired,
-  loading: propTypes.bool,
-};
-
-AddExpense.defaultProps = {
-  loading: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpense);

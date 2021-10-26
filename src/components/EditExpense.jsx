@@ -4,6 +4,7 @@ import propTypes from 'prop-types';
 import { editExpense, fetchCurrency } from '../actions';
 import InputExpense from './InputExpense';
 import SelectExpense from './SelectExpense';
+import { methodOptions, tagOptions } from '../helpers/optionsPayment';
 
 class EditExpense extends React.Component {
   constructor(props) {
@@ -37,23 +38,21 @@ class EditExpense extends React.Component {
 
   handleClick() {
     const { edit, onClick } = this.props;
-    const teste = { ...this.state };
-    edit(teste);
+    const editedExpense = { ...this.state };
+    edit(editedExpense);
     onClick();
   }
 
   render() {
-    const methodOptions = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-    const tagOptions = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const { value, description } = this.state;
-    const { currencyOptions, loading } = this.props;
-    if (loading) { return <div>Carregando moeda</div>; }
+    const { value, description, method, currency, tag } = this.state;
+    const { currencyOptions } = this.props;
     return (
-      <section className="edit-mode">
+      <section className="edit-expense">
         <InputExpense
           text="Valor: "
           type="number"
           name="value"
+          min="0"
           dataTestId="value-input"
           value={ value }
           onChange={ this.handleChange }
@@ -67,23 +66,26 @@ class EditExpense extends React.Component {
           onChange={ this.handleChange }
         />
         <SelectExpense
-          text="Moeda"
+          text="Moeda: "
           name="currency"
           dataTestId="currency-input"
+          selected={ currency }
           onChange={ this.handleChange }
           options={ currencyOptions }
         />
         <SelectExpense
-          text="Método de pagamento"
+          text="Método de pagamento: "
           name="method"
           dataTestId="method-input"
+          selected={ method }
           onChange={ this.handleChange }
           options={ methodOptions }
         />
         <SelectExpense
-          text="Tag"
+          text="Tag: "
           name="tag"
           dataTestId="tag-input"
+          selected={ tag }
           onChange={ this.handleChange }
           options={ tagOptions }
         />
@@ -118,7 +120,6 @@ EditExpense.propTypes = {
   })).isRequired,
   getCurrencies: propTypes.func.isRequired,
   currencyOptions: propTypes.arrayOf(propTypes.string).isRequired,
-  loading: propTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDisptachToProps)(EditExpense);
