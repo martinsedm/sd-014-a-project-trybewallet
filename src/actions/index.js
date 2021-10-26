@@ -25,9 +25,12 @@ export const getApiCurrenciesThunk = () => async (dispatch) => {
     const response = await getCurrenciesFromApi();
     const currencies = Object.keys(response)
       .filter((currencie) => currencie.length < maximunCharacter);
-    console.log(currencies);
     dispatch(getApiSuccess(currencies));
   } catch (error) {
     dispatch(getApiError(error));
   }
 };
+
+export const setExpenses = (expenses) => ({
+  type: SET_EXPENSES, expenses,
+});
