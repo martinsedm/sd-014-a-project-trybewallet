@@ -1,86 +1,82 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveLogin as saveLoginAction } from '../actions';
+import { setEmailValue } from '../actions';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-
+  constructor() {
+    super();
     this.state = {
       email: '',
-      senha: '',
-      redirect: false,
+      password: '',
     };
-    this.handleChance = this.handleChance.bind(this);
-    this.buttonClick = this.buttonClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.clickSubmit = this.clickSubmit.bind(this);
   }
 
-  // atualiza estado local
-  handleChance({ target }) {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
-    const { email, senha } = this.state;
-    const caracteres = 5;
-    if (email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
-      && senha.length >= caracteres) {
-      document.getElementById('submit').disabled = false;
-    }
-  }
-
-  buttonClick(event) {
-    event.preventDefault();
+  clickSubmit() {
     const { email } = this.state;
-    const { saveLogin } = this.props;
-    saveLogin(email);
-    this.setState({
-      redirect: true,
-    });
+    const { dispatchSet, history } = this.props;
+    dispatchSet(email);
+    history.push('/carteira');
+  }
+
+  // Função genérica para salvar o que é digitado no input dentro do estado
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
   }
 
   render() {
-    const { email, senha, redirect } = this.state;
-    if (redirect === true) return (<Redirect to="/carteira" />);
+    const { email, password } = this.state;
+    const MAXLENGTH = 6;
+    const validateEmail = /\S+@\S+\.\S+/.test(email);
+    // https://backefront.com.br/validacao-email-javascript/
     return (
-      <form htmlFor="form" onSubmit={ this.buttonClick }>
-        <label htmlFor="email">
-          <input
-            data-testid="email-input"
-            onChange={ this.handleChance }
-            value={ email }
-            name="email"
-          />
-        </label>
-        <label htmlFor="senha">
-          <input
-            data-testid="password-input"
-            onChange={ this.handleChance }
-            value={ senha }
-            name="senha"
-            type="password"
-          />
-        </label>
+      <fieldset>
+        <form>
+          <label htmlFor="email">
+            E-mail:
+            <input
+              data-testid="email-input"
+              type="email"
+              name="email"
+              value={ email }
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password">
+            Password:
+            <input
+              data-testid="password-input"
+              type="password"
+              name="password"
+              value={ password }
+              onChange={ this.handleChange }
+            />
+          </label>
+        </form>
         <button
-          id="submit"
-          disabled
           type="submit"
+          disabled={ !validateEmail || password.length < MAXLENGTH }
+          onClick={ this.clickSubmit }
         >
           Entrar
         </button>
-      </form>
+      </fieldset>
+
     );
   }
 }
-
 Login.propTypes = {
-  saveLogin: PropTypes.func.isRequired,
+  dispatchSet: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-const mapDispatchToProps = (dispach) => ({
-  saveLogin: (email) => dispach(saveLoginAction(email)),
-});
-
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSet: (email) => dispatch(setEmailValue(email)),
+}
+);
 export default connect(null, mapDispatchToProps)(Login);

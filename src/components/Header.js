@@ -3,28 +3,44 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currency: 'BRL',
+    };
+  }
+
   render() {
-    const { email } = this.props;
+    const { email, total } = this.props;
+    const { currency } = this.state;
     return (
-      <header>
+      <section>
         <div data-testid="email-field">
-          { email }
+          <span>Email:</span>
+          {email}
         </div>
         <div data-testid="total-field">
-          0
+          <span>Total:</span>
+          {total}
         </div>
         <div data-testid="header-currency-field">
-          BRL
+          <span>Currency:</span>
+          {currency}
         </div>
-      </header>
+      </section>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  total: state.wallet.expenses.reduce((total, { value, currency, exchangeRates }) => total
+  + value * exchangeRates[currency].ask, 0),
+});
+// obtive ajuda do Filipe Brochier s2 - na questao 8 - me salvando da recuperação <3
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  total: PropTypes.number.isRequired,
 };
-
-const mapStateToProps = (state) => ({ email: state.user.email });
 
 export default connect(mapStateToProps, null)(Header);
