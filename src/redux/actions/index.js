@@ -3,6 +3,8 @@ export const ADD_PASSWORD = 'ADD_PASSWORD';
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const UPDATE_TOTAL_EXPENSES = 'UPDATE_TOTAL_EXPENSES';
 
 export function addEmail(email) {
   return {
@@ -47,6 +49,30 @@ export function fetchCurrencies() {
       dispatch(getCurrencies(json));
     } catch (error) {
       dispatch(failedRequest(error));
+    }
+  };
+}
+
+const fetchExchangeRates = async () => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  return response.json();
+};
+
+const updateTotalExpenses = () => ({ type: UPDATE_TOTAL_EXPENSES });
+
+export function addExpense(expense) {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: ADD_EXPENSE,
+        expense: {
+          ...expense,
+          exchangeRates: await fetchExchangeRates(),
+        },
+      });
+      dispatch(updateTotalExpenses());
+    } catch (error) {
+      dispatch(failedRequest());
     }
   };
 }

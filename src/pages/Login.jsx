@@ -91,11 +91,11 @@ function mapDispatchToProps(dispatch) {
   });
 }
 
-Login.propTypes = ({
+Login.propTypes = {
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   dispatchEmail: PropTypes.func.isRequired,
   dispatchPassword: PropTypes.func.isRequired,
-});
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
