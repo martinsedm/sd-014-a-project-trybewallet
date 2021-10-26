@@ -48,6 +48,11 @@ class Wallet extends React.Component {
     });
   }
 
+  saveCurrency() {
+    return (dispatch) => fetchCurrency(URL)
+      .then((response) => dispatch(currencyAction(response)));
+  }
+
   renderInputs() {
     const { value, description } = this.state;
     return Object.values(inputs).map(({ htmlFor, text, type }) => (
@@ -77,7 +82,7 @@ class Wallet extends React.Component {
         <form
           onSubmit={ (e) => {
             e.preventDefault();
-            saveExpense(this.state);
+            saveExpense({ ...this.state, exhangeCurrency: currencies });
           } }
         >
           { this.renderInputs() }
