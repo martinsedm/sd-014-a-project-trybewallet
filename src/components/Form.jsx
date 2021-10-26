@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Select from './Select';
+import fetchAPI from '../services/APIntegrator';
 
 class Form extends Component {
   constructor(props) {
@@ -10,17 +12,32 @@ class Form extends Component {
       currency: 'USA',
       method: 'Dinheiro',
       tag: 'Alimentação',
+      opArr: [],
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleAPI = this.handleAPI.bind(this);
+  }
 
+  async componentDidMount() {
+    await this.handleAPI();
+  }
+
+  async handleAPI() {
+    const api = await fetchAPI();
+    delete api.USDT;
+    const arrAPI = Object.entries(api);
+    const arrAPIMapped = arrAPI.map((curr) => curr[0]);
+    this.setState({ opArr: arrAPIMapped });
   }
 
   handleChange({ target: { value, name } }) {
-    this.setState({ [name]: value});
+    this.setState({ [name]: value });
   }
 
   render() {
-    const { value, description, currency, method, tag } = this.state;
+    const { value, description, currency, method, tag, opArr } = this.state;
+    const opMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const opTag = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
         <label htmlFor="value">
@@ -36,32 +53,26 @@ class Form extends Component {
         </label>
         <label htmlFor="description">
           Descrição
-          <input type="text" name="description" value={ description } id="description" onChange={ this.handleChange }/>
+          <input
+            type="text"
+            name="description"
+            alue={ description }
+            id="description"
+            onChange={ this.handleChange }
+          />
         </label>
-        <label htmlFor="currency">
-          Moeda
-          <select name="currency" value={ currency } id="currency" onChange={ this.handleChange }>
-            API
-          </select>
-        </label>
-        <label htmlFor="method">
-          Método de pagamento
-          <select name="method" value={ method } id="method" onChange={ this.handleChange }>
-            <option id="cash">Dinheiro</option>
-            <option id="credit-card">Cartão de crédito</option>
-            <option id="debit-card">Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="tag">
-          Tag
-          <select name="tag" value={ tag } id="tag" onChange={ this.handleChange }>
-            <option id="food">Alimentação</option>
-            <option id="leisure">Lazer</option>
-            <option id="work">Trabalho</option>
-            <option id="transport">Transporte</option>
-            <option id="health">Saúde</option>
-          </select>
-        </label>
+        <Select
+          att={ ['currency', currency, 'Moeda', this.handleChange] }
+          option={ opArr }
+        />
+        <Select
+          att={ ['method', method, 'Método de pagamento', this.handleChange] }
+          option={ opMethod }
+        />
+        <Select
+          att={ ['tag', tag, 'Tag', this.handleChange] }
+          option={ opTag }
+        />
         <button type="submit">
           Adicionar despesa
         </button>
