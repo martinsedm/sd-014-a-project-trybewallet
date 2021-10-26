@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { userLogin } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -28,6 +31,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
+    const { setUserLogin, history } = this.props;
     return (
       <>
         <h1>Trybe Wallet</h1>
@@ -48,16 +52,27 @@ class Login extends React.Component {
             onChange={ this.handleChande }
             name="password"
           />
-          <button
-            type="submit"
-            disabled={ !this.validLogin() }
-          >
-            Entrar
-          </button>
         </form>
+        <button
+          onClick={ () => {
+            setUserLogin(email);
+            history.push('/carteira');
+          } }
+          type="button"
+          disabled={ !this.validLogin() }
+        >
+          Entrar
+        </button>
       </>
     );
   }
 }
+const mapDispatchToProps = (dispatch) => ({
+  setUserLogin: (email) => dispatch(userLogin(email)),
+});
 
-export default Login;
+// const mapStateToProps = (state) => ({
+//   userLogin: state.loginReducer,
+// });
+
+export default connect(null, mapDispatchToProps)(Login);
