@@ -7,15 +7,16 @@ class Login extends Component {
     super();
     this.state = {
       email: '',
+      password: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleChange({ target }) {
-    const { value } = target;
+    const { name, value } = target;
     this.setState({
-      email: value,
+      [name]: value,
     });
   }
 
@@ -24,9 +25,11 @@ class Login extends Component {
   }
 
   render() {
-    const { email } = this.state;
+    const CARACTER_MIN = 6;
+    const { email, password } = this.state;
+    const VALID_EMAIL = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
     return (
-      <form>
+      <form onSubmit={ this.handleSubmit }>
         <input
           type="email"
           data-testid="email-input"
@@ -39,10 +42,13 @@ class Login extends Component {
           type="password"
           data-testid="password-input"
           name="password"
+          value={ password }
           placeholder="Digite a senha"
+          onChange={ this.handleChange }
         />
         <button
-          type="button"
+          type="submit"
+          disabled={ password.length < CARACTER_MIN || email.search(VALID_EMAIL) !== 0 }
         >
           Entrar
         </button>
