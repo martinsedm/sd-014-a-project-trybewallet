@@ -1,7 +1,26 @@
 import React from 'react';
 
+import { getCurrencies, mapCurrency } from '../helper';
+
 class ExpensesForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencies: [],
+    };
+  }
+
+  async componentDidMount() {
+    const currencies = await getCurrencies();
+    this.updateState({ currencies });
+  }
+
+  updateState(state) {
+    this.setState(state);
+  }
+
   render() {
+    const { currencies } = this.state;
     return (
       <div>
         <label htmlFor="value">
@@ -15,9 +34,7 @@ class ExpensesForm extends React.Component {
         <label htmlFor="currency">
           Moeda
           <select id="currency">
-            <option>Real</option>
-            <option>Dolar</option>
-            <option>Euro</option>
+            { mapCurrency(currencies) }
           </select>
         </label>
         <label htmlFor="paymentMethod">
