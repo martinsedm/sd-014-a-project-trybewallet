@@ -1,7 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { API_SUCCESS } from '../actions';
-import { API_EXCHANG_RATES } from '../actions';
-import { FETCH_EXPENSE } from '../actions';
+import { API_SUCCESS, API_EXCHANG_RATES } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
