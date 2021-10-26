@@ -16,12 +16,12 @@ const Login = ({ setUser }) => {
 
   const handleEmailAddress = ({ target: { value } }) => {
     const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
-    if (testEmail.test(value)) { setEmailAddress({
-      address: value, isValid: true,
-    });
+    if (testEmail.test(value)) {
+      setEmailAddress({
+        address: value, isValid: true,
+      });
     } else { setEmailAddress({ isValid: false }); }
   };
-
   return (
     <main>
       <div className="login__container">
