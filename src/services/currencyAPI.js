@@ -13,4 +13,11 @@ export const getAllCoins = () => (
     ))
 );
 
+// forma 2
+// export const async getAllCoins() => (
+//   const response = await  fetch(ECONOMIA_BASE_API)
+//   const currencies = await response.json();
+//   return currencies;
+// );
+
 export default getAllCoins;
