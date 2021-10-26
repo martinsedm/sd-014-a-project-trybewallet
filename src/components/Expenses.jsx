@@ -1,19 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
+import { Button, Container, FormGroup, Form } from 'reactstrap';
 import { getExpenses as getExpensesAction } from '../actions';
 import currencyAPI from '../services/currencyAPI';
-import Input from './Input';
-import Select from './Select';
-
-const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+import TextInput from './TextInput';
+import SelectInput from './SelectInput';
+import {
+  valueInput,
+  descriptionInput,
+  methods,
+  tags,
+  currencyInput,
+  methodInput,
+  tagInput } from '../data';
 
 class Expenses extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: '',
       description: '',
       currency: 'USD',
       method: 'Dinheiro',
@@ -22,6 +28,8 @@ class Expenses extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTextInput = this.handleTextInput.bind(this);
+    this.handleSelectInput = this.handleSelectInput.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -34,55 +42,68 @@ class Expenses extends React.Component {
     const exchangeRates = await currencyAPI();
     this.setState({ exchangeRates });
     getExpenses(this.state);
+    this.setState({
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: {},
+    });
+  }
+
+  handleTextInput({ label, type, name }, value, onChange) {
+    return (<TextInput
+      label={ label }
+      type={ type }
+      name={ name }
+      value={ value }
+      onChange={ onChange }
+    />);
+  }
+
+  handleSelectInput({ label, name }, value, options, onChange) {
+    return (<SelectInput
+      label={ label }
+      name={ name }
+      value={ value }
+      options={ options }
+      onChange={ onChange }
+    />);
   }
 
   render() {
     const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
-      <form onSubmit={ this.handleSubmit }>
-        <Input
-          label="Valor"
-          type="number"
-          name="value"
-          htmlFor="value"
-          value={ value }
-          onChange={ this.handleChange }
-        />
-        <Input
-          label="Descrição"
-          type="text"
-          name="description"
-          htmlFor="description"
-          value={ description }
-          onChange={ this.handleChange }
-        />
-        <Select
-          label="Moeda"
-          name="currency"
-          htmlFor="currency"
-          value={ currency }
-          options={ currencies }
-          onChange={ this.handleChange }
-        />
-        <Select
-          label="Método de pagamento"
-          name="method"
-          htmlFor="method"
-          value={ method }
-          options={ methods }
-          onChange={ this.handleChange }
-        />
-        <Select
-          label="Tag"
-          name="tag"
-          htmlFor="tag"
-          value={ tag }
-          options={ tags }
-          onChange={ this.handleChange }
-        />
-        <button type="submit">Adicionar despesa</button>
-      </form>
+      <Form onSubmit={ this.handleSubmit } inline className="expenses-form">
+        <Container className="expensesInput">
+          <FormGroup>
+            { this.handleTextInput(valueInput, value, this.handleChange)}
+          </FormGroup>
+          <FormGroup>
+            { this.handleTextInput(descriptionInput, description, this.handleChange) }
+          </FormGroup>
+          <FormGroup>
+            { this.handleSelectInput(
+              currencyInput, currency, currencies, this.handleChange,
+            ) }
+          </FormGroup>
+          <FormGroup>
+            { this.handleSelectInput(
+              methodInput, method, methods, this.handleChange,
+            ) }
+          </FormGroup>
+          <FormGroup>
+            { this.handleSelectInput(
+              tagInput, tag, tags, this.handleChange,
+            ) }
+          </FormGroup>
+          <Button type="submit" className="expenseBtn" color="primary" size="sm">
+            Adicionar despesa
+          </Button>
+        </Container>
+      </Form>
     );
   }
 }

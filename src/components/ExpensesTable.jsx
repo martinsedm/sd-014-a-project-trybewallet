@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Button, Table } from 'reactstrap';
 import { removeExpense as removeExpenseAction } from '../actions';
 
 class ExpensesTable extends Component {
@@ -9,7 +10,7 @@ class ExpensesTable extends Component {
     const titles = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
     return (
-      <table>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             { titles.map((title, index) => <th key={ index }>{ title }</th>)}
@@ -29,19 +30,29 @@ class ExpensesTable extends Component {
               <td>{ Number(exchangeRates[currency].ask * value).toFixed(2) }</td>
               <td>Real</td>
               <td>
-                <button type="button">Editar</button>
-                <button
+                <Button
+                  type="button"
+                  className="expenseBtn"
+                  color="primary"
+                  size="sm"
+                >
+                  Editar
+                </Button>
+                <Button
                   type="button"
                   data-testid="delete-btn"
                   onClick={ () => removeExpense(id) }
+                  className="expenseBtn"
+                  color="danger"
+                  size="sm"
                 >
                   Excluir
-                </button>
+                </Button>
               </td>
             </tr>
           )) }
         </tbody>
-      </table>
+      </Table>
     );
   }
 }

@@ -12,9 +12,16 @@ class Header extends Component {
 
     return (
       <header>
-        <p data-testid="email-field">{ email }</p>
-        <p data-testid="total-field">{ (totalExpenses).toFixed(2) }</p>
-        <p data-testid="header-currency-field">BRL</p>
+        <div className="logo">
+          <p>TrybeWallet</p>
+        </div>
+        <div className="user-info">
+          <ul>
+            <li data-testid="email-field">{ email }e@e.com</li>
+            <li data-testid="total-field">{ (totalExpenses).toFixed(2) }</li>
+            <li data-testid="header-currency-field">BRL</li>
+          </ul>
+        </div>
       </header>
     );
   }
