@@ -3,6 +3,8 @@ import getCurrencyAPI from '../services/awesomeAPI';
 
 export const EMAIL = 'EMAIL';
 export const FETCH_CURRENCY = 'FETCH_CURRENCY';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const TOTAL_EXPENSE = 'TOTAL EXPENSE';
 
 export const saveEmail = (email) => ({
   type: EMAIL,
@@ -18,14 +20,17 @@ export const fetchCurrency = (currencies) => ({
   },
 });
 
-// export function fetchAPI() {
-//   return async (dispatch) => {
-//     const data = await getCurrencyAPI();
-//     dispatch(fetchCurrency(data));
-//   };
-// }
+export const addExpense = (expenses) => ({
+  type: ADD_EXPENSE,
+  payload: expenses,
+});
 
 export const fetchAPI = () => async (dispatch) => {
   const currencies = await getCurrencyAPI();
   dispatch(fetchCurrency(currencies));
+};
+
+export const addExpenseThunk = (expense) => async (dispatch) => {
+  const currencies = await getCurrencyAPI();
+  dispatch(addExpense({ ...expense, exchangeRates: currencies }));
 };
