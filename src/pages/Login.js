@@ -31,16 +31,14 @@ class Login extends React.Component {
 
   handleChange({ target }) {
     const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState({ [name]: value });
   }
 
   render() {
     const minPasswordLength = 6;
     const { password } = this.state;
     return (
-      <form>
+      <form className="loginForm">
         <label htmlFor="email">
           Email:
           <input

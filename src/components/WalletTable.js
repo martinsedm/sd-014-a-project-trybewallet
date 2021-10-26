@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import FormButton from './FormButton';
+import { removeExpenseAction } from '../actions';
 
 class WalletTable extends React.Component {
   constructor(props) {
@@ -9,7 +12,7 @@ class WalletTable extends React.Component {
   }
 
   fillTable() {
-    const { expenses, deleteRow } = this.props;
+    const { expenses, enableEditForm, removeExpense } = this.props;
     return expenses.map((exp) => (
       <tr key={ exp.id }>
         <td>{ exp.description }</td>
@@ -21,14 +24,20 @@ class WalletTable extends React.Component {
         <td>{ (exp.value * exp.exchangeRates[exp.currency].ask).toFixed(2) }</td>
         <td>Real</td>
         <td>
-          <button
-            type="button"
-            data-testid="delete-btn"
-            onClick={ deleteRow }
-            id={ exp.id }
-          >
-            X
-          </button>
+          <FormButton
+            onClick={ enableEditForm }
+            label="Edit"
+            testid="edit-btn"
+            id={ Number(exp.id) }
+          />
+        </td>
+        <td>
+          <FormButton
+            onClick={ () => removeExpense(exp.id) }
+            label="X"
+            testid="delete-btn"
+            id={ Number(exp.id) }
+          />
         </td>
       </tr>
     ));
@@ -63,7 +72,12 @@ class WalletTable extends React.Component {
 
 WalletTable.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  deleteRow: PropTypes.func.isRequired,
+  removeExpense: PropTypes.func.isRequired,
+  enableEditForm: PropTypes.func.isRequired,
 };
 
-export default WalletTable;
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
+});
+
+export default connect(null, mapDispatchToProps)(WalletTable);
