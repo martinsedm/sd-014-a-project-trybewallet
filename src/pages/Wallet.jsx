@@ -43,13 +43,13 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currencies, email, totalExpenses } = this.props;
+    const { currencies, email, totalExpenses = 0 } = this.props;
     return (
       <>
         <h1>Wallet</h1>
         <Header email={ email } totalExpenses={ totalExpenses } currency="BRL" />
         <WalletForm
-          currenciesCodes={ Object.keys(currencies) }
+          currenciesCodes={ Object.keys(currencies).filter((curr) => curr !== 'USDT') }
           handleChange={ this.handleChange }
           handleSubmit={ this.handleSubmit }
           selected={ this.state }
