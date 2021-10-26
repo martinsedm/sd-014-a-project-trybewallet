@@ -1,13 +1,13 @@
 import { SET_USER } from '../actions';
 
-const INITIAL_STATE = { email: '' };
+const initialState = { email: '' };
 
-const userReducer = (state = INITIAL_STATE, { type, payload }) => {
+const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-  case SET_USER:
-    return { email: payload.email };
-  default:
-    return state;
+  case SET_USER: return {
+    email: payload.email,
+  };
+  default: return state;
   }
 };
 

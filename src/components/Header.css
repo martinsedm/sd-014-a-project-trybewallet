@@ -1,10 +1,10 @@
 header {
   align-items: center;
-  background-color: rgb(243, 243, 243);
-  border-bottom: 1px solid rgb(224, 224, 224);
-  color: rgb(22, 22, 22);
+  background-color: rgba(106, 25, 255);
+  border-bottom: 1px solid rgb(48, 184, 132);
+  color: rgb(240, 240, 240);
   display: flex;
-  height: 2.8rem;
+  height: 4rem;
   justify-content: space-between;
   padding-inline: 20px;
   position: sticky;

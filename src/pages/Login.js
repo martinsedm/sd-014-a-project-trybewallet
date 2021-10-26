@@ -16,40 +16,39 @@ const Login = ({ setUser }) => {
 
   const handleEmailAddress = ({ target: { value } }) => {
     const testEmail = /^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i;
-    if (testEmail.test(value)) {
-      setEmailAddress({ address: value, isValid: true });
-    } else {
-      setEmailAddress({ isValid: false });
-    }
+    if (testEmail.test(value)) { setEmailAddress({ address: value, isValid: true }); }
+    else { setEmailAddress({ isValid: false }); }
   };
 
   return (
     <main>
       <div className="login__container">
-        <h3>Login</h3>
-        <input
-          type="email"
-          data-testid="email-input"
-          onChange={ handleEmailAddress }
-          placeholder="Email"
-        />
-        <input
-          data-testid="password-input"
-          type="password"
-          onChange={ handlePassword }
-          value={ password.password }
-          placeholder="Senha"
-        />
-        <Link to="/carteira">
-          <button
-            disabled={ !password.isValid || !emailAddress.isValid }
-            type="submit"
-            onClick={ () => setUser(emailAddress) }
-            className="btn__login"
-          >
-            Entrar
-          </button>
-        </Link>
+        <h3>Acesse sua carteira digital!</h3>
+        <div className="login__input">
+          <input
+            type="email"
+            data-testid="email-input"
+            onChange={ handleEmailAddress }
+            placeholder="Email"
+          />
+          <input
+            data-testid="password-input"
+            type="password"
+            onChange={ handlePassword }
+            value={ password.password }
+            placeholder="Senha"
+          />
+          <Link to="/carteira">
+            <button
+              disabled={ !password.isValid || !emailAddress.isValid }
+              type="submit"
+              onClick={ () => setUser(emailAddress) }
+              className="btn__login"
+            >
+              Entrar
+            </button>
+          </Link>
+        </div>
       </div>
     </main>
   );
