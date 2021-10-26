@@ -9,6 +9,7 @@ class Input extends React.Component {
         {title}
         <input
           type="text"
+          className="form-control"
           onChange={ onChange }
           id={ id }
           value={ value }

@@ -9,6 +9,7 @@ class FormSelect extends Component {
         { title }
         <select
           id={ id }
+          className="form-control"
           name={ id }
           value={ value }
           onChange={ onChange }

@@ -10,7 +10,7 @@ class Tr extends Component {
     const { ask, name } = exchangeRates[currency];
     const convertedValue = value * ask;
     return (
-      <tr>
+      <tr className="border-bottom">
         <td>{description}</td>
         <td>{tag}</td>
         <td>{method}</td>
@@ -22,6 +22,7 @@ class Tr extends Component {
         <td>
           <button
             data-testid="delete-btn"
+            className="btn btn-danger m-2"
             onClick={ () => deleteExpense(id) }
             type="button"
           >
@@ -30,6 +31,7 @@ class Tr extends Component {
           <button
             type="button"
             data-testid="edit-btn"
+            className="btn btn-primary m-2"
             onClick={ () => { editCondition(true, expense); } }
           >
             Editar

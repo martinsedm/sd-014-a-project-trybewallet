@@ -1,10 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Lottie from 'react-lottie';
+import animationData from '../lottie/wallet.json';
+import '../styles/login.css';
 
 import { setUserEmail } from '../actions';
 import { emailVerification, passwordVerification } from '../services/auth';
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+};
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -39,39 +50,51 @@ class Login extends React.Component {
     history.push('/carteira');
   }
 
+  // eslint-disable-next-line max-lines-per-function
   render() {
     const { emailCondition, passwordCondition } = this.state;
     const buttonDisabled = !(emailCondition && passwordCondition);
     return (
-      <main>
-        <section>
-          <h1>Login</h1>
-          <form>
-            <label htmlFor="email">
-              Email:
-              <input
-                data-testid="email-input"
-                type="email"
-                name="email"
-                onChange={ (event) => {
-                  this.handleChange(event);
-                  this.handleCondition(event);
-                } }
-                id="email"
-              />
-            </label>
-            <label htmlFor="password">
-              Password:
-              <input
-                data-testid="password-input"
-                type="password"
-                name="password"
-                onChange={ this.handleCondition }
-                id="password"
-              />
-            </label>
+      <main className="login-page d-flex">
+        <section className="d-flex align-items-center">
+          <Lottie
+            options={ defaultOptions }
+            height={ 500 }
+          />
+        </section>
+        <section
+          className="w-50 d-flex flex-column
+          justify-content-center align-items-center"
+        >
+          <form
+            className="form-login d-flex flex-column align-items-center
+            rounded text-center p-5"
+          >
+            <h1 className="text-white fw-bold">Login</h1>
+            <input
+              data-testid="email-input"
+              type="email"
+              className="form-control mt-2"
+              placeholder="Email"
+              name="email"
+              onChange={ (event) => {
+                this.handleChange(event);
+                this.handleCondition(event);
+              } }
+              id="email"
+            />
+            <input
+              data-testid="password-input"
+              type="password"
+              className="form-control mt-2"
+              placeholder="Senha"
+              name="password"
+              onChange={ this.handleCondition }
+              id="password"
+            />
             <button
               type="button"
+              className="fw-bold fs-1 btn btn-danger mt-4 w-75"
               onClick={ this.handleClick }
               disabled={ buttonDisabled }
             >

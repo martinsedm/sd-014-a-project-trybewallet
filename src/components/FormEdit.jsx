@@ -67,10 +67,14 @@ class Form extends Component {
     editCondition(false);
   }
 
+  // eslint-disable-next-line max-lines-per-function
   render() {
     const { value, description, currency, method, tag } = this.state;
     return (
-      <form>
+      <form
+        className="d-flex justify-content-around align-items-center pt-2 pb-2"
+        style={ { backgroundColor: '#E8505B' } }
+      >
         <Input
           id="value"
           value={ value }
@@ -104,7 +108,12 @@ class Form extends Component {
           title="Tag:"
           options={ this.generateTags() }
         />
-        <button type="button" data-testid="edit-btn" onClick={ this.handleClick }>
+        <button
+          type="button"
+          className="btn btn-primary p-3"
+          data-testid="edit-btn"
+          onClick={ this.handleClick }
+        >
           Editar despesa
         </button>
       </form>

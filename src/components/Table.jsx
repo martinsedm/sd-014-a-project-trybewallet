@@ -7,8 +7,8 @@ class Table extends Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table>
-        <thead>
+      <table className="w-100 text-center">
+        <thead className="bg-dark text-white">
           <tr>
             <th>Descrição</th>
             <th>Tag</th>
