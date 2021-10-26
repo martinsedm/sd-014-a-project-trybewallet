@@ -1,5 +1,6 @@
 export const SET_USER_VALUE = 'SET_USER_VALUE';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
+export const SET_EXPENSE = 'SET_EXPENSE';
 
 export const setUserValue = (payload) => ({
   type: SET_USER_VALUE,
@@ -12,6 +13,12 @@ export const setCurrencies = (currencies) => (
     payload: { currencies },
   }
 );
+
+export const setExpense = (payload) => (
+  {
+    type: SET_EXPENSE,
+    payload,
+  });
 
 export function fetchCurrencies() {
   return async (dispatch) => {
