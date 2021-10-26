@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const NEW_EXPENSE = 'NEW_EXPENSE';
 export const ERROR = 'ERROR';
 
 export const saveEmail = (email) => ({
@@ -17,6 +18,29 @@ export const catchError = (error) => ({
   type: ERROR,
   error,
 });
+
+export const newExpense = (
+  { value, description, currency, method, tag }, exchangeRates,
+) => ({
+  type: NEW_EXPENSE,
+  payload: {
+    id: 0,
+    value,
+    description,
+    currency,
+    method,
+    tag,
+    exchangeRates,
+  },
+});
+
+export const getExpensesThunk = (
+  { value, description, currency, method, tag },
+) => async (dispatch) => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const exchangeRates = await response.json();
+  dispatch(newExpense({ value, description, currency, method, tag }, exchangeRates));
+};
 
 export const getThunk = () => async (dispatch) => {
   try {
