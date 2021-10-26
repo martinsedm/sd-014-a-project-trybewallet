@@ -1,10 +1,9 @@
-// import { WALLET_ACTION } from '../actions/walletAction';
-import { API_SUCESS } from '../actions/fetchApiAction';
+import { API_ERROR, API_SUCESS, GET_EXPENSES } from '../actions/fetchApiAction';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
-
+  error: null,
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -13,7 +12,19 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       currencies: action.payload,
-      expenses: action.payload,
+    };
+  case GET_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses, {
+        id: state.expenses,
+        ...action.payload,
+      }],
+    };
+  case API_ERROR:
+    return {
+      ...state,
+      error: action.payload.error,
     };
   default:
     return state;
