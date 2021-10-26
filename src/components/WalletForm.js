@@ -5,6 +5,7 @@ import FormSelect from './FormSelect';
 import FormInput from './FormInput';
 import FormButton from './FormButton';
 import { paymentOptions, tagOptions } from '../data';
+import { updateTotalValueAction } from '../actions';
 
 class WalletForm extends React.Component {
   render() {
@@ -78,4 +79,8 @@ const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
 });
 
-export default connect(mapStateToProps)(WalletForm);
+const mapDispatchToProps = (dispatch) => ({
+  updateTotalValue: () => dispatch(updateTotalValueAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletForm);
