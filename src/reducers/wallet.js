@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   expenses: [],
 };
 
-export default function wallet(state = INITIAL_STATE, action) {
+const wallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case ADD_EXPENSE:
     return {
@@ -16,10 +16,10 @@ export default function wallet(state = INITIAL_STATE, action) {
       ],
     };
   case GET_CURRENCIES:
-    return {
-      ...state, currencies: action.payload,
-    };
+    return { ...state, currencies: action.payload };
   default:
     return state;
   }
-}
+};
+
+export default wallet;

@@ -1,13 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getCurrencies, mapCurrency } from '../helper';
+import {
+  mapCurrency,
+  getApi } from '../helper';
 
-import { addExpense } from '../actions';
+import {
+  addExpense as AddExpenseAction,
+  fetchCurrencies as FetchCurrenciesAction,
+} from '../actions';
 
 const INITIAL_STATE = {
   currency: '',
-  currencies: [],
   description: '',
   exchangeRates: {},
   method: '',
@@ -23,9 +28,9 @@ class ExpensesForm extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  async componentDidMount() {
-    const currencies = await getCurrencies();
-    this.updateState({ currencies });
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   updateState(state) {
@@ -40,6 +45,9 @@ class ExpensesForm extends React.Component {
   }
 
   async handleClick() {
+    const { addExpense } = this.props;
+    const exchangeRates = await getApi();
+    this.setState({ exchangeRates });
     addExpense(this.state);
     this.setState(INITIAL_STATE);
   }
@@ -82,7 +90,8 @@ class ExpensesForm extends React.Component {
   }
 
   renderCurrencies() {
-    const { currencies, currency } = this.state;
+    const { currency } = this.state;
+    const { currencies } = this.props;
     return (
       <label htmlFor="currency">
         Moeda
@@ -143,25 +152,38 @@ class ExpensesForm extends React.Component {
   render() {
     return (
       <div>
-        {this.renderValue()}
-        {this.renderDescription()}
-        {this.renderCurrencies()}
-        {this.renderMethods()}
-        {this.renderTags()}
-        <button
-          type="button"
-          disabled={ this.handleDisabled() }
-          onClick={ this.handleClick }
-        >
-          Adicionar despesas
-        </button>
+        <form>
+          {this.renderValue()}
+          {this.renderDescription()}
+          {this.renderCurrencies()}
+          {this.renderMethods()}
+          {this.renderTags()}
+          <button
+            type="button"
+            disabled={ this.handleDisabled() }
+            onClick={ this.handleClick }
+          >
+            Adicionar despesa
+          </button>
+        </form>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(addExpense(expense)),
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
 });
 
-export default connect(null, mapDispatchToProps)(ExpensesForm);
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expense) => dispatch(AddExpenseAction(expense)),
+  getCurrencies: () => dispatch(FetchCurrenciesAction()),
+});
+
+ExpensesForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  addExpense: PropTypes.func.isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);

@@ -10,11 +10,10 @@ export function passwordValidation(password) {
   return password.length >= MIN_LENGTH;
 }
 
-export async function getCurrencies() {
+export async function getApi() {
   const request = await fetch('https://economia.awesomeapi.com.br/json/all');
   const response = await request.json();
-  const currencies = Object.keys(response).filter((currency) => currency !== 'USDT');
-  return currencies;
+  return response;
 }
 
 export function mapCurrency(currencies) {
