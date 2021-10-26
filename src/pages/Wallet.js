@@ -48,9 +48,20 @@ class Wallet extends React.Component {
     });
   }
 
-  saveCurrency() {
-    return (dispatch) => fetchCurrency(URL)
-      .then((response) => dispatch(currencyAction(response)));
+  fireSaveExpense() {
+    const { value, description, currency, payment: method, category: tag } = this.state;
+    const { expenses, saveExpense } = this.props;
+    fetchCurrency(URL)
+      .then((exchangeRates) => {
+        saveExpense({
+          id: expenses.length,
+          value,
+          description,
+          currency,
+          method,
+          tag,
+          exchangeRates });
+      });
   }
 
   renderInputs() {
@@ -74,7 +85,7 @@ class Wallet extends React.Component {
       category,
       loading,
     } = this.state;
-    const { saveExpense, currencies } = this.props;
+    const { currencies } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -82,15 +93,14 @@ class Wallet extends React.Component {
         <form
           onSubmit={ (e) => {
             e.preventDefault();
-            this.saveCurrency();
-            saveExpense({ ...this.state, exchangeCurrency: currencies });
+            this.fireSaveExpense();
           } }
         >
           { this.renderInputs() }
           <Select
             htmlFor="currency"
             text="Moeda"
-            options={ loading ? ['loading'] : Object.keys(currencies) }
+            options={ loading ? ['loading'] : currencies }
             value={ currency }
             handleChange={ this.handleChange }
           />
@@ -120,17 +130,19 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   setCurrencies: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpense: (payload) => dispatch(expenseAction(payload)),
-  setCurrencies: (payload) => dispatch(currencyAction(payload)),
+  setCurrencies: (payload) => dispatch(currencyAction(Object.keys(payload))),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
