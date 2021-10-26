@@ -44,7 +44,6 @@ export function fetchCurrencies() {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const json = await response.json();
-      console.log(json);
       dispatch(getCurrencies(json));
     } catch (error) {
       dispatch(failedRequest(error));
