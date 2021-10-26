@@ -30,10 +30,9 @@ class Wallet extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.newExpense = this.newExpense.bind(this);
+    this.setExpense = this.setExpense.bind(this);
     this.enableEditForm = this.enableEditForm.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
-    this.renderWalletForm = this.renderWalletForm.bind(this);
   }
 
   componentDidMount() {
@@ -41,7 +40,7 @@ class Wallet extends React.Component {
     fetchCurrencies();
   }
 
-  async newExpense() {
+  async setExpense() {
     const { addExpense, updateTotalValue } = this.props;
     const { expenseId, value, description, currency, method, tag } = this.state;
     const exchangeRates = await (await fetch('https://economia.awesomeapi.com.br/json/all')).json();
@@ -110,22 +109,6 @@ class Wallet extends React.Component {
     this.setState({ [name]: value });
   }
 
-  renderWalletForm() {
-    const { value, description, currency,
-      method, tag } = this.state;
-    return (
-      <WalletForm
-        value={ Number(value) }
-        description={ description }
-        currency={ currency }
-        method={ method }
-        tag={ tag }
-        handleChange={ this.handleChange }
-        onClick={ this.newExpense }
-      />
-    );
-  }
-
   render() {
     const { editMode } = this.state;
     const { expenses } = this.props;
@@ -135,7 +118,7 @@ class Wallet extends React.Component {
         <WalletForm
           expense={ this.state }
           handleChange={ this.handleChange }
-          onClick={ editMode ? this.handleEdit : this.newExpense }
+          onClick={ editMode ? this.handleEdit : this.setExpense }
         />
         <WalletTable
           expenses={ expenses }

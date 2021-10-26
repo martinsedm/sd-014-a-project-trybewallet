@@ -59,7 +59,10 @@ class WalletForm extends React.Component {
 
 WalletForm.propTypes = {
   expense: PropTypes.shape({
-    value: PropTypes.number.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+    ]),
     description: PropTypes.string.isRequired,
     currency: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,

@@ -28,7 +28,6 @@ describe('11 - Crie um botão para editar uma despesa da tabela contendo as segu
     const currencyInput = await screen.findByRole('combobox', {
       name: /moeda/i,
     });
-    console.log(currencyInput.outerHTML);
     const methodInput = await screen.findByRole('combobox', {
       name: /método de pagamento/i,
     });
