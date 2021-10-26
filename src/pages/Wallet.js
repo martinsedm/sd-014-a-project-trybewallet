@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchCurrencies } from '../actions';
+import ExpenseTable from '../components/expenseTable';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -92,6 +93,7 @@ class Wallet extends React.Component {
           { this.renderFieldset() }
           { this.renderOptions() }
         </form>
+        <ExpenseTable />
       </main>
     );
   }

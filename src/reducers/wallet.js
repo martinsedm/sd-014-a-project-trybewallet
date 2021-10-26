@@ -4,6 +4,7 @@ import { FETCH_API, FETCH_ERROR_API } from '../actions';
 const INITIAL_STATE = {
   currencies: [],
   error: null,
+  expenses: [],
 };
 
 const walletReducer = (state = INITIAL_STATE, action) => {
