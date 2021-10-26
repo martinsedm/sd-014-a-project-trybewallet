@@ -18,8 +18,8 @@ export async function getCurrencies() {
 }
 
 export function mapCurrency(currencies) {
-  return currencies.map((currency, index) => (
-    <option key={ index } value={ currency }>
+  return currencies.map((currency) => (
+    <option key={ currency } value={ currency }>
       { currency }
     </option>
   ));
