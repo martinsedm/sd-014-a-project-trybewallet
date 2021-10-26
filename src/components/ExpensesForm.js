@@ -101,7 +101,7 @@ class ExpensesForm extends React.Component {
   renderMethods() {
     const { method } = this.state;
     return (
-      <label htmlFor="paymentMethod">
+      <label htmlFor="method">
         Método de pagamento
         <select
           id="method"
@@ -109,9 +109,10 @@ class ExpensesForm extends React.Component {
           onChange={ this.handleChange }
           value={ method }
         >
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
+          <option value="">Selecione</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );
@@ -120,7 +121,7 @@ class ExpensesForm extends React.Component {
   renderTags() {
     const { tag } = this.state;
     return (
-      <label htmlFor="category">
+      <label htmlFor="tag">
         Tag
         <select
           id="tag"
@@ -128,11 +129,12 @@ class ExpensesForm extends React.Component {
           onChange={ this.handleChange }
           value={ tag }
         >
-          <option>Alimentação</option>
-          <option>Lazer</option>
-          <option>Trabalho</option>
-          <option>Transporte</option>
-          <option>Trabalho</option>
+          <option value="">Selecione</option>
+          <option value="Alimentação">Alimentação</option>
+          <option value="Lazer">Lazer</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Transporte">Transporte</option>
+          <option value="Saúde">Saúde</option>
         </select>
       </label>
     );

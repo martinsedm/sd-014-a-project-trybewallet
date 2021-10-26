@@ -24,3 +24,12 @@ export function mapCurrency(currencies) {
     </option>
   ));
 }
+
+export function totalExpense(expenses) {
+  const total = expenses.reduce((acc, curr) => {
+    const value = Number(curr.value);
+    const exchange = Number(curr.exchangeRates[curr.currency].ask);
+    return acc + value * exchange;
+  }, 0);
+  return total;
+}
