@@ -2,47 +2,100 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { walletExpenses } from '../actions';
+import Inputs from './Inputs';
+import Selects from './Selects';
+
 class Expenses extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      id: 0,
+      value: 0,
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
+      exchangeRates: [],
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange({ target }) {
+    const { name } = target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  async handleClick() {
+    const exchangeRates = await (await
+    fetch('https://economia.awesomeapi.com.br/json/all')).json();
+
+    this.setState({
+      exchangeRates,
+    });
+
+    const { addExpense } = this.props;
+    addExpense(this.state);
+
+    const { id } = this.state;
+    this.setState({
+      id: id + 1,
+    });
+  }
+
   render() {
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
+    const metodoDePagamento = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+    const categorias = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
     return (
       <form>
-        <label htmlFor="valor">
-          Valor:
-          <input type="number" name="valor" id="valor" />
-        </label>
-        <label htmlFor="descricao">
-          Descrição:
-          <input type="text" name="descricao" id="descricao" />
-        </label>
-        <label htmlFor="moeda">
-          Moeda:
-          <select name="moeda" id="moeda">
-            { /* src: https://github.com/tryber/sd-014-a-project-trybewallet/pull/66/commits/df05f278dff2d395e4503ca4dcb4b614981b1cf1 */ }
-            { currencies.map((sigla) => (sigla !== 'USDT' ? <option>{sigla}</option>
-              : null))}
-          </select>
-        </label>
-        <label htmlFor="pagamento">
-          Método de pagamento:
-          <select name="pagamento" id="pagamento">
-            <option>Dinheiro</option>
-            <option>Cartão de crédito</option>
-            <option>Cartão de débito</option>
-          </select>
-        </label>
-        <label htmlFor="categoria">
-          Tag:
-          <select name="categoria" id="categoria">
-            <option>Alimentação</option>
-            <option>Lazer</option>
-            <option>Trabalho</option>
-            <option>Transporte</option>
-            <option>Saúde</option>
-          </select>
-        </label>
+        <Inputs
+          label="Valor:"
+          type="number"
+          id="valor"
+          value={ value }
+          onChange={ this.handleChange }
+        />
+        <Inputs
+          label="Descrição:"
+          type="text"
+          id="descricao"
+          value={ description }
+          onChange={ this.handleChange }
+        />
+        <Selects
+          label="Moeda:"
+          id="moeda"
+          value={ currency }
+          array={ currencies }
+          onChange={ this.handleChange }
+        />
+        <Selects
+          label="Método de pagamento:"
+          id="pagamento"
+          value={ method }
+          array={ metodoDePagamento }
+          onChange={ this.handleChange }
+        />
+        <Selects
+          label="Tag:"
+          id="categoria"
+          value={ tag }
+          array={ categorias }
+          onChange={ this.handleChange }
+        />
+        <button type="button" onClick={ this.handleClick }>
+          Adicionar despesa
+        </button>
       </form>
-
     );
   }
 }
@@ -53,8 +106,13 @@ const mapStateToProps = (state) => (
   }
 );
 
+const mapDispatchToProps = (dispatch) => ({
+  addExpense: (expense) => dispatch(walletExpenses(expense)),
+});
+
 Expenses.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.any),
+  addExpense: PropTypes.objectOf(PropTypes.any),
 }.isRequired;
 
-export default connect(mapStateToProps, null)(Expenses);
+export default connect(mapStateToProps, mapDispatchToProps)(Expenses);

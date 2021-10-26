@@ -22,3 +22,8 @@ export function fetchAPI() {
       .then((json) => dispatch(walletCurrencies(json)));
   };
 }
+
+export const walletExpenses = (expense) => ({
+  type: SET_WALLET_EXPENSES,
+  expense,
+});
