@@ -10,6 +10,19 @@ class Wallet extends React.Component {
     this.state = {
       total: 0,
     };
+    this.handleTotal = this.handleTotal.bind(this);
+  }
+
+  handleTotal() {
+    const { walletState: { expenses } } = this.props;
+
+    const newTotal = expenses.reduce((acc, item) => {
+      const convertion = Number(item.value)
+      * Number(item.exchangeRates[item.currency].ask);
+      return acc + convertion;
+    }, 0);
+
+    this.setState({ total: newTotal });
   }
 
   render() {
@@ -28,7 +41,7 @@ class Wallet extends React.Component {
             BRL
           </div>
         </section>
-        <Form />
+        <Form handleTotal={ this.handleTotal } />
       </main>
     );
   }
@@ -36,10 +49,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   loginEmail: state.user.email,
+  walletState: state.wallet,
 });
 
 Wallet.propTypes = {
   loginEmail: PropTypes.string.isRequired,
+  walletState: PropTypes.objectOf(PropTypes.shape).isRequired,
 };
 
 export default connect(mapStateToProps, null)(Wallet);
