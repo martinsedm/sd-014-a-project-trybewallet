@@ -30,7 +30,7 @@ class Form extends Component {
     });
   }
 
-  async handleExpenses() {
+  async handleExpenses() { // Ajuda do colega Caio César - T14A para resolução do requisito 8. <3
     const { value, description, currency, method, tag } = this.state;
     const { newExpense } = this.props;
     await newExpense({ value, description, currency, method, tag });
