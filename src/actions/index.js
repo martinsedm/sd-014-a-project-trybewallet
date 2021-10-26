@@ -1,4 +1,4 @@
-import fetchAPI from '../../utils/getRatesAPI';
+import fetchAPI from '../utils/getRatesAPI';
 
 export const actionTypes = {
   SAVE_EMAIL: 'SAVE_EMAIL',

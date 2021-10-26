@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchAPI from '../utils/getRatesAPI';
-import { saveExpensesAtState as saveExpensesAction } from '../redux/actions';
+import { saveExpensesAtState as saveExpensesAction } from '../actions';
 
 class FormsComp extends Component {
   constructor() {

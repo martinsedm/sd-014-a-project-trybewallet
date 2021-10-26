@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { saveEmailAtState as saveEmailAtStateAction } from '../redux/actions';
+import { saveEmailAtState as saveEmailAtStateAction } from '../actions';
 import LoginComplement from './LoginComplement';
 
 class Login extends React.Component {
