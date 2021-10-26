@@ -10,7 +10,7 @@ const initialState = {
 const walletReducer = (state = initialState, action) => {
   switch (action.type) {
   case SET_WALLET_CURRENCIES:
-    return { ...state, currencies: action.value };
+    return { ...state, currencies: action.data };
   case SET_WALLET_EXPENSES:
     return { ...state, expenses: action.value };
   default:

@@ -8,3 +8,17 @@ export const userEmail = (email) => ({
   type: SET_USER_EMAIL,
   email,
 });
+
+export const walletCurrencies = (currency) => ({
+  type: SET_WALLET_CURRENCIES,
+  data: currency,
+});
+
+export function fetchAPI() {
+  return (dispatch) => {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((data) => data.json())
+      .then((json) => Object.keys(json))
+      .then((json) => dispatch(walletCurrencies(json)));
+  };
+}
