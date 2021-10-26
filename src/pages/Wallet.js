@@ -2,60 +2,52 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import fetchApi from '../actions';
+import Forms from '../components/Forms';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      total: 0,
+    };
+    this.totalExpenses = this.totalExpenses.bind(this);
+  }
+
   componentDidMount() {
     const { setFetchApi } = this.props;
     setFetchApi();
   }
 
+  totalExpenses() {
+    const { total } = this.state;
+    const { expenses } = this.props;
+    let totalValue = 0;
+    if (expenses.length !== 0) {
+      const expense = expenses.find((exp) => exp.id === expenses.length - 1);
+      const expenseCurrency = expense.currency;
+      const currencyAskPrice = expense.exchangeRates[expenseCurrency].ask;
+      totalValue += parseFloat(expense.value) * currencyAskPrice;
+      console.log('id', totalValue);
+      this.setState({
+        total: total + totalValue,
+      });
+    }
+  }
+
   render() {
-    const { userLogged, currencies } = this.props;
+    const { total } = this.state;
+    const { userLogged } = this.props;
+
     return (
       <div>
         <header>
           <span data-testid="email-field">{ userLogged }</span>
           { ' ' }
-          <span data-testid="total-field">0</span>
+          <span data-testid="total-field">{ total.toFixed(2) }</span>
           { ' ' }
           <span data-testid="header-currency-field">BRL</span>
         </header>
-        <form>
-          <label htmlFor="valor">
-            Valor:
-            <input type="text" name="valor" id="valor" />
-          </label>
-          <label htmlFor="descricao">
-            Descrição:
-            <input type="text" name="descricao" id="descricao" />
-          </label>
-          <label htmlFor="moeda">
-            Moeda:
-            <select id="moeda">
-              {currencies.map((currency, index) => (
-                <option key={ index } value={ currency }>{ currency }</option>
-              ))}
-            </select>
-          </label>
-          <label htmlFor="metodo-pagamento">
-            Método de pagamento:
-            <select id="metodo-pagamento">
-              <option value="dinheiro">Dinheiro</option>
-              <option value="credito">Cartão de crédito</option>
-              <option value="debito">Cartão de débito</option>
-            </select>
-          </label>
-          <label htmlFor="tag">
-            Tag:
-            <select id="tag">
-              <option value="alimentacao">Alimentação</option>
-              <option value="lazer">Lazer</option>
-              <option value="trabalho">Trabalho</option>
-              <option value="transporte">Transporte</option>
-              <option value="saude">Saúde</option>
-            </select>
-          </label>
-        </form>
+        <Forms totalExpenses={ this.totalExpenses } />
       </div>
     );
   }
@@ -63,7 +55,7 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   userLogged: state.user.email,
-  currencies: state.wallet.currencies,
+  expenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -71,11 +63,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 Wallet.propTypes = ({
   userLogged: PropTypes.string.isRequired,
-});
-
-Wallet.propTypes = ({
   setFetchApi: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
