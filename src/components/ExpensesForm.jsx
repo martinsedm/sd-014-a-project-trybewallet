@@ -115,7 +115,7 @@ ExpensesForm.propTypes = {
   addExpense: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     currency: PropTypes.string.isRequired,
     method: PropTypes.string.isRequired,
     tag: PropTypes.string.isRequired,
