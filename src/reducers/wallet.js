@@ -1,4 +1,4 @@
-// import { GET_USER } from '../actions';
+import { SET_CURRENCIES } from '../actions';
 
 const INICIAL_STATE = {
   currencies: [],
@@ -7,8 +7,8 @@ const INICIAL_STATE = {
 
 function wallet(state = INICIAL_STATE, action) {
   switch (action.type) {
-  case 'GET_USER':
-    return { ...state, email: action.email };
+  case SET_CURRENCIES:
+    return { ...state, currencies: action.currencies };
   default:
     return state;
   }

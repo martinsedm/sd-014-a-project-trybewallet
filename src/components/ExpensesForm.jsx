@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { paymentMethod, tags } from '../data';
 import InputForm from './InputForm';
 import SelectForm from './SelectForm';
+import { fetchAPI } from '../actions';
 
 class ExpensesForm extends Component {
   constructor() {
@@ -11,12 +13,17 @@ class ExpensesForm extends Component {
     this.state = {
       value: 0,
       describe: '',
-      currency: 'BRL',
+      currency: 'USD',
       payment: 'Dinheiro',
       tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
   handleChange({ target }) {
@@ -38,6 +45,7 @@ class ExpensesForm extends Component {
 
   render() {
     const { value, describe, currency, payment, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <form>
         <InputForm name="value" value={ value } change={ this.handleChange } />
@@ -47,7 +55,7 @@ class ExpensesForm extends Component {
           value={ currency }
           type="Moeda"
           change={ this.handleChange }
-          options={ [currency] }
+          options={ currencies }
         />
         <SelectForm
           name="payment"
@@ -78,4 +86,13 @@ const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   expenses,
 });
 
-export default connect(mapStateToProps)(ExpensesForm);
+const mapDispatchToProps = (dispatch) => ({
+  getCurrencies: () => dispatch(fetchAPI()),
+});
+
+ExpensesForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
