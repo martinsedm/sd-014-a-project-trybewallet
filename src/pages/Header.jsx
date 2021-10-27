@@ -13,7 +13,7 @@ class Header extends Component {
 
   render() {
     const { login } = this.props;
-    
+
     return (
       <section>
         <div data-testid="email-field">
