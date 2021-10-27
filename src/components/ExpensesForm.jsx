@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { paymentMethod, tags } from '../data';
 import InputForm from './InputForm';
 import SelectForm from './SelectForm';
-import { fetchAPI } from '../actions';
+import { fetchAPI, addExpense as addExpenseAction } from '../actions';
 
 class ExpensesForm extends Component {
   constructor() {
@@ -12,13 +12,14 @@ class ExpensesForm extends Component {
 
     this.state = {
       value: 0,
-      describe: '',
+      description: '',
       currency: 'USD',
-      payment: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -31,35 +32,48 @@ class ExpensesForm extends Component {
     this.setState({ [name]: value });
   }
 
-  createPaymentOptions() {
-    return paymentMethod.map((method) => (
-      <option value={ method } key={ method }>{ method }</option>
-    ));
-  }
-
-  createtagOptions() {
-    return tags.map((tag) => (
-      <option value={ tag } key={ tag }>{ tag }</option>
-    ));
+  async handleClick() {
+    const { addExpense, expenses, getCurrencies } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    await getCurrencies();
+    const { currencies } = this.props;
+    const newExpense = {
+      id: expenses.length,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates: currencies,
+    };
+    addExpense(newExpense);
   }
 
   render() {
-    const { value, describe, currency, payment, tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
     return (
       <form>
-        <InputForm name="value" value={ value } change={ this.handleChange } />
-        <InputForm name="describe" value={ describe } change={ this.handleChange } />
+        <InputForm
+          name="value"
+          value={ value }
+          change={ this.handleChange }
+        />
+        <InputForm
+          name="description"
+          value={ description }
+          change={ this.handleChange }
+        />
         <SelectForm
           name="currency"
           value={ currency }
           type="Moeda"
           change={ this.handleChange }
-          options={ currencies }
+          options={ Object.keys(currencies) }
         />
         <SelectForm
-          name="payment"
-          value={ payment }
+          name="method"
+          value={ method }
           type="Método de pagamento"
           change={ this.handleChange }
           options={ paymentMethod }
@@ -73,8 +87,9 @@ class ExpensesForm extends Component {
         />
         <button
           type="button"
+          onClick={ this.handleClick }
         >
-          Entrar
+          Adicionar despesa
         </button>
       </form>
     );
@@ -88,11 +103,24 @@ const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchAPI()),
+  addExpense: (expense) => dispatch(addExpenseAction(expense)),
 });
 
 ExpensesForm.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.objectOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ])).isRequired,
   getCurrencies: PropTypes.func.isRequired,
+  addExpense: PropTypes.func.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
+    currency: PropTypes.string.isRequired,
+    method: PropTypes.string.isRequired,
+    tag: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
