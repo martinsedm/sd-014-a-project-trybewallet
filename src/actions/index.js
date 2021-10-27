@@ -1,2 +1,6 @@
 export const USER_LOGIN = 'USER_LOGIN';
-export const userLogin = (email) => ({ type: USER_LOGIN, email });
+
+export const userLogin = (payload) => ({
+  type: USER_LOGIN,
+  payload,
+});

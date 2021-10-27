@@ -71,9 +71,6 @@ const mapDispatchToProps = (dispatch) => ({
   setUserLogin: (email) => dispatch(userLogin(email)),
 });
 
-// const mapStateToProps = (state) => ({
-//   userLogin: state.loginReducer,
-// });
 Login.propTypes = {
   setUserLogin: PropTypes.func,
 }.isRequired;
