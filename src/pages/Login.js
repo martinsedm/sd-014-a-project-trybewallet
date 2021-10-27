@@ -55,7 +55,7 @@ class Login extends React.Component {
         </form>
         <button
           onClick={ () => {
-            setUserLogin(email);
+            setUserLogin(this.state);
             history.push('/carteira');
           } }
           type="button"
@@ -68,7 +68,7 @@ class Login extends React.Component {
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  setUserLogin: (email) => dispatch(userLogin(email)),
+  setUserLogin: (payload) => dispatch(userLogin(payload)),
 });
 
 Login.propTypes = {
