@@ -14,7 +14,7 @@ function wallet(state = INICIAL_STATE, action) {
   case RMV_EXPENSE:
     return {
       ...state,
-      expenses: state.expenses.filter((expense) => expense.id !== Number(action.id)),
+      expenses: state.expenses.filter((_item, index) => index !== Number(action.index)),
     };
   default:
     return state;

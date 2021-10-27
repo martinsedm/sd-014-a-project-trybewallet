@@ -31,12 +31,20 @@ class ExpenseTable extends Component {
         </thead>
         <tbody>
           { expenses
-            .map(({ id, value, currency, method, tag, description, exchangeRates }) => {
+            .map(({
+              id,
+              value,
+              currency,
+              method,
+              tag,
+              description,
+              exchangeRates,
+            }, index) => {
               const currencyName = exchangeRates[currency].name;
               const cambio = this.roundToTwo(exchangeRates[currency].ask);
               const exchangeValue = this.roundToTwo(value * exchangeRates[currency].ask);
               return (
-                <tr key={ id }>
+                <tr key={ `${id}${index}` }>
                   <td>{ description }</td>
                   <td>{ tag }</td>
                   <td>{ method }</td>
@@ -47,7 +55,7 @@ class ExpenseTable extends Component {
                   <td>Real</td>
                   <td>
                     <button
-                      id={ id }
+                      id={ index }
                       type="button"
                       data-testid="delete-btn"
                       onClick={ this.handleClick }

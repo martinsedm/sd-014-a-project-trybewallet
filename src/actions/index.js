@@ -6,9 +6,9 @@ export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const RMV_EXPENSE = 'RMV_EXPENSE';
 
-export const rmvExpense = (id) => ({
+export const rmvExpense = (index) => ({
   type: RMV_EXPENSE,
-  id,
+  index,
 });
 
 export const setUser = (email) => ({
