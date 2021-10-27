@@ -4,6 +4,13 @@ export const SET_CURRENCIES = 'SET_CURRENCIES';
 
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 
+export const RMV_EXPENSE = 'RMV_EXPENSE';
+
+export const rmvExpense = (id) => ({
+  type: RMV_EXPENSE,
+  id,
+});
+
 export const setUser = (email) => ({
   type: SET_USER,
   email,
