@@ -8,13 +8,12 @@ class Header extends Component {
   constructor() {
     super();
     this.state = {
-      // currency: '',
-      // total: 0,
     };
   }
 
   render() {
     const { login } = this.props;
+    console.log(login);
 
     return (
       <section>
@@ -23,11 +22,11 @@ class Header extends Component {
         </div>
 
         <div data-testid="total-field">
-          Total!
+          Total: 0
         </div>
 
         <div data-testid="header-currency-field">
-          Total!
+          Currency: BRL
         </div>
       </section>
     );

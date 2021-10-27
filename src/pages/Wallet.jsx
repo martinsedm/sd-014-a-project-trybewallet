@@ -7,7 +7,6 @@ class Wallet extends Component {
     return (
       <div>
         <Header />
-        TrybeWallet
       </div>
     );
   }
