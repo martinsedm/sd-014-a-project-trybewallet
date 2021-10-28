@@ -125,7 +125,11 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
+};
+
+Wallet.defaultProps = {
+  loading: false,
 };
 
 const mapDispatchToProps = (dispatch) => ({
