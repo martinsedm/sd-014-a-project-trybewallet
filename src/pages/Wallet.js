@@ -22,7 +22,6 @@ class Wallet extends React.Component {
       currency: '',
       payment: '',
       category: '',
-      loading: true,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -75,9 +74,8 @@ class Wallet extends React.Component {
       currency,
       payment,
       category,
-      loading,
     } = this.state;
-    const { currencies } = this.props;
+    const { currencies, loading } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -125,6 +123,7 @@ Wallet.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -135,6 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  loading: state.wallet.loading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
