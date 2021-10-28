@@ -11,6 +11,7 @@ import {
   fetchCurrencies as currencyAction,
   saveExpense as expenseAction,
 } from '../actions';
+import ExpenseList from '../components/ExpenseList';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -75,7 +76,7 @@ class Wallet extends React.Component {
       method,
       tag,
     } = this.state;
-    const { currencies, loading } = this.props;
+    const { currencies, loading, expenses } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -112,6 +113,7 @@ class Wallet extends React.Component {
             type="submit"
             text="Adicionar despesa"
           />
+          <ExpenseList expenses={ expenses } />
         </form>
       </div>
     );
