@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import { categories, inputs, methods } from '../data';
 import { fetchCurrency, URL } from '../services/awesomeAPI';
 import {
-  setCurrencies as currencyAction,
+  fetchCurrencies as currencyAction,
   saveExpense as expenseAction,
 } from '../actions';
 
@@ -30,16 +30,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { setCurrencies } = this.props;
-    fetchCurrency(URL)
-      .then((response) => {
-        this.setState(() => {
-          setCurrencies(response);
-          return {
-            loading: false,
-          };
-        });
-      });
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
@@ -131,13 +123,13 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setCurrencies: PropTypes.func.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpense: (payload) => dispatch(expenseAction(payload)),
-  setCurrencies: (payload) => dispatch(currencyAction(Object.keys(payload))),
+  fetchCurrencies: () => dispatch(currencyAction()),
 });
 
 const mapStateToProps = (state) => ({
