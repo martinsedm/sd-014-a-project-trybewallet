@@ -28,14 +28,14 @@ function ExpenseList({ expenses }) {
         const { ask } = exchangeRates[currency];
         return (
           <li key={ id }>
-            <div>{ description }</div>
-            <div>{ tag }</div>
-            <div>{ method }</div>
-            <div>{ `${currency} ${(+value).toFixed(2)}` }</div>
-            <div>{ currency }</div>
-            <div>{ (+ask).toFixed(2) }</div>
-            <div>{ `R$ ${(ask * value).toFixed(2)}` }</div>
-            <div>Real Brasileiro</div>
+            <div role="cell">{ description }</div>
+            <div role="cell">{ tag }</div>
+            <div role="cell">{ method }</div>
+            <div role="cell">{ value }</div>
+            <div role="cell">{ currency }</div>
+            <div role="cell">{ (+ask).toFixed(2) }</div>
+            <div role="cell">{ `R$ ${(ask * value).toFixed(2)}` }</div>
+            <div role="cell">Real Brasileiro</div>
           </li>
         );
       }) }
