@@ -5,6 +5,7 @@ import { fetchCurrency, addExpenses } from '../actions';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import Select from '../components/Select';
+import ExpenseTable from '../components/ExpenseTable';
 
 const methods = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -56,7 +57,6 @@ class Wallet extends React.Component {
           <Input
             id="descrição"
             label="Descrição:"
-            type="text"
             name="description"
             value={ description }
             onChange={ this.handleChange }
@@ -84,6 +84,7 @@ class Wallet extends React.Component {
           />
           <button type="button" onClick={ this.handleClick }>Adicionar Despesa</button>
         </form>
+        <ExpenseTable />
       </>
     );
   }
@@ -100,8 +101,6 @@ const mapDispatchToProps = (dispatch) => ({
   addExpense: (payload) => dispatch(addExpenses(payload)),
 });
 
-const mapStateToProps = ({ wallet }) => ({
-  currencies: wallet.currencies,
-});
+const mapStateToProps = ({ wallet }) => ({ currencies: wallet.currencies });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
