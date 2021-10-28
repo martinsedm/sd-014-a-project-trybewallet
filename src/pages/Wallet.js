@@ -19,9 +19,9 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      payment: '',
-      category: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Trabalho',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,7 +40,7 @@ class Wallet extends React.Component {
   }
 
   fireSaveExpense() {
-    const { value, description, currency, payment: method, category: tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { expenses, saveExpense } = this.props;
     fetchCurrency(URL)
       .then((exchangeRates) => {
@@ -72,8 +72,8 @@ class Wallet extends React.Component {
   render() {
     const {
       currency,
-      payment,
-      category,
+      method,
+      tag,
     } = this.state;
     const { currencies, loading } = this.props;
     return (
@@ -95,17 +95,17 @@ class Wallet extends React.Component {
             handleChange={ this.handleChange }
           />
           <Select
-            htmlFor="payment"
+            htmlFor="method"
             text="Método de pagamento"
             options={ methods }
-            value={ payment }
+            value={ method }
             handleChange={ this.handleChange }
           />
           <Select
-            htmlFor="category"
+            htmlFor="tag"
             text="Tag"
             options={ categories }
-            value={ category }
+            value={ tag }
             handleChange={ this.handleChange }
           />
           <Button
