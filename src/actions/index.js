@@ -1,6 +1,7 @@
 export const SET_USER = 'SET_USER';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const SET_CURRENCY = 'SET_CURRENCY';
+export const DELETE_SPEND = 'DELETE_SPEND';
 
 export const setUser = (email) => ({ type: SET_USER, payload: { email } });
 
@@ -10,6 +11,11 @@ export const addExpensesAction = (payload, exchangeRates) => ({
     ...payload,
     exchangeRates,
   },
+});
+
+export const actionDelete = (payload) => ({
+  type: DELETE_SPEND,
+  payload,
 });
 
 export const setCurrencyAction = (payload) => ({ type: SET_CURRENCY, payload });

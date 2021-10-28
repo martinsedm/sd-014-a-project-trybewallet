@@ -1,4 +1,4 @@
-import { ADD_EXPENSES, SET_CURRENCY } from '../actions';
+import { ADD_EXPENSES, SET_CURRENCY, DELETE_SPEND } from '../actions';
 
 const initialState = { expenses: [], currencies: [] };
 
@@ -14,6 +14,12 @@ const walletReducer = (state = initialState, { type, payload }) => {
     return {
       ...state,
       currencies: Object.keys(payload).filter((currency) => currency !== 'USDT'),
+    };
+
+  case DELETE_SPEND:
+    return {
+      ...state,
+      expenses: state.expenses.filter((_, index) => index !== payload),
     };
 
   default:
