@@ -8,9 +8,10 @@ import Button from '../components/Button';
 import { categories, inputs, methods } from '../data';
 import { fetchCurrency, URL } from '../services/awesomeAPI';
 import {
-  setCurrencies as currencyAction,
+  fetchCurrencies as currencyAction,
   saveExpense as expenseAction,
 } from '../actions';
+import ExpenseList from '../components/ExpenseList';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -19,10 +20,9 @@ class Wallet extends React.Component {
     this.state = {
       value: 0,
       description: '',
-      currency: '',
-      payment: '',
-      category: '',
-      loading: true,
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Trabalho',
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -30,16 +30,8 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    const { setCurrencies } = this.props;
-    fetchCurrency(URL)
-      .then((response) => {
-        this.setState(() => {
-          setCurrencies(response);
-          return {
-            loading: false,
-          };
-        });
-      });
+    const { fetchCurrencies } = this.props;
+    fetchCurrencies();
   }
 
   handleChange({ target: { name, value } }) {
@@ -49,7 +41,7 @@ class Wallet extends React.Component {
   }
 
   fireSaveExpense() {
-    const { value, description, currency, payment: method, category: tag } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     const { expenses, saveExpense } = this.props;
     fetchCurrency(URL)
       .then((exchangeRates) => {
@@ -81,11 +73,10 @@ class Wallet extends React.Component {
   render() {
     const {
       currency,
-      payment,
-      category,
-      loading,
+      method,
+      tag,
     } = this.state;
-    const { currencies } = this.props;
+    const { currencies, loading, expenses } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -105,23 +96,24 @@ class Wallet extends React.Component {
             handleChange={ this.handleChange }
           />
           <Select
-            htmlFor="payment"
+            htmlFor="method"
             text="Método de pagamento"
             options={ methods }
-            value={ payment }
+            value={ method }
             handleChange={ this.handleChange }
           />
           <Select
-            htmlFor="category"
+            htmlFor="tag"
             text="Tag"
             options={ categories }
-            value={ category }
+            value={ tag }
             handleChange={ this.handleChange }
           />
           <Button
             type="submit"
             text="Adicionar despesa"
           />
+          <ExpenseList expenses={ expenses } />
         </form>
       </div>
     );
@@ -131,18 +123,20 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setCurrencies: PropTypes.func.isRequired,
+  fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   saveExpense: (payload) => dispatch(expenseAction(payload)),
-  setCurrencies: (payload) => dispatch(currencyAction(Object.keys(payload))),
+  fetchCurrencies: () => dispatch(currencyAction()),
 });
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  loading: state.wallet.loading,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

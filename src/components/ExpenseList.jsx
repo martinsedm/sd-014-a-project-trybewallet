@@ -29,7 +29,7 @@ function ExpenseList({ expenses }) {
             <div>{ description }</div>
             <div>{ tag }</div>
             <div>{ method }</div>
-            <div>{ `${currency} ${value.toFixed(2)}` }</div>
+            <div>{ `${currency} ${(+value).toFixed(2)}` }</div>
             <div>{ currency }</div>
             <div>{ (+ask).toFixed(2) }</div>
             <div>{ `R$ ${(ask * value).toFixed(2)}` }</div>
