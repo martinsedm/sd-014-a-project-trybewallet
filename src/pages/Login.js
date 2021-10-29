@@ -18,9 +18,11 @@ class Login extends React.Component {
     this.setState({
       [name]: value,
     }, () => {
-      const { password }=this.state;
-      const minInputLength = 6;
-      if (password.length >= minInputLength) {
+      const { password, email } = this.state;
+      const MIN_KEY_LENGTH = 6;
+      const VALID_EMAIL = email.includes('@' && '.com');
+      console.log(VALID_EMAIL);
+      if (password.length >= MIN_KEY_LENGTH && VALID_EMAIL) {
         this.setState({ isDisabled: false });
       } else {
         this.setState({ isDisabled: true });
