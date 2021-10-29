@@ -1,77 +1,55 @@
 import React from 'react';
+import Button from '../components/Button';
+import Input from '../components/Input';
 
 class Login extends React.Component {
-  // constructor() {
-  //   super();
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      isDisabled: true,
+    };
 
-  //   // this.state = {
-  //   //   emailInput: '',
-  //   //   passwordInput: '',
-  //   //   isLoading: false,
-  //   //   button: true,
-  //   // };
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  //   // this.handleChange = this.handleChange.bind(this);
-  //   // this.handleClick = this.handleClick.bind(this);
-  // }
-
-  // handleChange(event) {
-  //   this.setState({ searchInput: event.target.value }, () => {
-  //     const { searchInput } = this.state;
-  //     const minSearchLength = 2;
-  //     if (searchInput.length >= minSearchLength) {
-  //       this.setState({ button: false });
-  //     } else {
-  //       this.setState({ button: true });
-  //     }
-  //   });
-  // }
-
-  // async handleClick() {
-  //   try {
-  //     this.setState({ isLoading: true, search: false });
-  //     const { searchInput } = this.state;
-  //     const searchResponse = await searchAlbumsAPI(searchInput);
-  //     this.setState({
-  //       isLoading: false,
-  //       search: true,
-  //       searchArray: searchResponse,
-  //       searchInputSaved: searchInput,
-  //       searchInput: '',
-  //     });
-  //   } catch {
-  //     console.log('error');
-  //   }
-  // }
+  handleChange({ target: { name, value } }) {
+    this.setState({
+      [name]: value,
+    }, () => {
+      const { password }=this.state;
+      const minInputLength = 6;
+      if (password.length >= minInputLength) {
+        this.setState({ isDisabled: false });
+      } else {
+        this.setState({ isDisabled: true });
+      }
+    });
+  }
 
   render() {
+    const { email, password, isDisabled } = this.state;
     return (
       <form>
-        <label htmlFor="Email">
-          <input
-            type="text"
-            name="Email"
-            data-testid="email-input"
-            // value={ emailInput }
-            // onChange={ handleChange }
-          />
-        </label>
-        <label htmlFor="Password">
-          <input
-            type="password"
-            name="Password"
-            data-testid="password-input"
-            // value={ passwordInput }
-            // onChange={ handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          // disabled={ button }
-          // onClick={ handleClick }
-        >
-          Entrar
-        </button>
+        <Input
+          type="email"
+          name="email"
+          value={ email }
+          onChange={ this.handleChange }
+        />
+        <Input
+          type="password"
+          name="password"
+          value={ password }
+          onChange={ this.handleChange }
+        />
+        <Button
+          name="button"
+          disabled={ isDisabled }
+          label="Entrar"
+          onClick={ this.handleClick }
+        />
       </form>
     );
   }
