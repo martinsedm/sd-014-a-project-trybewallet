@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+// https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
 
 class Login extends React.Component {
   constructor() {
@@ -10,12 +13,19 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { history } = this.props;
+    history.push('/carteira');
   }
 
   render() {
@@ -46,6 +56,7 @@ class Login extends React.Component {
         <button
           type="submit"
           disabled={ password.length < MINCODE || email.search(emailValid) }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -53,4 +64,8 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default withRouter(Login);
