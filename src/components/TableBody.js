@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default function TableBody({ expenses }) {
+import { removeExpense as removeExpenseAction } from '../actions';
+
+function TableBody({ expenses, removeExpense }) {
   return (
     <tbody>
       {expenses.map(
@@ -22,7 +25,13 @@ export default function TableBody({ expenses }) {
               <td>Real</td>
               <td>
                 <button type="button">Editar</button>
-                <button type="button">Excluir</button>
+                <button
+                  data-testid="delete-btn"
+                  onClick={ () => removeExpense(id) }
+                  type="button"
+                >
+                  Excluir
+                </button>
               </td>
             </tr>
           );
@@ -31,6 +40,10 @@ export default function TableBody({ expenses }) {
     </tbody>
   );
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (id) => dispatch(removeExpenseAction(id)),
+});
 
 TableBody.propTypes = {
   expenses: PropTypes.arrayOf(
@@ -44,4 +57,7 @@ TableBody.propTypes = {
       value: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
+
+export default connect(null, mapDispatchToProps)(TableBody);
