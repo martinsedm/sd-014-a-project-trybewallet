@@ -1,6 +1,6 @@
 header {
   align-items: center;
-  background: teal;
+  background: #01535d;
   border-bottom: 1px solid rgba(216, 216, 216, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -8,7 +8,7 @@ header {
   justify-content: space-between;
   position: fixed;
   width: 100vw;
-  z-index: 2;
+  z-index: 3;
 }
 
 .header-container {

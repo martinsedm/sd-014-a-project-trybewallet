@@ -1,4 +1,5 @@
 import {
+  DELETE_EXPENSE,
   FETCH_CURRENCIES_ERROR,
   FETCH_CURRENCIES_SUCCESS,
   NEW_EXPENSE,
@@ -34,7 +35,11 @@ const wallet = (
         ...action.payload,
       }],
     };
-
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== action.payload),
+    };
   default:
     return state;
   }

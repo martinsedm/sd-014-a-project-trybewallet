@@ -3,6 +3,7 @@ import { fetchCurrencies } from '../utils/currencyAPI';
 export const FETCH_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const FETCH_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
 export const NEW_EXPENSE = 'NEW_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export function emailAction(newEmail) {
   return {
@@ -23,6 +24,11 @@ export const fetchCurrenciesError = (payload) => ({
 
 export const expensesAction = (payload) => ({
   type: NEW_EXPENSE,
+  payload,
+});
+
+export const deleteExpenseAction = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 

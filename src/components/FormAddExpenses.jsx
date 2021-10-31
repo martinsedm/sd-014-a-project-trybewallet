@@ -76,7 +76,13 @@ class FormAddExpenses extends Component {
         </label>
         <Currencies value={ currency } handleChange={ this.handleChange } />
         <Tag value={ tag } handleChange={ this.handleChange } />
-        <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
+        <button
+          className="btn-form"
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+        </button>
       </form>
     );
   }

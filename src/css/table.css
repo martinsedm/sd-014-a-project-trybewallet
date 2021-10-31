@@ -1,0 +1,37 @@
+.expenses-table {
+  align-items: center; 
+  background: rgb(207, 207, 207);
+  border: black;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+  position: absolute;
+  width: 100vw;
+  z-index: 1;
+}
+
+.expenses-table th {
+  background: #01535d;
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0.5em;
+  text-align: center;
+}
+.expenses-table td {
+  background-color: rgba(250, 235, 215, 0.452);
+  border-radius: 5px;
+  font-size: 18px;
+  padding: 0.5em;
+  text-align: center;
+  width: 8vw;
+}
+
+.expenses-table button {
+  background: #01535d;
+  border: none;
+  color: white;
+  width: 7vw;
+}
