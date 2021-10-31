@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-class FormInput extends Component {
-  render() {
-    const { label, name, onChange, value } = this.props;
-
-    return (
-      <label htmlFor={ name }>
-        {label}
-        <input
-          id={ name }
-          name={ name }
-          onChange={ onChange }
-          type="text"
-          value={ value }
-        />
-      </label>
-    );
-  }
+export default function FormInput({ label, name, onChange, value }) {
+  return (
+    <label htmlFor={ name }>
+      {label}
+      <input
+        id={ name }
+        name={ name }
+        onChange={ onChange }
+        type="text"
+        value={ value }
+      />
+    </label>
+  );
 }
 
 FormInput.propTypes = {
@@ -26,5 +22,3 @@ FormInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
-
-export default FormInput;
