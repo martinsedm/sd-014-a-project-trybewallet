@@ -12,8 +12,12 @@ function TableBody({ expenses, removeExpense, setToEditExpense }) {
     <tbody>
       {expenses.map(
         ({ currency, description, exchangeRates, id, method, tag, value }) => {
-          const exchangeName = exchangeRates[currency].name.split('/')[0];
-          const exchangeRate = exchangeRates[currency].ask;
+          const { ask, code, name } = exchangeRates[currency];
+          const THOUSAND = 1000;
+
+          const exchangeName = name.split('/')[0];
+          let exchangeRate = ask;
+          if (code === 'BTC') exchangeRate *= THOUSAND;
           const convertedValue = value * exchangeRate;
 
           return (

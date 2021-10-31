@@ -3,10 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 function Header({ expenses, user }) {
-  const total = expenses.reduce((acc, curr) => {
-    const value = Number(curr.value);
-    const exchange = Number(curr.exchangeRates[curr.currency].ask);
-    return acc + value * exchange;
+  const total = expenses.reduce((acc, { currency, exchangeRates, value }) => {
+    const THOUSAND = 1000;
+    const { ask, code } = exchangeRates[currency];
+
+    const numberedValue = Number(value);
+
+    let exchange = Number(ask);
+    if (code === 'BTC') exchange *= THOUSAND;
+
+    return acc + numberedValue * exchange;
   }, 0);
   // Calculate total in BRL
 
