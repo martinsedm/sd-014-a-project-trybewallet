@@ -1,8 +1,6 @@
 /* referência css: maurício leite s2 */
 
-
-.login-box
-{
+.login-box {
   align-items: center;
   background: teal;
   display: flex;
@@ -14,7 +12,7 @@
 .login {
   align-items: center;
   backdrop-filter: blur(4.1px);
-  background: rgb(255, 255, 255);
+  background: white;
   border: 1px solid rgba(255, 255, 255, 0.23);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.335);
@@ -28,13 +26,13 @@
 
 
 .login input {
+  background-color: rgba(136, 191, 241, 0.23);
   border: none;
   border-radius: 3px;
   height: 2.8em;
   outline: none;
   padding-left: 10px;
   width: 22rem;
-  background-color: rgba(136, 191, 241, 0.23);
 }
 
 label h5 {
@@ -50,6 +48,7 @@ label h5 {
   background: #01535d;
   border: none;
   border-radius: 3px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.253);
   color: #fff;
   cursor: pointer;
   display: flex;
@@ -59,5 +58,4 @@ label h5 {
   justify-content: center;
   margin-top: 20px;
   width: 22rem;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.253);
 }

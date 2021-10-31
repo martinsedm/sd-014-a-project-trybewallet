@@ -4,7 +4,7 @@ button {
   border: none;
   border-radius: 100px;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.253);
-  color: #fff;
+  color: white;
   cursor: pointer;
   display: flex;
   font-size: 16px;
@@ -32,7 +32,7 @@ button {
 
 input {
   align-items: center;
-  background:white;
+  background: white;
   border: none;
   cursor: pointer;
   display: flex;
@@ -45,7 +45,7 @@ input {
 
 select {
   align-items: center;
-  background:white;
+  background: white;
   border: none;
   cursor: pointer;
   display: flex;
@@ -53,13 +53,13 @@ select {
   font-weight: 500;
   height: 2.5em;
   justify-content: center;
-  width: 10rem;
   padding-left: 6px;
+  width: 10rem;
 }
 
 textarea {
   align-items: center;
-  background:white;
+  background: white;
   border: none;
   cursor: pointer;
   font-size: 16px;

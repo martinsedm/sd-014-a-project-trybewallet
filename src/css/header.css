@@ -1,6 +1,6 @@
 header {
   align-items: center;
-  background:teal;
+  background: teal;
   border-bottom: 1px solid rgba(216, 216, 216, 0.3);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
   display: flex;
@@ -20,7 +20,7 @@ header {
 }
 
 header span {
-  color: rgb(255, 255, 255);
+  color: white;
   font-size: 15px;
   font-weight: 800;
 }
