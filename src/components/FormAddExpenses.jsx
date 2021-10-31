@@ -45,7 +45,7 @@ class FormAddExpenses extends Component {
         <label htmlFor="value">
           <h5>Valor: </h5>
           <input
-            type="text"
+            type="number"
             name="value"
             id="value"
             value={ value }
