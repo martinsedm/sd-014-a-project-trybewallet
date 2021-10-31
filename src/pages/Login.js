@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { inforUsuarioAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -9,12 +12,20 @@ class Login extends React.Component {
       password: '',
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value,
     });
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { inforUsuario, history } = this.props;
+    inforUsuario(email);
+    history.push('/carteira');
   }
 
   render() {
@@ -36,23 +47,22 @@ class Login extends React.Component {
             name="email"
             value={ email }
             onChange={ this.handleChange }
-            required
           />
         </label>
-        <label htmlFor="password">
+        <label htmlFor="login-password">
           senha:
           <input
-            id="password"
-            data-testid="password-input"
             type="password"
             name="password"
+            id="login-password"
+            data-testid="password-input"
             value={ password }
             onChange={ this.handleChange }
-            required
           />
         </label>
         <button
           type="button"
+          onClick={ this.handleClick }
           disabled={ !validaEmailRegex.test(email) || password.length < caracMinimoSenha }
         >
           Entrar
@@ -62,4 +72,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  inforUsuario: (payload) => dispatch(inforUsuarioAction(payload)),
+});
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+  inforUsuario: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);

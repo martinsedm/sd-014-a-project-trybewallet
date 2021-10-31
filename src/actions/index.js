@@ -1,7 +1,7 @@
 // Coloque aqui suas actions do usuario.
 export const INFOR_USUARIO = 'INFOR_USUARIO';
 
-export const inforUsuario = (email) => ({
+export const inforUsuarioAction = (payload) => ({
   type: INFOR_USUARIO,
-  email,
+  payload,
 });

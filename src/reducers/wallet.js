@@ -1,4 +1,4 @@
-// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas no estado
+// Esse reducer será responsável por tratar o todas as informações relacionadas as despesas no estado do usuario.
 
 const INICIAL_STATE = {
   currencies: [],
@@ -10,7 +10,7 @@ function wallet(state = INICIAL_STATE, action) {
   case 'INFOR_USUARIO':
     return {
       ...state,
-      email: action.email,
+      email: action.payload.email,
     };
   default:
     return state;
