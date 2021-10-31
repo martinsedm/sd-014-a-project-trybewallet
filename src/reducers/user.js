@@ -1,15 +1,16 @@
 // Esse reducer será responsável por tratar as informações da pessoa usuária
+import { ATT_EMAIL } from '../actions';
+
 const INITIAL_STATE = {
   email: '',
-  password: '',
 };
 
 function userReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case NOME_DO_EVENTO:
+  case ATT_EMAIL:
     return {
       ...state,
-      chaveExemplo: action.payload.algumValor,
+      email: action.payload.email,
     };
   default:
     return state;
