@@ -20,6 +20,7 @@
   padding: 0.5em;
   text-align: center;
 }
+
 .expenses-table td {
   background-color: rgba(250, 235, 215, 0.452);
   border-radius: 5px;
