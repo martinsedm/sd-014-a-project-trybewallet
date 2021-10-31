@@ -5,14 +5,16 @@ import {
   addExpense as addExpenseAction,
   fetchCurrencies as fetchCurrenciesAction,
 } from '../actions';
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
 import fetchApi from '../services/api';
 
 const INITIAL_STATE = {
-  currency: '',
+  currency: 'USD',
   description: '',
   exchangeRates: {},
-  method: '',
-  tag: '',
+  method: 'Dinheiro',
+  tag: 'Alimentação',
   value: '',
 };
 
@@ -37,8 +39,10 @@ class AddExpenseForm extends Component {
   async handleClick() {
     const { addExpense } = this.props;
     const exchangeRates = await fetchApi();
+
     this.setState({ exchangeRates });
     addExpense(this.state);
+
     this.setState(INITIAL_STATE);
   }
 
@@ -47,101 +51,59 @@ class AddExpenseForm extends Component {
     return !(currency && description && method && tag && value);
   }
 
-  renderCurrencies() {
-    const { currencies } = this.props;
-    const { currency } = this.state;
+  renderButton() {
     return (
-      <label htmlFor="currency">
-        Moeda
-        <select
-          id="currency"
-          name="currency"
-          onChange={ this.handleChange }
-          value={ currency }
-        >
-          {currencies.map((curr) => (
-            <option key={ curr } value={ curr }>
-              {curr}
-            </option>
-          ))}
-        </select>
-      </label>
-    );
-  }
-
-  renderMethods() {
-    const { method } = this.state;
-    return (
-      <label htmlFor="method">
-        Método de pagamento
-        <select
-          id="method"
-          name="method"
-          onChange={ this.handleChange }
-          value={ method }
-        >
-          <option value="">Selecione</option>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de débito">Cartão de débito</option>
-        </select>
-      </label>
-    );
-  }
-
-  renderTags() {
-    const { tag } = this.state;
-    return (
-      <label htmlFor="tag">
-        Tag
-        <select id="tag" name="tag" onChange={ this.handleChange } value={ tag }>
-          <option value="">Selecione</option>
-          <option value="Alimentação">Alimentação</option>
-          <option value="Lazer">Lazer</option>
-          <option value="Trabalho">Trabalho</option>
-          <option value="Transporte">Transporte</option>
-          <option value="Saúde">Saúde</option>
-        </select>
-      </label>
+      <button
+        disabled={ this.isDisabled() }
+        onClick={ this.handleClick }
+        type="button"
+      >
+        Adicionar despesa
+      </button>
     );
   }
 
   render() {
-    const { description, value } = this.state;
+    const { currencies } = this.props;
+    const { currency, description, method, tag, value } = this.state;
     return (
       <div>
         <h1>Cadastro de despesas</h1>
         <form>
-          <label htmlFor="value">
-            Valor
-            <input
-              id="value"
-              name="value"
-              onChange={ this.handleChange }
-              type="text"
-              value={ value }
-            />
-          </label>
-          <label htmlFor="description">
-            Descrição
-            <input
-              id="description"
-              name="description"
-              onChange={ this.handleChange }
-              type="text"
-              value={ description }
-            />
-          </label>
-          {this.renderCurrencies()}
-          {this.renderMethods()}
-          {this.renderTags()}
-          <button
-            disabled={ this.isDisabled() }
-            onClick={ this.handleClick }
-            type="button"
-          >
-            Adicionar despesa
-          </button>
+          <FormInput
+            label="Valor"
+            name="value"
+            onChange={ this.handleChange }
+            value={ value }
+          />
+          <FormInput
+            label="Descrição"
+            name="description"
+            onChange={ this.handleChange }
+            value={ description }
+          />
+          <FormSelect
+            label="Moeda"
+            name="currency"
+            onChange={ this.handleChange }
+            options={ currencies }
+            value={ currency }
+          />
+          <FormSelect
+            label="Método de pagamento"
+            name="method"
+            onChange={ this.handleChange }
+            options={ ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'] }
+            value={ method }
+          />
+          <FormSelect
+            label="Tag"
+            name="tag"
+            onChange={ this.handleChange }
+            options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+            value={ tag }
+          />
+          {this.renderButton()}
         </form>
       </div>
     );
