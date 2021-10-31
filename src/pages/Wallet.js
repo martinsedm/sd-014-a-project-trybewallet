@@ -76,7 +76,7 @@ class Wallet extends React.Component {
       method,
       tag,
     } = this.state;
-    const { currencies, loading, expenses } = this.props;
+    const { currencies, loading } = this.props;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -91,7 +91,7 @@ class Wallet extends React.Component {
           <Select
             htmlFor="currency"
             text="Moeda"
-            options={ loading ? ['loading'] : currencies }
+            options={ loading ? ['loading'] : Object.keys(currencies) }
             value={ currency }
             handleChange={ this.handleChange }
           />
@@ -113,7 +113,7 @@ class Wallet extends React.Component {
             type="submit"
             text="Adicionar despesa"
           />
-          <ExpenseList expenses={ expenses } />
+          <ExpenseList />
         </form>
       </div>
     );
@@ -122,7 +122,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   saveExpense: PropTypes.func.isRequired,
-  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   loading: PropTypes.bool,

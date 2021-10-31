@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 function ExpenseList({ expenses }) {
   return (
@@ -25,23 +26,27 @@ function ExpenseList({ expenses }) {
         tag,
         exchangeRates,
       }) => {
-        const { ask } = exchangeRates[currency];
+        const { ask, name } = exchangeRates[currency];
         return (
           <li key={ id }>
             <div role="cell">{ description }</div>
             <div role="cell">{ tag }</div>
             <div role="cell">{ method }</div>
             <div role="cell">{ value }</div>
-            <div role="cell">{ currency }</div>
+            <div role="cell">{ name.split('/')[0] }</div>
             <div role="cell">{ (+ask).toFixed(2) }</div>
-            <div role="cell">{ `R$ ${(ask * value).toFixed(2)}` }</div>
-            <div role="cell">Real Brasileiro</div>
+            <div role="cell">{ `${(ask * value).toFixed(2)}` }</div>
+            <div role="cell">Real</div>
           </li>
         );
       }) }
     </ul>
   );
 }
+
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
 
 ExpenseList.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.shape({
@@ -55,4 +60,4 @@ ExpenseList.propTypes = {
   })).isRequired,
 };
 
-export default ExpenseList;
+export default connect(mapStateToProps)(ExpenseList);
