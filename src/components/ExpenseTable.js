@@ -18,19 +18,16 @@ const tableHeaders = [
 
 function ExpenseTable({ expenses }) {
   return (
-    <>
-      <h1>Tabela de despesas</h1>
-      <table>
-        <thead>
-          <tr>
-            {tableHeaders.map((header) => (
-              <th key={ header }>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <TableBody expenses={ expenses } />
-      </table>
-    </>
+    <table>
+      <thead>
+        <tr>
+          {tableHeaders.map((header) => (
+            <th key={ header }>{header}</th>
+          ))}
+        </tr>
+      </thead>
+      <TableBody expenses={ expenses } />
+    </table>
   );
 }
 

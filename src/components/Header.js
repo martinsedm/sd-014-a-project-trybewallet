@@ -12,13 +12,9 @@ function Header({ expenses, user }) {
 
   return (
     <header>
-      <h1>Cabeçalho</h1>
-      <div>
-        <p data-testid="email-field">{user}</p>
-        {/* change to span tag when styling */}
-        <span data-testid="total-field">{total}</span>
-        <span data-testid="header-currency-field">BRL</span>
-      </div>
+      <h4 data-testid="email-field">{user}</h4>
+      <span data-testid="total-field">{total.toFixed(2)}</span>
+      <span data-testid="header-currency-field">BRL</span>
     </header>
   );
 }
