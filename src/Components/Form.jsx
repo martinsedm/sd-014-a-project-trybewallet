@@ -40,13 +40,13 @@ class Form extends React.Component {
     const { moedas } = this.state;
     return (
       <form>
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
-          <input name="valor" type="text" />
+          <input name="valor" id="value" type="text" />
         </label>
-        <label htmlFor="description">
+        <label htmlFor="descripion">
           Descrição
-          <input name="description" type="text" />
+          <input name="descrição" type="text" id="descripion" />
         </label>
         <label htmlFor="sigla">
           Moeda
@@ -56,20 +56,20 @@ class Form extends React.Component {
         </label>
         <label htmlFor="payment">
           Método de pagamento
-          <select name="payment">
+          <select name="Método de pagamento" id="payment">
             <option value="cash">Dinheiro</option>
             <option value="credit">Cartão de crédito</option>
             <option value="debit">Cartão de débito</option>
           </select>
         </label>
-        <label htmlFor="tage">
+        <label htmlFor="tag-id">
           Tag
-          <select name="tag">
-            <option value="food">Alimentação</option>
-            <option value="fun">Lazer</option>
-            <option value="work">Trabalho</option>
-            <option value="transport">Transporte</option>
-            <option value="healthy">Saúde</option>
+          <select name="tag" id="tag-id">
+            <option name="Alimentação">Alimentação</option>
+            <option name="Lazer">Lazer</option>
+            <option name="Trabalho">Trabalho</option>
+            <option name="Transporte">Transporte</option>
+            <option name="Saúde">Saúde</option>
           </select>
         </label>
       </form>
