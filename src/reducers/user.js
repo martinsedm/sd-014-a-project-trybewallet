@@ -1,14 +1,20 @@
-// Esse reducer será responsável por tratar as informações da pessoa usuária
+// Esse reducer será responsável por tratar as informações da pessoa usuária no estado
+import { INFOR_USUARIO } from '../actions';
 
-import { REDUX_ACTION } from '../actions/index';
+const INITIAL_STATE = {
+  email: '',
+};
 
-const INITIAL_STATE = { email: '' };
-
-export default function user(state = INITIAL_STATE, action) {
+function user(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case REDUX_ACTION:
-    return { ...state, email: action.payload };
+  case INFOR_USUARIO:
+    return {
+      ...state,
+      email: action.payload,
+    };
   default:
     return state;
   }
 }
+
+export default user;
