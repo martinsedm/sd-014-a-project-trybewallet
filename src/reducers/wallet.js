@@ -11,7 +11,7 @@ function userReducer(state = INITIAL_STATE, action) {
   case UPDATE_WALLET:
     return {
       ...state,
-      chaveExemplo: action.payload.algumValor,
+      expenses: [...state.expenses, action.payload.expenses],
     };
   default:
     return state;

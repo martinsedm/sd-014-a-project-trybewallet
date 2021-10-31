@@ -8,3 +8,10 @@ export const attEmail = (email) => ({
     email,
   },
 });
+
+export const uptdWallet = (expenses) => ({
+  type: UPDATE_WALLET,
+  payload: {
+    expenses,
+  },
+});
