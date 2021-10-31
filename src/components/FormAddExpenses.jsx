@@ -10,12 +10,14 @@ import Tag from './Tag';
 class FormAddExpenses extends Component {
   constructor(props) {
     super(props);
+    const { currency } = this.props;
     this.state = {
-      value: 0,
-      description: 'Adicione uma descrição',
+      value: '',
+      description: '',
       method: '',
       exchangeRates: {},
       tag: '',
+      currency,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -28,14 +30,14 @@ class FormAddExpenses extends Component {
   }
 
   async handleClick() {
-    const { expensesAction } = this.props;
+    const { newExpense } = this.props;
     const exchangeRates = await fetchCurrencies();
     this.setState({ exchangeRates });
-    expensesAction(this.state);
+    newExpense(this.state);
   }
 
   render() {
-    const { value, description, method, tag } = this.state;
+    const { value, description, method, tag, currency } = this.state;
     return (
       <form>
         <label htmlFor="value">
@@ -65,12 +67,12 @@ class FormAddExpenses extends Component {
             value={ method }
             onChange={ this.handleChange }
           >
-            <option value="cash">Dinheiro</option>
-            <option value="credit-card">Cartão de crédito</option>
-            <option value="debit-card">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
-        <Currencies value={ method } handleChange={ this.handleChange } />
+        <Currencies value={ currency } handleChange={ this.handleChange } />
         <Tag value={ tag } handleChange={ this.handleChange } />
         <button type="button" onClick={ this.handleClick }>Adicionar despesa</button>
       </form>
@@ -79,11 +81,16 @@ class FormAddExpenses extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  expensesAction: (expenses) => dispatch(expensesForm(expenses)),
+  newExpense: (state) => dispatch(expensesForm(state)),
+});
+
+const mapStateToProps = (state) => ({
+  currency: state.wallet.currency,
 });
 
 FormAddExpenses.propTypes = {
-  expensesAction: PropTypes.func.isRequired,
+  newExpense: PropTypes.func.isRequired,
+  currency: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(FormAddExpenses);
+export default connect(mapStateToProps, mapDispatchToProps)(FormAddExpenses);
