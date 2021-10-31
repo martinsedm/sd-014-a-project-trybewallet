@@ -7,6 +7,7 @@ import FormSelect from './FormSelect';
 
 import {
   addExpense as addExpenseAction,
+  editExpense as editExpenseAction,
   fetchCurrencies as fetchCurrenciesAction,
 } from '../actions';
 import fetchApi from '../services/api';
@@ -26,11 +27,26 @@ class AddExpenseForm extends Component {
     this.state = INITIAL_STATE;
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.updateState = this.updateState.bind(this);
   }
 
   componentDidMount() {
     const { fetchCurrencies } = this.props;
     fetchCurrencies();
+  }
+
+  componentDidUpdate(nextProps) {
+    const { editId, expenses, isEditing } = this.props;
+
+    // (isEditing !== nextProps.isEditing) is used to prevent looping when editing
+    if (isEditing && isEditing !== nextProps.isEditing) {
+      const { currency, description, method, tag, value } = expenses[editId];
+      this.updateState({ currency, description, method, tag, value });
+    }
+  }
+
+  updateState(newState) {
+    this.setState(newState);
   }
 
   handleChange(event) {
@@ -53,8 +69,23 @@ class AddExpenseForm extends Component {
     return !(currency && description && method && tag && value);
   }
 
+  handleEditExpense(expense) {
+    const { editExpense } = this.props;
+
+    editExpense(expense);
+    this.setState(INITIAL_STATE);
+  }
+
   renderButton() {
-    return (
+    const { editId: id, isEditing } = this.props;
+    const { currency, description, method, tag, value } = this.state;
+    const expense = { currency, description, id, method, tag, value };
+
+    return isEditing ? (
+      <button onClick={ () => this.handleEditExpense(expense) } type="button">
+        Editar despesa
+      </button>
+    ) : (
       <button
         disabled={ this.isDisabled() }
         onClick={ this.handleClick }
@@ -70,7 +101,6 @@ class AddExpenseForm extends Component {
     const { currency, description, method, tag, value } = this.state;
     return (
       <div>
-        <h1>Cadastro de despesas</h1>
         <form>
           <FormInput
             label="Valor"
@@ -102,7 +132,13 @@ class AddExpenseForm extends Component {
             label="Tag"
             name="tag"
             onChange={ this.handleChange }
-            options={ ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'] }
+            options={ [
+              'Alimentação',
+              'Lazer',
+              'Trabalho',
+              'Transporte',
+              'Saúde',
+            ] }
             value={ tag }
           />
           {this.renderButton()}
@@ -114,17 +150,30 @@ class AddExpenseForm extends Component {
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
+  editId: state.wallet.editId,
+  expenses: state.wallet.expenses,
+  isEditing: state.wallet.isEditing,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   addExpense: (expense) => dispatch(addExpenseAction(expense)),
+  editExpense: (expense) => dispatch(editExpenseAction(expense)),
   fetchCurrencies: () => dispatch(fetchCurrenciesAction()),
 });
 
 AddExpenseForm.propTypes = {
   addExpense: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editExpense: PropTypes.func.isRequired,
+  editId: PropTypes.number,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool,
+};
+
+AddExpenseForm.defaultProps = {
+  editId: null,
+  isEditing: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddExpenseForm);

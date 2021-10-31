@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { removeExpense as removeExpenseAction } from '../actions';
+import {
+  removeExpense as removeExpenseAction,
+  setToEditExpense as setToEditExpenseAction,
+} from '../actions';
 
-function TableBody({ expenses, removeExpense }) {
+function TableBody({ expenses, removeExpense, setToEditExpense }) {
   return (
     <tbody>
       {expenses.map(
@@ -20,11 +23,19 @@ function TableBody({ expenses, removeExpense }) {
               <td>{method}</td>
               <td>{value}</td>
               <td>{exchangeName}</td>
-              <td>{Math.round(exchangeRate * 100) / 100}</td>
-              <td>{Math.round(convertedValue * 100) / 100}</td>
+              {/* <td>{Math.round(exchangeRate * 100) / 100}</td> */}
+              <td>{Number(exchangeRate).toFixed(2)}</td>
+              {/* <td>{Math.round(convertedValue * 100) / 100}</td> */}
+              <td>{Number(convertedValue).toFixed(2)}</td>
               <td>Real</td>
               <td>
-                <button type="button">Editar</button>
+                <button
+                  data-testid="edit-btn"
+                  onClick={ () => setToEditExpense(id) }
+                  type="button"
+                >
+                  Editar
+                </button>
                 <button
                   data-testid="delete-btn"
                   onClick={ () => removeExpense(id) }
@@ -43,6 +54,7 @@ function TableBody({ expenses, removeExpense }) {
 
 const mapDispatchToProps = (dispatch) => ({
   removeExpense: (id) => dispatch(removeExpenseAction(id)),
+  setToEditExpense: (id) => dispatch(setToEditExpenseAction(id)),
 });
 
 TableBody.propTypes = {
@@ -58,6 +70,7 @@ TableBody.propTypes = {
     }),
   ).isRequired,
   removeExpense: PropTypes.func.isRequired,
+  setToEditExpense: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(TableBody);
