@@ -10,7 +10,7 @@ function wallet(state = INICIAL_STATE, action) {
   case 'INFOR_USUARIO':
     return {
       ...state,
-      email: action.payload.email,
+      email: action.email,
     };
   default:
     return state;

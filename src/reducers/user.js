@@ -10,7 +10,7 @@ function user(state = INITIAL_STATE, action) {
   case INFOR_USUARIO:
     return {
       ...state,
-      email: action.payload,
+      email: action.email,
     };
   default:
     return state;
