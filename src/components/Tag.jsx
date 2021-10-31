@@ -7,7 +7,7 @@ class Tag extends Component {
     return (
       <div>
         <label htmlFor="tag">
-          Tag
+          <h5>Tag: </h5>
           <select
             name="tag"
             value={ value }

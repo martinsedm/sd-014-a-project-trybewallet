@@ -2,6 +2,7 @@ import React from 'react';
 
 import Header from '../components/Header';
 import FormAddExpenses from '../components/FormAddExpenses';
+import TableExpenses from '../components/TableExpenses';
 
 class Wallet extends React.Component {
   render() {
@@ -9,6 +10,7 @@ class Wallet extends React.Component {
       <main>
         <Header />
         <FormAddExpenses />
+        <TableExpenses />
       </main>
     );
   }

@@ -7,6 +7,8 @@ import { expensesAction as expensesForm } from '../actions';
 import Currencies from './Currencies';
 import Tag from './Tag';
 
+import '../css/form.css';
+
 class FormAddExpenses extends Component {
   constructor(props) {
     super(props);
@@ -39,9 +41,9 @@ class FormAddExpenses extends Component {
   render() {
     const { value, description, method, tag, currency } = this.state;
     return (
-      <form>
+      <form className="form-container">
         <label htmlFor="value">
-          Valor
+          <h5>Valor: </h5>
           <input
             type="text"
             name="value"
@@ -51,7 +53,7 @@ class FormAddExpenses extends Component {
           />
         </label>
         <label htmlFor="description">
-          Descrição
+          <h5>Descrição: </h5>
           <textarea
             name="description"
             id="description"
@@ -60,7 +62,7 @@ class FormAddExpenses extends Component {
           />
         </label>
         <label htmlFor="method">
-          Método de Pagamento
+          <h5>Método de Pagamento: </h5>
           <select
             name="method"
             id="method"

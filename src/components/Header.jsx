@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import '../css/header.css';
+
 class Header extends Component {
   render() {
     const currency = 'BRL';
@@ -12,19 +14,19 @@ class Header extends Component {
     }, 0);
 
     return (
-      <header>
+      <header className="header-container">
         <label htmlFor="email-field">
-          E-mail
+          <span>E-mail: </span>
           <span data-testid="email-field">
             { email }
           </span>
         </label>
         <label htmlFor="total-field">
-          Total
+          <span>Total: </span>
           <span data-testid="total-field">{ expended }</span>
         </label>
         <label htmlFor="header-currency-field">
-          Moeda
+          <span>Moeda: </span>
           <span data-testid="header-currency-field">{ currency }</span>
         </label>
       </header>

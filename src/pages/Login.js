@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { emailAction } from '../actions';
 import { verifyEmail, verifyPassword } from '../utils/verifyLoginInputs';
 
+import '../css/login.css';
+
 class Login extends React.Component {
   constructor() {
     super();
@@ -26,37 +28,39 @@ class Login extends React.Component {
     const { dispatchEmail, history } = this.props;
     const buttonTrue = !(verifyEmail(email) && verifyPassword(password));
     return (
-      <div>
-        <label htmlFor="email-login">
-          E-mail
-          <input
-            name="email"
-            type="text"
-            data-testid="email-input"
-            onChange={ this.handleChange }
-            value={ email }
-          />
-        </label>
-        <label htmlFor="password-input">
-          Senha
-          <input
-            name="password"
-            type="password"
-            data-testid="password-input"
-            onChange={ this.handleChange }
-            value={ password }
-          />
-        </label>
-        <button
-          type="button"
-          disabled={ buttonTrue }
-          onClick={ () => {
-            dispatchEmail(email);
-            history.push('/carteira');
-          } }
-        >
-          Entrar
-        </button>
+      <div className="login-box">
+        <div className="login">
+          <label htmlFor="email-login">
+            <h5>E-mail</h5>
+            <input
+              name="email"
+              type="text"
+              data-testid="email-input"
+              onChange={ this.handleChange }
+              value={ email }
+            />
+          </label>
+          <label htmlFor="password-input">
+            <h5>Senha</h5>
+            <input
+              name="password"
+              type="password"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+              value={ password }
+            />
+          </label>
+          <button
+            type="button"
+            disabled={ buttonTrue }
+            onClick={ () => {
+              dispatchEmail(email);
+              history.push('/carteira');
+            } }
+          >
+            Entrar
+          </button>
+        </div>
       </div>
     );
   }

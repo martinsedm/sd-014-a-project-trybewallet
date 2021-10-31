@@ -16,7 +16,7 @@ class Currencies extends Component {
     return (
       <div>
         <label htmlFor="currency">
-          Moeda
+          <h5>Moeda: </h5>
           <select
             name="currency"
             id="currency"
