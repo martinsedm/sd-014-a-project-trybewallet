@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import FormInput from './FormInput';
+import FormSelect from './FormSelect';
+
 import {
   addExpense as addExpenseAction,
   fetchCurrencies as fetchCurrenciesAction,
 } from '../actions';
-import FormInput from './FormInput';
-import FormSelect from './FormSelect';
 import fetchApi from '../services/api';
 
 const INITIAL_STATE = {

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { setUserEmail } from '../actions';
-import Input from '../components/Input';
+import LoginInput from '../components/LoginInput';
 
 class Login extends React.Component {
   constructor(props) {
@@ -42,14 +43,14 @@ class Login extends React.Component {
     return (
       <div>
         <form>
-          <Input
+          <LoginInput
             name="email"
             onChange={ this.handleChange }
             placeholder="Email"
             type="email"
             value={ email }
           />
-          <Input
+          <LoginInput
             name="password"
             onChange={ this.handleChange }
             placeholder="Senha"

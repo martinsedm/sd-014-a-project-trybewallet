@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function Input({ name, onChange, placeholder, type, value }) {
+export default function LoginInput({ name, onChange, placeholder, type, value }) {
   return (
     <input
       data-testid={ `${name}-input` }
@@ -14,7 +14,7 @@ export default function Input({ name, onChange, placeholder, type, value }) {
   );
 }
 
-Input.propTypes = {
+LoginInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
