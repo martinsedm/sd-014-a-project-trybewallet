@@ -1,23 +1,20 @@
 import React from 'react';
 
-function Login() {
-  return (
-    <div>
-      <label for="email-input">
-        Email:
-        <input type="email" data-testid="email-input" id="email-input" />
-      </label>
-      <label for="password-input">
-        Password:
+class Login extends React.Component {
+  render() {
+    return (
+      <div>
+        <div>Login</div>
+        <input type="email" data-testid="email-input" />
         <input
           type="password"
+          placeholder="Insira sua senha"
           data-testid="password-input"
-          id="password-input"
         />
-      </label>
-      <button type="button">Entrar</button>
-    </div>
-  );
+        <button type="button">Entrar</button>
+      </div>
+    );
+  }
 }
 
 export default Login;

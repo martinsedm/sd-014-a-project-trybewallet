@@ -1,25 +1,16 @@
-import { INPUT_EMAIL, INPUT_PASSWORD } from '../actions/actionsTypes';
-
 const INITIAL_STATE = {
-  email: '',
-  password: '',
+  user: {
+    email: '',
+  },
 };
 
-const saveInputLogin = (state = INITIAL_STATE, action) => {
+const user = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case INPUT_EMAIL:
-      return {
-        ...state,
-        email: action.payload,
-      };
-    case INPUT_PASSWORD:
-      return {
-        ...state,
-        email: action.payload,
-      };
-    default:
-      return INITIAL_STATE;
+  case 'USER_LOGIN':
+    return { email: action.payload };
+  default:
+    return state;
   }
 };
 
-export default saveInputLogin;
+export default user;
