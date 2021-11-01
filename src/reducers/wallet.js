@@ -1,7 +1,7 @@
 import { SET_CURRENCIES, SAVE_EXPENSE, REQUEST_CURRECIES } from '../actions';
 
 const INITIAL_STATE = {
-  currencies: {},
+  currencies: [],
   expenses: [],
   loading: false,
 };
@@ -17,7 +17,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case SET_CURRENCIES:
     return {
       ...state,
-      currencies: { ...payload },
+      currencies: [...payload],
       loading: false,
     };
   case SAVE_EXPENSE:

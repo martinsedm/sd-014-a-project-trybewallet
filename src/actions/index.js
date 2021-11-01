@@ -28,6 +28,6 @@ export const fetchCurrencies = () => (
   (dispatch) => {
     dispatch(requestCurrencies());
     return fetchCurrency(URL)
-      .then((currencies) => dispatch(setCurrencies(currencies)));
+      .then((currencies) => dispatch(setCurrencies(Object.keys(currencies))));
   }
 );
