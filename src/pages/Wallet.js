@@ -21,7 +21,7 @@ class Wallet extends React.Component {
     }, 0);
     return total.toFixed(2);
   }
-  
+
   render() {
     const { email } = this.props;
     return (
