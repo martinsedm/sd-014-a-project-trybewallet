@@ -4,6 +4,7 @@ export const SET_USER_DATA = 'SET_USER_DATA';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SAVE_EXPENSE = 'SAVE_EXPENSE';
 export const REQUEST_CURRECIES = 'REQUEST_CURRENCIES';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const setUserData = (payload) => ({
   type: SET_USER_DATA,
@@ -22,6 +23,11 @@ export const saveExpense = (payload) => ({
 
 const requestCurrencies = () => ({
   type: REQUEST_CURRECIES,
+});
+
+export const removeExpense = (payload) => ({
+  type: REMOVE_EXPENSE,
+  payload,
 });
 
 export const fetchCurrencies = () => (
