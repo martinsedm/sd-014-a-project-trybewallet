@@ -7,21 +7,21 @@ const INITIAL_STATE = {
 
 function wallet(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case REQUEST_API:
-      return {
-        ...state,
-        expenses: [
-          ...state.expenses,
-          {
-            id: state.expenses.length,
-            ...action.state,
-            exchangeRates: action.payload,
-          },
-        ],
-      };
+  case REQUEST_API:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        {
+          id: state.expenses.length,
+          ...action.state,
+          exchangeRates: action.payload,
+        },
+      ],
+    };
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }
 
