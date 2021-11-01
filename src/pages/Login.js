@@ -2,7 +2,33 @@ import React from 'react';
 
 class Login extends React.Component {
   render() {
-    return <div>Login</div>;
+    return (
+      <div>
+        <form>
+          <label htmlFor="email">
+            E-mail
+            <input
+              data-testid="email-input"
+              type="email"
+              name="email"
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              data-testid="password-input"
+              type="password"
+              name="password"
+            />
+          </label>
+          <button
+            type="button"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
+    );
   }
 }
 
