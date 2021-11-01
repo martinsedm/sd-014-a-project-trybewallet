@@ -14,12 +14,14 @@ class Login extends React.Component {
       buttonDesabled: true,
     };
   }
+
   handleChange({ target }) {
     const { name, value } = target;
     this.setState({
       [name]: value,
     }, () => this.inputValidation());
   }
+  
   inputValidation() {
     // REGEX retirado do post: https://stackoverflow.com/questions/35788383/regex-validation-in-javascript-email
     const emailValidationRegex = /\S+@\S+\.\S+/;
