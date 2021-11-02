@@ -1,18 +1,48 @@
-import { USER, REQUEST_API } from './actionTypes';
+// user
+export const SET_EMAIL = 'user/SET_EMAIL';
+export const setUserEmail = (payload) => (
+  { type: SET_EMAIL, payload }
+);
 
-export const userAction = (email) => ({
-  type: USER,
-  payload: email,
-});
+// form
+export const SET_VALUE = 'form/SET_VALUE';
+export const SET_DESCRIPTION = 'form/SET_DESCRIPTION';
+export const SET_COIN = 'form/SET_COIN';
+export const SET_PAYMENT = 'form/SET_PAYMENT';
+export const SET_TAG = 'form/SET_TAG';
+export const setFormValue = (payload) => (
+  { type: SET_VALUE, payload }
+);
+export const setFormDesc = (payload) => (
+  { type: SET_DESCRIPTION, payload }
+);
+export const setFormCoin = (payload) => (
+  { type: SET_COIN, payload }
+);
+export const setFormPayment = (payload) => (
+  { type: SET_PAYMENT, payload }
+);
+export const setFormTag = (payload) => (
+  { type: SET_TAG, payload }
+);
 
-const requestApi = (json, state) => ({
-  type: REQUEST_API,
-  payload: json,
-  state,
-});
+// wallet
+export const SET_TOTAL = 'wallet/SET_TOTAL';
+export const ERASE_TOTAL = 'wallet/ERASE_TOTAL';
+export const CREATE_EXPENSE = 'wallet/CREATE_EXPENSE';
+export const ERASE_EXPENSE = 'wallet/ERASE_EXPENSE';
+export const createExpense = (payload) => (
+  { type: CREATE_EXPENSE, payload }
+);
 
-export function fetchApi(state) {
-  return (dispatch) => fetch('https://economia.awesomeapi.com.br/json/all')
-    .then((response) => response.json())
-    .then((json) => dispatch(requestApi(json, state)));
-}
+export const setTotal = (payload) => (
+  { type: SET_TOTAL, payload }
+);
+
+export const eraseTotal = (payload) => (
+  { type: ERASE_TOTAL, payload }
+);
+
+export const eraseExpense = (payload) => (
+  { type: ERASE_EXPENSE, payload }
+);
