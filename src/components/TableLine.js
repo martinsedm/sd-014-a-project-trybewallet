@@ -15,7 +15,8 @@ const TableLine = ({ expenses }) => {
       {spends.map((spend, index) => {
         const { description, tag, method, value, exchangeRates, currency } = spend;
         const roundedAsk = Math.round(exchangeRates[currency].ask * 100) / 100;
-        const roundedConverted = Math.round(exchangeRates[currency].ask * value * 100) / 100;
+        const roundedConverted = Math.round(exchangeRates[currency]
+            .ask * value * 100) / 100;
 
         return (
           <tr key={ index }>
