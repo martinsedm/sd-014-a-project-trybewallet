@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import EraseBtn from './EraseBtn';
 
 const TableLine = ({ expenses }) => {
   const [spends, setSpends] = useState([]);
@@ -28,7 +29,10 @@ const TableLine = ({ expenses }) => {
             <td>{ roundedAsk }</td>
             <td>{ roundedConverted }</td>
             <td>Real</td>
-            <td>Editar/Excluir</td>
+            <td>
+                <button type="button">Editar</button>
+                <EraseBtn spend={ spend } value={ exchangeRates[currency].ask * value } />
+              </td>
           </tr>
         );
       })}
