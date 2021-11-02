@@ -21,4 +21,5 @@ function InputEmail({ handleChange }) {
 InputEmail.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
+
 export default InputEmail;
