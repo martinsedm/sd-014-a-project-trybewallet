@@ -1,6 +1,9 @@
 // Página de Formulário de despesa.
 
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { fetchAPIMoeda } from '../actions';
 
 class FormExpense extends React.Component {
   constructor() {
@@ -9,11 +12,16 @@ class FormExpense extends React.Component {
     this.state = {
       valor: 0,
       descricao: '',
-      moeda: '',
-      pagamento: '',
-      tag: '',
+      moeda: 'USD',
+      pagamento: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const { definirValorMoedas } = this.props;
+    definirValorMoedas();
   }
 
   handleChange({ target }) {
@@ -24,7 +32,7 @@ class FormExpense extends React.Component {
 
   render() {
     const { valor, descricao, moeda, pagamento, tag } = this.state;
-
+    const { currencies } = this.props;
     return (
       <form>
         <label htmlFor="valor">
@@ -48,7 +56,7 @@ class FormExpense extends React.Component {
         <label htmlFor="moeda">
           Moeda:
           <select id="moeda" value={ moeda }>
-            <option name="BRL">BRL</option>
+            {currencies.map((moedas) => (<option key={ moedas }>{moedas}</option>))}
           </select>
         </label>
         <label htmlFor="metodoPagamento">
@@ -69,9 +77,20 @@ class FormExpense extends React.Component {
             <option id="saúde">Saúde</option>
           </select>
         </label>
-      </form>
-    );
+        <button type="button">Adicionar despesa</button>
+      </form>);
   }
 }
 
-export default FormExpense;
+const mapStateToProps = (state) => ({ currencies: state.wallet.currencies });
+
+const mapDispatchToProps = (dispatch) => ({
+  definirValorMoedas: (moedas) => dispatch(fetchAPIMoeda(moedas)),
+});
+
+FormExpense.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.any).isRequired,
+  definirValorMoedas: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);
