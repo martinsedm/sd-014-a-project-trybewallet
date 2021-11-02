@@ -35,7 +35,6 @@ const Header = ({ email, expenses = [] }) => {
       setTotalValue(Math.round(result * 100) / 100);
     }
   }, [expenses]);
-
   return (
     <header>
       <span data-testid="email-field">{`E-mail: ${email}`}</span>

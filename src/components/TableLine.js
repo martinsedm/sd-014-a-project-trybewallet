@@ -30,9 +30,9 @@ const TableLine = ({ expenses }) => {
             <td>{ roundedConverted }</td>
             <td>Real</td>
             <td>
-                <button type="button">Editar</button>
-                <EraseBtn spend={ spend } value={ exchangeRates[currency].ask * value } />
-              </td>
+              <button type="button">Editar</button>
+              <EraseBtn spend={ spend } value={ exchangeRates[currency].ask * value } />
+            </td>
           </tr>
         );
       })}
