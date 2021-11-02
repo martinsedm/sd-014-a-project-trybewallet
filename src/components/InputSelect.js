@@ -19,5 +19,4 @@ InputSelect.propTypes = {
   id: PropTypes.string.isRequired,
   listSelect: PropTypes.arrayOf().isRequired,
 };
-
 export default InputSelect;

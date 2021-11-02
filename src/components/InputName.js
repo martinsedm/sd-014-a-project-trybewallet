@@ -20,5 +20,4 @@ function InputName({ handleChange }) {
 InputName.propTypes = {
   handleChange: PropTypes.func.isRequired,
 };
-
 export default InputName;

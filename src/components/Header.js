@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import digitalWallet from '../image/digital-wallet.png';
 
 function Header({ email, expenses }) {
   // Função que calcular o total.

@@ -1,0 +1,11 @@
+.flex {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container-header {
+  background-color: rgba(28, 184, 65, 0.5);
+  height: 60px;
+  width: 100%;
+}

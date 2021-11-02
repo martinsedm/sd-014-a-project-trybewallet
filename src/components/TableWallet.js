@@ -89,9 +89,7 @@ TableWallet.defaultProps = {
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
-
 const mapDispatchToProps = (dispatch) => ({
   deleteExpense: (payload) => dispatch(delExpenses(payload)),
 });
-
 export default connect(mapStateToProps, mapDispatchToProps)(TableWallet);

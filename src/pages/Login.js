@@ -1,93 +1,145 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { InputEmail, InputName } from '../components';
-import { userAction } from '../actions';
+import PropTypes from 'prop-types';
+import { Input, InputSelect, Header, TableWallet } from '../components';
+import { walletFetch, setExpenses, updateExpenses } from '../actions';
+import './wallet.css';
 
-class Login extends React.Component {
+class Wallet extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      email: false,
-      password: false,
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validEmailPassword = this.validEmailPassword.bind(this);
+    this.cont = 0;
+    this.listTag = [
+      'Alimentação',
+      'Lazer',
+      'Trabalho',
+      'Transporte',
+      'Saúde',
+    ];
+
+    this.paymentMethods = [
+      'Dinheiro',
+      'Cartão de crédito',
+      'Cartão de débito',
+    ];
+
+    this.addDismissal = this.addDismissal.bind(this);
+    this.defaltSelect = this.defaltSelect.bind(this);
   }
 
-  handleSubmit(event) {
-    const { updateUser, history } = this.props;
-    // pega o email pra madna pra store.
-    const email = document.getElementById('aligned-name');
-    event.preventDefault();
-    updateUser({ email: email.value });
-    history.push('/carteira');
+  componentDidMount() {
+    const { fetchApi } = this.props;
+    fetchApi();
   }
 
-  // Função resposavel por valida o email e a senha.
-  validEmailPassword(event) {
-    const { id, value } = event.target;
+  defaltSelect() {
+    document.getElementById('currency').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('method').value = 'USD';
+    document.getElementById('add-button').textContent = 'Adicionar despesa';
+  }
 
-    const regexEmailValid = /^[\w+.]+@\w+\.\w{2,}(?:\.\w{2})?$/;
-    const regexPasswordValid = /^[a-zA-Z0-9]{6}.*$/;
-
-    if (id === 'aligned-name') {
-      if (regexEmailValid.test(value)) {
-        return this.setState({ email: true });
-      }
-      this.setState({ email: false });
-    }
-
-    if (id === 'aligned-password') {
-      if (regexPasswordValid.test(value)) {
-        return this.setState({ password: true });
-      }
-      this.setState({ password: false });
+  addDismissal(event) {
+    const { fetchApi, setExpensess, upExpenses } = this.props;
+    const { value } = document.getElementById('value');
+    const description = document.getElementById('description').value;
+    const currency = document.getElementById('currency').value;
+    const method = document.getElementById('method').value;
+    const tag = document.getElementById('tag').value;
+    if (event.target.textContent === 'Adicionar despesa') {
+      fetchApi();
+      const { currencies } = this.props;
+      setExpensess({
+        id: this.cont,
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates: currencies,
+      });
+      this.cont += 1;
+    } else {
+      const { currencies } = this.props;
+      upExpenses({
+        id: Number(event.target.name),
+        value,
+        description,
+        currency,
+        method,
+        tag,
+        exchangeRates: currencies,
+      });
+      this.defaltSelect();
     }
   }
 
   render() {
-    const { email, password } = this.state;
+    const { currencies, email } = this.props;
+    const lestSelecCurrencies = Object.keys(currencies)
+      .filter((currencie) => currencie !== 'USDT');
+
     return (
-      <section className="flex-user">
-        <form
-          onSubmit={ this.handleSubmit }
-          className="pure-form pure-form-aligned"
-        >
-          <fieldset>
-            <img
-              className="image-user"
-              src="https://image.flaticon.com/icons/png/512/149/149071.png"
-              width="150px"
-              alt=""
+      <>
+        <Header email={ email } />
+        <section>
+          <form className="pure-form">
+            <Input label="Valor" id="value" />
+            <Input label="Descrição" id="description" />
+            <InputSelect
+              id="currency"
+              label="Moeda"
+              listSelect={ lestSelecCurrencies }
             />
-            <InputName handleChange={ this.validEmailPassword } />
-            <InputEmail handleChange={ this.validEmailPassword } />
-            <div className="pure-controls">
-              <button
-                disabled={ (email && password) ? '' : 'true' }
-                type="submit"
-                className="pure-button pure-button-primary"
-              >
-                Entrar
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </section>
+            <InputSelect
+              id="method"
+              label="Método de pagamento"
+              listSelect={ this.paymentMethods }
+
+            />
+            <InputSelect
+              id="tag"
+              label="Tag"
+              listSelect={ this.listTag }
+            />
+            <button
+              id="add-button"
+              onClick={ this.addDismissal }
+              type="button"
+              className="button-success pure-button"
+            >
+              Adicionar despesa
+            </button>
+          </form>
+        </section>
+        <TableWallet />
+      </>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  updateUser: (payload) => dispatch(userAction(payload)),
+const mapStateToProps = (state) => ({
+  email: state.user.email,
+  currencies: state.wallet.currencies[0],
+  expenses: state.wallet.expenses,
 });
 
-Login.propTypes = {
-  updateUser: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
+const mapDispatchToProps = (dispatch) => ({
+  fetchApi: () => dispatch(walletFetch()),
+  setExpensess: (payload) => dispatch(setExpenses(payload)),
+  upExpenses: (payload) => dispatch(updateExpenses(payload)),
+});
+
+Wallet.propTypes = {
+  email: PropTypes.string.isRequired,
+  fetchApi: PropTypes.func.isRequired,
+  currencies: PropTypes.shape(),
+  setExpensess: PropTypes.func.isRequired,
+  upExpenses: PropTypes.func.isRequired,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+Wallet.defaultProps = {
+  currencies: {},
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
