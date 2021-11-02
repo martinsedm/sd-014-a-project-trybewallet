@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Form from '../components/Form';
 import Expenses from '../components/Expenses';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   totalValueExpenses() {
@@ -33,6 +34,7 @@ class Wallet extends React.Component {
         </header>
         <Form />
         <Expenses />
+        <Table />
       </>
     );
   }
