@@ -1,48 +1,39 @@
-// user
-export const SET_EMAIL = 'user/SET_EMAIL';
-export const setUserEmail = (payload) => (
-  { type: SET_EMAIL, payload }
-);
+export const SET_USER = 'SET_USER';
+export const SET_WALLET = 'SET_WALLET';
+export const REQUEST_FETCH = 'REQUEST_FECTH';
+export const RECEIVE_FETCH = 'RECEIVE_FETCH,';
+export const FAILL_FETCH = 'FAILL_FECTH';
+export const SET_EXPENSE = 'SET_EXPENSE';
+export const DEL_EXPENSE = 'DEL_EXPENSE';
+export const UPDATE_EXENSE = 'UPDATE_EXENSE';
 
-// form
-export const SET_VALUE = 'form/SET_VALUE';
-export const SET_DESCRIPTION = 'form/SET_DESCRIPTION';
-export const SET_COIN = 'form/SET_COIN';
-export const SET_PAYMENT = 'form/SET_PAYMENT';
-export const SET_TAG = 'form/SET_TAG';
-export const setFormValue = (payload) => (
-  { type: SET_VALUE, payload }
-);
-export const setFormDesc = (payload) => (
-  { type: SET_DESCRIPTION, payload }
-);
-export const setFormCoin = (payload) => (
-  { type: SET_COIN, payload }
-);
-export const setFormPayment = (payload) => (
-  { type: SET_PAYMENT, payload }
-);
-export const setFormTag = (payload) => (
-  { type: SET_TAG, payload }
-);
+export const userAction = (payload) => ({ type: SET_USER, payload });
+export const walletAction = (payload) => ({ type: SET_WALLET, payload });
+export const setExpenses = (payload) => ({ type: SET_EXPENSE, payload });
+export const delExpenses = (payload) => ({ type: DEL_EXPENSE, payload });
+export const updateExpenses = (payload) => ({ type: UPDATE_EXENSE, payload });
 
-// wallet
-export const SET_TOTAL = 'wallet/SET_TOTAL';
-export const ERASE_TOTAL = 'wallet/ERASE_TOTAL';
-export const CREATE_EXPENSE = 'wallet/CREATE_EXPENSE';
-export const ERASE_EXPENSE = 'wallet/ERASE_EXPENSE';
-export const createExpense = (payload) => (
-  { type: CREATE_EXPENSE, payload }
-);
+// iniciar a requisição.
+export const requestFetch = () => ({
+  type: REQUEST_FETCH, status: 'loading',
+});
 
-export const setTotal = (payload) => (
-  { type: SET_TOTAL, payload }
-);
+// usa a requisição recebida.
+export const receiveFetch = (payload) => ({
+  type: RECEIVE_FETCH, payload,
+});
+// caso de erro.
+export const faillFetch = () => ({
+  type: FAILL_FETCH, status: 'Faill Request',
+});
 
-export const eraseTotal = (payload) => (
-  { type: ERASE_TOTAL, payload }
-);
-
-export const eraseExpense = (payload) => (
-  { type: ERASE_EXPENSE, payload }
-);
+export const walletFetch = () => async (dispatch) => { // thunk declarado
+  try {
+    dispatch(requestFetch());
+    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const wallet = await response.json();
+    return dispatch(receiveFetch(wallet));
+  } catch (error) {
+    return dispatch(faillFetch());
+  }
+};
