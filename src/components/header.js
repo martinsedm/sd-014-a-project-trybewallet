@@ -1,16 +1,4 @@
-// import React from 'react';
-
-// class header extends React.Component {
-//   render() {
-//     return (
-//       <header>
-//         <div data-testid="email-field">{}</div>
-//       </header>
-//     );
-//   }
-// }
-// export default header;
-import React, { Component }  from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
