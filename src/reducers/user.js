@@ -4,7 +4,6 @@ import { USER_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   email: '',
-  password: '',
 };
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -12,7 +11,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
   case USER_LOGIN:
     return { ...state,
       email: action.payload.email,
-      password: action.payload.password,
     };
   default:
     return state;
