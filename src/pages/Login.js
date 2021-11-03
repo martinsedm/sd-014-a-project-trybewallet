@@ -1,6 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Button from '../components/Button';
 import Input from '../components/Input';
+import { setUser } from '../actions/index';
 
 class Login extends React.Component {
   constructor() {
@@ -12,6 +15,13 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.onSubmitForm = this.onSubmitForm.bind(this);
+  }
+
+  onSubmitForm() {
+    const { history, dispatchSetValue } = this.props;
+    dispatchSetValue(this.state);
+    history.push('/carteira');
   }
 
   handleChange({ target: { name, value } }) {
@@ -32,6 +42,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isDisabled } = this.state;
+    // const { savedEmail } = this.props;
     return (
       <form>
         <Input
@@ -50,11 +61,25 @@ class Login extends React.Component {
           name="button"
           disabled={ isDisabled }
           label="Entrar"
-          onClick={ this.handleClick }
+          onClick={ this.onSubmitForm }
         />
       </form>
     );
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatchSetValue: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (state) => dispatch(setUser(state.email)),
+});
+const mapStateToProps = (state) => ({
+  savedEmail: state.user.email,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -8,4 +8,7 @@ export const store = createStore(
   composeWithDevTools(),
 );
 
+// solução do problema de lint com a expostação da store
+// https://stackoverflow.com/questions/44437203/how-do-i-resolve-eslint-import-no-named-as-default
+// export default connect(null, null)(store);
 export default store;
