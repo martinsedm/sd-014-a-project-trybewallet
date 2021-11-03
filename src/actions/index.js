@@ -8,13 +8,28 @@ export const userEmail = (email) => ({
 });
 
 export const SEND_CURRENCY = 'SEND_CURRENCY';
-
+// Action para enviar as informações das moedas para o estado global
 export const sendCurrency = (response) => ({
   type: SEND_CURRENCY,
   payload: response,
 });
 
+export const SEND_VALUE_EXPENSES = 'SEND_VALUE_EXPENSES';
+export const sendValuesExpenses = (arrayLocalState) => ({
+  type: SEND_VALUE_EXPENSES,
+  payload: arrayLocalState,
+});
+
+// como se trata de uma action assincrona, uso o thunk.
+// dentro dele eu pego a resposta e guardo numa variável de forma assincrona
+// em seguida uso o dispatch passando a minha action como paramentro
+// e a minha resposta assincrona como parametro da action
 export const sendCurrencyThunk = () => async (dispatch) => {
   const responseThunk = await requestApi();
   dispatch(sendCurrency(responseThunk));
+};
+
+export const expenseThunk = (despesas) => async (dispatch) => {
+  const responseThunk = await requestApi();
+  dispatch(sendValuesExpenses({ ...despesas, exchangeRates: responseThunk }));
 };

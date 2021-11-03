@@ -11,6 +11,9 @@ class SelectedCurrency extends React.Component {
   componentDidUpdate() {
     this.renderOptions();
   }
+  // função para trazer o meu objetão como props. utilizar o object.keys para pegar somente as moedas.
+  // filter para retirar as 2 moedas que não quero utilizar
+  // meu retorno da função com um map no meu array gerado pelo object.keys. Criando option a cada iteração
 
   renderOptions() {
     const { currencyProps } = this.props;
@@ -44,6 +47,7 @@ SelectedCurrency.propTypes = {
   currencyProps: PropTypes.objectOf.isRequired,
 };
 
+// trazendo do meu estado as informações das moedas e passando como props.
 const mapStateToProps = (state) => ({
   currencyProps: state.wallet.currencies,
 });

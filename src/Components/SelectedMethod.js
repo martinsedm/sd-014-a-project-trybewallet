@@ -7,10 +7,15 @@ class SelectedMethod extends React.Component {
     return (
       <label htmlFor="select-method">
         Método de pagamento
-        <select name={ name } id="select-method" onChange={ onChange } value={ value }>
-          <option>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
+        <select
+          name={ name }
+          id="select-method"
+          onChange={ onChange }
+          value={ value }
+        >
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão de crédito">Cartão de crédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
       </label>
     );

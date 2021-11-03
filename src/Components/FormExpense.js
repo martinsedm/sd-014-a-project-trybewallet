@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { sendCurrencyThunk } from '../actions';
+import { expenseThunk, sendCurrencyThunk } from '../actions';
 import SelectedCurrency from './SelectedCurrency';
 import SelectedMethod from './SelectedMethod';
 import SelectedTag from './SelectedTag';
@@ -14,8 +14,12 @@ class FormExpense extends React.Component {
       description: '',
       value: 0,
       method: 'Dinheiro',
-      currency: 'BRL',
+      currency: 'USD',
+      tag: 'Lazer',
+      id: 0,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -23,8 +27,24 @@ class FormExpense extends React.Component {
     dispatchCurrency();
   }
 
+  handleChange({ target }) {
+    const { name, value } = target;
+    this.setState({ [name]: value });
+  }
+
+  handleClick(event) {
+    event.preventDefault();
+    const { expensesProps } = this.props;
+    expensesProps(this.state);
+    let { id } = this.state;
+    id += 1;
+    this.setState({
+      id,
+    });
+  }
+
   render() {
-    const { value, description, currency, method } = this.state;
+    const { value, description, currency, method, tag } = this.state;
     return (
       <form>
         <Textos
@@ -43,16 +63,20 @@ class FormExpense extends React.Component {
         />
         <SelectedCurrency
           text="Moeda"
-          name="moeda"
+          name="currency"
           value={ currency }
-          // onChange={ this.handleCurrencySelect }
+          onChange={ this.handleChange }
         />
         <SelectedMethod
-          name="método de pagamento"
+          name="method"
           value={ method }
-          // onChange={ this.handleMethod }
+          onChange={ this.handleChange }
         />
-        <SelectedTag name="tag" onChange={ this.handleChange } />
+        <SelectedTag
+          name="tag"
+          onChange={ this.handleChange }
+          value={ tag }
+        />
         <button type="submit" onClick={ this.handleClick }>
           Adicionar Despesa
         </button>
@@ -60,16 +84,18 @@ class FormExpense extends React.Component {
     );
   }
 }
-
+// não posso chamar o thunk direto no componente, então passo ele como props através da dispatchCurrency
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrency: () => dispatch(sendCurrencyThunk()),
+  expensesProps: (arrayLocal) => dispatch(expenseThunk(arrayLocal)),
 });
 const mapStateToProps = (state) => ({
   currencyProps: state.wallet.currencies,
 });
 
 FormExpense.propTypes = {
-  dispatchCurrency: PropTypes.objectOf.isRequired,
+  dispatchCurrency: PropTypes.func.isRequired,
+  expensesProps: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);
