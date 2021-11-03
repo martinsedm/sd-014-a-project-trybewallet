@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { sendCurrencyThunk } from '../actions';
 import SelectedCurrency from './SelectedCurrency';
 import SelectedMethod from './SelectedMethod';
 import SelectedTag from './SelectedTag';
-import Textos from './textos';
+import Textos from './Textos';
 
 class FormExpense extends React.Component {
   constructor(props) {
@@ -13,6 +16,11 @@ class FormExpense extends React.Component {
       method: 'Dinheiro',
       currency: 'BRL',
     };
+  }
+
+  componentDidMount() {
+    const { dispatchCurrency } = this.props;
+    dispatchCurrency();
   }
 
   render() {
@@ -53,4 +61,15 @@ class FormExpense extends React.Component {
   }
 }
 
-export default FormExpense;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchCurrency: () => dispatch(sendCurrencyThunk()),
+});
+const mapStateToProps = (state) => ({
+  currencyProps: state.wallet.currencies,
+});
+
+FormExpense.propTypes = {
+  dispatchCurrency: PropTypes.objectOf.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormExpense);
