@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import DeleteButton from './DeleteButton';
 
 class Table extends React.Component {
   render() {
@@ -19,7 +20,7 @@ class Table extends React.Component {
           <th>Editar/Excluir</th>
         </tr>
         {expenses.map((expense, index) => (
-          <tr key={ index }>
+          <tr key={ expense.id }>
             <td>{expense.description}</td>
             <td>{expense.tag}</td>
             <td>{expense.method}</td>
@@ -31,6 +32,9 @@ class Table extends React.Component {
                 .toFixed(2)}
             </td>
             <td>Real</td>
+            <td>
+              <DeleteButton index={ index } />
+            </td>
           </tr>
         ))}
       </table>

@@ -1,4 +1,4 @@
-import { SEND_CURRENCY, SEND_VALUE_EXPENSES } from '../actions';
+import { SEND_CURRENCY, SEND_VALUE_EXPENSES, DELETE_EXPENSE } from '../actions';
 
 const initialState = {
   currencies: [],
@@ -17,6 +17,11 @@ const walletReducer = (state = initialState, action) => {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+  case DELETE_EXPENSE:
+    return ({
+      ...state,
+      expenses: [...action.payload],
+    });
 
   default:
     return state;

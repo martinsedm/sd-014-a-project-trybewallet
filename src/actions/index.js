@@ -20,6 +20,12 @@ export const sendValuesExpenses = (arrayLocalState) => ({
   payload: arrayLocalState,
 });
 
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const deleteExpense = (expenses) => ({
+  type: DELETE_EXPENSE,
+  payload: expenses,
+});
+
 // como se trata de uma action assincrona, uso o thunk.
 // dentro dele eu pego a resposta e guardo numa variável de forma assincrona
 // em seguida uso o dispatch passando a minha action como paramentro
