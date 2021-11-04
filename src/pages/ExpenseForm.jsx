@@ -3,20 +3,21 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addCurrencies, addExpense } from '../actions';
 
-const tagDescription = ['Alimentação', 'Transporte', 'Lazer', 'Trabalho', 'Saúde', 'Outros'];
+const tagDescription = ['Alimentação',
+  'Transporte', 'Lazer', 'Trabalho', 'Saúde', 'Outros'];
 const payment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
 class ExpenseForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      id: 0,
-      value: '',
       currency: '',
-      method: '',
-      tag: '',
       description: '',
       exchangeRates: {},
+      id: 0,
+      method: '',
+      tag: '',
+      value: '',
     };
 
     this.createInput = this.createInput.bind(this);
@@ -38,13 +39,13 @@ class ExpenseForm extends Component {
     const { newExpense } = this.props;
     const response = await this.fetchCurrency();
     const filter = Object.entries(response).filter((element) => (element[0]) !== 'USDT');
-    console.log(Object.fromEntries(filter));
 
     this.setState({
       exchangeRates: Object.fromEntries(filter),
     });
-
-    // newExpense(this.state);
+    // const { exchangeRates } = this.state;
+    console.log(this.state);
+    newExpense(this.state);
   }
 
   async fetchCurrency() {
@@ -79,14 +80,13 @@ class ExpenseForm extends Component {
         <form>
           <label htmlFor={ id }>
             { value }
-            <select name={ id } id={ id }>
+            <select name={ id } id={ id } onChange={ this.eventHandler }>
               { obj.map((element, i) => (
                 <option
                   key={ i }
                   currency={ element }
                   id={ id }
                   value={ element }
-                  onChange={ this.eventHandler }
                 >
                   { element }
                 </option>
