@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-// https://stackoverflow.com/questions/42701129/how-to-push-to-history-in-react-router-v4
+import { connect } from 'react-redux';
+import { actionLogin } from '../actions';
+
+import './Login.css';
 
 class Login extends React.Component {
   constructor() {
@@ -24,7 +26,10 @@ class Login extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const { history } = this.props;
+    const { history, dispatchEmail } = this.props;
+    const { email } = this.state;
+    dispatchEmail(email);
+
     history.push('/carteira');
   }
 
@@ -34,7 +39,8 @@ class Login extends React.Component {
     const emailValid = /\S+@\S+\.\S+/;
     // Referencia: https://www.horadecodar.com.br/2020/09/07/expressao-regular-para-validar-e-mail-javascript-regex/
     return (
-      <>
+      <div id="login">
+        <span className="title"> TrybeWallet </span>
         <input
           data-testid="email-input"
           type="email"
@@ -42,6 +48,7 @@ class Login extends React.Component {
           value={ email }
           onChange={ this.handleChange }
           placeholder="EMAIL"
+          className="inputs"
         />
 
         <input
@@ -51,6 +58,7 @@ class Login extends React.Component {
           value={ password }
           onChange={ this.handleChange }
           placeholder="PASSWORD"
+          className="inputs"
         />
 
         <button
@@ -60,12 +68,19 @@ class Login extends React.Component {
         >
           Entrar
         </button>
-      </>);
+      </div>);
   }
 }
 
 Login.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
+  dispatchEmail: PropTypes.func.isRequired,
 };
 
-export default withRouter(Login);
+const mapDispatchToProps = (dispatch) => (
+  {
+    dispatchEmail: (emailValue) => dispatch(actionLogin(emailValue)),
+  }
+);
+
+export default connect(null, mapDispatchToProps)(Login);

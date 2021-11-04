@@ -1,0 +1,36 @@
+#login {
+  background-color: gainsboro;
+  border: 2px solid black;
+  border-radius: 10%;
+  margin-top: 200px;
+  margin-left: 550px;
+  margin-right: 550px;
+  padding: 20px;
+  text-align: center;
+  height: 251px;
+  width: 251px;
+}
+
+.inputs {
+  border-radius: 10px;
+  margin-top: 20px;
+  padding: 15px;
+}
+
+.title {
+  background-color: rgb(69, 112, 69);
+  border-radius: 10px;
+  font-size: 25px;
+  font-weight: 900;
+  margin: 5%;
+  padding: 10px;
+}
+
+button {
+  background-color: rgb(69, 112, 69);
+  border-radius: 10%;
+  color: white;
+  font-size: 20px;
+  margin: 10px;
+  padding: 10px
+}
