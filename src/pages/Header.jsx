@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Form from './Form';
 
 class Header extends Component {
   render() {
     const { emailInfo } = this.props;
     return (
-      <>
+      <header>
         <h5
           data-testid="email-field"
         >
@@ -22,7 +23,8 @@ class Header extends Component {
         >
           BRL
         </h5>
-      </>
+        <Form />
+      </header>
     );
   }
 }
