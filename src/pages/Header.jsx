@@ -2,43 +2,63 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-// import store from './store';
-
 class Header extends Component {
-  constructor() {
-    super();
-    this.state = {
-    };
+  make(bla) {
+    bla.reduce((acc, crr) => {
+      const usdValue = Math.round(Number(crr.value)
+     * Number(crr.exchangeRates[crr.currency].ask) * 100) / 100;
+
+      acc += usdValue;
+      return acc;
+    }, 0);
   }
 
   render() {
-    const { login } = this.props;
-
+    const { expenses: { expenses } } = this.props;
+    const { login: { email } } = this.props;
+    // console.log(expenses);
     return (
-      <section>
+      <header>
         <div data-testid="email-field">
-          { login }
+          <label htmlFor="email-field">
+            Email:
+            <span>
+              {' '}
+              { email }
+            </span>
+          </label>
         </div>
-
         <div data-testid="total-field">
-          Total: 0
+          Despesa: 0
+          { expenses }
         </div>
-
         <div data-testid="header-currency-field">
-          Currency: BRL
+          <label htmlFor="total-field">
+            Currency:
+            <span>
+              {' '}
+              BRL
+            </span>
+          </label>
         </div>
-      </section>
+      </header>
     );
   }
 }
 
 Header.propTypes = {
-  login: PropTypes.string.isRequired,
+  login: PropTypes.shape({
+    email: PropTypes.string,
+  }).isRequired,
+  expenses: PropTypes.shape({
+    expenses: PropTypes.number,
+  }).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    login: state.user.email,
+    login: state.user,
+    expenses: state.wallet,
   };
 }
 

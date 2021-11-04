@@ -7,8 +7,8 @@ import { loginAction } from '../actions';
 const six = 6;
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       email: '',
       password: '',
@@ -79,7 +79,7 @@ class Login extends Component {
             data-testid="login-submit-button"
             disabled={ this.verifyLogin() }
             onClick={ () => {
-              login({ email });
+              login(email);
               this.setState({ email, logged: true });
             } }
             type="button"

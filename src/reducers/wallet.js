@@ -1,18 +1,24 @@
-import { WALLET } from '../actions';
+import { EXPENSE, CURRENCIES } from '../actions';
 
 const INICIAL_STATE = {
-  func: 'a',
-  func2: 'a',
+  expenses: 0,
+  currencies: [],
 };
 
-function walletReducer(state = INICIAL_STATE, action) {
-  switch (action.type) {
-  case WALLET:
+export default function walletReducer(state = INICIAL_STATE, { type, payload }) {
+  switch (type) {
+  case EXPENSE:
     return {
       ...state,
+      expenses: payload,
     };
+  case CURRENCIES:
+    return {
+      ...state,
+      currencies: payload,
+    };
+
   default:
     return state;
   }
 }
-export default walletReducer;

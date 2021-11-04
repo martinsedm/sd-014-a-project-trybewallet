@@ -13,7 +13,6 @@ class App extends Component {
           <Route exact path="/" component={ Login } />
           <Route path="/carteira" component={ Wallet } />
           <Route path="/header" component={ Header } />
-
         </Switch>
       </div>
     );

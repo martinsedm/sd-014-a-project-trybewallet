@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Header from './Header';
-
-const tag = ['Alimentação', 'Transporte', 'Lazer', 'Trabalho', 'Saúde', 'Outros'];
-const payment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
+import { addCurrencies } from '../actions';
+import ExpenseForm from './ExpenseForm';
 
 class Wallet extends Component {
   constructor(props) {
@@ -11,89 +11,56 @@ class Wallet extends Component {
     this.state = {
       currency: [],
     };
-
-    this.createInput = this.createInput.bind(this);
-    this.createSelect = this.createSelect.bind(this);
-    this.fetchCurrency = this.fetchCurrency.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchCurrency().then((response) => {
+  async componentDidMount() {
+    await this.fetchCurrency().then((response) => {
       this.setState({
-        currency: response,
+        currency: this.removeCurrency(response),
       });
     });
-  }
-
-  createInput(id, type, value) {
-    return (
-      <>
-        <form>
-          <label htmlFor={ id }>
-            { value }
-            <input type={ type } name={ id } id={ id } />
-          </label>
-        </form>
-        <p />
-      </>
-    );
-  }
-
-  removeCurrency() {
+    const { saveCurrencies } = this.props;
     const { currency } = this.state;
-    const newCurrency = Object.keys(currency).filter((element) => element !== 'USDT');
-    this.setState({
-      currency: newCurrency,
-    });
-    console.log(newCurrency);
+    // console.log(currency);
+    saveCurrencies(currency);
   }
 
-  createSelect(id, obj = {}, value) {
-    return (
-      <>
-        <form>
-          <label htmlFor={ id }>
-            { value }
-            <select name={ id } id={ id }>
-              { Object.values(obj).map((element, i) => (
-                <option key={ i } value={ element }>{ element }</option>
-              ))}
-            </select>
-          </label>
-        </form>
-        <p />
-      </>
-    );
+  removeCurrency(currency) {
+    const newCurrency = Object.keys(currency).filter((element) => element !== 'USDT');
+    return newCurrency;
   }
 
   async fetchCurrency() {
     const response = await fetch('https://economia.awesomeapi.com.br/json/all');
     const data = await response.json();
+    // console.log(data);
     return data;
   }
 
   render() {
-    const { currency } = this.state;
-    const newCurrency = Object.keys(currency).filter((element) => element !== 'USDT');
-
     return (
       <div>
         <Header />
+        <ExpenseForm />
         <p />
-        { this.createInput('value', 'text', 'Valor:') }
-        { this.createInput('description', 'text', 'Descrição:') }
-        { this.createSelect('currency', newCurrency, 'Moeda:') }
-        { this.createSelect('payment', payment, 'Método de pagamento:') }
-        { this.createSelect('tag', tag, 'Tag:') }
       </div>
     );
   }
 }
 
-function mapStateToProps(state) {
+Wallet.propTypes = {
+  saveCurrencies: PropTypes.func.isRequired,
+};
+
+function mapDispatchToProps(dispatch) {
   return {
-    login: state.user.email,
+    saveCurrencies: (data) => dispatch(addCurrencies(data)),
   };
 }
 
-export default connect(mapStateToProps, null)(Wallet);
+function mapStateToProps(state) {
+  return {
+    expenses: state.wallet,
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
