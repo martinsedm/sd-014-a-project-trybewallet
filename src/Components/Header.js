@@ -10,6 +10,7 @@ class Header extends React.Component {
     };
     this.sumExpenses = this.sumExpenses.bind(this);
   }
+  // previousprops nesse caso está guardando o meu estado antes de ser alterado. E então comparo com o estado atual para garantir que só chamarei a função caso tenha havido atualização
 
   componentDidUpdate(previousProps) {
     const { expenses } = this.props;
@@ -17,6 +18,7 @@ class Header extends React.Component {
       this.sumExpenses();
     }
   }
+  // função que acessar o value do expenses e a propridade ask do exchange para a conta da conversão
 
   sumExpenses() {
     const { expenses } = this.props;
@@ -48,7 +50,7 @@ class Header extends React.Component {
     );
   }
 }
-
+// passando estado como props para poder usar as propridades do expenses
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,

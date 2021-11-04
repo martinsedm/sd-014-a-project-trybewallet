@@ -44,7 +44,7 @@ SelectedCurrency.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
-  currencyProps: PropTypes.objectOf.isRequired,
+  currencyProps: PropTypes.func.isRequired,
 };
 
 // trazendo do meu estado as informações das moedas e passando como props.

@@ -32,6 +32,8 @@ class FormExpense extends React.Component {
     this.setState({ [name]: value });
   }
 
+  // nessa função eu chamo minha action thunk em forma de props e passa o estado atual como parametro
+
   handleClick(event) {
     event.preventDefault();
     const { expensesProps } = this.props;
@@ -85,6 +87,7 @@ class FormExpense extends React.Component {
   }
 }
 // não posso chamar o thunk direto no componente, então passo ele como props através da dispatchCurrency
+// (arrayLocal) está guardando lugar para o parametro que irei passar no handleClick que é o estado atual
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrency: () => dispatch(sendCurrencyThunk()),
   expensesProps: (arrayLocal) => dispatch(expenseThunk(arrayLocal)),

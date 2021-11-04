@@ -29,6 +29,11 @@ export const sendCurrencyThunk = () => async (dispatch) => {
   dispatch(sendCurrency(responseThunk));
 };
 
+// tive que fazer um thunk para poder lidar com a informação da API que preciso
+// no primeiro parâmetro eu quero passar o meu estado com as despesas.
+// esse estado é passado como paramentro lá no Form dentro do handleClick no funcção que criei como prop desse thunk
+// dispacho minha action com o meu estado e uma nova chave que guarda as informações da api
+
 export const expenseThunk = (despesas) => async (dispatch) => {
   const responseThunk = await requestApi();
   dispatch(sendValuesExpenses({ ...despesas, exchangeRates: responseThunk }));
