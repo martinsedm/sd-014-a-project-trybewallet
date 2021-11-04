@@ -78,8 +78,5 @@ Login.propTypes = {
 const mapDispatchToProps = (dispatch) => ({
   dispatchSetValue: (state) => dispatch(setUser(state.email)),
 });
-const mapStateToProps = (state) => ({
-  savedEmail: state.user.email,
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);
