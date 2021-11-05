@@ -1,4 +1,4 @@
-// Informações da Página da Carteira.
+// Carrega as Informações da Página do cabeçalho e do Formulario de despesas para dentro da Página de Carteira.
 
 import React from 'react';
 import FormExpense from '../components/FormExpense';
@@ -8,7 +8,6 @@ class Wallet extends React.Component {
   render() {
     return (
       <div>
-        Carteira.
         <Header />
         <FormExpense />
       </div>
