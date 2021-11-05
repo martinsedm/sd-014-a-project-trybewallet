@@ -2,7 +2,11 @@
 
 import {
   VALOR_MOEDAS,
-  ADICIONAR_DESPESAS, VALORAPI_SUCESSO, VALORAPI_ERROR } from '../actions/index';
+  ADICIONAR_DESPESAS,
+  VALORAPI_SUCESSO,
+  VALORAPI_ERROR,
+  APAGAR_DESPESAS,
+} from '../actions/index';
 
 const INICIAL_STATE = {
   currencies: [],
@@ -35,6 +39,11 @@ const wallet = (state = INICIAL_STATE, action) => {
         id: state.expenses.length,
         ...action.payload,
       }],
+    };
+  case APAGAR_DESPESAS:
+    return {
+      ...state,
+      expenses: state.expenses.filter((expense) => expense.id !== Number(action.payload)),
     };
   default:
     return state;

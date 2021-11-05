@@ -3,10 +3,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { apagarValorDespesaAction } from '../actions';
 
 class TableExpenses extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, apagarTabela } = this.props;
     return (
       <table>
         <table>
@@ -39,6 +40,13 @@ class TableExpenses extends React.Component {
                     * parseFloat(expense.exchangeRates[expense.currency].ask)).toFixed(2)}
                 </td>
                 <td>Real</td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ () => apagarTabela(expense.id) }
+                >
+                  Excluir
+                </button>
               </tr>
             ))
           }
@@ -52,9 +60,15 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  apagarTabela: (id) => dispatch(apagarValorDespesaAction(id)),
+});
+
 TableExpenses.propTypes = {
-  expenses: PropTypes.func.isRequired,
-  map: PropTypes.func.isRequired,
+  expenses: PropTypes.shape({
+    map: PropTypes.func.isRequired,
+  }).isRequired,
+  apagarTabela: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, null)(TableExpenses);
+export default connect(mapStateToProps, mapDispatchToProps)(TableExpenses);

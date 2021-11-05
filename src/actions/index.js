@@ -7,6 +7,7 @@ export const VALOR_MOEDAS = 'VALOR_MOEDAS';
 export const VALORAPI_SUCESSO = 'VALORAPI_SUCESSO';
 export const VALORAPI_ERROR = 'VALORAPI_ERROR';
 export const ADICIONAR_DESPESAS = 'ADICIONAR_DESPESAS';
+export const APAGAR_DESPESAS = 'APAGAR_DESPESAS';
 
 export const inforUsuarioAction = (email) => ({
   type: INFOR_USUARIO,
@@ -30,6 +31,11 @@ export const definirValorMoedasAPIErrorAction = (payload) => ({
 
 export const definirValorDespesaAction = (payload) => ({
   type: ADICIONAR_DESPESAS,
+  payload,
+});
+
+export const apagarValorDespesaAction = (payload) => ({
+  type: APAGAR_DESPESAS,
   payload,
 });
 
