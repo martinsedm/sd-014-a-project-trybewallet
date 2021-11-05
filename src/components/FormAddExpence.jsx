@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropsTypes from 'prop-types';
+import PropsTypes from 'prop-types';
 import Input from './Input';
 import Select from './Select';
 import Button from './Button';
@@ -26,9 +26,9 @@ class FormAddExpence extends React.Component {
 
   render() {
     const { value, currency, payMethod, tag, description } = this.state;
+    const { currencies } = this.props;
     const payMethodOpt = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOpt = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
-    const currencyOpt = [];
     return (
       <form>
         <Input
@@ -42,7 +42,7 @@ class FormAddExpence extends React.Component {
           name="currency"
           label="Moeda"
           value={ currency }
-          options={ currencyOpt }
+          options={ currencies }
           onChange={ this.handleChange }
         />
         <Select
@@ -66,22 +66,14 @@ class FormAddExpence extends React.Component {
           value={ description }
           onChange={ this.handleChange }
         />
-        <Button
-          name="button"
-          label="Entrar"
-          onClick={ this.onSubmitForm }
-        />
+        <Button name="button" label="Entrar" onClick={ this.onSubmitForm } />
       </form>
     );
   }
 }
 
-// FormAddExpence.propTypes = {
-//   type: PropsTypes.string.isRequired,
-//   name: PropsTypes.string.isRequired,
-//   onChange: PropsTypes.func.isRequired,
-//   value: PropsTypes.string.isRequired,
-//   testId: PropsTypes.string.isRequired,
-// };
+FormAddExpence.propTypes = {
+  currencies: PropsTypes.string.isRequired,
+};
 
 export default FormAddExpence;

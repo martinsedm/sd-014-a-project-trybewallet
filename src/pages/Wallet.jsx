@@ -9,12 +9,34 @@ class Wallet extends React.Component {
     this.state = {
       totalExpense: 0,
       currency: 'BRL',
+      currencies: [],
+
     };
+
+    this.fetchCurrencyApi = this.fetchCurrencyApi.bind(this);
+    this.getFilterCurrencies = this.getFilterCurrencies.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchCurrencyApi();
+  }
+
+  getFilterCurrencies(response) {
+    const arrayCurrency = Object.keys(response);
+    const filterCurrency = arrayCurrency.filter((cur) => cur !== 'USDT');
+    return (filterCurrency);
+  }
+
+  fetchCurrencyApi() {
+    fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
+      response.json()
+        .then((json) => this.setState({ currencies: this.getFilterCurrencies(json) }));
+    });
   }
 
   render() {
     const { savedEmail } = this.props;
-    const { totalExpense, currency } = this.state;
+    const { totalExpense, currency, currencies } = this.state;
     return (
       <div>
         <h1>TrybeWallet</h1>
@@ -23,7 +45,7 @@ class Wallet extends React.Component {
           <h3 data-testid="total-field">{`Despesa Total: ${totalExpense}`}</h3>
           <h3 data-testid="header-currency-field">{currency}</h3>
         </header>
-        <FormAddExpence />
+        <FormAddExpence currencies={ currencies } />
       </div>
     );
   }
