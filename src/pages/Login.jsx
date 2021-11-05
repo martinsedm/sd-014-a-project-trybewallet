@@ -94,7 +94,11 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  login: PropTypes.func.isRequired,
+  login: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.array,
+    PropTypes.object,
+  ]).isRequired,
 };
 
 function mapDispatchToProps(dispatch) {

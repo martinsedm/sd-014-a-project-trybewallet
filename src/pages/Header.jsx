@@ -2,21 +2,30 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-class Header extends Component {
-  make(bla) {
-    bla.reduce((acc, crr) => {
-      const usdValue = Math.round(Number(crr.value)
-     * Number(crr.exchangeRates[crr.currency].ask) * 100) / 100;
+let totalExpense = 0;
 
-      acc += usdValue;
-      return acc;
-    }, 0);
+class Header extends Component {
+  makeExpense(expense, rate) {
+    const totalValue = Math.round(Number(expense)
+              * Number(rate) * 100) / 100;
+    totalExpense += totalValue;
+    return totalExpense;
   }
 
   render() {
-    const { expenses: { expenses } } = this.props;
+    const { getExpenses } = this.props;
     const { login: { email } } = this.props;
-    // console.log(expenses);
+    const value = getExpenses[getExpenses.length - 1]
+      ? (getExpenses[getExpenses.length - 1]).value : 0;
+
+    const rate = getExpenses[getExpenses.length - 1]
+      ? getExpenses[getExpenses.length - 1].exchangeRates[
+        Object.keys(getExpenses[getExpenses.length - 1].exchangeRates).find(
+          (element) => element === (getExpenses[getExpenses.length - 1].currency),
+        )].ask : 0;
+
+    const expenses = this.makeExpense(value, rate);
+
     return (
       <header>
         <div data-testid="email-field">
@@ -29,11 +38,13 @@ class Header extends Component {
           </label>
         </div>
         <div data-testid="total-field">
-          Despesa: 0
+          Despesa:
+          {' '}
           { expenses }
+          {' '}
         </div>
         <div data-testid="header-currency-field">
-          <label htmlFor="total-field">
+          <label htmlFor="header-currency-field">
             Currency:
             <span>
               {' '}
@@ -50,15 +61,16 @@ Header.propTypes = {
   login: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,
-  expenses: PropTypes.shape({
-    expenses: PropTypes.number,
-  }).isRequired,
+  getExpenses: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+  ]).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     login: state.user,
-    expenses: state.wallet,
+    getExpenses: state.wallet.expenses,
   };
 }
 

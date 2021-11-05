@@ -11,12 +11,12 @@ class ExpenseForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currency: '',
+      currency: 'USD',
       description: '',
       exchangeRates: {},
-      id: 0,
-      method: '',
-      tag: '',
+      id: -1,
+      method: 'Dinheiro',
+      tag: 'Alimentação',
       value: '',
     };
 
@@ -38,13 +38,12 @@ class ExpenseForm extends Component {
   async clickHandler() {
     const { newExpense } = this.props;
     const response = await this.fetchCurrency();
-    const filter = Object.entries(response).filter((element) => (element[0]) !== 'USDT');
-
+    const filter = Object.entries(response).filter((element) => (element[0]) !== '');
+    const { id } = this.state;
     this.setState({
       exchangeRates: Object.fromEntries(filter),
+      id: id + 1,
     });
-    // const { exchangeRates } = this.state;
-    console.log(this.state);
     newExpense(this.state);
   }
 

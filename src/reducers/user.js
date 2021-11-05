@@ -15,3 +15,4 @@ export default function userReducer(state = INICIAL_STATE, action) {
     return state;
   }
 }
+

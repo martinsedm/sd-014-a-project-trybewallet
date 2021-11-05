@@ -21,7 +21,6 @@ class Wallet extends Component {
     });
     const { saveCurrencies } = this.props;
     const { currency } = this.state;
-    // console.log(currency);
     saveCurrencies(currency);
   }
 
