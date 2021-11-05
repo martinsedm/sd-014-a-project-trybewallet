@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { userLogin as userLoginAction } from '../actions';
 
 class Login extends React.Component {
   constructor() {
@@ -9,10 +12,18 @@ class Login extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.validateAcess = this.validateAcess.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleClick() {
+    const { email } = this.state;
+    const { history, userLogin } = this.props;
+    userLogin({ email });
+    history.push('/carteira');
   }
 
   // Realizei essa função de validação de email consultando https://ui.dev/validate-email-address-javascript/
@@ -47,6 +58,7 @@ class Login extends React.Component {
         <button
           type="submit"
           disabled={ !this.validateAcess(email, password) }
+          onClick={ this.handleClick }
         >
           Entrar
         </button>
@@ -55,4 +67,15 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  userLogin: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  userLogin: (payload) => dispatch(userLoginAction(payload)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);
