@@ -19,7 +19,7 @@ export const sendValuesExpenses = (arrayLocalState) => ({
   type: SEND_VALUE_EXPENSES,
   payload: arrayLocalState,
 });
-
+// criando uma ação que vai enviar a cha expense
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 export const deleteExpense = (expenses) => ({
   type: DELETE_EXPENSE,

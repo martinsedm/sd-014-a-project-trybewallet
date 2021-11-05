@@ -17,6 +17,9 @@ const walletReducer = (state = initialState, action) => {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
+
+    // não retorno o array antigo e envio apenas com o array novo criado  a partir do filter
+    // não apaga meus estados mas reescreve a chave expenses
   case DELETE_EXPENSE:
     return ({
       ...state,

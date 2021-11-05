@@ -11,8 +11,11 @@ class DeleteButton extends React.Component {
       <button
         type="button"
         onClick={ () => {
+          console.log(expenses);
           const newExpense = expenses.filter((iten, id) => id !== index);
+          console.log(newExpense);
           dispatchDelete(newExpense);
+          // enviando uma nova lista para o meu estado. Ele atualiza o componente sem a posição retirada pelo botao
         } }
         data-testid="delete-btn"
       >
@@ -23,7 +26,7 @@ class DeleteButton extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  dispatchDelete: (index) => dispatch(deleteExpense(index)),
+  dispatchDelete: (newExp) => dispatch(deleteExpense(newExp)),
 });
 
 const mapStateToProps = (state) => ({
