@@ -1,5 +1,5 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { UPDATE_WALLET } from '../actions';
+import { UPDATE_WALLET, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -12,6 +12,11 @@ function userReducer(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, action.payload.expenses],
+    };
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: action.payload.expenses,
     };
   default:
     return state;

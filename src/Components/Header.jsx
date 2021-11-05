@@ -12,20 +12,18 @@ class Header extends React.Component {
     this.calculateValue = this.calculateValue.bind(this);
   }
 
-  componentDidMount() {
-    this.calculateValue();
-  }
-
   calculateValue() {
     const { expenses } = this.props;
     let totalValue = 0;
 
-    for (let i = 0; i < expenses.length; i += 1) {
-      const { currency, exchangeRates } = expenses[i];
-      totalValue += parseFloat(expenses[i].value * exchangeRates[currency].ask);
+    if (expenses.length > 0) {
+      for (let i = 0; i < expenses.length; i += 1) {
+        const { currency, exchangeRates } = expenses[i];
+        totalValue += parseFloat(expenses[i].value * exchangeRates[currency].ask);
+      }
     }
 
-    return totalValue;
+    return totalValue.toFixed(2);
   }
 
   render() {
@@ -39,7 +37,7 @@ class Header extends React.Component {
         </div>
         <div>
           Despesa Total:
-          <p data-testid="total-field">{ this.calculateValue().toFixed(2) }</p>
+          <p data-testid="total-field">{ this.calculateValue() }</p>
         </div>
         <div>
           Câmbio:
