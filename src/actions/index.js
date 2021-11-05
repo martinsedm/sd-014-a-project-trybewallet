@@ -3,6 +3,7 @@
 import fetchAPIMoeda from '../services/APIMoeda';
 
 export const INFOR_USUARIO = 'INFOR_USUARIO';
+export const VALOR_MOEDAS = 'VALOR_MOEDAS';
 export const VALORAPI_SUCESSO = 'VALORAPI_SUCESSO';
 export const VALORAPI_ERROR = 'VALORAPI_ERROR';
 export const ADICIONAR_DESPESAS = 'ADICIONAR_DESPESAS';
@@ -10,6 +11,11 @@ export const ADICIONAR_DESPESAS = 'ADICIONAR_DESPESAS';
 export const inforUsuarioAction = (email) => ({
   type: INFOR_USUARIO,
   email,
+});
+
+export const definirValorMoedasAction = (currencies) => ({
+  type: VALOR_MOEDAS,
+  currencies,
 });
 
 export const definirValorMoedasAPISucessoAction = (payload) => ({
