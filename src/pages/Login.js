@@ -11,10 +11,10 @@ class Login extends React.Component {
       password: '',
     };
     this.validLogin = this.validLogin.bind(this);
-    this.handleChande = this.handleChande.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChande({ target }) {
+  handleChange({ target }) {
     const { value, name } = target;
     this.setState({
       [name]: value,
@@ -42,14 +42,14 @@ class Login extends React.Component {
             type="email"
             placeholder="Email"
             value={ email }
-            onChange={ this.handleChande }
+            onChange={ this.handleChange }
           />
           <input
             data-testid="password-input"
             placeholder="Senha"
             type="password"
             value={ password }
-            onChange={ this.handleChande }
+            onChange={ this.handleChange }
             name="password"
           />
         </form>
