@@ -9,6 +9,7 @@ import Options from './Options';
 import Table from './Table';
 import PaymentOptions from './PaymentOptions';
 import TagOptions from './TagOptions';
+import TableExpenses from './TableExpenses';
 
 class Forms extends Component {
   constructor() {
@@ -99,6 +100,7 @@ class Forms extends Component {
           >
             Adicionar Despesa
           </button>
+          <TableExpenses />
         </fieldset>
       </form>
     );
