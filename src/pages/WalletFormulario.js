@@ -1,12 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { FetchMoedas } from '../actions';
 
 class WalletFormulario extends React.Component {
   constructor() {
     super();
-    this.ContinuaçãoDoForm = this.ContinuaçãoDoForm.bind(this);
+    this.tagDoFormulario = this.tagDoFormulario.bind(this);
+    this.optionsMoedas = this.optionsMoedas.bind(this);
   }
 
-  ContinuaçãoDoForm() {
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
+  }
+
+  optionsMoedas() {
+    const { currencies } = this.props;
+
+    return currencies.filter((currency) => currency !== 'USDT')
+      .map(((currency) => (
+        <option key={ currency } value={ currency }>{currency}</option>
+      )));
+  }
+
+  tagDoFormulario() {
     return (
       <label htmlFor="Tag">
         Tag:
@@ -27,16 +45,19 @@ class WalletFormulario extends React.Component {
           Valor:
           <input type="number" id="Valor" />
         </label>
+
         <label htmlFor="Descrição">
           Descrição:
           <input type="text" id="Descrição" />
         </label>
-        <label htmlFor="Moeda">
-          Moeda:
-          <select id="Moeda">
-            <option>BRL</option>
+
+        <label htmlFor="moeda">
+          Moedas:
+          <select id="moeda">
+            { this.optionsMoedas()}
           </select>
         </label>
+
         <label htmlFor="Pagamento">
           Método De Pagamento:
           <select id="Pagamento">
@@ -45,10 +66,24 @@ class WalletFormulario extends React.Component {
             <option>Cartão de débito</option>
           </select>
         </label>
-        {this.ContinuaçãoDoForm()}
+
+        {this.tagDoFormulario()}
       </form>
     );
   }
 }
 
-export default WalletFormulario;
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(FetchMoedas()),
+});
+
+WalletFormulario.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  setCurrencies: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WalletFormulario);
