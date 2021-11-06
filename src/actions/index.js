@@ -32,14 +32,3 @@ export const getCoinsOfApi = () => async (dispatch) => {
     console.log(err.message);
   }
 };
-
-export const getAPICoins = async () => {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    return json;
-  } catch (err) {
-    console.log(err.message);
-  }
-  
-};

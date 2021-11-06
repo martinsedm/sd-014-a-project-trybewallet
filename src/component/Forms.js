@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   addExpenses,
-  getAPICoins,
-  changeWallet,
   getCoinsOfApi as getCoinsOfApiAction,
 } from '../actions';
 import Options from './Options';
