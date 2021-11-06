@@ -1,30 +1,36 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getCurrenciesThunk as getCurrenciesThunkAction } from '../actions';
 
 class ExpensesForm extends React.Component {
+  componentDidMount() {
+    const { getCurrenciesThunk } = this.props;
+    getCurrenciesThunk();
+  }
+
   render() {
+    const { currencies } = this.props;
+
     return (
       <section>
         <form>
           <label htmlFor="input-value">
             Valor:
-            <input
-              type="number"
-              name="value"
-              id="input-value"
-            />
+            <input type="number" name="value" id="input-value" />
           </label>
           <label htmlFor="input-description">
             Descrição:
-            <input
-              type="text"
-              name="description"
-              id="input-description"
-            />
+            <input type="text" name="description" id="input-description" />
           </label>
           <label htmlFor="select-currency">
             Moeda:
             <select name="currency" id="select-currency">
-              {/* moedas API */}
+              {currencies.map((currency) => (
+                <option key={ currency }>
+                  { currency }
+                </option>
+              ))}
             </select>
           </label>
           <label htmlFor="select-payment">
@@ -51,4 +57,17 @@ class ExpensesForm extends React.Component {
   }
 }
 
-export default ExpensesForm;
+ExpensesForm.propTypes = {
+  currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  getCurrenciesThunk: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getCurrenciesThunk: () => dispatch(getCurrenciesThunkAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpensesForm);
