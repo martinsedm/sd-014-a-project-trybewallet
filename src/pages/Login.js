@@ -1,4 +1,8 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setLogin as setLoginAction } from '../actions';
 
 // comentário pra dar push
 class Login extends React.Component {
@@ -9,6 +13,13 @@ class Login extends React.Component {
       password: '',
     };
     this.handleInput = this.handleInput.bind(this);
+    this.handleButton = this.handleButton.bind(this);
+  }
+
+  handleButton() {
+    const { email } = this.state;
+    const { setLogin } = this.props;
+    setLogin(email);
   }
 
   handleInput({ target }) {
@@ -44,18 +55,26 @@ class Login extends React.Component {
             data-testid="password-input"
             onChange={ this.handleInput }
           />
-
-          <button
-            onClick={ this.handleButton }
-            disabled={ !conditionButton }
-            type="button"
-            data-testid="login-submit-button"
-          >
-            Entrar
-          </button>
+          <Link to="/carteira">
+            <button
+              onClick={ this.handleButton }
+              disabled={ !conditionButton }
+              type="button"
+              data-testid="login-submit-button"
+            >
+              Entrar
+            </button>
+          </Link>
         </form>
       </div>);
   }
 }
 
-export default Login;
+Login.propTypes = {
+  setLogin: PropTypes.func.isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  setLogin: (email) => dispatch(setLoginAction(email)),
+});
+
+export default connect(null, mapDispatchToProps)(Login);

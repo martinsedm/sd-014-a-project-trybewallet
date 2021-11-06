@@ -1,8 +1,7 @@
 // Coloque aqui suas actions
-function login(email) {
-  return {
-    type: 'USER_LOGIN',
-    email,
-  };
-}
-export default login;
+export const LOGIN = 'LOGIN';
+
+export const setLogin = (payload) => ({
+  type: LOGIN,
+  payload,
+});
