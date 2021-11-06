@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class ExpenseTable extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class ExpenseTable extends Component {
   }
 
   showExpenses() {
-    const { getExpenses } = this.props;
+    const { getExpenses, removeExpense } = this.props;
     const showExpenses = getExpenses.map((expense) => (
       <tr key={ expense.id }>
         <td> - </td>
@@ -31,7 +32,13 @@ class ExpenseTable extends Component {
 
         <td>
           <button type="button">Editar</button>
-          <button type="button">Excluir</button>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => removeExpense(expense.id) }
+          >
+            Excluir
+          </button>
         </td>
       </tr>
     ));
@@ -71,7 +78,14 @@ ExpenseTable.propTypes = {
     PropTypes.array,
     PropTypes.object,
   ]).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    removeExpense: (data) => dispatch(deleteExpense(data)),
+  };
+}
 
 function mapStateToProps(state) {
   return {
@@ -79,4 +93,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(ExpenseTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);

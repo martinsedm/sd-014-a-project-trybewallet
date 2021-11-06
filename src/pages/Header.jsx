@@ -2,30 +2,26 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-let totalExpense = 0;
-
 class Header extends Component {
-  makeExpense(expense, rate) {
-    const totalValue = Math.round(Number(expense)
-              * Number(rate) * 100) / 100;
-    totalExpense += totalValue;
-    return totalExpense;
+  constructor() {
+    super();
+
+    this.sumExpenses = this.sumExpenses.bind(this);
+  }
+
+  sumExpenses() {
+    const { getExpenses } = this.props;
+    const totalValue = getExpenses.reduce((acc, current) => {
+      const { exchangeRates, value, currency } = current;
+      const rate = exchangeRates[currency].ask;
+      return acc + (rate * value);
+    }, 0);
+    return totalValue.toFixed(2);
   }
 
   render() {
-    const { getExpenses } = this.props;
     const { login: { email } } = this.props;
-    const value = getExpenses[getExpenses.length - 1]
-      ? (getExpenses[getExpenses.length - 1]).value : 0;
-
-    const rate = getExpenses[getExpenses.length - 1]
-      ? getExpenses[getExpenses.length - 1].exchangeRates[
-        Object.keys(getExpenses[getExpenses.length - 1].exchangeRates).find(
-          (element) => element === (getExpenses[getExpenses.length - 1].currency),
-        )].ask : 0;
-
-    const expenses = this.makeExpense(value, rate);
-
+    const expenses = this.sumExpenses();
     return (
       <header>
         <div data-testid="email-field">
@@ -41,7 +37,6 @@ class Header extends Component {
           Despesa:
           {' '}
           { expenses }
-          {' '}
         </div>
         <div data-testid="header-currency-field">
           <label htmlFor="header-currency-field">
