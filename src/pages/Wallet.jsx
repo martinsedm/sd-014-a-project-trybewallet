@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Header from './Header';
 import { addCurrencies } from '../actions';
 import ExpenseForm from './ExpenseForm';
+import ExpenseTable from './ExpenseTable';
 
 class Wallet extends Component {
   constructor(props) {
@@ -41,6 +42,8 @@ class Wallet extends Component {
       <div>
         <Header />
         <ExpenseForm />
+        <p />
+        <ExpenseTable />
         <p />
       </div>
     );
