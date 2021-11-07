@@ -6,7 +6,7 @@ class Header extends React.Component {
     const { email, despesas } = this.props;
     return (
       <header>
-        <h1>Saturno Wallet</h1>
+        <h1>Wallet</h1>
         <h2 data-testid="email-field">
           Email:
           {email}
