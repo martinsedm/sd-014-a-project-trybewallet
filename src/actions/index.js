@@ -1,28 +1,40 @@
 export const SALVAR_LOGIN = 'SALVAR_LOGIN';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 export const ADD_CURRENCY = 'ADD_CURRENCY';
 export const ERROR_API = 'ERROR_API';
+export const AMOUNT_EXPENSES = 'AMOUNT_EXPENSES';
+export const COIN = 'COIN';
 
 const API_CURRENCY = 'https://economia.awesomeapi.com.br/json/all';
 
 export const salvarLogin = (email) => ({
   type: SALVAR_LOGIN,
-  payload: {
-    email,
-  },
+  payload: { email },
+});
+
+export const addExpenses = (expenses) => ({
+  type: ADD_EXPENSES,
+  payload: { expenses },
 });
 
 export const addCurrency = (currencies) => ({
   type: ADD_CURRENCY,
-  payload: {
-    currencies,
-  },
+  payload: { currencies },
 });
 
 export const errorApi = (error) => ({
   type: ERROR_API,
-  pauload: {
-    error,
-  },
+  payload: { error },
+});
+
+export const amountExpenses = (amount) => ({
+  type: AMOUNT_EXPENSES,
+  payload: { amount },
+});
+
+export const coinAction = (coins) => ({
+  type: COIN,
+  payload: { coins },
 });
 
 export function buscaApi() {
@@ -38,3 +50,13 @@ export function buscaApi() {
     }
   };
 }
+
+export const buscaMoeda = () => async (dispatch) => {
+  try {
+    const apiMoeda = await fetch(API_CURRENCY);
+    const respostaMoeda = await apiMoeda.json();
+    return dispatch(coinAction(respostaMoeda));
+  } catch (error) {
+    return dispatch(errorApi);
+  }
+};
