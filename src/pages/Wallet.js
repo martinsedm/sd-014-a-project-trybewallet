@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { newExpense, newCurrencies } from '../actions';
 import Forms from '../components/Forms';
+import Header from '../components/Header';
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -10,26 +11,37 @@ class Wallet extends React.Component {
 
     this.state = {
       despesas: 0,
+      isLoading: true,
     };
+  }
+
+  async componentDidMount() {
+    await fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((r) => r.json())
+      .then((r) => {
+        const { Currencies } = this.props;
+        Currencies(r);
+        this.setState({
+          isLoading: false,
+        });
+      });
   }
 
   render() {
     const { email } = this.props;
-    const { despesas } = this.state;
+    const { despesas, isLoading } = this.state;
+    if (isLoading === true) {
+      return (
+        <div>
+          <h1>Carregando...</h1>
+          <Header email={ email } despesas={ despesas } />
+        </div>
+      );
+    }
+
     return (
       <div>
-        <header>
-          <h1>Saturno Wallet</h1>
-          <h2 data-testid="email-field">
-            Email:
-            {email}
-          </h2>
-          <h2 data-testid="total-field">
-            Despesa Total: R$
-            {despesas}
-          </h2>
-          <h2 data-testid="header-currency-field">BRL</h2>
-        </header>
+        <Header email={ email } despesas={ despesas } />
         <Forms />
       </div>
     );
@@ -42,11 +54,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   newExpense: (value) => dispatch(newExpense(value)),
-  newCurrencies: (value) => dispatch(newCurrencies(value)),
+  Currencies: (value) => dispatch(newCurrencies(value)),
 });
 
 Wallet.propTypes = {
   email: PropTypes.string.isRequired,
+  Currencies: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
