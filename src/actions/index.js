@@ -2,6 +2,7 @@
 export const LOGGED_EMAIL = 'LOGGED_EMAIL';
 export const CHANGE_WALLET = 'CHANGE_WALLET';
 export const ADD_EXPENSES = 'ADD_EXPENSES';
+export const OVERWRITE_EXPENSES = 'OVERWRITE_EXPENSES';
 
 export const loggedEmail = (email) => ({
   type: LOGGED_EMAIL,
@@ -19,6 +20,13 @@ export const addExpenses = (expenses) => ({
   type: ADD_EXPENSES,
   expenses,
 });
+
+export const overwriteXpenses = (payload) => (
+  {
+    type: OVERWRITE_EXPENSES,
+    payload,
+  }
+);
 
 const url = 'https://economia.awesomeapi.com.br/json/all';
 
