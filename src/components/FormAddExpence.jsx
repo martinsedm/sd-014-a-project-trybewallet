@@ -19,8 +19,17 @@ class FormAddExpence extends React.Component {
       expenses: [],
     };
 
+    this.sumExpense = this.sumExpense.bind(this);
+    this.fetchCurrencyApi = this.fetchCurrencyApi.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  fetchCurrencyApi() {
+    fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
+      response.json()
+        .then((json) => this.setState({ json }));
+    });
   }
 
   handleChange({ target: { name, value } }) {
@@ -29,9 +38,19 @@ class FormAddExpence extends React.Component {
     });
   }
 
+  sumExpense(currency, value) {
+    const { json } = this.state;
+    const usedCurrency = currency.value;
+    console.log(usedCurrency);
+    const atualCurrencyValue = json.USD.ask;
+    console.log(atualCurrencyValue);
+    console.log(value);
+  }
+
   handleClick() {
     const { id, value, currency, payMethod, tag, description, expenses } = this.state;
-    // const newId = id + 1;
+    this.fetchCurrencyApi();
+    this.sumExpense(currency, value);
     this.setState({
       id: id + 1,
       expenses: [...expenses, {
