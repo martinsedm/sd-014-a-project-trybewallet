@@ -1,6 +1,7 @@
 // Coloque aqui suas actions
 export const LOGIN = 'LOGIN';
 export const WALLET = 'WALLET';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const userLogin = (payload) => ({
   type: LOGIN,
@@ -13,6 +14,11 @@ export const userWallet = (currencies, expenses) => ({
     currencies,
     expenses,
   },
+});
+
+export const deleteExpense = (expenses) => ({
+  type: DELETE_EXPENSE,
+  expenses,
 });
 
 export function requestAPI() {

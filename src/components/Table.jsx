@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-// Uso das tags de tabela - https://www.homehost.com.br/blog/criar-sites/tabela-html/
+// Uso de tags de tabela - https://www.homehost.com.br/blog/criar-sites/tabela-html/
 
-class Table extends React.Component {
+class Table extends Component {
   render() {
     const tableInfos = ['Descrição', 'Tag', 'Método de pagamento', 'Valor', 'Moeda',
       'Câmbio utilizado', 'Valor convertido', 'Moeda de conversão', 'Editar/Excluir'];
