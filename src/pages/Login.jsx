@@ -42,7 +42,6 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isDisabled } = this.state;
-    // const { savedEmail } = this.props;
     return (
       <form>
         <Input

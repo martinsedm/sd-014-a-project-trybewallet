@@ -1,5 +1,7 @@
 import React from 'react';
-import PropsTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { setExpenses } from '../actions/index';
 import Input from './Input';
 import Select from './Select';
 import Button from './Button';
@@ -8,20 +10,41 @@ class FormAddExpence extends React.Component {
   constructor() {
     super();
     this.state = {
+      id: 0,
       value: 0,
-      currency: '',
-      payMethod: '',
-      tag: '',
+      currency: 'USD',
+      payMethod: 'Dinheiro',
+      tag: 'Alimentação',
       description: '',
+      expenses: [],
     };
 
     this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
+  }
+
+  handleClick() {
+    const { id, value, currency, payMethod, tag, description, expenses } = this.state;
+    // const newId = id + 1;
+    this.setState({
+      id: id + 1,
+      expenses: [...expenses, {
+        value,
+        currency,
+        payMethod,
+        tag,
+        description,
+        id,
+      }],
+    });
+    const { dispatchSetValue } = this.props;
+    dispatchSetValue(this.state);
   }
 
   render() {
@@ -66,14 +89,19 @@ class FormAddExpence extends React.Component {
           value={ description }
           onChange={ this.handleChange }
         />
-        <Button name="button" label="Entrar" onClick={ this.onSubmitForm } />
+        <Button name="button" label="Adicionar despesa" onClick={ this.handleClick } />
       </form>
     );
   }
 }
 
 FormAddExpence.propTypes = {
-  currencies: PropsTypes.string.isRequired,
+  dispatchSetValue: PropTypes.func.isRequired,
+  currencies: PropTypes.string.isRequired,
 };
 
-export default FormAddExpence;
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (state) => dispatch(setExpenses(state.expenses)),
+});
+
+export default connect(null, mapDispatchToProps)(FormAddExpence);
