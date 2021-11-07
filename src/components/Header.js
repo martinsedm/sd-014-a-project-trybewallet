@@ -21,15 +21,15 @@ class Header extends React.Component {
     return (
       <header>
         <h1>Carteira</h1>
-        <h3 data-testid="email-field">
+        <h2 data-testid="email-field">
           Email:
           {email}
-        </h3>
-        <h3 data-testid="total-field">
+        </h2>
+        <h2 data-testid="total-field">
           Despesa Total: R$
           {despesas}
-        </h3>
-        <h3 data-testid="header-currency-field">BRL</h3>
+        </h2>
+        <h2 data-testid="header-currency-field">BRL</h2>
       </header>
     );
   }

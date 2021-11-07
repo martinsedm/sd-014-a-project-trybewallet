@@ -63,7 +63,7 @@ class Forms extends React.Component {
     });
   }
 
-  inputvalor(value) {
+  inputvalue(value) {
     return (
       <label htmlFor="inputValue">
         valor
@@ -85,7 +85,7 @@ class Forms extends React.Component {
       <label htmlFor="tag">
         tag
         <select id="tag" name="tag" value={ tag } onChange={ this.HandleChange }>
-          <option value="Alimentcao">Alimentação</option>
+          <option value="Alimentacao">Alimentação</option>
           <option value="Lazer">Lazer</option>
           <option value="Trabalho">Trabalho</option>
           <option value="Transporte">Transporte</option>
@@ -119,7 +119,7 @@ class Forms extends React.Component {
     if (moedas.length === 0) return <h2>Caregando...</h2>;
     return (
       <form onSubmit={ this.onSubmit }>
-        {this.inputvalor(value)}
+        {this.inputvalue(value)}
         <label htmlFor="moeda">
           moeda
           <select
@@ -143,7 +143,7 @@ class Forms extends React.Component {
             onChange={ this.HandleChange }
           />
         </label>
-        <button type="submit">Adicionar</button>
+        <button type="submit">Adicionar despesa</button>
       </form>
     );
   }
