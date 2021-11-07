@@ -1,26 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { getCurrenciesThunk, setExpenseThunk } from '../actions';
+
 import Exchange from './Exchange';
 import Expenses from './Expenses';
-import { getCurrenciesThunk } from '../actions/index';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
       despesa: '',
-      descrição: '',
       moeda: '',
       pagamento: '',
-      despesas: '',
+      tag: '',
+      descrição: '',
     };
     this.handleChange = this.handleChange.bind(this);
-  }
-
-  componentDidMount() {
-    const { setCurrentAPI } = this.props;
-    setCurrentAPI();
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleChange({ target }) {
@@ -30,67 +27,44 @@ class Form extends React.Component {
     });
   }
 
+  handleClick() {
+    const { setCurrentExpense } = this.props;
+    setCurrentExpense(this.state);
+  }
+
   render() {
-    const { despesa, descrição, moeda, pagamento, despesas } = this.state;
-    const { currencies } = this.props;
+    const { despesa, moeda, tag, descrição, pagamento } = this.state;
     return (
       <form>
-        <label htmlFor="despesa">
-          Valor
-          <input
-            type="text"
-            id="despesa"
-            value={ despesa }
-            name="despesa"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label
-          htmlFor="descrição"
+        <Exchange
+          despesa={ despesa }
+          moeda={ moeda }
+          pagamento={ pagamento }
+          handleChange={ this.handleChange }
+        />
+        <Expenses
+          tag={ tag }
+          descrição={ descrição }
+          handleChange={ this.handleChange }
+        />
+        <button
+          type="button"
+          onClick={ this.handleClick }
         >
-          Descrição
-          <input
-            type="text"
-            id="descrição"
-            value={ descrição }
-            name="descrição"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <label htmlFor="moeda">
-          Moeda
-          <select
-            type="text"
-            id="moeda"
-            value={ moeda }
-            name="moeda"
-            onChange={ this.handleChange }
-          >
-
-            {currencies.map((data, keys) => (
-              <option key={ keys } value={ data }>{ data }</option>
-            )) }
-
-          </select>
-        </label>
-        <Exchange handleChange={ this.handleChange } value={ pagamento } />
-        <Expenses handleChange={ this.handleChange } value={ despesas } />
+          Adicionar despesa
+        </button>
       </form>
-
     );
   }
 }
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
-});
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentAPI: () => dispatch(getCurrenciesThunk()),
+  setCurrentExpense: (expense) => dispatch(setExpenseThunk(expense)),
 });
 
 Form.propTypes = {
-  setCurrentAPI: PropTypes.func.isRequired,
-  currencies: PropTypes.string.isRequired,
+  setCurrentExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Form);

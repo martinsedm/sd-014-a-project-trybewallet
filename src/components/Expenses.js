@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 
 class Expenses extends React.Component {
   render() {
-    const { handleChange } = this.props;
+    const { handleChange, descrição, tag } = this.props;
     return (
       <div>
-        <label htmlFor="despesas1">
+        <label htmlFor="tag">
           Tag
           <select
             type="text"
-            id="despesas1"
+            id="tag"
+            value={ tag }
+            name="tag"
             onChange={ handleChange }
           >
             <option value="Alimentação">Alimentação</option>
@@ -20,6 +22,18 @@ class Expenses extends React.Component {
             <option value="Saúde">Saúde</option>
           </select>
         </label>
+        <label
+          htmlFor="descrição"
+        >
+          Descrição
+          <input
+            type="text"
+            id="descrição"
+            value={ descrição }
+            name="descrição"
+            onChange={ handleChange }
+          />
+        </label>
       </div>
     );
   }
@@ -27,6 +41,8 @@ class Expenses extends React.Component {
 
 Expenses.propTypes = {
   handleChange: PropTypes.func.isRequired,
+  tag: PropTypes.string.isRequired,
+  descrição: PropTypes.string.isRequired,
 };
 
 export default Expenses;
