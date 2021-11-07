@@ -3,6 +3,7 @@ export const FETCH_SUCESS = 'fetch-sucess';
 export const FETCH_FAIL = 'fetch-fail';
 export const FETCH_EXPENSE = 'fetch-expense';
 export const EXPENSE_TOTAL = 'expense-total';
+export const REMOVER_TABELA = 'remover-tabela';
 
 export const userLogin = (payload) => ({ type: USER_LOGIN, payload });
 
@@ -13,6 +14,11 @@ export const fetchFail = (payload) => ({ type: FETCH_FAIL, payload });
 export const fetchExpense = (payload) => ({ type: FETCH_EXPENSE, payload });
 
 export const expenseTotal = () => ({ type: EXPENSE_TOTAL });
+
+export const removerExpense = (id) => (dispatch) => {
+  dispatch({ type: REMOVER_TABELA, id });
+  dispatch(expenseTotal());
+};
 
 export const FetchAPIMoedas = async () => {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');

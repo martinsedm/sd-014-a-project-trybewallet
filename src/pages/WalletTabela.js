@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { removerExpense } from '../actions';
 
 class WalletTabela extends React.Component {
   ConvertendoBRL(exchangeRates, currency, value) {
@@ -12,6 +13,7 @@ class WalletTabela extends React.Component {
   }
 
   ResultTabela({ description, tag, method, value, currency, exchangeRates, id }) {
+    const { setRemoverExpense } = this.props;
     return (
       <tr key={ id }>
         <td>{ description }</td>
@@ -28,6 +30,15 @@ class WalletTabela extends React.Component {
           }
         </td>
         <td>Real</td>
+        <td>
+          <button
+            type="button"
+            data-testid="delete-btn"
+            onClick={ () => setRemoverExpense(id) }
+          >
+            remover
+          </button>
+        </td>
       </tr>
     );
   }
@@ -61,8 +72,13 @@ const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  setRemoverExpense: (id) => dispatch(removerExpense(id)),
+});
+
 WalletTabela.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  setRemoverExpense: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(WalletTabela);
+export default connect(mapStateToProps, mapDispatchToProps)(WalletTabela);

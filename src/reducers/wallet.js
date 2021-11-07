@@ -1,4 +1,5 @@
-import { FETCH_SUCESS, FETCH_FAIL, FETCH_EXPENSE, EXPENSE_TOTAL } from '../actions';
+import { FETCH_SUCESS,
+  FETCH_FAIL, FETCH_EXPENSE, EXPENSE_TOTAL, REMOVER_TABELA } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -16,6 +17,11 @@ const calculoExpenseTotal = (expenses) => expenses.reduce(
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+  case REMOVER_TABELA:
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.id),
+    };
   case FETCH_SUCESS:
     return {
       ...state,
