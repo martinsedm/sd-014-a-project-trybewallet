@@ -13,7 +13,7 @@ export const newCurrencies = (state) => ({
   state,
 });
 
-export const atexpenses = (state) => ({
+export const attexpenses = (state) => ({
   type: 'EXPENSES',
   state,
 });

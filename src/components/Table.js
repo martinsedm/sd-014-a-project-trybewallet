@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { atexpenses } from '../actions';
+import { attexpenses } from '../actions';
 
 class Table extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  newListExpenses: (value) => dispatch(atexpenses(value)),
+  newListExpenses: (value) => dispatch(attexpenses(value)),
 });
 
 Table.propTypes = {
