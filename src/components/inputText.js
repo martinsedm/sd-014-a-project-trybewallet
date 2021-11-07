@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class InputText extends Component {
+class inputText extends Component {
   constructor(props) {
     super(props);
     this.state = { };
@@ -9,19 +9,22 @@ class InputText extends Component {
 
   render() {
     const {
-      idName,
+      id,
+      name,
       type,
       placeholder,
       value,
       testid,
       onChange,
+      label,
     } = this.props;
 
     return (
       <label htmlFor={ id }>
+        {label}
         <input
           id={ id }
-          name={ idName }
+          name={ name }
           type={ type }
           value={ value }
           data-testid={ testid }
@@ -33,13 +36,15 @@ class InputText extends Component {
   }
 }
 
-InputText.propTypes = {
+inputText.propTypes = {
+  name: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
-  idName: PropTypes.string,
+  id: PropTypes.string,
   testid: PropTypes.string,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
+  label: PropTypes.string,
 }.isRequired;
 
-export default InputText;
+export default inputText;
