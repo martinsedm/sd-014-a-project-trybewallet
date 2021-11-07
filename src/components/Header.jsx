@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 
 class Header extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    // Consultei: https://raullesteves.medium.com/javascript-entendendo-o-reduce-de-uma-vez-por-todas-c4cbaa16e380
+    const totalExpenses = expenses
+      .reduce((acc, {
+        value,
+        exchangeRates,
+        currency,
+      }) => acc + (value * exchangeRates[currency].ask), 0);
 
     return (
       <header>
@@ -17,7 +24,9 @@ class Header extends React.Component {
         <h4
           data-testid="total-field"
         >
-          Despesa total: 0
+          Despesa total:
+          {' '}
+          { totalExpenses }
         </h4>
         <h4
           data-testid="header-currency-field"
@@ -31,10 +40,12 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 const mapStateToProp = (state) => ({
   email: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProp)(Header);

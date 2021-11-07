@@ -73,7 +73,7 @@ class Login extends React.Component {
           </label>
           <Link to="/carteira">
             <button
-              type="submit"
+              type="button"
               disabled={ disableButton }
               onClick={ () => UserEmail(email) }
             >

@@ -2,6 +2,7 @@ import fetchCurrencies from '../services/curreciesAPI';
 
 export const USER_EMAIL = 'USER_EMAIL';
 export const GET_CURRENCIES = 'GET_CURRENCIES';
+export const ADD_EXPENSES = 'ADD_EXPENSES';
 
 export const userEmail = (payload) => ({
   type: USER_EMAIL,
@@ -15,5 +16,21 @@ export const getCurrencies = (payload) => ({
 
 export const getCurrenciesThunk = () => async (dispatch) => {
   const response = await fetchCurrencies();
-  dispatch(getCurrencies(response));
+  const currencies = Object.keys(response);
+  const filteredCurrencies = currencies.filter((currency) => currency !== 'USDT');
+  dispatch(getCurrencies(filteredCurrencies));
+};
+
+export const addExpenses = (payload) => ({
+  type: ADD_EXPENSES,
+  payload,
+});
+
+export const addExpensesThunk = (localState) => async (dispatch) => {
+  const response = await fetchCurrencies();
+  const payload = {
+    ...localState,
+    exchangeRates: response,
+  };
+  dispatch(addExpenses(payload));
 };

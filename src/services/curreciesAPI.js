@@ -1,8 +1,7 @@
 async function fetchCurrencies() {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-  const currencies = Object.keys(await response.json());
-  const filteredCurrencies = currencies.filter((currency) => currency !== 'USDT');
-  return filteredCurrencies;
+  const currencies = await response.json();
+  return currencies;
 }
 
 export default fetchCurrencies;
