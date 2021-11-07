@@ -73,7 +73,10 @@ class ExpensesForm extends React.Component {
             tag={ tag }
             handleChange={ this.handleChange }
           />
-          <button type="button" onClick={ this.handleClick }>
+          <button
+            type="button"
+            onClick={ this.handleClick }
+          >
             Adicionar despesa
           </button>
         </form>
