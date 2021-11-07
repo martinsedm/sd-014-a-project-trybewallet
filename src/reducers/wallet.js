@@ -1,10 +1,18 @@
-import { FETCH_SUCESS, FETCH_FAIL } from '../actions';
+import { FETCH_SUCESS, FETCH_FAIL, FETCH_EXPENSE, EXPENSE_TOTAL } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
-  expense: [],
+  expenses: [],
   error: null,
+  expenseID: 0,
+  expenseTotal: 0,
 };
+
+const calculoExpenseTotal = (expenses) => expenses.reduce(
+  (total, { value, currency, exchangeRates }) => (
+    total + (Number(value) * Number(exchangeRates[currency].ask))
+  ), 0,
+);
 
 const walletReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -18,6 +26,20 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       error: action.payload,
+    };
+  case FETCH_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses,
+        { id: state.expenseID, ...action.payload },
+      ],
+      expenseID: state.expenseID + 1,
+    };
+  case EXPENSE_TOTAL:
+    return {
+      ...state,
+      expenseTotal: calculoExpenseTotal(state.expenses),
     };
   default:
     return state;
