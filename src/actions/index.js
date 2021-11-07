@@ -13,4 +13,9 @@ export const newCurrencies = (state) => ({
   state,
 });
 
+export const atexpenses = (state) => ({
+  type: 'EXPENSES',
+  state,
+});
+
 export default newUser;
