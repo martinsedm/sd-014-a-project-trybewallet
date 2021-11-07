@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchCurrencies as fetchCurrenciesAction,
   getExpenses as getExpensesAction } from '../actions/index';
 
-export class Forms extends Component {
+export class Formulario extends Component {
   constructor() {
     super();
 
@@ -111,7 +111,7 @@ export class Forms extends Component {
   }
 }
 
-Forms.propTypes = {
+Formulario.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
   fetchCurrencies: PropTypes.func.isRequired,
   getExpenses: PropTypes.func.isRequired,
@@ -126,4 +126,4 @@ const mapDispatchToProps = (dispatch) => ({
   getExpenses: (payload) => dispatch(getExpensesAction(payload)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Forms);
+export default connect(mapStateToProps, mapDispatchToProps)(Formulario);
