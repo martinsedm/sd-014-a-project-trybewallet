@@ -38,8 +38,8 @@ class Wallet extends React.Component {
 
   sumExpenses() {
     const { expenses } = this.props;
-    const sum = expenses.reduce((acc, { value, currency, atualCurrency }) => {
-      const currencyPrice = atualCurrency[currency].ask;
+    const sum = expenses.reduce((acc, { value, currency, exchangeRates }) => {
+      const currencyPrice = exchangeRates[currency].ask;
       return value * currencyPrice + acc;
     }, 0);
     this.setState({
@@ -66,7 +66,7 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   savedEmail: PropTypes.string.isRequired,
-  expenses: PropTypes.array.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
 };
 
 const mapStateToProps = (state) => ({

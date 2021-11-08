@@ -14,7 +14,7 @@ class FormAddExpence extends React.Component {
       id: 0,
       value: 0,
       currency: 'USD',
-      payMethod: 'Dinheiro',
+      method: 'Dinheiro',
       tag: 'Alimentação',
       description: '',
       expenses: [],
@@ -53,7 +53,7 @@ class FormAddExpence extends React.Component {
   //   console.log(value);
 
   async handleClick() {
-    const { id, value, currency, payMethod, tag, description, expenses } = this.state;
+    const { id, value, currency, method, tag, description, expenses } = this.state;
     const { dispatchSetValue, sum } = this.props;
     const result = await fetch('https://economia.awesomeapi.com.br/json/all');
     const jsonX = await result.json();
@@ -61,13 +61,13 @@ class FormAddExpence extends React.Component {
     this.setState({
       id: id + 1,
       expenses: [...expenses, {
+        id,
         value,
         currency,
-        payMethod,
+        method,
         tag,
         description,
-        id,
-        atualCurrency: jsonX,
+        exchangeRates: jsonX,
       }],
     });
     dispatchSetValue(this.state);
@@ -75,7 +75,7 @@ class FormAddExpence extends React.Component {
   }
 
   render() {
-    const { value, currency, payMethod, tag, description } = this.state;
+    const { value, currency, method, tag, description } = this.state;
     const { currencies } = this.props;
     const payMethodOpt = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
     const tagOpt = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
@@ -96,9 +96,9 @@ class FormAddExpence extends React.Component {
           onChange={ this.handleChange }
         />
         <Select
-          name="payMethod"
+          name="method"
           label="Método de pagamento"
-          value={ payMethod }
+          value={ method }
           options={ payMethodOpt }
           onChange={ this.handleChange }
         />
