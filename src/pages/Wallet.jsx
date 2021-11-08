@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import fetchCurrencyApi from '../services/currencyAPI';
 import FormAddExpense from '../components/FormAddExpense';
+import TableExpense from '../components/TableExpense';
 
 class Wallet extends React.Component {
   constructor() {
@@ -59,7 +60,7 @@ class Wallet extends React.Component {
           <h3 data-testid="header-currency-field">{currency}</h3>
         </header>
         <FormAddExpense currencies={ currencies } sum={ this.sumExpenses } />
-        <tableExpense 
+        <TableExpense />
       </div>
     );
   }
