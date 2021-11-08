@@ -58,16 +58,19 @@ class ExpenseForm extends Component {
             />
           </label>
           <label htmlFor="input-moeda">
+            Moeda
             <select id="input-moeda">
               <option value="teste">vazio</option>
             </select>
           </label>
           <label htmlFor="input-metodo">
+            Método de pagamento
             <select id="input-metodo">
               { this.makePayMethods() }
             </select>
           </label>
           <label htmlFor="expense-tag">
+            Tag
             <select id="expense-tag">
               { this.makeExpenseTags() }
             </select>
