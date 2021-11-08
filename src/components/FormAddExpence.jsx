@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// import fetchCurrencyApi from '../services/currencyAPI';
 import { setExpenses } from '../actions/index';
 import Input from './Input';
 import Select from './Select';
@@ -19,17 +20,14 @@ class FormAddExpence extends React.Component {
       expenses: [],
     };
 
-    this.sumExpense = this.sumExpense.bind(this);
-    this.fetchCurrencyApi = this.fetchCurrencyApi.bind(this);
+    // this.sumExpense = this.sumExpense.bind(this);
+    // this.fetchCurrencyApi = this.fetchCurrencyApi.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  fetchCurrencyApi() {
-    fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
-      response.json()
-        .then((json) => this.setState({ json }));
-    });
+  componentDidUpdate() {
+    // this.fetchCurrencyApi().then((response) => console.log(response));
   }
 
   handleChange({ target: { name, value } }) {
@@ -38,19 +36,28 @@ class FormAddExpence extends React.Component {
     });
   }
 
-  sumExpense(currency, value) {
-    const { json } = this.state;
-    const usedCurrency = currency.value;
-    console.log(usedCurrency);
-    const atualCurrencyValue = json.USD.ask;
-    console.log(atualCurrencyValue);
-    console.log(value);
-  }
+  // fetchCurrencyApi() {
+  //   fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
+  //     response.json()
+  //       // .then((responseJson) => this.setState({ json: responseJson }));
+  //       .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)));
+  //   });
+  // }
 
-  handleClick() {
+  // sumExpense(currency, value) {
+  //   const { json } = this.state;
+  //   const usedCurrency = currency.value;
+  //   console.log(usedCurrency);
+  //   const atualCurrencyValue = json.USD.ask;
+  //   console.log(atualCurrencyValue);
+  //   console.log(value);
+
+  async handleClick() {
     const { id, value, currency, payMethod, tag, description, expenses } = this.state;
-    this.fetchCurrencyApi();
-    this.sumExpense(currency, value);
+    const { dispatchSetValue, sum } = this.props;
+    const result = await fetch('https://economia.awesomeapi.com.br/json/all');
+    const jsonX = await result.json();
+    // this.fetchCurrencyApi();
     this.setState({
       id: id + 1,
       expenses: [...expenses, {
@@ -60,10 +67,11 @@ class FormAddExpence extends React.Component {
         tag,
         description,
         id,
+        atualCurrency: jsonX,
       }],
     });
-    const { dispatchSetValue } = this.props;
     dispatchSetValue(this.state);
+    sum();
   }
 
   render() {
@@ -117,6 +125,7 @@ class FormAddExpence extends React.Component {
 FormAddExpence.propTypes = {
   dispatchSetValue: PropTypes.func.isRequired,
   currencies: PropTypes.string.isRequired,
+  sum: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

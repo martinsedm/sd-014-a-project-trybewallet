@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+// import fetchCurrencyApi from '../services/currencyAPI';
 import FormAddExpence from '../components/FormAddExpence';
 
 class Wallet extends React.Component {
@@ -15,6 +16,7 @@ class Wallet extends React.Component {
 
     this.fetchCurrencyApi = this.fetchCurrencyApi.bind(this);
     this.getFilterCurrencies = this.getFilterCurrencies.bind(this);
+    this.sumExpenses = this.sumExpenses.bind(this);
   }
 
   componentDidMount() {
@@ -34,6 +36,17 @@ class Wallet extends React.Component {
     });
   }
 
+  sumExpenses() {
+    const { expenses } = this.props;
+    const sum = expenses.reduce((acc, { value, currency, atualCurrency }) => {
+      const currencyPrice = atualCurrency[currency].ask;
+      return value * currencyPrice + acc;
+    }, 0);
+    this.setState({
+      totalExpense: (sum).toFixed(2),
+    });
+  }
+
   render() {
     const { savedEmail } = this.props;
     const { totalExpense, currency, currencies } = this.state;
@@ -45,7 +58,7 @@ class Wallet extends React.Component {
           <h3 data-testid="total-field">{`Despesa Total: ${totalExpense}`}</h3>
           <h3 data-testid="header-currency-field">{currency}</h3>
         </header>
-        <FormAddExpence currencies={ currencies } />
+        <FormAddExpence currencies={ currencies } sum={ this.sumExpenses } />
       </div>
     );
   }
@@ -53,10 +66,12 @@ class Wallet extends React.Component {
 
 Wallet.propTypes = {
   savedEmail: PropTypes.string.isRequired,
+  expenses: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   savedEmail: state.user.email,
+  expenses: state.wallet.expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);
