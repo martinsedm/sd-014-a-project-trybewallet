@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import fetchCurrencyApi from '../services/currencyAPI';
-import FormAddExpence from '../components/FormAddExpence';
+import FormAddExpense from '../components/FormAddExpense';
 
 class Wallet extends React.Component {
   constructor() {
@@ -58,7 +58,8 @@ class Wallet extends React.Component {
           <h3 data-testid="total-field">{`Despesa Total: ${totalExpense}`}</h3>
           <h3 data-testid="header-currency-field">{currency}</h3>
         </header>
-        <FormAddExpence currencies={ currencies } sum={ this.sumExpenses } />
+        <FormAddExpense currencies={ currencies } sum={ this.sumExpenses } />
+        <tableExpense 
       </div>
     );
   }

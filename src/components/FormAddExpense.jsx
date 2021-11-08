@@ -7,7 +7,7 @@ import Input from './Input';
 import Select from './Select';
 import Button from './Button';
 
-class FormAddExpence extends React.Component {
+class FormAddExpense extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -122,7 +122,7 @@ class FormAddExpence extends React.Component {
   }
 }
 
-FormAddExpence.propTypes = {
+FormAddExpense.propTypes = {
   dispatchSetValue: PropTypes.func.isRequired,
   currencies: PropTypes.string.isRequired,
   sum: PropTypes.func.isRequired,
@@ -132,4 +132,4 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchSetValue: (state) => dispatch(setExpenses(state.expenses)),
 });
 
-export default connect(null, mapDispatchToProps)(FormAddExpence);
+export default connect(null, mapDispatchToProps)(FormAddExpense);
