@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
-
   somaExpenses(expenses) {
     let totalExpense = 0;
     expenses.forEach((expense) => {
