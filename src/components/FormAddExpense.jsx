@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import fetchCurrencyApi from '../services/currencyAPI';
+import fetchCurrencyApi from '../services/currencyAPI';
 import { setExpenses } from '../actions/index';
 import Input from './Input';
 import Select from './Select';
@@ -27,7 +27,7 @@ class FormAddExpense extends React.Component {
   }
 
   componentDidUpdate() {
-    // this.fetchCurrencyApi().then((response) => console.log(response));
+    // console.log(this.fetchCurrencyApi());
   }
 
   handleChange({ target: { name, value } }) {
@@ -37,7 +37,7 @@ class FormAddExpense extends React.Component {
   }
 
   // fetchCurrencyApi() {
-  //   fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
+  //   return fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
   //     response.json()
   //       // .then((responseJson) => this.setState({ json: responseJson }));
   //       .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)));
@@ -55,8 +55,10 @@ class FormAddExpense extends React.Component {
   async handleClick() {
     const { id, value, currency, method, tag, description, expenses } = this.state;
     const { dispatchSetValue, sum } = this.props;
-    const result = await fetch('https://economia.awesomeapi.com.br/json/all');
-    const jsonX = await result.json();
+    // const result = await fetch('https://economia.awesomeapi.com.br/json/all');
+    // const jsonX = await result.json();
+    const jsonX = await fetchCurrencyApi();
+    // console.log(jsonX);
     // this.fetchCurrencyApi();
     this.setState({
       id: id + 1,

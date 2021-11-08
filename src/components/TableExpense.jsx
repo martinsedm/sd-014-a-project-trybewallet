@@ -11,7 +11,7 @@ class TableExpense extends React.Component {
   }
 
   handleClick(event) {
-    console.log(event.target.label);
+    console.log(event.target.name);
   }
 
   render() {
@@ -44,7 +44,7 @@ class TableExpense extends React.Component {
               <td>{atualCurrencyValue * value}</td>
               <td>Real</td>
               <td>
-                <Button label={ id } name="delete" onClick={ this.handleClick } />
+                <Button name={ id } data="delete" onClick={ this.handleClick } />
               </td>
             </tr>
           );
