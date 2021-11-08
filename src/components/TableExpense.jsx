@@ -1,29 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setExpenses } from '../actions/index';
 import Button from './Button';
 
 class TableExpense extends React.Component {
   constructor() {
     super();
+    this.state = {
+      expensesS: [],
+    };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(event) {
+    const { dispatchSetValue } = this.props;
+    const { expensesS } = this.state;
     const expenseId = event.target.name;
-    const { expenses } = this.props;
+    const deleteExpenses = expensesS.splice(expenseId, 1);
 
-    // function filterById(exp) {
-    //   return exp.id !== expenseId;
-    // }
+    this.setState({
+      expensesS,
+    });
 
-    // const filterExpenses = expenses.filter((_, index) => index !== expenseId);
-    const filterExpenses = expenses.splice(expenseId, 1);
-    
+    dispatchSetValue(expensesS);
+
     console.log(expenseId);
-    console.log(filterExpenses);
-    console.log(expenses);
+    // console.log(expenses);
+    console.log(deleteExpenses);
   }
 
   render() {
@@ -67,11 +72,16 @@ class TableExpense extends React.Component {
 }
 
 TableExpense.propTypes = {
+  dispatchSetValue: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.any.isRequired).isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSetValue: (filterExpenses) => dispatch(setExpenses(filterExpenses)),
+});
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(TableExpense);
+export default connect(mapStateToProps, mapDispatchToProps)(TableExpense);

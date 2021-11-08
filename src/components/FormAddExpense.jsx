@@ -26,40 +26,16 @@ class FormAddExpense extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidUpdate() {
-    // console.log(this.fetchCurrencyApi());
-  }
-
   handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
   }
 
-  // fetchCurrencyApi() {
-  //   return fetch('https://economia.awesomeapi.com.br/json/all').then((response) => {
-  //     response.json()
-  //       // .then((responseJson) => this.setState({ json: responseJson }));
-  //       .then((json) => (response.ok ? Promise.resolve(json) : Promise.reject(json)));
-  //   });
-  // }
-
-  // sumExpense(currency, value) {
-  //   const { json } = this.state;
-  //   const usedCurrency = currency.value;
-  //   console.log(usedCurrency);
-  //   const atualCurrencyValue = json.USD.ask;
-  //   console.log(atualCurrencyValue);
-  //   console.log(value);
-
   async handleClick() {
     const { id, value, currency, method, tag, description, expenses } = this.state;
     const { dispatchSetValue, sum } = this.props;
-    // const result = await fetch('https://economia.awesomeapi.com.br/json/all');
-    // const jsonX = await result.json();
     const jsonX = await fetchCurrencyApi();
-    // console.log(jsonX);
-    // this.fetchCurrencyApi();
     this.setState({
       id: id + 1,
       expenses: [...expenses, {
