@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 
 class Header extends React.Component {
   render() {
-    const valor = 0;
     const coin = 'BRL:';
-    const { email } = this.props;
+    const { email, valor } = this.props;
     return (
       <div>
         <h1 data-testid="email-field">
@@ -29,9 +28,22 @@ class Header extends React.Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  valor: PropTypes.number.isRequired,
+};
+
+const sumTotalAccount = (expenses) => {
+  let total = 0;
+  expenses.forEach((element) => {
+    const { currency } = element;
+    const { ask } = element.exchangeRates[currency];
+
+    total += (ask * element.value);
+  });
+  return total;
 };
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  valor: sumTotalAccount(state.wallet.expenses),
 });
 export default connect(mapStateToProps)(Header);

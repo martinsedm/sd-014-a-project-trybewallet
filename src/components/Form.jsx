@@ -1,17 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { saveExpense } from '../actions';
+import { getExchangeRate } from '../actions';
 
 class Form extends React.Component {
   constructor() {
     super();
     this.state = {
-      value: '',
-      description: '',
-      currency: '',
-      method: '',
-      tag: '',
+      expense: {
+        id: 0,
+        value: '',
+        description: '',
+        currency: 'USD',
+        method: 'Dinheiro',
+        tag: 'Alimentação',
+        exchangeRates: '',
+      },
       coins: [],
 
     };
@@ -32,14 +36,31 @@ class Form extends React.Component {
   }
 
   getValuesOnChange({ target: { value, id } }) {
-    this.setState({ [id]: value });
+    const { expense } = this.state;
+
+    this.setState({
+      expense: {
+        ...expense,
+        [id]: value,
+      },
+
+    });
     // adicionar acesso aos valores dos  campos aqui.
     // apos salvar valores no redux.
   }
 
   handleClick() {
+    const { expense } = this.state;
+    const { id } = expense;
     const { setSaveExpense } = this.props;
-    setSaveExpense(this.state);
+    setSaveExpense(expense);
+    // this.setState({ id: id + 1 });
+    this.setState({
+      expense: {
+        ...expense,
+        id: id + 1,
+      },
+    });
   }
 
   renderSelectOptions(coins) {
@@ -47,12 +68,13 @@ class Form extends React.Component {
   }
 
   renderSelects() {
-    const { method, tag } = this.state;
+    const { expense } = this.state;
+    const { method, tag } = expense;
     return (
       <div>
-        <label htmlFor="metodo-pagamento">
+        <label htmlFor="method">
           Método de pagamento
-          <select id="metodo-pagamento" value={ method }>
+          <select id="method" value={ method } onChange={ this.getValuesOnChange }>
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
             <option value="Cartão de débito">Cartão de débito</option>
@@ -60,7 +82,7 @@ class Form extends React.Component {
         </label>
         <label htmlFor="tag">
           tag
-          <select id="tag" value={ tag }>
+          <select id="tag" value={ tag } onChange={ this.getValuesOnChange }>
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
             <option value="Trabalho">Trabalho</option>
@@ -73,7 +95,9 @@ class Form extends React.Component {
   }
 
   render() {
-    const { coins, value, description, currency } = this.state;
+    const { coins, expense } = this.state;
+    const { value, description, currency } = expense;
+
     return (
       <form>
         <label htmlFor="value">
@@ -117,7 +141,7 @@ Form.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setSaveExpense: (expense) => { dispatch(saveExpense(expense)); },
+  setSaveExpense: (expense) => { dispatch(getExchangeRate(expense)); },
 });
 
 export default connect(null, mapDispatchToProps)(Form);
