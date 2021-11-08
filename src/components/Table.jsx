@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import DeleteExpenseBtn from './DeleteExpenseBtn';
 
 // Uso de tags de tabela - https://www.homehost.com.br/blog/criar-sites/tabela-html/
 
@@ -31,7 +32,7 @@ class Table extends Component {
                     { (Number(value) * Number(exchangeRates[currency].ask)).toFixed(2) }
                   </td>
                   <td>Real</td>
-                  <td>Editar/Excluir</td>
+                  <td><DeleteExpenseBtn id={ id } /></td>
                 </tr>
               ),
             )}
