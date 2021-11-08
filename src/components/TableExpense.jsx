@@ -1,8 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from './Button';
 
 class TableExpense extends React.Component {
+  constructor() {
+    super();
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick({ target }) {
+    console.log(target);
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -32,6 +43,9 @@ class TableExpense extends React.Component {
               <td>{atualCurrencyValue.toFixed(2)}</td>
               <td>{atualCurrencyValue * value}</td>
               <td>Real</td>
+              <td>
+                <Button key={ id } name="delete" onClick={ this.handleClick } />
+              </td>
             </tr>
           );
         })}
