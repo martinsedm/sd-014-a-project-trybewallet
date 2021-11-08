@@ -19,7 +19,8 @@ class TableExpense extends React.Component {
           <th>Editar/Excluir</th>
         </tr>
         { expenses.map((expense) => {
-          const { id, value, currency, method, tag, description, exchangeRates } = expense;
+          const { id, value, currency, method,
+            tag, description, exchangeRates } = expense;
           const atualCurrencyValue = Number(exchangeRates[currency].ask);
           return (
             <tr key={ id }>
