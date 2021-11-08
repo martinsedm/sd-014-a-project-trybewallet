@@ -3,6 +3,9 @@ import { getCurrentAPI } from '../services/fetchAPI';
 export const USER_LOGIN = 'USER_LOGIN';
 export const SET_CURRENCIES = 'SET_CURRENCIES';
 export const SET_EXPENSE = 'SET_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const TOTAL_EXPENSE = 'TOTAL_EXPENSE';
+
 export const ERROR = 'ERROR';
 
 export const userLogin = (payload) => ({
@@ -19,6 +22,15 @@ export const setExpenses = (expense, payload) => ({
   type: SET_EXPENSE,
   expense,
   payload,
+});
+
+export const removeExpenses = (payload) => ({
+  type: DELETE_EXPENSE,
+  payload,
+});
+
+export const totalExpenses = () => ({
+  type: TOTAL_EXPENSE,
 });
 
 export const setError = (payload) => ({
@@ -44,4 +56,9 @@ export const setExpenseThunk = (expense) => async (dispatch) => {
   } catch (error) {
     dispatch(setError(error));
   }
+};
+
+export const deleteExpense = (id) => (dispatch) => {
+  dispatch({ type: DELETE_EXPENSE, id });
+  dispatch(totalExpenses());
 };
