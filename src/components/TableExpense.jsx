@@ -7,28 +7,23 @@ import Button from './Button';
 class TableExpense extends React.Component {
   constructor() {
     super();
-    this.state = {
-      expensesS: [],
-    };
+    // this.state = {
+    //   expensesS: [],
+    // };
 
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick(event) {
-    const { dispatchSetValue } = this.props;
-    const { expensesS } = this.state;
+    const { expenses, dispatchSetValue } = this.props;
     const expenseId = event.target.name;
-    const deleteExpenses = expensesS.splice(expenseId, 1);
+    const filterExpenses = expenses.filter((exp) => exp.Id !== expenseId);
 
-    this.setState({
-      expensesS,
-    });
-
-    dispatchSetValue(expensesS);
+    dispatchSetValue(filterExpenses);
 
     console.log(expenseId);
-    // console.log(expenses);
-    console.log(deleteExpenses);
+    console.log(filterExpenses);
+    console.log(expenses[expenseId].id);
   }
 
   render() {
