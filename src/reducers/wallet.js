@@ -19,7 +19,7 @@ const wallet = (state = INITIAL_STATE, action) => {
   case SET_EXPENSE:
     return {
       ...state,
-      expenses: [{
+      expenses: [...state.expenses, {
         id: state.id,
         value: action.expense.despesa,
         description: action.expense.descrição,

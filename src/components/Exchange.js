@@ -48,9 +48,9 @@ class Exchange extends React.Component {
             value={ pagamento }
             onChange={ handleChange }
           >
-            <option value="dinheiro">Dinheiro</option>
-            <option value="credito">Cartão de crédito</option>
-            <option value="debito">Cartão de débito</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão de crédito">Cartão de crédito</option>
+            <option value="Cartão de débito">Cartão de débito</option>
           </select>
         </label>
 
