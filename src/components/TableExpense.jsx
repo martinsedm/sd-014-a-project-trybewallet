@@ -11,7 +11,7 @@ class TableExpense extends React.Component {
   }
 
   handleClick(event) {
-    console.log(event);
+    console.log(event.target.label);
   }
 
   render() {
