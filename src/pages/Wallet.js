@@ -6,6 +6,7 @@ import Forms from '../components/Forms';
 import Header from '../components/Header';
 import { buscaApi } from '../actions';
 import TableOptions from '../components/Table/TableOptions';
+import TableExpenses from '../components/Table/TableExpenses';
 
 class Wallet extends React.Component {
   componentDidMount() {
@@ -19,6 +20,7 @@ class Wallet extends React.Component {
         <Header />
         <Forms />
         <TableOptions />
+        <TableExpenses />
       </div>
     );
   }

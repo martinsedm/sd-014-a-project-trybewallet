@@ -6,9 +6,6 @@ class TableExpenses extends React.Component {
   render() {
     const { expenses } = this.props;
 
-    if (expenses === undefined) return <p>Carregando...</p>;
-    if (expenses.length === undefined) return <p>Carregando...</p>;
-
     return (
       expenses
         .map(({ id, value, description, currency, method, tag, exchangeRates }) => (
