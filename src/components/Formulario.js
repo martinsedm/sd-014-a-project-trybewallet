@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchCurrencies as fetchCurrenciesAction,
   getExpenses as getExpensesAction } from '../actions/index';
 
-export class Formulario extends Component {
+class Formulario extends Component {
   constructor() {
     super();
 
