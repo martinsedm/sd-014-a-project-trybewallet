@@ -11,7 +11,19 @@ class TableExpense extends React.Component {
   }
 
   handleClick(event) {
-    console.log(event.target.name);
+    const expenseId = event.target.name;
+    const { expenses } = this.props;
+
+    // function filterById(exp) {
+    //   return exp.id !== expenseId;
+    // }
+
+    // const filterExpenses = expenses.filter((_, index) => index !== expenseId);
+    const filterExpenses = expenses.splice(expenseId, 1);
+    
+    console.log(expenseId);
+    console.log(filterExpenses);
+    console.log(expenses);
   }
 
   render() {
