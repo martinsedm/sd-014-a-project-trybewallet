@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Table extends React.Component {
-  intoBRL(exchangeRates, currency, value) {
-    return (exchangeRates[currency].ask * value);
-  }
-
   setTable({ description, tag, method, value, currency, exchangeRates, id }) {
     return (
       <tr key={ id }>
@@ -30,6 +26,10 @@ class Table extends React.Component {
 
   exchangeFormat(value) {
     return `${Number(value).toFixed(2)}`;
+  }
+
+  intoBRL(exchangeRates, currency, value) {
+    return (exchangeRates[currency].ask * value);
   }
 
   render() {
