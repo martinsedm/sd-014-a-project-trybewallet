@@ -1,15 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteActualExpense } from '../actions';
 
 class Table extends React.Component {
   render() {
-    const { expenses } = this.props;
-    const [expense] = expenses;
-
-    console.log(expense, 'expense');
-    // console.log(expenses, 'expenses');
-
+    const { expenses, setDeleteActualExpense } = this.props;// const [expense] = expenses;
     return (
       <table>
         <tr>
@@ -32,7 +28,6 @@ class Table extends React.Component {
             <td>
               {oneExpense.exchangeRates[oneExpense.currency]
                 .name.split('/')[0]}
-
             </td>
             <td>
               {Math.round(oneExpense.exchangeRates[oneExpense.currency]
@@ -44,7 +39,16 @@ class Table extends React.Component {
                / 100 }
             </td>
             <td>Real</td>
-            <td>Excluir</td>
+            <td>
+              <button
+                data-testid="delete-btn"
+                type="button"
+                onClick={ () => setDeleteActualExpense(oneExpense.id) }
+              >
+                Excluir
+              </button>
+
+            </td>
           </tr>
         ))}
       </table>
@@ -54,20 +58,14 @@ class Table extends React.Component {
 
 Table.propTypes = {
   expenses: PropTypes.number.isRequired,
+  setDeleteActualExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
-});
-export default connect(mapStateToProps)(Table);
 
-// {
-//   "expense": {
-//     "id": 1,
-//     "value": "2200",
-//     "description": "asdsad",
-//     "currency": "USD",
-//     "method": "Dinheiro",
-//     "tag": "Alimentação",
-//     "exchangeRates": ""
-//   },
+});
+const mapDispatchToProps = (dispatch) => ({
+  setDeleteActualExpense: (id) => { dispatch(deleteActualExpense(id)); },
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

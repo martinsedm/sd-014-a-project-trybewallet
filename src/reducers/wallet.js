@@ -1,4 +1,4 @@
-import { SAVE_ACTUAL_EXPENSE } from '../actions';
+import { SAVE_ACTUAL_EXPENSE, DELETE_ACTUAL_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -13,6 +13,14 @@ export default function walletReducer(state = INITIAL_STATE, action) {
       expenses: [
         ...state.expenses,
         action.expense,
+      ],
+
+    };
+  case DELETE_ACTUAL_EXPENSE:
+    return {
+      ...state,
+      expenses: [
+        ...state.expenses.filter((expense) => action.id !== expense.id),
       ],
 
     };

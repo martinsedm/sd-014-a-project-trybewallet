@@ -1,10 +1,15 @@
 export const SAVE_PERSONAL_EMAIL = 'SAVE_PERSONAL_EMAIL';
 export const CURRENT_WALLET = 'CURRENT_WALLET';
 export const SAVE_ACTUAL_EXPENSE = 'SAVE_ACTUAL_EXPENSE';
+export const DELETE_ACTUAL_EXPENSE = 'DELETE_ACTUAL_EXPENSE';
 
 export const savePersonalEmail = (payload) => ({
   type: SAVE_PERSONAL_EMAIL,
   payload,
+});
+export const deleteActualExpense = (id) => ({
+  type: DELETE_ACTUAL_EXPENSE,
+  id,
 });
 
 export const saveExpense = (expense) => ({
