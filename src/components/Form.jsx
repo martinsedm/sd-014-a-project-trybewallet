@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { requestAPI, addExpense, ThunkAPI } from '../actions';
+import { requestAPI, ThunkAPI } from '../actions';
 import Input from './Input';
 import Select from './Select';
 
