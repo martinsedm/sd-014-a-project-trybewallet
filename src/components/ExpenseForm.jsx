@@ -1,4 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setCurrencies as setCurrenciesAction } from '../actions/index';
 
 class ExpenseForm extends Component {
   constructor() {
@@ -11,6 +14,11 @@ class ExpenseForm extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.makePayMethods = this.makePayMethods.bind(this);
     this.makeExpenseTags = this.makeExpenseTags.bind(this);
+  }
+
+  componentDidMount() {
+    const { setCurrencies } = this.props;
+    setCurrencies();
   }
 
   handleInput({ target }) {
@@ -34,6 +42,7 @@ class ExpenseForm extends Component {
 
   render() {
     const { value, description } = this.state;
+    const { wallet } = this.props;
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
@@ -60,7 +69,8 @@ class ExpenseForm extends Component {
           <label htmlFor="input-moeda">
             Moeda
             <select id="input-moeda">
-              <option value="teste">vazio</option>
+              { wallet.currencies.map((currency) => currency !== 'USDT'
+              && <option key={ currency } value={ currency }>{currency}</option>)}
             </select>
           </label>
           <label htmlFor="input-metodo">
@@ -75,7 +85,6 @@ class ExpenseForm extends Component {
               { this.makeExpenseTags() }
             </select>
           </label>
-
           <input type="submit" value="Enviar" />
         </form>
       </div>
@@ -83,4 +92,16 @@ class ExpenseForm extends Component {
   }
 }
 
-export default ExpenseForm;
+ExpenseForm.propTypes = {
+  setCurrencies: PropTypes.func.isRequired,
+  wallet: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  setCurrencies: () => dispatch(setCurrenciesAction()),
+});
+
+const mapStateToProps = ({ wallet }) => ({
+  wallet,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);
