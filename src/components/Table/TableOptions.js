@@ -18,7 +18,9 @@ class TableOptions extends React.Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <TableExpenses />
+        <tbody>
+          <TableExpenses />
+        </tbody>
       </table>
     );
   }

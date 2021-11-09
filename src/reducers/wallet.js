@@ -4,6 +4,7 @@ import {
   ADD_EXPENSES,
   AMOUNT_EXPENSES,
   COIN,
+  REMOVE_EXPENSE,
 } from '../actions';
 
 const INITIALSTATE = {
@@ -12,6 +13,7 @@ const INITIALSTATE = {
   expenses: [],
   amount: 0,
   coins: {},
+
 };
 
 function walletReducer(state = INITIALSTATE, action) {
@@ -28,6 +30,8 @@ function walletReducer(state = INITIALSTATE, action) {
     return { ...state, coins: action.payload.coins };
   default:
     return state;
+  case REMOVE_EXPENSE:
+    return { ...state, expenses: action.payload.remove };
   }
 }
 export default walletReducer;

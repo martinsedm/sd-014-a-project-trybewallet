@@ -4,6 +4,7 @@ export const ADD_CURRENCY = 'ADD_CURRENCY';
 export const ERROR_API = 'ERROR_API';
 export const AMOUNT_EXPENSES = 'AMOUNT_EXPENSES';
 export const COIN = 'COIN';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 const API_CURRENCY = 'https://economia.awesomeapi.com.br/json/all';
 
@@ -35,6 +36,11 @@ export const amountExpenses = (amount) => ({
 export const coinAction = (coins) => ({
   type: COIN,
   payload: { coins },
+});
+
+export const removeDespesas = (remove) => ({
+  type: REMOVE_EXPENSE,
+  payload: { remove },
 });
 
 export function buscaApi() {

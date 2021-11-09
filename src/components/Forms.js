@@ -42,7 +42,6 @@ class Forms extends React.Component {
   render() {
     const { value, description, currency, method, tag } = this.state;
     const { currencies } = this.props;
-    // if (currencies.length === 0) return <p>Carregando..</p>;
 
     return (
       <div>
