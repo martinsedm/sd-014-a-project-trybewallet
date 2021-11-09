@@ -53,7 +53,7 @@ class ExpenseTable extends Component {
                   type="button"
                   onClick={ () => this.handleClick(expense) }
                   data-testid="delete-btn"
-                 >
+                >
                  Excluir
                 </button>
               </td>
