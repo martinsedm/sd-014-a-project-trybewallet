@@ -12,3 +12,4 @@ export const setCurrencies = () => async (dispatch) => {
   const currencies = await fetchWithout();
   return dispatch({ type: CURRENCIES, payload: currencies });
 };
+export const setExpenses = (payload) => ({ type: EXPENSES, payload });

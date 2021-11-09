@@ -1,17 +1,22 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { setCurrencies as setCurrenciesAction } from '../actions/index';
+import { setCurrencies as setCurrenciesAction,
+  setExpenses as setExpensesAction } from '../actions/index';
+import { fetchCurrency } from '../services/fetchCurrencyAPI';
 
 class ExpenseForm extends Component {
   constructor() {
     super();
     this.state = {
-      value: 0,
+      value: 1,
       description: '',
-
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: 'Alimentação',
     };
     this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.makePayMethods = this.makePayMethods.bind(this);
     this.makeExpenseTags = this.makeExpenseTags.bind(this);
   }
@@ -38,6 +43,23 @@ class ExpenseForm extends Component {
     return expenseTags.map((tag, index) => (
       <option key={ index } value={ tag }>{ tag }</option>
     ));
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    const { setExpenses } = this.props;
+    const { value, description, currency, method, tag } = this.state;
+    const fetch = await fetchCurrency();
+    console.log(fetch);
+    const expense = {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates: fetch,
+    };
+    setExpenses(expense);
   }
 
   render() {
@@ -68,24 +90,24 @@ class ExpenseForm extends Component {
           </label>
           <label htmlFor="input-moeda">
             Moeda
-            <select id="input-moeda">
+            <select name="currency" onChange={ this.handleInput } id="input-moeda">
               { wallet.currencies.map((currency) => currency !== 'USDT'
               && <option key={ currency } value={ currency }>{currency}</option>)}
             </select>
           </label>
           <label htmlFor="input-metodo">
             Método de pagamento
-            <select id="input-metodo">
+            <select name="method" onChange={ this.handleInput } id="input-metodo">
               { this.makePayMethods() }
             </select>
           </label>
           <label htmlFor="expense-tag">
             Tag
-            <select id="expense-tag">
+            <select name="tag" onChange={ this.handleInput } id="expense-tag">
               { this.makeExpenseTags() }
             </select>
           </label>
-          <input type="submit" value="Enviar" />
+          <input type="submit" value="Adicionar despesa" />
         </form>
       </div>
     );
@@ -94,10 +116,12 @@ class ExpenseForm extends Component {
 
 ExpenseForm.propTypes = {
   setCurrencies: PropTypes.func.isRequired,
+  setExpenses: PropTypes.func.isRequired,
   wallet: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 const mapDispatchToProps = (dispatch) => ({
   setCurrencies: () => dispatch(setCurrenciesAction()),
+  setExpenses: (payload) => dispatch(setExpensesAction(payload)),
 });
 
 const mapStateToProps = ({ wallet }) => ({

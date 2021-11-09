@@ -4,6 +4,7 @@ import { CURRENCIES, EXPENSES } from '../actions';
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  total: 0.00,
 };
 
 const wallet = (state = INITIAL_STATE, action) => {
@@ -11,7 +12,11 @@ const wallet = (state = INITIAL_STATE, action) => {
   case EXPENSES:
     return {
       ...state,
-      expenses: action.payload,
+      expenses: [...state.expenses, { id: state.expenses.length, ...action.payload }],
+      // total: Number(state.total) + (action.payload.value * Number(action.payload.exchangeRates[action.payload.currency].ask).toFixed(2)),
+      total: (Number(state.total)
+      + (Number(action.payload.value)
+       * Number(action.payload.exchangeRates[action.payload.currency].ask))).toFixed(2),
     };
   case CURRENCIES:
     return {
