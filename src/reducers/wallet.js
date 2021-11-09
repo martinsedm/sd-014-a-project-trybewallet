@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 function walletReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case GET_CURRENCIES:
-    return { 
+    return {
       ...state,
       currencies: action.payload,
     };
@@ -17,7 +17,7 @@ function walletReducer(state = INITIAL_STATE, action) {
       ...state,
       expenses: [...state.expenses, action.payload],
     };
-    case DELETE_EXPENSE:
+  case DELETE_EXPENSE:
     return {
       ...state,
       expenses: state.expenses.filter((expense) => expense.id !== action.payload.id),
