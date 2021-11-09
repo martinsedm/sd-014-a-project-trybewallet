@@ -1,8 +1,28 @@
 import React from 'react';
 import Header from '../components/Header';
+import currencyApi from '../services/currencyApi';
 
 class Wallet extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      currency: [],
+    };
+  }
+
+  componentDidMount() {
+    this.currencyFilter();
+  }
+
+  async currencyFilter() {
+    const desiredCodes = Object.values(await currencyApi())
+      .filter(({ codein }) => codein === 'BRL');
+    this.setState({ currency: desiredCodes });
+  }
+
   render() {
+    const { currency } = this.state;
+
     return (
       <div>
         <Header />
@@ -18,7 +38,9 @@ class Wallet extends React.Component {
           <label htmlFor="currency">
             Moeda:
             <select id="currency" type="select" name="currency">
-              <option>moeda</option>
+              {currency.map(({ code }) => (
+                <option key={ code }>{ code }</option>
+              ))}
             </select>
           </label>
           <label htmlFor="payment">
