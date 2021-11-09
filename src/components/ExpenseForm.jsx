@@ -50,7 +50,6 @@ class ExpenseForm extends Component {
     const { setExpenses } = this.props;
     const { value, description, currency, method, tag } = this.state;
     const fetch = await fetchCurrency();
-    console.log(fetch);
     const expense = {
       value,
       description,
