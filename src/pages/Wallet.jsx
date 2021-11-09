@@ -99,7 +99,7 @@ class Wallet extends React.Component {
               {this.renderCurrencyCodes()}
             </select>
           </label>
-          <label htmlFor="payment">
+          <label htmlFor="method">
             Método de pagamento:
             <select id="method" name="method" value={ method } onChange={ handleChange }>
               {this.renderMethod()}
