@@ -1,5 +1,6 @@
-import api from '../services/api'
-export const SET_USER_EMAIL = "SET_USER_EMAIL";
+import api from '../services/api';
+
+export const SET_USER_EMAIL = 'SET_USER_EMAIL';
 export const SET_COINS = 'SET_COINS';
 export const SET_EXPENDITURE = 'SET_EXPENDITURE';
 export const DELETE_EXPENDITURE = 'DELETE_EXPENDITURE';

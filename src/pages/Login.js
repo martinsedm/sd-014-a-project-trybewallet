@@ -1,36 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { setUserEmail } from '../actions'
 import { connect } from 'react-redux';
+import { setUserEmail } from '../actions';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       enable: false,
-    }
-  this.enableForm = this.enableForm.bind(this);
-  this.handleChange = this.handleChange.bind(this); 
-  this.submitForm = this.submitForm.bind(this);
-  } 
-  
-  enableForm () {
-    const { email, password } = this.state
+    };
+    this.enableForm = this.enableForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+  }
+
+  enableForm() {
+    const { email, password } = this.state;
     const emailRegex = /\S+@\S+\.\S+/;
     const passwordLength = 6;
     const enable = emailRegex.test(email) && password.length >= passwordLength;
-    this.setState({ enable }) 
-    };
-  
+    this.setState({ enable });
+  }
+
   handleChange({ target: { name, value } }) {
     this.setState({ [name]: value }, () => this.enableForm());
   }
 
-  submitForm (event) {
-    const { email } = this.state
-    const { history, setEmailGlobal } = this.props
+  submitForm(event) {
+    const { email } = this.state;
+    const { history, setEmailGlobal } = this.props;
     event.preventDefault();
     setEmailGlobal(email);
     history.push('/carteira');
@@ -39,23 +39,26 @@ class Login extends React.Component {
   render() {
     const { enable } = this.state;
     return (
-      <form onSubmit = { this.submitForm } >
+      <form onSubmit={ this.submitForm }>
         <input
-        data-testid="email-input"
-        type = "text"
-        name = "email"
-        onChange = { this.handleChange } />
+          data-testid="email-input"
+          type="text"
+          name="email"
+          onChange={ this.handleChange }
+        />
         <input
-        data-testid="password-input"
-        name="password"
-        type = "password" 
-        onChange = { this.handleChange } />
+          data-testid="password-input"
+          name="password"
+          type="password"
+          onChange={ this.handleChange }
+        />
         <input
-        type = "submit"
-        value = "Entrar"
-        disabled = { !enable } />
+          type="submit"
+          value="Entrar"
+          disabled={ !enable }
+        />
       </form>
-    )
+    );
   }
 }
 
