@@ -60,7 +60,7 @@ class Wallet extends React.Component {
           <h3 data-testid="header-currency-field">{currency}</h3>
         </header>
         <FormAddExpense currencies={ currencies } sum={ this.sumExpenses } />
-        <TableExpense />
+        <TableExpense sum={ this.sumExpenses } />
       </div>
     );
   }

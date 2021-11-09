@@ -10,11 +10,3 @@ export const setUser = (payload) => ({
 export const setExpenses = (payload) => ({
   type: SET_EXPENSES, payload,
 });
-
-// export const fetchCurrencyApiThunk = () => async (dispatch) => {
-//   const response = await fetchCurrencyApi();
-//   const payload = {
-//     currencyValue: response.USD.ask,
-//   };
-//   dispatch(setExpenses(payload));
-// };
