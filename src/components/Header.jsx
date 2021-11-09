@@ -11,7 +11,7 @@ class Header extends Component {
           { user.email }
         </p>
         <p data-testid="total-field">
-          { wallet.total}
+          { `Total: 0 ${wallet.total}` }
         </p>
         <p data-testid="header-currency-field"> BRL </p>
       </div>
