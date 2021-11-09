@@ -1,13 +1,8 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-import { ADD_EXPENSE, RECEIVE_INSTANT_RATE, REQUEST_INSTANT_RATE } from '../actions';
+import { ADD_EXPENSE, DELETE_EXPENSE } from '../actions';
 
 const initialState = {
-  expenses: [
-    //   {
-
-    //   // value: 0,
-    // },
-  ],
+  expenses: [],
 };
 
 function walletReducer(state = initialState, action) {
@@ -17,11 +12,9 @@ function walletReducer(state = initialState, action) {
       ...state,
       expenses: [...state.expenses, action.value],
     };
-  case REQUEST_INSTANT_RATE:
-    return state;
-  case RECEIVE_INSTANT_RATE:
-    return {
-      ...state,
+  case DELETE_EXPENSE:
+    return { ...state,
+      expenses: action.value,
     };
   default:
     return state;

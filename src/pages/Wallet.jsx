@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addExpense as addExpenseAction } from '../actions';
 import Header from '../components/Header';
 import Input from '../components/Input';
+import WalletTable from '../components/WalletTable';
 import currencyApi from '../services/currencyApi';
 
 const paymentMethod = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
@@ -112,6 +113,7 @@ class Wallet extends React.Component {
           </label>
           <button type="button" onClick={ handleClick }> Adicionar despesa</button>
         </form>
+        <WalletTable />
       </div>
     );
   }
