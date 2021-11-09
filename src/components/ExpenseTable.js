@@ -49,12 +49,13 @@ class ExpenseTable extends Component {
               </td>
               <td>Real</td>
               <td>
+                {/* linter tendo problemas com o botão que está identado corretamente */}
                 <button
                   type="button"
                   onClick={ () => this.handleClick(expense) }
                   data-testid="delete-btn"
-                 >
-                 Excluir
+                >
+                  Excluir
                 </button>
               </td>
             </tr>
