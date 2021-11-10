@@ -18,9 +18,9 @@ class CurrencyOptions extends Component {
             .filter((currencie) => (
               currencie[0] !== 'USDT' && currencie[0] !== 'DOGE'
             ))
-            .map((currencie) => (
+            .map((currencie, index) => (
               <option
-                key={ currencie[0] }
+                key={ index }
                 value={ currencie[0] }
               >
                 {currencie[0]}
@@ -41,7 +41,8 @@ const mapStateToProps = (state) => ({
 });
 
 CurrencyOptions.propTypes = {
-  currencies: PropTypes.arrayOf(PropTypes.array).isRequired,
+  currencies: PropTypes
+    .arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])).isRequired,
   getCurrencies: PropTypes.func.isRequired,
 };
 
