@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   total: 0,
-  expensesIdCounter: 2,
+  expensesIdCounter: 0,
 };
 
 function wallet(state = INITIAL_STATE, action) {
