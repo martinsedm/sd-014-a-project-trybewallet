@@ -3,6 +3,7 @@ export const GET_CURRENCIES_SUCCESS = 'GET_CURRENCIES_SUCCESS';
 export const GET_CURRENCIES_ERROR = 'GET_CURRENCIES_ERROR';
 export const NEW_EXPENSE = 'NEW_EXPENSE';
 export const TOTAL_COST = 'TOTAL_COST';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const userEmailAction = (email) => ({
   type: USER_EMAIL,
@@ -56,3 +57,10 @@ export const newExpenseThunk = (
   const exchangeRates = await response.json();
   dispatch(newExpense({ value, description, currency, method, tag }, exchangeRates));
 };
+
+export const removeExpense = (index) => ({
+  type: REMOVE_EXPENSE,
+  payload: {
+    index,
+  },
+});

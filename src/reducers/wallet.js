@@ -1,9 +1,11 @@
-import { GET_CURRENCIES_SUCCESS, NEW_EXPENSE, TOTAL_COST } from '../actions';
+import {
+  GET_CURRENCIES_SUCCESS, NEW_EXPENSE, TOTAL_COST, REMOVE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
   total: 0,
+  expensesIdCounter: 2,
 };
 
 function wallet(state = INITIAL_STATE, action) {
@@ -17,7 +19,7 @@ function wallet(state = INITIAL_STATE, action) {
     return {
       ...state,
       expenses: [...state.expenses, {
-        id: action.payload.id + state.expenses.length,
+        id: state.expensesIdCounter,
         value: action.payload.value,
         description: action.payload.description,
         currency: action.payload.currency,
@@ -25,12 +27,26 @@ function wallet(state = INITIAL_STATE, action) {
         tag: action.payload.tag,
         exchangeRates: action.payload.exchangeRates,
       }],
+      expensesIdCounter: state.expensesIdCounter + 1,
     };
   }
   case TOTAL_COST: {
     return {
       ...state,
       total: parseFloat(state.total) + parseFloat(action.payload.total),
+    };
+  }
+  case REMOVE_EXPENSE: {
+    const toBeRemovedElement = state.expenses
+      .filter((expense) => expense.id === Number(action.payload.index))[0];
+    const expenseCurrency = toBeRemovedElement.currency;
+    console.log(state);
+    return {
+      ...state,
+      total: state.total - (Math.round(Number(toBeRemovedElement
+        .exchangeRates[expenseCurrency].ask) * Number(toBeRemovedElement.value)
+         * 100) / 100),
+      expenses: state.expenses.filter((expense) => expense !== toBeRemovedElement),
     };
   }
   default:

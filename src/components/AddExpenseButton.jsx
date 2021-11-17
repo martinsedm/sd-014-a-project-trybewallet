@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { newExpenseThunk, totalCost as totalCostAction } from '../actions';
+import handleTotalState from '../helpers';
 
 class AddExpenseButton extends Component {
   constructor() {
@@ -18,15 +19,7 @@ class AddExpenseButton extends Component {
 
   handleTotal() {
     const { totalCost, expenses } = this.props;
-    const lastElementIndex = expenses.length - 1;
-    const cost = expenses[lastElementIndex].value;
-    const expenseCurrency = expenses[lastElementIndex].currency;
-    const currencies = Object.entries(expenses[lastElementIndex].exchangeRates);
-    const conversionRate = currencies.filter(
-      (currency) => currency[0] === expenseCurrency,
-    )[0][1].ask;
-    const total = cost * conversionRate;
-    totalCost(total);
+    handleTotalState(totalCost, expenses);
   }
 
   render() {

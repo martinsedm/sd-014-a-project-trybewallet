@@ -2,16 +2,37 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import { connect } from 'react-redux';
+import { removeExpense as removeExpenseAction /* totalCost as totalCostAction */ }
+  from '../actions';
+// import handleTotalState from '../helpers';
 
 class ExpenseTableBody extends Component {
+  constructor() {
+    super();
+    this.handleDeleteButton = this.handleDeleteButton.bind(this);
+    // this.handleTotal = this.handleTotal.bind(this);
+  }
+
+  async handleDeleteButton({ target: { value } }) {
+    const { removeExpense } = this.props;
+    await removeExpense(value);
+    // this.handleTotal();
+  }
+
+  // handleTotal() {
+  //   const { totalCost, expenses } = this.props;
+  //   handleTotalState(totalCost, expenses);
+  // }
+
   render() {
     const { expenses } = this.props;
+
     return (
       <tbody>
-        { expenses && expenses.map((expense) => {
+        { expenses.length > 0 && expenses.map((expense) => {
           const expenseCurrency = expense.currency;
           return (
-            <tr key={ expense.id }>
+            <tr key={ expense.id } id={ `tr-${expense.id}` }>
               <td>{ expense.description }</td>
               <td>{ expense.tag }</td>
               <td>{ expense.method }</td>
@@ -29,7 +50,12 @@ class ExpenseTableBody extends Component {
               <td>Real</td>
               <td>
                 <AiFillEdit />
-                <button type="button">
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  onClick={ this.handleDeleteButton }
+                  value={ expense.id }
+                >
                   Excluir
                   <AiFillDelete />
                 </button>
@@ -44,10 +70,16 @@ class ExpenseTableBody extends Component {
 
 ExpenseTableBody.propTypes = {
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  removeExpense: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   expenses: state.wallet.expenses,
 });
 
-export default connect(mapStateToProps)(ExpenseTableBody);
+const mapDispatchToProps = (dispatch) => ({
+  removeExpense: (index) => dispatch(removeExpenseAction(index)),
+  // totalCost: (total) => (dispatch(totalCostAction(total))),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTableBody);

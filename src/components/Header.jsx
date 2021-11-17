@@ -10,7 +10,7 @@ class Header extends Component {
         <span>
           Gastos:
           <span data-testid="total-field">
-            { !total ? 0 : Math.round(total * 100) / 100 }
+            { total && Math.round(Number(total) * 100) / 100 }
           </span>
           <span data-testid="header-currency-field">
             BRL
