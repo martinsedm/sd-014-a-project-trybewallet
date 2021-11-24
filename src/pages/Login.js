@@ -50,35 +50,40 @@ class Login extends React.Component {
     const { handleClick, loginButton, verifyLoginData } = this;
     const { email, password } = this.state;
     return (
-      <div>
+      <div className="login">
         <form>
-          <div>
-            <input
-              data-testid="email-input"
-              type="email"
-              name="email"
-              placeholder="email"
-              value={ email }
-              onChange={ handleClick }
-            />
+          <div className="login-forms">
+            <h1>Login</h1>
+            <div className="general-input">
+              <input
+                data-testid="email-input"
+                type="email"
+                name="email"
+                placeholder="email@email.com"
+                value={ email }
+                onChange={ handleClick }
+              />
+            </div>
+            <div className="general-input">
+              <input
+                data-testid="password-input"
+                type="password"
+                name="password"
+                placeholder="password"
+                value={ password }
+                onChange={ handleClick }
+              />
+            </div>
+            <div className="button-login">
+              <button
+                type="button"
+                disabled={ verifyLoginData(email, password) }
+                onClick={ () => loginButton() }
+              >
+                Entrar
+              </button>
+            </div>
           </div>
-          <div>
-            <input
-              data-testid="password-input"
-              type="password"
-              name="password"
-              placeholder="password"
-              value={ password }
-              onChange={ handleClick }
-            />
-          </div>
-          <button
-            type="button"
-            disabled={ verifyLoginData(email, password) }
-            onClick={ () => loginButton() }
-          >
-            Entrar
-          </button>
         </form>
       </div>
     );

@@ -1,4 +1,3 @@
-// Coloque aqui suas actions
 export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const SAVE_API = 'SAVE_API';
 export const SAVE_API_EXPENSE = 'SAVE_API_EXPENSE';

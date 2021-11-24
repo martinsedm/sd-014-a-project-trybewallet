@@ -19,16 +19,19 @@ class Header extends Component {
   render() {
     const { email } = this.props;
     return (
-      <header>
-        <p data-testid="email-field">{ email }</p>
-        <p
-          data-testid="total-field"
-        >
-          {`Despesa Total: R$ ${this.sumExpenses().toFixed(2)}`}
+      <div>
+        <header className="header">
+          <img src="https://course.betrybe.com/images/trybe-logo-e10dbaaa26462aa149b81a924b00df07.png?vsn=d" alt="trybe-logo" />
+          <p data-testid="email-field">{ email }</p>
+          <p
+            data-testid="total-field"
+          >
+            {`Despesa Total: R$ ${this.sumExpenses().toFixed(2)} BRL`}
 
-        </p>
-        <p data-testid="header-currency-field">BRL</p>
-      </header>
+          </p>
+        </header>
+
+      </div>
     );
   }
 }

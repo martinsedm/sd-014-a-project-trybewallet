@@ -5,6 +5,7 @@ import { fetchAPI, fetchAPIExpenses } from '../actions';
 import Select from '../components/Select';
 import Table from '../components/Table';
 import Header from '../components/Header';
+import addButton from '../images/add-btn-icon.png';
 
 const PAYMENT = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const ALIMENTAÇÃO = 'Alimentação';
@@ -57,6 +58,7 @@ class Wallet extends React.Component {
         <label htmlFor="valor">
           Valor:
           <input
+            className="input-painel"
             type="text"
             name="valor"
             id="valor"
@@ -67,6 +69,7 @@ class Wallet extends React.Component {
         <label htmlFor="descrição">
           Descrição:
           <input
+            className="input-painel"
             type="text"
             name="descrição"
             id="descrição"
@@ -83,9 +86,9 @@ class Wallet extends React.Component {
     const { moeda, pagamento, tag } = this.state;
     const COIN_TREATED = Object.keys(currency).filter((coin) => coin !== 'USDT');
     return (
-      <div>
+      <div className="wallet">
         <Header />
-        <form>
+        <form className="painel">
           {this.inputValueAndDescription()}
           <Select
             id="moeda"
@@ -111,11 +114,14 @@ class Wallet extends React.Component {
             arry={ TAG_TYPE }
             labelName="Tag:"
           />
-          <input
+          <button
+            className="button-image"
             type="button"
             value="Adicionar Despesa"
             onClick={ () => this.addExpense() }
-          />
+          >
+            <img src={ addButton } alt="add-button" className="img" />
+          </button>
         </form>
         <Table />
       </div>

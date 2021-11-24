@@ -1,41 +1,120 @@
-.App {
+input {
+  padding: 0.2em 0.5em;
+}
+
+input::placeholder {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
+.login {
   align-items: center;
-  background-color: #282c34;
-  color: white;
+  background-color: #118c4f;
+  background-image: url('https://media.giphy.com/media/l1LcitrlHas5jQLhS/giphy.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
   justify-content: center;
-  min-height: 100vh;
+  width: 100vw;
 }
 
-.App-link {
-  color: #61dafb;
+.login-forms {
+  height: 30vh;
+  margin-bottom: 200px;
+  margin-left: 600px;
+  width: 20vw;
 }
 
-@keyframes App-logo-spin {
+.login-forms h1 {
+  display: flex;
+  justify-content: center;
+}
 
-  from {
-    transform: rotate(0deg);
-  }
+.general-input {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+
+.button-login {
+  display: flex;
+  justify-content: center;
+}
+
+.button-login button {
+  height: 50px;
+  width: 195px;
+}
+
+img {
+  height: 75px;
+  width: 150px;
+}
+
+.wallet {
+  background-color: rgba(255, 255, 255, 0.534);
+}
+
+.header {
+  background-color: black;
+  color: aliceblue;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.painel {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  text-align: center;
+  vertical-align: baseline;
+}
+
+th , td {
+  border-spacing: 10px;
+}
+
+table , th , td {
+  border: 1px solid #333;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.button-image {
+  border: none;
+  height: 26px;
+  padding: 0;
+  width: 26px;
+}
+
+.img {
+  background-color: #118c4f;
+  border-radius: 25%;
+  height: 25px;
+  margin: 0;
+  width: 25px;
+}
+
+.img-trash {
+  border-radius: 25%;
+  height: 25px;
+  margin: 0;
+  width: 25px;
+}
+
+.input-painel {
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px;
+  height: 12.5px;
+  width: 125px;
 }
