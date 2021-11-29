@@ -97,3 +97,5 @@ Table.propTypes = {
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Table);
+
+// componente feito com a ajuda do respositorio: https://github.com/tryber/sd-011-project-trybewallet/pull/60

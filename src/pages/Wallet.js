@@ -11,6 +11,7 @@ class Wallet extends Component {
   constructor(props) {
     super(props);
 
+    // despesas
     const { expenses } = this.props;
     this.state = {
       id: expenses.length,
@@ -54,6 +55,7 @@ class Wallet extends Component {
   handleClick() {
     const { expenses, dispatchFetchPosts } = this.props;
     dispatchFetchPosts(this.state);
+
     this.setState({
       id: expenses.length + 1,
       value: '',
@@ -95,7 +97,7 @@ class Wallet extends Component {
             onChange={ this.change }
           >
             {currencies.map((coin, index) => (
-              <option key={ index } value={ coin }>{ coin }</option>
+              <option key={ index } value={ coin }>{ coin }</option> // tipo da moeda
             ))}
           </select>
         </label>
@@ -184,13 +186,16 @@ class Wallet extends Component {
   }
 }
 
+// transformando o estado do redux em props.
+
 const mapStateToProps = (state) => ({
-  email: state.user.email,
+  email: state.userReducer.email,
   loading: state.wallet.loading,
   expenses: state.wallet.expenses,
   currencies: state.wallet.currencies,
-});
+}); // esta função define a realçao entre o estado do redux e as props do componente
 
+// transforma as actions em props.
 const mapDispatchToProps = (dispatch) => ({
   dispatchFetchPosts: (state) => dispatch(fetchPosts(state)),
   dispatchChangeExpense: (state) => dispatch(changeExpense(state)),
@@ -204,3 +209,5 @@ Wallet.propTypes = {
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);
+
+// componente feito com a ajuda do respositorio da Gisele Costa https://github.com/tryber/sd-011-project-trybewallet/pull/60

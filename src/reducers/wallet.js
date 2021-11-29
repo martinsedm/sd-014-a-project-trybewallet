@@ -38,3 +38,5 @@ const wallet = (state = INITIAL_STATE, action) => {
 };
 
 export default wallet;
+
+// reducer feito com ajuda do repositorio: https://github.com/tryber/sd-011-project-trybewallet/pull/60
